@@ -150,7 +150,7 @@ class BootStrap {
         //pac3.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'444') )
         persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.858::6667778') )
         persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::444') )
-        persona3.addToIdentities( new PersonName(primerNombre:'Marta', primerApellido:'Stewart') )
+        persona3.addToIdentities( new PersonName(primerNombre:'Mata', primerApellido:'Lozano') )
         persona3.fechaNacimiento = new Date(83, 11, 26)
         persona3.type = "Persona"
         persona3.sexo = "F"

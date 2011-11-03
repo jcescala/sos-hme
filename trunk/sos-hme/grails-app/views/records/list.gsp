@@ -79,6 +79,8 @@
                 </g:if>
                 <g:else>
                   <g:message code="Documento Clinico Creado" /> <!-- TODO i18n -->
+                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}"><g:message code="Ver CDA" /></g:link> <!-- TODO i18n -->
+
                 </g:else>
               </g:if>
           </td>
