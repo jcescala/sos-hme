@@ -3,6 +3,7 @@ package cda
 
 import groovy.xml.MarkupBuilder
 import hce.core.composition.Composition
+import hce.core.common.directory.Folder
 import demographic.DemographicService
 import demographic.role.Role
 import demographic.party.Person
@@ -16,6 +17,9 @@ import serviceinterfaces.DemographicServiceInterface
 import templates.TemplateManager
 import hce.core.common.change_control.Version
 import java.text.SimpleDateFormat
+import org.springframework.web.context.request.RequestContextHolder
+
+
 
 /**
  *
@@ -90,7 +94,13 @@ class ManagerCDA {
         def clidoc_code_codeSystemName = "HCET"
         def clidoc_code_codeSystem = "2.16.858.1.1.1.1.1.4"
         def clidoc_code_code = "11111-1" // Elegido por nositros, todos los docs de trauma tienen el mismo code
-        def clidoc_title = "Hospital Maciel - Episodio de Trauma"
+
+        //--------------
+        def domain_path = RequestContextHolder.currentRequestAttributes().getSession().traumaContext.domainPath
+        def path = Folder.findByPath(domain_path)
+        def clidoc_title = "SOS Telemedicina - "+path.name.value
+        //--------------------
+
         def clidoc_effectiveTime_value = DateConverter.toHL7DateFormat(comp.context.startTime.toDate())
         def clidoc_confidentialityCode_code = "N"
         def clidoc_confidentialityCode_codeSystem = "2.16.858.1.1.1.1.1.5"
@@ -122,10 +132,10 @@ class ManagerCDA {
         }
         //----------------------------------------------------------------------
         def autor_assignedAuthor_assignedPerson_representedOrganization_id_root = "2.16.858.1.1.1.1.1.6"
-        def autor_assignedAuthor_assignedPerson_representedOrganization_name = "Hospital Maciel"
+        def autor_assignedAuthor_assignedPerson_representedOrganization_name = "SOS Telemedicina"
         // CUSTODIAN
         def custodian_assignedCustodian_representedCustodianOrganization_id_root = "2.16.858.1.1.1.1.1.7"
-        def custodian_assignedCustodian_representedCustodianOrganization_name = "Hospital Maciel"
+        def custodian_assignedCustodian_representedCustodianOrganization_name = "SOS Telemedicina"
         // RECORD TARGET
         def recordTarget_patientRole_id_extension = ""
         def recordTarget_patientRole_id_root = ""
@@ -169,7 +179,7 @@ class ManagerCDA {
         def legalAuthenticator_assignedEntity_assignedPerson_mane_given = autor_assignedAuthor_assignedPerson_name_given
         def legalAuthenticator_assignedEntity_assignedPerson_name_family = autor_assignedAuthor_assignedPerson_name_family
         def legalAuthenticator_assignedEntity_representedOrganization_id_root = "2.16.858.1.1.1.1.1.9"
-        def legalAuthenticator_assignedEntity_representedOrganization_name = "Hospital Maciel"
+        def legalAuthenticator_assignedEntity_representedOrganization_name = "SOS Telemedicina"
         
         // FIXME: setear coding a ISO-8859-1
         def writer = new StringWriter()

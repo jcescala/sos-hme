@@ -48,56 +48,15 @@
                 <title>
                     <xsl:value-of select="$title"/>
                 </title>
-                <style type="text/css" media="screen">
-                    body {
-                        color: #003366;
-                        font-size: 12px;
-                        line-height: normal;
-                        font-family: Verdana, Arial, sans-serif;
-                        margin: 10px;
-                        scrollbar-3dlight-color: #EEEEEE;
-                        scrollbar-arrow-color: #003366;
-                        scrollbar-darkshadow-color: #EEEEEE;
-                        scrollbar-face-color: #EEEEEE;
-                        scrollbar-highlight-color: #003366;
-                        scrollbar-shadow-color: #003366;
-                        scrollbar-track-color: #EEEEEE;
-                    }
-                    a {
-                        color: #0099ff;
-                        text-decoration: none;
-                    }
-                    table {
-                        font-size: 10pt;
-                        background-repeat: no-repeat;
-                        border: 2px #bacd0c;
-                        line-height: 10pt;
-                        border-width: 0;
-                        border-color: #eeeeee
-                    }
-                    .input {
-                        color: #003366;
-                        font-size: 10pt;
-                        font-family: Verdana, Arial, sans-serif;
-                        background-color: #ffffff;
-                        border: solid 1px
-                    }
-                    h1 {
-                        font-size: 12pt;
-                    }
-                    h2 {
-                        font-size: 11pt;
-                    }
-                    .revision_insert {
-                        text-decoration: underline overline;
-                    }</style>
+                <link rel="stylesheet" href="/ehr/css/cda.css" type="text/css" media="screen" />
+                
             </head>
             <body>
                 <table style="width: 100%">
                     <tr bgcolor="#3399ff">
                         <td width="15%" valign="top">
                             <span style="color:white;font-weight:bold;">
-                                <xsl:text>Patient:</xsl:text>
+                                <xsl:text>Paciente:</xsl:text>
                             </span>
                         </td>
                         <td width="45%" valign="top">
@@ -128,7 +87,7 @@
                             </xsl:call-template>
                         </td>
                         <td valign="top" align="right">
-                            <xsl:text>Patient-ID:</xsl:text>
+                            <xsl:text>Paciente-ID:</xsl:text>
                         </td>
                         <td valign="top">
                             <xsl:apply-templates select="n1:recordTarget/n1:patientRole/n1:id" mode="getIDs"/>
@@ -136,7 +95,7 @@
                     </tr>
                     <tr bgcolor="#ccccff">
                         <td valign="top">
-                            <xsl:text>Created on:</xsl:text>
+                            <xsl:text>Fecha de creación:</xsl:text>
                         </td>
                         <td valign="top">
                             <xsl:call-template name="formatDate">
@@ -144,15 +103,15 @@
                             </xsl:call-template>
                         </td>
                         <td valign="top" align="right">
-                            <xsl:text>Gender:</xsl:text>
+                            <xsl:text>Género:</xsl:text>
                         </td>
                         <td valign="top">
                             <xsl:variable name="sex" select="n1:recordTarget/n1:patientRole/n1:patient/n1:administrativeGenderCode/@code"/>
                             <xsl:choose>
-                                <xsl:when test="$sex='M'">Male</xsl:when>
-                                <xsl:when test="$sex='F'">Female</xsl:when>
-                                <xsl:when test="$sex='U'">Undifferentiated</xsl:when>
-                                <xsl:otherwise>Unknown</xsl:otherwise>
+                                <xsl:when test="$sex='M'">Masculino</xsl:when>
+                                <xsl:when test="$sex='F'">Femenino</xsl:when>
+                                <xsl:when test="$sex='U'">Indiferenciable</xsl:when>
+                                <xsl:otherwise>Desconocido</xsl:otherwise>
                             </xsl:choose>
                         </td>
                     </tr>
@@ -275,40 +234,40 @@
         <xsl:variable name="month" select="substring ($date, 5, 2)"/>
         <xsl:choose>
             <xsl:when test="$month='01'">
-                <xsl:text>January </xsl:text>
+                <xsl:text>Enero </xsl:text>
             </xsl:when>
             <xsl:when test="$month='02'">
-                <xsl:text>February </xsl:text>
+                <xsl:text>Febrero </xsl:text>
             </xsl:when>
             <xsl:when test="$month='03'">
-                <xsl:text>March</xsl:text>
+                <xsl:text>Marzo</xsl:text>
             </xsl:when>
             <xsl:when test="$month='04'">
-                <xsl:text>April </xsl:text>
+                <xsl:text>Abril </xsl:text>
             </xsl:when>
             <xsl:when test="$month='05'">
-                <xsl:text>May </xsl:text>
+                <xsl:text>Mayo </xsl:text>
             </xsl:when>
             <xsl:when test="$month='06'">
-                <xsl:text>June </xsl:text>
+                <xsl:text>Junio </xsl:text>
             </xsl:when>
             <xsl:when test="$month='07'">
-                <xsl:text>July </xsl:text>
+                <xsl:text>Julio </xsl:text>
             </xsl:when>
             <xsl:when test="$month='08'">
-                <xsl:text>August </xsl:text>
+                <xsl:text>Agosto </xsl:text>
             </xsl:when>
             <xsl:when test="$month='09'">
-                <xsl:text>September </xsl:text>
+                <xsl:text>Septiembre </xsl:text>
             </xsl:when>
             <xsl:when test="$month='10'">
-                <xsl:text>October </xsl:text>
+                <xsl:text>Octubre </xsl:text>
             </xsl:when>
             <xsl:when test="$month='11'">
-                <xsl:text>November </xsl:text>
+                <xsl:text>Noviembre </xsl:text>
             </xsl:when>
             <xsl:when test="$month='12'">
-                <xsl:text>December </xsl:text>
+                <xsl:text>Deciembre </xsl:text>
             </xsl:when>
         </xsl:choose>
         <xsl:choose>
@@ -954,7 +913,7 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff" valign="top">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Consent:</xsl:text>
+                            <xsl:text>Consentimiento:</xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">
@@ -964,7 +923,7 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff" valign="top">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Custodian organization:</xsl:text>
+                            <xsl:text>Organización custodia:</xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">
@@ -988,7 +947,7 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Author:</xsl:text>
+                            <xsl:text>Autor:</xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">
@@ -1006,7 +965,7 @@
                         <xsl:if test="n1:assignedAuthoringDevice">
                             <xsl:value-of select="n1:assignedAuthoringDevice/n1:softwareName"/>
                         </xsl:if>
-                        <xsl:text> on </xsl:text>
+                        <xsl:text> en </xsl:text>
                         <xsl:call-template name="formatDate">
                             <xsl:with-param name="date" select="n1:time/@value"/>
                         </xsl:call-template>
@@ -1034,14 +993,14 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Authenticator: </xsl:text>
+                            <xsl:text>Autentificador: </xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">
                         <xsl:call-template name="getName">
                             <xsl:with-param name="name" select="n1:authenticator/n1:assignedEntity/n1:assignedPerson/n1:name"/>
                         </xsl:call-template>
-                        <xsl:text> on </xsl:text>
+                        <xsl:text> en </xsl:text>
                         <xsl:call-template name="formatDate">
                             <xsl:with-param name="date" select="n1:time/@value"/>
                         </xsl:call-template>
@@ -1060,14 +1019,14 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Legal Authenticator:</xsl:text>
+                            <xsl:text>Legal Autentificador:</xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">
                         <xsl:call-template name="getName">
                             <xsl:with-param name="name" select="n1:assignedEntity/n1:assignedPerson/n1:name"/>
                         </xsl:call-template>
-                        <xsl:text> on </xsl:text>
+                        <xsl:text> en </xsl:text>
                         <xsl:call-template name="formatDate">
                             <xsl:with-param name="date" select="n1:time/@value"/>
                         </xsl:call-template>
@@ -1086,7 +1045,7 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Custodian:</xsl:text>
+                            <xsl:text>Custodio:</xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">
@@ -1110,7 +1069,7 @@
                 <tr>
                     <td width="20%" bgcolor="#3399ff">
                         <span style="color:white;font-weight:bold; ">
-                            <xsl:text>Informant:</xsl:text>
+                            <xsl:text>Informante:</xsl:text>
                         </span>
                     </td>
                     <td width="80%" bgcolor="#ccccff" valign="top">

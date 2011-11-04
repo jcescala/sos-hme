@@ -39,7 +39,7 @@ class TipoIdentificador {
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.600", nombre:"Passport Numbers Namespace for PARAGUAY", nombreCorto:"Pasaporte paraguayo")
         */
         
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.1.1.1.3.1.5.1", nombre:"Número de paciente Hospital Maciel", nombreCorto:"Número de paciente")
+        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.1.1.1.3.1.5.1", nombre:"Número de paciente SOS Telemedicina", nombreCorto:"Número de paciente")
         
         // Para ingresar pacientes que no se sabe su id
         ret << new TipoIdentificador(codigo:AUTOGENERADO, nombre:"Autogenerado por el sistema", nombreCorto:"Autogenerado")
