@@ -18,6 +18,11 @@ import hce.core.common.archetyped.Archetyped
 import org.springframework.web.context.support.WebApplicationContextUtils
 //import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib // Para usar g.message
 
+//carga de data inicial
+import groovy.sql.Sql
+import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+
 class BootStrap {
 
     def hceService
@@ -258,7 +263,50 @@ class BootStrap {
         
         // /Creacion de episodio
         */
+       /*DATA INICIAL*/
+        println " - Datos Iniciales Tablas Demograficas"
         
+        
+        Sql sql = Sql.newInstance(CH.config.dataSource.url, CH.config.dataSource.username,
+        CH.config.dataSource.password, CH.config.dataSource.driverClassName)
+        
+        /*
+        String sqlFilePath = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/lugar.sql")
+        String sqlString = new File(sqlFilePath).eachLine {
+            sql.execute(it)
+        }
+        */
+        String sqlFilePath = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/lugarOptimo.sql")
+        String sqlString = new File(sqlFilePath).eachLine {
+            sql.execute(it)
+        }
+        
+        String sqlFilePathConyugal = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/situacionConyugal.sql")
+        String sqlStringConyugal = new File(sqlFilePathConyugal).eachLine {
+            sql.execute(it)
+        }
+        
+        String sqlFilePathNivelEducativo = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/nivelEducativo.sql")
+        String sqlStringNivelEducativo = new File(sqlFilePathNivelEducativo).eachLine {
+            sql.execute(it)
+        }
+        
+        String sqlFilePathProfesion = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/profesion.sql")
+        String sqlStringProfesion = new File(sqlFilePathProfesion).eachLine {
+            sql.execute(it)
+        }
+        
+        String sqlFilePathOcupacion = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/ocupacion.sql")
+        String sqlStringOcupacion = new File(sqlFilePathOcupacion).eachLine {
+            sql.execute(it)
+        }
+        
+        String sqlFilePathEtnia = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/etnia.sql")
+        String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
+            sql.execute(it)
+        }
+        
+        /*FIN DATA INICIAL*/ 
         println ""
         println "======= +++++++++ ======="
         println "======= /Bootstrap ======="

@@ -141,9 +141,9 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
                       multipartForm: 'multipart/form-data'
                     ]
 // The default codec used to encode data with ${}
-grails.views.default.codec="none" // none, html, base64
-grails.views.gsp.encoding="ISO-8859-1" //"UTF-8"
-grails.converters.encoding="ISO-8859-1" //"UTF-8"
+grails.views.default.codec="html" // none, html, base64
+grails.views.gsp.encoding="UTF-8" //"UTF-8" ISO-8859-1
+grails.converters.encoding="UTF-8" //"UTF-8"
 
 // enabled native2ascii conversion of i18n properties files
 grails.enable.native2ascii = true
