@@ -1,6 +1,7 @@
 <html>
   <head>
-    <meta name="layout" content="ehr-modal" />
+    <!--meta name="layout" content="ehr-modal" /-->
+    <meta name="layout" content="main" />
     <title><g:message code="demographic.show.title" /></title>
     <style>
         table #list {

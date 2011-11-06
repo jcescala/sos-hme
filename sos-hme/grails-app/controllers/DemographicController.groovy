@@ -28,6 +28,10 @@ import events.*
 
 import util.RandomGenerator
 
+/*Demograficos paciente*/
+import demographic.identity.*
+/**/
+
 class DemographicController{
 
     def hceService
@@ -421,7 +425,22 @@ class DemographicController{
         
         // creacion de un nuevo paciente
         def tiposIds = TipoIdentificador.list()
-        return [tiposIds: tiposIds]
+        def etniasIds = Etnia.list()
+        def profesionIds = Profesion.list()
+        def conyugalIds = Conyugal.list()
+        def nivelEducIds = Niveleducativo.list()
+        def ocupacionIds = Ocupacion.list()
+        def paisesIds = Lugar.findAllByTipolugarLike("Pais")
+        def entidadesIds = Lugar.findAllByTipolugarLike("Estado")
+        
+        return [tiposIds: tiposIds,
+            etniasIds : etniasIds,
+            profesionIds : profesionIds,
+            paisesIds : paisesIds,
+            conyugalIds : conyugalIds,
+            nivelEducIds : nivelEducIds,
+            ocupacionIds : ocupacionIds,
+            entidadesIds : entidadesIds]
     }
     
     /**
@@ -486,5 +505,37 @@ class DemographicController{
         
         // muestra pagina de edit
         return [patient:patient, pn:pn, tiposIds:tiposIds]
+    }
+    
+    def ajaxGetEstados = {
+        
+        if(params.id.toLong() == 1){
+            def list = Lugar.createCriteria().list{
+                padre{
+                    eq('id',params.id.toLong())
+                }
+            } 
+            render list.collect{ """<option value="${it.id}">${it.nombre}</option>""" } 
+        }
+        else{
+            def list = Lugar.findByNombreLike("Venezuela")
+            render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
+        }
+    }
+    
+    def ajaxGetMunicipios = {
+        
+        if(params.id.toLong() >= 1){
+            def list = Lugar.createCriteria().list{
+                padre{
+                    eq('id',params.id.toLong())
+                }
+            } 
+            render list.collect{ """<option value="${it.id}">${it.nombre}</option>""" } 
+        }
+        else{
+            def list = Lugar.findByNombreLike("Venezuela")
+            render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
+        }
     }
 }
