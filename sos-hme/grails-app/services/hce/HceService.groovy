@@ -67,104 +67,104 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         
         // Sacado de openehr terms en codeset languages
         compo.language = new CodePhrase(
-                codeString: 'es-uy',
-                terminologyId: TerminologyID.create('ISO_639-1', null)
-          )
+            codeString: 'es-uy',
+            terminologyId: TerminologyID.create('ISO_639-1', null)
+        )
         // sacado de openehr terms en codeset countries
         compo.territory = new CodePhrase(
-                codeString: 'UY',
-                terminologyId: TerminologyID.create('ISO_3166-1', null)
-          )
+            codeString: 'UY',
+            terminologyId: TerminologyID.create('ISO_3166-1', null)
+        )
         
         // el registro de trauma es de tipo eventual, definido en el grupo
         // de conceptos "composition category" de la terminologia openehr.
         compo.category = new DvCodedText(
-                value: "event",
-                definingCode: new CodePhrase(
-                     codeString: '433',
-                     terminologyId: TerminologyID.create('openehr', null)
-                )
-           )
+            value: "event",
+            definingCode: new CodePhrase(
+                codeString: '433',
+                terminologyId: TerminologyID.create('openehr', null)
+            )
+        )
         
         // Se usa para marcar el inicio y fin de la atencion de trauma.
         // Tambien tiene "participations" que sirven para decir quien ingreso los datos.
         // TODO: al context le faltan participations y otherContext, tambien falta healthCareFacility pero no creo que lo usemos.
         compo.context = new EventContext(
         
-          path: "/context",
+            path: "/context",
           
-          startTime: new DvDateTime(value:_startTime),
-          //startTime: RMExamples.getDvDateTime1('2009-11-23 23:14:00'), // Se tendria que poner al iniciar un nuevo episodio
-          //endTime: RMExamples.getDvDateTime1('2009-11-24 06:37:00'), // Se tendira que poner al cerra el episodio
-          //location: 'cama 5', // es el "point of care" con granularidad maxima, por ejemplo "cama 5", es opcional y no lo vamos a usar
+            startTime: new DvDateTime(value:_startTime),
+            //startTime: RMExamples.getDvDateTime1('2009-11-23 23:14:00'), // Se tendria que poner al iniciar un nuevo episodio
+            //endTime: RMExamples.getDvDateTime1('2009-11-24 06:37:00'), // Se tendira que poner al cerra el episodio
+            //location: 'cama 5', // es el "point of care" con granularidad maxima, por ejemplo "cama 5", es opcional y no lo vamos a usar
            
-          // setting es el servicio donde se da el cuidado, el valor se saca de la terminologia openehr
-          setting: new DvCodedText(
-            value: "emergency care", // TODO: traducir
-            definingCode: new CodePhrase(
-              codeString: '227',
-              terminologyId: TerminologyID.create('openehr', null)
-            ) // code phrase
-          ), // setting
+            // setting es el servicio donde se da el cuidado, el valor se saca de la terminologia openehr
+            setting: new DvCodedText(
+                value: "emergency care", // TODO: traducir
+                definingCode: new CodePhrase(
+                    codeString: '227',
+                    terminologyId: TerminologyID.create('openehr', null)
+                ) // code phrase
+            ), // setting
              
-          // ==================================================
-          // otherContext
-          otherContext: new ItemSingle(
-            path: "/context/otherContext",
-            item: new Element(
-              path: "/context/otherContext/item",
-              value: new DvText(
-                value: _otherContext,
-                language: new CodePhrase(
-                  codeString: 'es-uy',
-                  terminologyId: TerminologyID.create('ISO_639-1', null)
+            // ==================================================
+            // otherContext
+            otherContext: new ItemSingle(
+                path: "/context/otherContext",
+                item: new Element(
+                    path: "/context/otherContext/item",
+                    value: new DvText(
+                        value: _otherContext,
+                        language: new CodePhrase(
+                            codeString: 'es-uy',
+                            terminologyId: TerminologyID.create('ISO_639-1', null)
+                        ),
+                        encoding: new CodePhrase(
+                            codeString: 'UTF-8',
+                            terminologyId: TerminologyID.create('IANA_character-sets', null)
+                        )
+                    ), // dvtext
+                    archetypeNodeId: "trauma.composition.otherContext.item",
+                    archetypeDetails: new Archetyped(
+                        archetypeId: 'composition.otherContext.Element.item',
+                        templateId: 'composition.otherContext.template.item',
+                        rmVersion: '1.0.2'
+                    ),
+                    name: new DvText(
+                        value: 'hcet.otherContext.item'
+                    )
+                ), // element
+                archetypeNodeId: "trauma.composition.otherContext",
+                archetypeDetails: new Archetyped(
+                    archetypeId: 'composition.otherContext.Element',
+                    templateId: 'composition.otherContext.template',
+                    rmVersion: '1.0.2'
                 ),
-                encoding: new CodePhrase(
-                  codeString: 'UTF-8',
-                  terminologyId: TerminologyID.create('IANA_character-sets', null)
+                name: new DvText(
+                    value: 'hcet.otherContext'
                 )
-              ), // dvtext
-              archetypeNodeId: "trauma.composition.otherContext.item",
-              archetypeDetails: new Archetyped(
-                archetypeId: 'composition.otherContext.Element.item',
-                templateId: 'composition.otherContext.template.item',
-                rmVersion: '1.0.2'
-              ),
-              name: new DvText(
-                value: 'hcet.otherContext.item'
-              )
-            ), // element
-            archetypeNodeId: "trauma.composition.otherContext",
+            ), // other context, item single
+            archetypeNodeId: "trauma.composition.context",
             archetypeDetails: new Archetyped(
-              archetypeId: 'composition.otherContext.Element',
-              templateId: 'composition.otherContext.template',
-              rmVersion: '1.0.2'
+                archetypeId: 'composition.context.EventContext',
+                templateId: 'composition.context.template',
+                rmVersion: '1.0.2'
             ),
             name: new DvText(
-              value: 'hcet.otherContext'
+                value: 'hcet.context'
             )
-          ), // other context, item single
-          archetypeNodeId: "trauma.composition.context",
-          archetypeDetails: new Archetyped(
-            archetypeId: 'composition.context.EventContext',
-            templateId: 'composition.context.template',
-            rmVersion: '1.0.2'
-          ),
-          name: new DvText(
-            value: 'hcet.context'
-          )
         ) // event context
         
         
         // Datos de Locatable
         compo.archetypeNodeId = "trauma.composition" // FIXME: no tengo arquetipados los compos
         compo.archetypeDetails = new Archetyped(
-          archetypeId: 'trauma.composition',
-          templateId: 'trauma.template',
-          rmVersion: '1.0.2'
+            archetypeId: 'trauma.composition',
+            templateId: 'trauma.template',
+            rmVersion: '1.0.2'
         )
         compo.name = new DvText(
-          value: 'hcet'
+            value: 'hcet'
         )
         
         return compo
@@ -213,20 +213,20 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
      */
     def PartySelf createPatientPartysSelf( String root, String extension )
     {
-       /*
-        * El modelo es:
-        * PartySelf(hereda de PartyProxy)
-        * PartySelf.externalRef<PartyRef>.id<UIDBasedID>(root, extension)
-        */
-       def patient = new PartySelf (
-           externalRef: new PartyRef (
-               namespace: "demographic", // FIXME: ver valores correctos
-               type: "PERSON", // FIXME: ver valores correctos
-               objectId: UIDBasedID.create(root, extension)
-           )
-       )
+        /*
+         * El modelo es:
+         * PartySelf(hereda de PartyProxy)
+         * PartySelf.externalRef<PartyRef>.id<UIDBasedID>(root, extension)
+         */
+        def patient = new PartySelf (
+            externalRef: new PartyRef (
+                namespace: "demographic", // FIXME: ver valores correctos
+                type: "PERSON", // FIXME: ver valores correctos
+                objectId: UIDBasedID.create(root, extension)
+            )
+        )
        
-       return patient
+        return patient
     }
     
     /**
@@ -239,11 +239,11 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
     def boolean setCompositionComposer( Composition composition, String root, String extension )
     {
         def composer = new PartyIdentified (
-           externalRef: new PartyRef (
-               namespace: "demographic", // FIXME: ver valores correctos
-               type: "PERSON", // FIXME: ver valores correctos
-               objectId: UIDBasedID.create(root, extension)
-           )
+            externalRef: new PartyRef (
+                namespace: "demographic", // FIXME: ver valores correctos
+                type: "PERSON", // FIXME: ver valores correctos
+                objectId: UIDBasedID.create(root, extension)
+            )
         )
         composition.composer = composer
         
@@ -261,7 +261,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         return composition.composer
     }
 
-        /**
+    /**
      * Le pone la referencia al responsable de la creación de una versión.
      * @param composition
      * @param root
@@ -271,11 +271,11 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
     def boolean setVersionCommitter( Version version, String root, String extension )
     {
         def composer = new PartyIdentified (
-           externalRef: new PartyRef (
-               namespace: "demographic", // FIXME: ver valores correctos
-               type: "PERSON", // FIXME: ver valores correctos
-               objectId: UIDBasedID.create(root, extension)
-           )
+            externalRef: new PartyRef (
+                namespace: "demographic", // FIXME: ver valores correctos
+                type: "PERSON", // FIXME: ver valores correctos
+                objectId: UIDBasedID.create(root, extension)
+            )
         )
         version.committer = composer
 
@@ -293,15 +293,15 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
          * DvCodedText mode <concept id="219" rubric="physically present"/>
          */
         def participation = new Participation(
-          performer: _performer,
-          function: new DvText(value:'subject of care'), // texto libre, no lo codifico.
-          mode: new DvCodedText(
-            value: 'physically present',
-            definingCode: new CodePhrase(
-              codeString: '219',
-              terminologyId: TerminologyID.create('openehr', null)
+            performer: _performer,
+            function: new DvText(value:'subject of care'), // texto libre, no lo codifico.
+            mode: new DvCodedText(
+                value: 'physically present',
+                definingCode: new CodePhrase(
+                    codeString: '219',
+                    terminologyId: TerminologyID.create('openehr', null)
+                )
             )
-          )
         )
         
         return participation
@@ -323,22 +323,22 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         def patientParticipation = null
         if ( participations.size() > 0 )
         {
-           //println "hceService.getPartySelfFromComposition participations.size(): " + participations.size()
-           patientParticipation = participations.find{ it.function.value == 'subject of care' } // FIXME: no usar 'subject of care', usar algo tipo el rol...
+            //println "hceService.getPartySelfFromComposition participations.size(): " + participations.size()
+            patientParticipation = participations.find{ it.function.value == 'subject of care' } // FIXME: no usar 'subject of care', usar algo tipo el rol...
         }
         
         if (patientParticipation)
         {
-           //println "hceService.getPartySelfFromComposition patientParticipation: " + patientParticipation
-           //println "hceService.getPartySelfFromComposition patientParticipation.performer: " + patientParticipation.performer
-           //println "hceService.getPartySelfFromComposition patientParticipation.performer.getClass(): " + patientParticipation.performer.getClass()
-           //if (patientParticipation.performer instanceof PartySelf) // Dice que la clase es: hce.core.common.generic.PartyProxy_$$_javassist_49
-           if (patientParticipation.performer.getClassName() == 'PartySelf')
-           {
-              //println "hceService.getPartySelfFromComposition return PartySelf"
-              //return patientParticipation.performer // Error por javassist en lugar de PartySelf
-              return PartySelf.get(patientParticipation.performer.id)
-           }
+            //println "hceService.getPartySelfFromComposition patientParticipation: " + patientParticipation
+            //println "hceService.getPartySelfFromComposition patientParticipation.performer: " + patientParticipation.performer
+            //println "hceService.getPartySelfFromComposition patientParticipation.performer.getClass(): " + patientParticipation.performer.getClass()
+            //if (patientParticipation.performer instanceof PartySelf) // Dice que la clase es: hce.core.common.generic.PartyProxy_$$_javassist_49
+            if (patientParticipation.performer.getClassName() == 'PartySelf')
+            {
+                //println "hceService.getPartySelfFromComposition return PartySelf"
+                //return patientParticipation.performer // Error por javassist en lugar de PartySelf
+                return PartySelf.get(patientParticipation.performer.id)
+            }
         }
         
         //println "hceService.getPartySelfFromComposition null"
@@ -360,49 +360,49 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
 
         //println "hceService.getPatientFromComposition patientProxy: " + patientProxy
         
-/** FIXME: me dio error al buscar un paciente teniendo la conf del IMP remoto del Maciel...
- * Caused by: java.lang.reflect.UndeclaredThrowableException
-at hce.HceService$$EnhancerByCGLIB$$a9b08e53.getPatientFromComposition(<generated>)
-at serviceinterfaces.HceServiceInterface$getPatientFromComposition.call(Unknown Source)
-at events.handlers.VerificarCondicionCierreEventHandler.handle(script1269617715484.groovy:41)
-at events.handlers.VerificarCondicionCierreEventHandler$handle.call(Unknown Source)
-at events.EventManager$_handle_closure1.doCall(EventManager.groovy:47)
-at events.EventManager.handle(EventManager.groovy:46)
-at events.EventManager$handle.call(Unknown Source)
-at DemographicController$_closure4.doCall(DemographicController.groovy:223)
-at DemographicController$_closure4.doCall(DemographicController.groovy)
-Caused by: java.lang.Exception: Se encuentran: 0 pacientes a partir del ID: UIDBasedID-> 2.16.840.1.113883.2.14.2.1::5021690
-at hce.HceService.getPatientFromComposition(HceService.groovy:338)
-at hce.HceService$$FastClassByCGLIB$$a9659a4f.invoke(<generated>)
-at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
-... 9 more
- */
+        /** FIXME: me dio error al buscar un paciente teniendo la conf del IMP remoto del Maciel...
+         * Caused by: java.lang.reflect.UndeclaredThrowableException
+        at hce.HceService$$EnhancerByCGLIB$$a9b08e53.getPatientFromComposition(<generated>)
+        at serviceinterfaces.HceServiceInterface$getPatientFromComposition.call(Unknown Source)
+        at events.handlers.VerificarCondicionCierreEventHandler.handle(script1269617715484.groovy:41)
+        at events.handlers.VerificarCondicionCierreEventHandler$handle.call(Unknown Source)
+        at events.EventManager$_handle_closure1.doCall(EventManager.groovy:47)
+        at events.EventManager.handle(EventManager.groovy:46)
+        at events.EventManager$handle.call(Unknown Source)
+        at DemographicController$_closure4.doCall(DemographicController.groovy:223)
+        at DemographicController$_closure4.doCall(DemographicController.groovy)
+        Caused by: java.lang.Exception: Se encuentran: 0 pacientes a partir del ID: UIDBasedID-> 2.16.840.1.113883.2.14.2.1::5021690
+        at hce.HceService.getPatientFromComposition(HceService.groovy:338)
+        at hce.HceService$$FastClassByCGLIB$$a9659a4f.invoke(<generated>)
+        at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
+        ... 9 more
+         */
 
         if (patientProxy)
         {  
-           // TODO: probar esta funcion en el Maciel
-           // FIXME: probar si creo 2 episodios para la misma persona a ver si no obtiene 2 pacientes...
-           // List<Person> findPersonById( UIDBasedID id )
-           def patients = demographicService.findPersonById( patientProxy.externalRef.objectId )
+            // TODO: probar esta funcion en el Maciel
+            // FIXME: probar si creo 2 episodios para la misma persona a ver si no obtiene 2 pacientes...
+            // List<Person> findPersonById( UIDBasedID id )
+            def patients = demographicService.findPersonById( patientProxy.externalRef.objectId )
 
-           if (patients.size() == 0)
-           {
-               // no hago nada, el patient es null...
-           }
-           else if (patients.size() == 1) 
-           {
-               patient = patients[0]
-           }
-           else
-           {
-               // TODO: en teoria no deberia pasar pero en ningun lugar hay una restriccion explicita de no tener 2 pacientes con un id comun, hay que probar.
-               println patients
-               throw new Exception('Se encuentran: ' + patients.size() + ' pacientes a partir del ID: '+ patientProxy.externalRef.objectId )
-           }
+            if (patients.size() == 0)
+            {
+                // no hago nada, el patient es null...
+            }
+            else if (patients.size() == 1)
+            {
+                patient = patients[0]
+            }
+            else
+            {
+                // TODO: en teoria no deberia pasar pero en ningun lugar hay una restriccion explicita de no tener 2 pacientes con un id comun, hay que probar.
+                println patients
+                throw new Exception('Se encuentran: ' + patients.size() + ' pacientes a partir del ID: '+ patientProxy.externalRef.objectId )
+            }
            
-           // TODO: verificar que patientProxy.externalRef.objectId no tiene clase javassist
-           if (!patientProxy.externalRef.objectId instanceof UIDBasedID)
-              throw new Exception('Se espera un UIDBasedID y el tipo del id es: ' + patientProxy.externalRef.objectId.getClass())
+            // TODO: verificar que patientProxy.externalRef.objectId no tiene clase javassist
+            if (!patientProxy.externalRef.objectId instanceof UIDBasedID)
+            throw new Exception('Se espera un UIDBasedID y el tipo del id es: ' + patientProxy.externalRef.objectId.getClass())
            
         }
         
@@ -427,7 +427,7 @@ at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
             def partySelfs = PartySelf.withCriteria {
                 externalRef { // PartSelf>PartyRef
                     objectId { // PartyRef>ObjectId
-                       eq('value',personId.value)
+                        eq('value',personId.value)
                     }
                 }
             }
@@ -438,9 +438,9 @@ at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
                 participations {
                     performer {
                         or {
-                           partySelfs.id.each { pSelfId -> // pueden ser varios pSelf
-                              eq('id', pSelfId)
-                           }
+                            partySelfs.id.each { pSelfId -> // pueden ser varios pSelf
+                                eq('id', pSelfId)
+                            }
                         }
                     }
                 }
@@ -459,7 +459,105 @@ at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
         // pero si se haya identificado al paciente.
         return null
     }
-    
+    /**
+     * Devuelve la lista de composition (lista de episodios) pertenecientes a un paciente
+     * @param person
+     * @return List<Composition>
+     */
+    public List<Composition>  getAllCompositionForPatient( Person person, desde, hasta)
+    {
+
+       
+        // Busca un PartySelf (un paciente) por cada id de la persona,
+        // ese es el criterio de comparacion de personas por ahora.
+        def iter = person.ids.iterator()
+        def personId
+        while (iter.hasNext())
+        {
+            personId = iter.next()
+
+            // PUeden ser varios partySelfs, dependiendo si la persona fue ingresada mas de una vez.
+            def partySelfs = PartySelf.withCriteria {
+                externalRef { // PartSelf>PartyRef
+                    objectId { // PartyRef>ObjectId
+                        eq('value',personId.value)
+                    }
+                }
+            }
+
+            //Convierto los Date en DvDateTime para poder aplicar el Criteria correctamente
+           /* def des = new DvDateTime()
+            des.value = desde.toString()
+
+            def has = new DvDateTime()
+            has.value = hasta.toString()
+            */
+           if(desde==null) desde = new Date()
+           if(hasta==null) hasta = new Date()
+           hasta ++
+           
+           println "desde-" + desde
+           println "hasta-" + hasta
+           println "format desde-" + desde.format("yyyy-MM-dd HH:mm:ss")
+
+            // Busca el contexto con la participacion del partySelf que no tenga fecha de fin (el espisodio esta activo)
+            def contexts = EventContext.withCriteria {
+                //isNull('endTime') // episodio activo
+                //eq('startTime', desde)
+               startTime{
+                   between("value", desde.format("yyyy-MM-dd HH:mm:ss"),hasta.format("yyyy-MM-dd HH:mm:ss") )
+               }
+              /* endTime{
+                   le('value', hasta)
+               }*/
+                
+                /*ge("startTime",des)
+                le("endTime",has)
+                */
+                participations {
+                    performer {
+                        or {
+                            partySelfs.id.each { pSelfId -> // pueden ser varios pSelf
+                                eq('id', pSelfId)
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (contexts.size>0)
+            {
+                // Devuelve el episodio para el contexto
+                //return Composition.findByContext(contexts[0])
+
+                def compos = Composition.withCriteria{
+
+                    //Listar solo un dominio
+                    // eq('rmParentId', 1)
+                    or {
+                        contexts.each{ contx ->
+
+                            eq('context', contx)
+
+                        }
+                    }
+                }
+               /* OTRA MANERA DE HACERLO (MENOS EFICIENTE)
+                * def compos=[]
+                contexts.each{
+
+                    compos.add(Composition.findByContext(it))
+                }*/
+                return compos
+                
+            }
+        }
+
+        // No se encuentra el episodio, puede ser que todavia no se haya creado,
+        // pero si se haya identificado al paciente.
+        return null
+    }
+
     /**
      * Devuelve un map<ArchetypeId,Locatable>, con las referencias de los
      * arquetipos del template a los respectivos nodos del RM.
@@ -493,7 +591,7 @@ at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
     def Locatable findRootNodeForArchId ( Locatable rmNode, String archId )
     {
         if (rmNode.archetypeDetails.archetypeId == archId)
-           return rmNode
+        return rmNode
         
         // llamadas recursivas
         
@@ -556,26 +654,26 @@ at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
     /*
     def eliminarMovimientoComposition(Composition composition){
 
-        def listaEntry = composition.content
-        composition.content = null
-        listaEntry.each{e ->
-            if (e.archetypeDetails.archetypeId != "openEHR-EHR-INSTRUCTION.movimientos.v1"){
-                composition.addToContent(e)
-            }
-        }
-
-        ////def entryMovimiento = getCompositionContentItemForTemplate(composition, "openEHR-EHR-INSTRUCTION.movimientos.v1")
-        ////composition.content.remove(entryMovimiento)
-
-        println "==============================================================222"
-        println "==============================================================>>>>>>>>>>>>>>>>>>>>>>>>"
-        def new_composition2 = new Composition()
-        RMLoader.recorrerComposition(composition, new_composition2)
-        println imprimirObjetoXML(new_composition2)
-        println "==============================================================>>>>>>>>>>>>>>>>>>>>>>>>"
-        println "==============================================================222"
+    def listaEntry = composition.content
+    composition.content = null
+    listaEntry.each{e ->
+    if (e.archetypeDetails.archetypeId != "openEHR-EHR-INSTRUCTION.movimientos.v1"){
+    composition.addToContent(e)
     }
-    */
+    }
+
+    ////def entryMovimiento = getCompositionContentItemForTemplate(composition, "openEHR-EHR-INSTRUCTION.movimientos.v1")
+    ////composition.content.remove(entryMovimiento)
+
+    println "==============================================================222"
+    println "==============================================================>>>>>>>>>>>>>>>>>>>>>>>>"
+    def new_composition2 = new Composition()
+    RMLoader.recorrerComposition(composition, new_composition2)
+    println imprimirObjetoXML(new_composition2)
+    println "==============================================================>>>>>>>>>>>>>>>>>>>>>>>>"
+    println "==============================================================222"
+    }
+     */
     
     
     /**
@@ -584,7 +682,7 @@ at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
      */
     boolean domainHasTemplates( String domainPath )
     {
-       return (ApplicationHolder.application.config.templates2."${domainPath}".size() > 0)
+        return (ApplicationHolder.application.config.templates2."${domainPath}".size() > 0)
     }
     
     

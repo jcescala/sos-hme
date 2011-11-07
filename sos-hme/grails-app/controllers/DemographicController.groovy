@@ -31,7 +31,8 @@ import util.RandomGenerator
 /*Demograficos paciente*/
 import demographic.identity.*
 /**/
-
+import hce.core.composition.* // Composition y EventContext
+import hce.core.common.directory.Folder
 class DemographicController{
 
     def hceService
@@ -228,6 +229,8 @@ class DemographicController{
         
         // Guardo los resultados de consultar el IMP remoto en la base como cache.
         def persona = Person.get(params.id)
+       
+
         
         // =====================================================================
         // 1) Si no hay un episodio seleccionado, muestro la patalla de show del
@@ -253,9 +256,33 @@ class DemographicController{
                           params : ['flash.message': 'El paciente seleccionado no tiene identificadores, debe tener por lo menos uno.'] )
                 return
             }
+            def compos = []
+            Folder domain = Folder.findByPath( session.traumaContext.domainPath )
+            /*
+            compos = Composition.withCriteria {
+            }
             
+            // Uso la referencia desde los hijos al padre, asi me ahorro el loop
+            eq('rmParentId', domain.id)
+            
+            // TODO: paginacion
+            // TODO: orden por fecha descendente
+            // TODO: poner cantidad en config
+            maxResults(15)
+            
+            if (params.offset)
+              firstResult( Integer.parseInt(params.offset) )
+            
+            order("id", "desc") // 
+            //order("context.startTime.value", "desc") // no funca
+            }
+            */
+
+
+            compos = hceService.getAllCompositionForPatient(persona, params.desde, params.hasta)
+
             def ids = persona.ids.toArray()
-            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension ])
+            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, compositions: compos])
         }
         else // caso 2)
         {
