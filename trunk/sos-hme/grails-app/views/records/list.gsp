@@ -1,5 +1,6 @@
 <%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
-<%@ page import="hce.core.common.change_control.Version" %><%@ page import="hce.core.composition.Composition" %>
+<%@ page import="hce.core.common.change_control.Version" %>
+<%@ page import="hce.core.composition.Composition" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <html>
   <head>
@@ -37,6 +38,14 @@
       <li>
         <g:link action="create" class="create"><g:message code="trauma.list.action.crearEpisodio" /></g:link>
       </li>
+      <li>
+        <g:link action="" class="find"><g:message code="trauma.list.action.buscarEpisodio" /></g:link>
+      </li>
+
+      <li>
+        <g:link controller="demographic" action="admisionPaciente" class="find"><g:message code="demographic.admision_paciente.buscar_paciente" /></g:link>
+      </li>
+
     </ul>
     
     <table id="list">

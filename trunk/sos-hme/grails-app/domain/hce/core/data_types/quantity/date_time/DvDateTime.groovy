@@ -15,5 +15,7 @@ class DvDateTime extends DvTemporal {
     {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = (Date)formatter.parse( this.value );    
-    }
+    
+   //this.value
+        }
 }
