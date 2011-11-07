@@ -1,0 +1,127 @@
+@charset "utf-8";
+*{
+	margin:0 auto;
+	padding:0;
+}
+.bodylogin, .bodybasic{
+	width:1024px;
+	margin-left:165px;
+}
+.loginheader{
+	height:300px;
+	background-image:url(../images/fondoHeader.jpg);
+	background-repeat:no-repeat;
+}
+.logosos{
+	width:186px;
+	height:131px;
+	background-image:url(../images/logoSos.jpg);
+	background-repeat:no-repeat;
+	position:relative; float:left;
+	margin-left:40px; margin-top:40px;
+}
+.logoucvvertical{
+	width:213px;
+	height:200px;
+	background-image:url(../images/ucvVertical.jpg);
+	background-repeat:no-repeat;
+	position:relative; float:right;
+	margin-right:60px;	
+}
+.footercontenido{
+	text-align:center;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:14px; color:#07253f;
+}
+.logincontenido{
+	height:275px;
+	border-top-color:#e5e5e5;
+	border-top-style:solid;
+	border-top-width:medium;
+	margin-top:4px;
+	border-bottom-color:#98bfea;
+	border-bottom-style:solid;
+	border-bottom-width:thin;
+	margin-bottom:4px;
+}
+.outerlogin{
+	width:500px;
+	height:250px;
+	background-color:#f3c647;
+	margin-left:130px;
+	margin-top:-90px;
+}
+.ingreseimage{
+	background-image:url(../images/ingreseSos.jpg);
+	background-repeat:no-repeat;
+	width:126px;	height:21px;	margin-left:20px;
+}
+.userlogin{
+	margin-top:10px;
+	width:384px;	height:40px;
+	color:#3772aa;	font-size:18px;
+	padding-left:20px;	margin-left:0px;
+}
+.buttonlogin{
+	background:url(../images/botonIngresar.jpg) no-repeat;
+	width:122px; height:48px;
+	margin-top:30px;
+	margin-left:280px;
+}
+.errorlogin{
+	font-size:16px;	color:#F00;
+	font-family:Arial, Helvetica, sans-serif;
+	margin-left:22px;	margin-top:5px;
+	font-weight:bolder;
+}
+.logobasic{
+	width:100px; height:50px;
+	background-image:url(../images/logoSos2.jpg);	background-repeat:no-repeat;
+	position:relative; float:left;
+	margin-top:15px;
+}
+.headerbasic{
+	height:70px;
+}
+.ucvbasic{
+	width:260px; height:13px;
+	background-image:url(../images/ucvName.jpg); background-repeat:no-repeat;
+	position:relative; float:left;
+	margin-top:25px;	margin-left:30px;
+}
+.sessionbasic{
+	color:#7e7e7e;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin-top:20px; margin-left:250px;
+	position:relative; float:left;
+}
+.barrabasic{
+	background-color:#ecb421;
+	height:15px; margin-top:20px;
+}
+.contenidobasic{
+	height:450px;	border-bottom-color:#98bfea;
+	border-bottom-style:solid;	border-bottom-width:thin; margin-bottom:4px;
+}
+.listadominios{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#082a45;
+	font-weight:bolder; font-size:18px;
+	margin-top:15px;
+}
+.bodydomainlist{
+	background-image:url(../images/fondoBodyHorizontal.jpg);
+	height:450px;
+	margin-top:-15px;
+}
+.logoucvhor{
+	width:192px; height:249px;
+	background-image:url(../images/ucvHorizontal.jpg);
+	position:relative; float:right;
+	margin-top:70px;
+}
+.domainfolder{
+	position:relative;	float:left;
+	margin-left:50px; margin-top:20px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+}
