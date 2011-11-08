@@ -92,16 +92,19 @@
 .sessionbasic{
 	color:#7e7e7e;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	margin-top:20px; margin-left:250px;
+	margin-top:20px; margin-left:340px;
 	position:relative; float:left;
 }
 .barrabasic{
 	background-color:#ecb421;
 	height:15px; margin-top:20px;
 }
-.contenidobasic{
+.contenidobasic, .basicregistro{
 	height:450px;	border-bottom-color:#98bfea;
 	border-bottom-style:solid;	border-bottom-width:thin; margin-bottom:4px;
+}
+.basicregistro{
+	height:750px;
 }
 .listadominios{
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -124,4 +127,43 @@
 	position:relative;	float:left;
 	margin-left:50px; margin-top:20px;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+.menubar, .menubar2{
+	width:830px; height:37px;
+	position:relative;	float:right;
+	background-image:url(../images/fondoMenu.jpg);
+	margin-top:11px;
+}
+
+.menubar li{
+	width:80px;
+	position:relative;	float:left; margin-left:15px;
+	margin-top:8px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	height:37px;
+}
+.menubar a{
+	color:#FFF; font-weight:bold;
+}
+.menubar2 li{
+	width:140px;
+	position:relative;	float:left; margin-left:15px;
+	margin-top:8px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	height:37px;
+}
+.menubar2 a{
+	color:#FFF; font-weight:bold;
+}
+.listrecords{
+	width:832px;	margin-left:0px;	background-color:#FFF;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:14px;
+}
+.threcords, .tdrecords{
+	border-bottom-style:solid; border-bottom-color:#ecb421; border-bottom-width:medium;
+}
+.tdrecords{
+	border-bottom-color:#4f677f;
+	border-bottom-width:thin;
 }
