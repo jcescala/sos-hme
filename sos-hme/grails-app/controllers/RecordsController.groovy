@@ -170,12 +170,10 @@ class RecordsController {
         if (params.doit)
         {
             def startDate = DateConverter.iso8601ExtendedDateTimeFromParams( params, 'startDate_' )
-            
+
             println "Startdate: " + startDate
-            def start=  Date.parse("yyyy-MM-dd hh:mm:ss", startDate)
-            
-            def composition = hceService.createComposition( start, params.otherContext )
-           
+
+            def composition = hceService.createComposition( startDate, params.otherContext )
             // TODO: verificar si se crea para un paciente:
             // - buscarlo por id en el servicio demografico
             // - asociarlo como subject de la composition
