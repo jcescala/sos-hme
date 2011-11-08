@@ -25,11 +25,17 @@ class TraumaTagLib {
     def person = { attrs ->
 
         def persona = hceService.getPatientFromComposition(attrs['param1'])
+        if(persona){
         def name= persona.identities.find{ it.purpose == 'PersonName'}
        
         out << "<a href='demographic/seleccionarPaciente/"+ persona.id +"'>"
         out << (name?.primerNombre?:"") + " "+ (name?.segundoNombre?:"") +" "+ (name?.primerApellido?:"") + " "+(name?.segundoApellido?:"")
         out << "</a>"
+        }else{
+        out << "Sin paciente asignado"
+
+
+        }
     }
 
     // Viene archetypeId o (rmtype y idMarchingKey)
