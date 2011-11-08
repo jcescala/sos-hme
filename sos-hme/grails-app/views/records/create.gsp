@@ -1,6 +1,6 @@
 <html>
   <head>
-    <meta name="layout" content="ehr-modal" />
+    <meta name="layout" content="basicrecord" />
     <style>
       textarea {
         width: 600px;
