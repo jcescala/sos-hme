@@ -2,6 +2,7 @@
 <%@ page import="hce.core.common.change_control.Version" %>
 <%@ page import="hce.core.composition.Composition" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="hce.HceService" %>
 <html>
   <head>
     <meta name="layout" content="basicrecord" />
@@ -31,6 +32,7 @@
     <table id="listrecords" class="listrecords">
       <tr>
         <th class="threcords"><g:message code="trauma.list.label.id" /></th>
+        <th class="threcords"><g:message code="registro.paciente" /></th>
         <th class="threcords"><g:message code="trauma.list.label.startTime" /></th>
         <th class="threcords"><g:message code="trauma.list.label.endTime" /></th>
         <th class="threcords"><g:message code="trauma.list.label.observations" /></th>
@@ -40,6 +42,8 @@
       <g:each in="${compositions}" var="composition">
         <tr>
           <td>${composition.id}</td>
+          
+          <td><g:person param1="${composition}" /></td>
           <td><g:format date="${composition.context.startTime?.toDate()}" /></td>
           <td><g:format date="${composition.context.endTime?.toDate()}" /></td>
           <td>

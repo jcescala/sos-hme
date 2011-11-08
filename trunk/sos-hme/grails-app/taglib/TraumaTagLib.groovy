@@ -20,15 +20,27 @@ class TraumaTagLib {
     def customQueriesService
     def demographicService
     
+    //
+
+    def person = { attrs ->
+
+        def persona = hceService.getPatientFromComposition(attrs['param1'])
+        def name= persona.identities.find{ it.purpose == 'PersonName'}
+       
+        out << "<a href='demographic/seleccionarPaciente/"+ persona.id +"'>"
+        out << (name?.primerNombre?:"") + " "+ (name?.segundoNombre?:"") +" "+ (name?.primerApellido?:"") + " "+(name?.segundoApellido?:"")
+        out << "</a>"
+    }
+
     // Viene archetypeId o (rmtype y idMarchingKey)
     // in: episodeId
     def resumenEpisodio = { attrs, body ->
         
-       // TODO: esto deberia hacerse en un template y de aqui renderearlo nomas.
+        // TODO: esto deberia hacerse en un template y de aqui renderearlo nomas.
        
-       def composition = Composition.get( attrs.episodeId )
-       if (!composition)
-          throw new Exception("No se encuentra el episodio con id " + attrs.episodeId + " @TraumaTagLib 1")
+        def composition = Composition.get( attrs.episodeId )
+        if (!composition)
+        throw new Exception("No se encuentra el episodio con id " + attrs.episodeId + " @TraumaTagLib 1")
 
         //-----------------------------------------------------------------------
         // Datos para mostrar Triage
@@ -48,15 +60,15 @@ class TraumaTagLib {
         def resultRTS
         def resultRTSp
         if (RTS != null){ 
-            DecimalFormat formateador = new DecimalFormat("####.##")
-            resultRTS = message(code:'trauma.list.label.RTS') + ': ' + RTS.intValue() + ' (FR = ' + FR.doubleValue() + ', PAS = ' + PAS.doubleValue() + ', GCS = ' + GCS.doubleValue() + ')'
-            resultRTSp = message(code:'trauma.list.label.RTSp') + ': ' + formateador.format(RTSp.doubleValue())
+        DecimalFormat formateador = new DecimalFormat("####.##")
+        resultRTS = message(code:'trauma.list.label.RTS') + ': ' + RTS.intValue() + ' (FR = ' + FR.doubleValue() + ', PAS = ' + PAS.doubleValue() + ', GCS = ' + GCS.doubleValue() + ')'
+        resultRTSp = message(code:'trauma.list.label.RTSp') + ': ' + formateador.format(RTSp.doubleValue())
         }
         else{
-            resultRTS = message(code:'trauma.list.label.FaltanDatosParaCalcularRTS')
-            resultRTSp = message(code:'trauma.list.label.FaltanDatosParaCalcularRTSp')
+        resultRTS = message(code:'trauma.list.label.FaltanDatosParaCalcularRTS')
+        resultRTSp = message(code:'trauma.list.label.FaltanDatosParaCalcularRTSp')
         }
-        */
+         */
 
         //-----------------------------------------------------------------------
         //-----------------------------------------------------------------------
@@ -108,10 +120,10 @@ class TraumaTagLib {
             
             out << '<div style="padding: 4px;">'
             out << message(code:'trauma.list.label.composer') + ': ' +
-                   ((nombres.primerNombre) ? (nombres.primerNombre + ' ') : '') +
-                   ((nombres.segundoNombre) ? (nombres.segundoNombre + ' ') : '') +
-                   ((nombres.primerApellido) ? (nombres.primerApellido + ' ') : '') +
-                   ((nombres.segundoApellido) ? (nombres.segundoApellido) : '')
+            ((nombres.primerNombre) ? (nombres.primerNombre + ' ') : '') +
+            ((nombres.segundoNombre) ? (nombres.segundoNombre + ' ') : '') +
+            ((nombres.primerApellido) ? (nombres.primerApellido + ' ') : '') +
+            ((nombres.segundoApellido) ? (nombres.segundoApellido) : '')
                 
             out << '</div>'
         }
@@ -136,7 +148,7 @@ class TraumaTagLib {
         out <<   '<div style="clear:both;"></div>'
         out << '</div>'
         out << '<div>&nbsp;</div>'
-        */
+         */
 
         
         // Para mostrar el color del triage si es que ya fue registrado.
@@ -160,7 +172,7 @@ class TraumaTagLib {
     def datosUsuario = { attrs, body ->    
         
         if (!attrs.userId)
-            throw new Exception("TraumaTagLib.datosUsuario: userId es obligatorio y no vino")
+        throw new Exception("TraumaTagLib.datosUsuario: userId es obligatorio y no vino")
         
         def login = LoginAuth.get( attrs.userId ) // TODO: puedo sacar el userId de session.traumaContext.userId
 
@@ -198,10 +210,10 @@ class TraumaTagLib {
         
         def composition = Composition.get( attrs.episodeId )
         if (!composition)
-            throw new Exception("No se encuentra el episodio con id " + attrs.episodeId + " @TraumaTagLib 2")
+        throw new Exception("No se encuentra el episodio con id " + attrs.episodeId + " @TraumaTagLib 2")
         
         if (!attrs.templateId)
-            throw new Exception("El templateId es obligatorio @TraumaTagLib 2")
+        throw new Exception("El templateId es obligatorio @TraumaTagLib 2")
         
         def item = hceService.getCompositionContentItemForTemplate(composition, attrs.templateId)
 
@@ -244,26 +256,26 @@ class TraumaTagLib {
      * esta tag no tiene sentido. Ver: http://code.google.com/p/open-ehr-gen-framework/issues/detail?id=9
     def canSignRecord = { attrs, body ->
         
-        def composition = Composition.get( attrs.episodeId )
-        def version = Version.findByData( composition )
-        //def item = hceService.getCompositionContentItemForTemplate( composition, "COMUNES-movimiento_paciente" )
-        //if (item)
-        if (version.lifecycleState == Version.STATE_COMPLETE)
-            out << body()
+    def composition = Composition.get( attrs.episodeId )
+    def version = Version.findByData( composition )
+    //def item = hceService.getCompositionContentItemForTemplate( composition, "COMUNES-movimiento_paciente" )
+    //if (item)
+    if (version.lifecycleState == Version.STATE_COMPLETE)
+    out << body()
     }
-    */
+     */
     def isNotSignedRecord = { attrs, body ->
        
-       def composition = Composition.get( attrs.episodeId )
-       if (!composition.composer)
-           out << body()
+        def composition = Composition.get( attrs.episodeId )
+        if (!composition.composer)
+        out << body()
     }
     
     def isSignedRecord = { attrs, body ->
         
         def composition = Composition.get( attrs.episodeId )
         if (composition.composer)
-            out << body()
+        out << body()
     }
     
     def reabrirEpisodio = { attrs, body ->
@@ -299,19 +311,19 @@ class TraumaTagLib {
             {
                 // Los codigos estan en el arquetipo de triage de trauma.
                 case 'at0003':
-                    return '#55cc55'
+                return '#55cc55'
                 break;
                 case 'at0004':
-                    return '#dddd55'
+                return '#dddd55'
                 break;
                 case 'at0005':
-                    return '#ff5555'
+                return '#ff5555'
                 break;
                 case 'at0006':
-                    return'#cccccc'
+                return'#cccccc'
                 break;
                 case 'at0007':
-                    return '#333333'
+                return '#333333'
                 break;
             }
         }
@@ -334,7 +346,7 @@ class TraumaTagLib {
         def roleKeys = roles.type
         
         if ( roleKeys.intersect([Role.MEDICO,Role.ENFERMERIA]).size() > 0 )
-            out << body()
+        out << body()
     }
     
     def langSelector = { attrs, body ->
@@ -350,6 +362,6 @@ class TraumaTagLib {
         //   1. le faltan datos
         //   2. la base es local
         if ( !demographicService.personHasAllData( attrs.patient ) && grailsApplication.config.hce.patient_administration.serviceType.local )
-            out << body()
+        out << body()
     }
 }
