@@ -4,58 +4,38 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <html>
   <head>
-    <meta name="layout" content="ehr-modal" />
+    <meta name="layout" content="basicrecord" />
     <title><g:message code="episodio.list.title" /></title>
-    <style>
-        table #list {
-          background-color: #ffffdd;
-          width: 100%;
-          font-size: 12px;
-          border: 1px solid #000;
-        }
-         #list th {
-          background-color: #ccccdd;
-        }
-        #list td {
-          text-align: center;
-        }
-    
-        /* paginacion */
-        .step, .currentStep, .nextLink, .prevLink {
-          padding-right: 5px;
-          padding-top: 7px;
-          display: inline-block;
-        }
-        .currentStep {
-          font-weight: bold;
-        }
-      </style>
   </head>
   <body>
-    <h1><g:message code="episodio.list.title" /></h1>
+     <div class="bodydomainlist">
+     <div id="logoucvhor" class="logoucvhor"></div>
+    <div id="listadominios" class="listadominios">
+        <g:message code="episodio.list.title" />
+    </div>
     
-    <ul class="top_actions">
-      <li>
-        <g:link action="create" class="create"><g:message code="trauma.list.action.crearEpisodio" /></g:link>
-      </li>
-      <li>
-        <g:link action="" class="find"><g:message code="trauma.list.action.buscarEpisodio" /></g:link>
-      </li>
-
-      <li>
-        <g:link controller="demographic" action="admisionPaciente" class="find"><g:message code="demographic.admision_paciente.buscar_paciente" /></g:link>
-      </li>
-
-    </ul>
+    <div id="menubar2" class="menubar2">
+      <ul>
+        <li>
+          <g:link action="create" class="create"><g:message code="trauma.list.action.crearEpisodio" /></g:link>
+        </li>
+        <li>
+          <g:link action="" class="find"><g:message code="trauma.list.action.buscarEpisodio" /></g:link>
+        </li>
+        <li>
+          <g:link controller="demographic" action="admisionPaciente" class="find"><g:message code="demographic.admision_paciente.buscar_paciente" /></g:link>
+        </li>
+      </ul>
+    </div>  
     
-    <table id="list">
+    <table id="listrecords" class="listrecords">
       <tr>
-        <th><g:message code="trauma.list.label.id" /></th>
-        <th><g:message code="trauma.list.label.startTime" /></th>
-        <th><g:message code="trauma.list.label.endTime" /></th>
-        <th><g:message code="trauma.list.label.observations" /></th>
-        <th><g:message code="trauma.list.label.state" /></th>
-        <th><g:message code="trauma.list.label.actions" /></th>
+        <th class="threcords"><g:message code="trauma.list.label.id" /></th>
+        <th class="threcords"><g:message code="trauma.list.label.startTime" /></th>
+        <th class="threcords"><g:message code="trauma.list.label.endTime" /></th>
+        <th class="threcords"><g:message code="trauma.list.label.observations" /></th>
+        <th class="threcords"><g:message code="trauma.list.label.state" /></th>
+        <th class="threcords"><g:message code="trauma.list.label.actions" /></th>
       </tr>
       <g:each in="${compositions}" var="composition">
         <tr>
@@ -110,6 +90,6 @@
                 controller="records" action="list"
                 max="15"
                 total="${Composition.countByRmParentId(domain.id)}" />
-    
+     </div>  
   </body>
 </html>
