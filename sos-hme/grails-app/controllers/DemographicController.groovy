@@ -31,7 +31,7 @@ import util.RandomGenerator
 /*Demograficos paciente*/
 import demographic.identity.*
 /**/
-import hce.core.composition.* // Composition y EventContext
+
 import hce.core.common.directory.Folder
 class DemographicController{
 
