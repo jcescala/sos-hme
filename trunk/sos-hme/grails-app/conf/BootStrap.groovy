@@ -133,7 +133,7 @@ class BootStrap {
         //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'6677') )
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567') )
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::6677') )
-        paciente.addToIdentities( new PersonName(primerNombre:'Pablo', primerApellido:'Pazos') )
+        paciente.addToIdentities( new PersonName(primerNombre:'Pedro', primerApellido:'Perez') )
         paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
         paciente.type = "Persona" // FIXME: el type no se setea solo con el nombre de la clase? (Person)
         paciente.sexo = "M"
@@ -144,7 +144,7 @@ class BootStrap {
         //pac2.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'3366') )
         pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.4::2345678') )
         pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::3366') )
-        pac2.addToIdentities( new PersonName(primerNombre:'Leandro', primerApellido:'Carrasco') )
+        pac2.addToIdentities( new PersonName(primerNombre:'Luis', primerApellido:'Lopez') )
         pac2.fechaNacimiento = new Date(82, 10, 25)
         pac2.type = "Persona"
         pac2.sexo = "M"
@@ -164,7 +164,7 @@ class BootStrap {
         def persona4 = new Person()
         persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234888') )
         persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::44556') )
-        persona4.addToIdentities( new PersonName(primerNombre:'Pablo', primerApellido:'Cardozo') )
+        persona4.addToIdentities( new PersonName(primerNombre:'Carlos', primerApellido:'Cardozo') )
         persona4.fechaNacimiento = new Date(85, 9, 24) // 24/10/1981
         persona4.type = "Persona"
         persona4.sexo = "M"

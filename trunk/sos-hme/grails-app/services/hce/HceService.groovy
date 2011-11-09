@@ -464,7 +464,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
      * @param person
      * @return List<Composition>
      */
-    public List<Composition>  getAllCompositionForPatient( Person person, desde, hasta)
+    public List<Composition>  getAllCompositionForPatient( Person person, Date desde, Date hasta)
     {
 
        
@@ -492,28 +492,26 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
             def has = new DvDateTime()
             has.value = hasta.toString()
             */
-           if(desde==null) desde = new Date()
-           if(hasta==null) hasta = new Date()
+           
            hasta ++
+           //desde --
            
            println "desde-" + desde
            println "hasta-" + hasta
-           println "format desde-" + desde.format("yyyy-MM-dd HH:mm:ss")
+           println "format desde-" + desde.format("yyyy-MM-dd hh:mm:ss a")
 
             // Busca el contexto con la participacion del partySelf que no tenga fecha de fin (el espisodio esta activo)
             def contexts = EventContext.withCriteria {
                 //isNull('endTime') // episodio activo
                 //eq('startTime', desde)
                startTime{
-                   between("value", desde.format("yyyy-MM-dd HH:mm:ss"),hasta.format("yyyy-MM-dd HH:mm:ss") )
+                   between("value", desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd") )
                }
               /* endTime{
                    le('value', hasta)
                }*/
                 
-                /*ge("startTime",des)
-                le("endTime",has)
-                */
+                
                 participations {
                     performer {
                         or {

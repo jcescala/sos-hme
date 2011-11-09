@@ -169,7 +169,10 @@ class RecordsController {
         println "Create: " + params
         if (params.doit)
         {
-            def startDate = DateConverter.iso8601ExtendedDateTimeFromParams( params, 'startDate_' )
+          //  def startDate = DateConverter.iso8601ExtendedDateTimeFromParams( params, 'startDate_' )
+          def startDate = DateConverter.iso8601ExtendedDateTimeFromParamsSOS( params.startDate )
+
+            println "Parametro: " + params.startDate
 
             println "Startdate: " + startDate
 

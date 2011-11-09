@@ -277,9 +277,13 @@ class DemographicController{
             //order("context.startTime.value", "desc") // no funca
             }
             */
+            def desde = params.desde
+            def hasta = params.hasta
+            
+            if(desde==null) desde = new Date()
+            if(hasta==null) hasta = new Date()
 
-
-            compos = hceService.getAllCompositionForPatient(persona, params.desde, params.hasta)
+            compos = hceService.getAllCompositionForPatient(persona, desde, hasta)
 
             def ids = persona.ids.toArray()
             render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, compositions: compos])
