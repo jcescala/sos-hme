@@ -14,8 +14,13 @@ class DvDateTime extends DvTemporal {
     Date toDate()
     {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date = (Date)formatter.parse( this.value );    
-    
+
+        // Convertir la fecha en formato 12 horas AM/PM //
+
+
+        Date date = (Date)formatter.parse( this.value );
+
+        
    //this.value
         }
 }

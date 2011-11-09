@@ -39,16 +39,7 @@
       <div class="message"><g:message code="${flash.message}" /></div>
     </g:if>
 
-  <%-- TEST:
-  <textarea>
-  <%
-    composition.context.participations.each{ it ->
-    
-      println it.performer
-    }
-  %>
-  </textarea>
-  --%>
+ 
   
     <div id="show_body">
       <div id="demographic">
