@@ -226,7 +226,10 @@ class TemplateManager {
     public Template getTemplate( String templateId )
     {
         // Si no esta cargado, lo intenta cargar
-        if (!this.cache[templateId])
+        
+        /*PARA NO TENER TEMPLATES EN CACHE*/
+       
+        if (true)  // <-- !this.cache[templateId] buscar templates en cache, Armando
         {
             println "No se encuentra el template " + templateId + ", se intenta cargarlo"
             //def id = new templateID( templateId ) // a partir del ID saco la ruta que tengo que cargar
