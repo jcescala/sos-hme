@@ -63,11 +63,11 @@ class DateConverter {
     {
         def iso8601 = ""
         iso8601 += (d.year + 1900) + "-"
-		iso8601 += (((d.month+1)<10) ? ('0'+(d.month+1)) : (d.month+1)) + "-"
-		iso8601 += ((d.date<10) ? ('0'+d.date) : d.date) + " "
-		iso8601 += ((d.hours<10) ? ('0'+d.hours) : d.hours) + ":"
-		iso8601 += ((d.minutes<10) ? ('0'+d.minutes) : d.minutes) + ":"
-		iso8601 += ((d.seconds<10) ? ('0'+d.seconds) : d.seconds)
+        iso8601 += (((d.month+1)<10) ? ('0'+(d.month+1)) : (d.month+1)) + "-"
+        iso8601 += ((d.date<10) ? ('0'+d.date) : d.date) + " "
+        iso8601 += ((d.hours<10) ? ('0'+d.hours) : d.hours) + ":"
+        iso8601 += ((d.minutes<10) ? ('0'+d.minutes) : d.minutes) + ":"
+        iso8601 += ((d.seconds<10) ? ('0'+d.seconds) : d.seconds)
         
         return iso8601
     }
@@ -83,11 +83,13 @@ class DateConverter {
     
     static String iso8601BasicToExtendedDateTime( String basic )
     {
-       return basic[0..3]+"-"+basic[4..5]+"-"+basic[5..6]+" "+basic[7..8]+":"+basic[9..10]
+        return basic[0..3]+"-"+basic[4..5]+"-"+basic[5..6]+" "+basic[7..8]+":"+basic[9..10]
     }
     
     static String iso8601ExtendedDateTimeFromParams( Map params, String prefix )
     {
+
+        //Es utilizado cuando se pasan parametros provenientes de un <g:datePicker>
         def year = ''
         def month = ''
         def day = ''
@@ -96,30 +98,55 @@ class DateConverter {
         
         params.keySet().each { key ->
         
-           if (key.startsWith(prefix))
-           {
-               def field = key.split('_')[1] // year, month, etc
-               switch(field)
-               {
-                   case 'year':   year = params[key]
-                   break
-                   case 'month':  month = params[key]
-                   break
-                   case 'day':    day = params[key]
-                   break
-                   case 'hour':   hour = params[key]
-                   break
-                   case 'minute': minute = params[key]
-                   break
-               }
-           }
+            if (key.startsWith(prefix))
+            {
+                def field = key.split('_')[1] // year, month, etc
+                switch(field)
+                {
+                    case 'year':   year = params[key]
+                    break
+                    case 'month':  month = params[key]
+                    break
+                    case 'day':    day = params[key]
+                    break
+                    case 'hour':   hour = params[key]
+                    break
+                    case 'minute': minute = params[key]
+                    break
+                }
+            }
         }
         
         return year+'-'+
-              ((month.size()==2)?month:'0'+month)+'-'+
-              ((day.size()==2)?day:'0'+day)+' '+
-              ((hour.size()==2)?hour:'0'+hour)+':'+
-              ((minute.size()==2)?minute:'0'+minute)+":"+
+        ((month.size()==2)?month:'0'+month)+'-'+
+        ((day.size()==2)?day:'0'+day)+' '+
+        ((hour.size()==2)?hour:'0'+hour)+':'+
+        ((minute.size()==2)?minute:'0'+minute)+":"+
+              '00'
+    }
+    static String iso8601ExtendedDateTimeFromParamsSOS( String fecha )
+    {
+        //Se espera que fecha tenga formato dd-mm-yyy
+
+        def year = ''
+        def month = ''
+        def day = ''
+        def hour = ''
+        def minute = ''
+
+        StringTokenizer tokens = new StringTokenizer(fecha,"-");
+
+        day = tokens.nextToken();
+        month = tokens.nextToken();
+        year = tokens.nextToken();
+        hour = "00"
+        minute = "00"
+        
+        return year+'-'+
+        ((month.size()==2)?month:'0'+month)+'-'+
+        ((day.size()==2)?day:'0'+day)+' '+
+        ((hour.size()==2)?hour:'0'+hour)+':'+
+        ((minute.size()==2)?minute:'0'+minute)+":"+
               '00'
     }
     
@@ -131,19 +158,19 @@ class DateConverter {
         
         params.keySet().each { key ->
         
-           if (key.startsWith(prefix))
-           {
-               def field = key.split('_')[1] // year, month, etc
-               switch(field)
-               {
-                   case 'year':   year = params[key]
-                   break
-                   case 'month':  month = params[key]
-                   break
-                   case 'day':    day = params[key]
-                   break
-               }
-           }
+            if (key.startsWith(prefix))
+            {
+                def field = key.split('_')[1] // year, month, etc
+                switch(field)
+                {
+                    case 'year':   year = params[key]
+                    break
+                    case 'month':  month = params[key]
+                    break
+                    case 'day':    day = params[key]
+                    break
+                }
+            }
         }
         
         try {

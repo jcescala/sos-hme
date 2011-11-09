@@ -116,7 +116,7 @@ class ArchetypeManager {
        // FIXME: PROBLEMAS DE CARGAR EL ARQUETIPO: openEHR-EHR-COMPOSITION.prescription.v1
        
        // Si no esta cargado, lo intenta cargar
-       if (!this.cache[archetypeId])
+       if (true) // <-- !this.cache[archetypeId] buscar arquetipos en cache, Armando
        {
            println "No se encuentra el arquetipo " + archetypeId + ", se intenta cargarlo"
            def id = new ArchetypeID( archetypeId ) // a partir del ID saco la ruta que tengo que cargar
