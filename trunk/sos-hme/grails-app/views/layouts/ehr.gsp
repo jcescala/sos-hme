@@ -92,6 +92,8 @@
 
 
         $(".DateSos").datepicker({dateFormat: 'dd-mm-yy',
+         
+         
                                      changeYear: true,
                                      altField: '#actualDate',
                                      buttonText: 'Calendario',
@@ -101,12 +103,16 @@
                                      minDate: new Date(2007, 9, 15),
                                      constrainInput: true,
                                      showButtonPanel: true,
-                                     showOn: 'both'
+                                     showOn: 'both',
+                                     
 
 
         });
+        $(".DateSos").attr("readonly",true);
 
         $('.DateTimeSos').datetimepicker({dateFormat: 'dd-mm-yy',
+          
+          
                                      ampm: true,
                                      changeYear: true,
                                      buttonText: 'Calendario',
@@ -117,6 +123,8 @@
                                      showOn: 'both'
 
         });
+        $(".DateTimeSos").attr("readonly",true);
+
 
 
  });
