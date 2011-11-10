@@ -17,7 +17,7 @@ if (refPath) _refPath = refPath
 <%-- Por si el elemento tiene varias ocurencias, ojo puede ser * --%>
 <%
   // Si no es null, es eso, si no es 1.
-  def max = ((cComplexObject.occurrences.upper) ? cComplexObject.occurrences.upper : 1)
+  def max = ((cComplexObject.occurrences.upper) ? cComplexObject.occurrences.upper : 1) //Se pude modificar por operador Elvis, Armando
   for (i in 1..max) {
 %>
 
@@ -29,6 +29,7 @@ if (refPath) _refPath = refPath
   <div class="${cComplexObject.rmTypeName} ${elementValueRmType}"><%-- FIXME: no quiero mostrar esto para campos simples, solo para sections, clusters y elements --%>
     <g:if test="${cComplexObject.nodeID}">
       <!-- Si es item structure no pone el titulo -->
+     
       <g:set var="archetypeTerm" value="${archetype.ontology.termDefinition(session.locale.language, cComplexObject.nodeID)}" />
       <g:if test="${!archetypeTerm}">
          <%-- Si es un nodo hoja, siempre cae aca porque no tiene ID --%>
