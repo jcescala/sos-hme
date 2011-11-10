@@ -18,6 +18,7 @@
     <div id="barrabasic" class="barrabasic"></div>
     
     <div id="contenidobasic" class="basicregistro">
+      
       <g:layoutBody />
     </div>
     

@@ -14,8 +14,8 @@ class Person extends Actor {
     Date fechaNacimiento // FIXME: DvDateTime
     String sexo
     
-    static String SEXO_MASCULINO = "M"
-    static String SEXO_FEMENINO = "F"
+    static String SEXO_MASCULINO = "Masculino"
+    static String SEXO_FEMENINO = "Femenino"
 
     static List getSexCodes()
     {
