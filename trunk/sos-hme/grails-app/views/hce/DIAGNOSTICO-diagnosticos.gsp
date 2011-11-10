@@ -4,7 +4,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <html>
   <head>
-    <meta name="layout" content="ehr" />
+    <meta name="layout" content="basic" />
     <style>
       #result table {
          border: 1px solid #000000;
