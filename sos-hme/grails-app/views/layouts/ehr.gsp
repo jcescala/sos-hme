@@ -25,7 +25,7 @@
       window.history.go(1);
     </g:javascript>
     
-    <g:javascript library="prototype/prototype" />
+    
     <g:javascript>
       Event.observe(window, 'load', function () {
  

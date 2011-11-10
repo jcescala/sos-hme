@@ -59,6 +59,7 @@ $.datepicker.setDefaults($.datepicker.regional['es']);
 
 </head>
 <body>
+  <div class="bodydomainlist">
   <h1><g:message code="trauma.create.title" /></h1>
 
 
@@ -95,5 +96,6 @@ $.datepicker.setDefaults($.datepicker.regional['es']);
   </div>
   
 </g:form>
+  </div>
 </body>
 </html>
