@@ -3,14 +3,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="layout" content="basicregistro" />
     <title><g:message code="demographic.agregar_paciente.title" /></title>
+    <g:javascript library="prototype" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
 	<g:javascript src='formToWizard.js' />
+        <g:javascript src='funciones.js' />
+        <g:javascript src='jquery.validate.js' />
+        
+        <link rel="stylesheet" href="${resource(dir:'css',file:'wizard.css')}" />
     <style>
       label {
         display: block;
       }
     </style>
     <g:javascript>
+          
          function updateSubCats( category ){
             ${remoteFunction( 
               controller:'demographic', 
@@ -43,23 +49,7 @@
           }
       </g:javascript>
 	  <style type="text/css">
-        body { font-family:Lucida Sans, Arial, Helvetica, Sans-Serif; font-size:13px; margin:20px;}
-        #main { width:960px; margin: 0px auto; border:solid 1px #b2b3b5; -moz-border-radius:10px; padding:20px; background-color:#f6f6f6;}
-        #header { text-align:center; border-bottom:solid 1px #b2b3b5; margin: 0 0 20px 0; }
-        fieldset { border:none; width:320px;}
-        legend { font-size:18px; margin:0px; padding:10px 0px; color:#b0232a; font-weight:bold;}
-        label { display:block; margin:15px 0 5px;}
-        input[type=text], input[type=password] { width:300px; padding:5px; border:solid 1px #000;}
-        .prev, .next { background-color:#b0232a; padding:5px 10px; color:#fff; text-decoration:none;}
-        .prev:hover, .next:hover { background-color:#000; text-decoration:none;}
-        .prev { float:left;}
-        .next { float:right;}
-        #steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px;}
-        #steps li {font-size:24px; float:left; padding:10px; color:#b0b1b3;}
-        #steps li span {font-size:11px; display:block;}
-        #steps li.current { color:#000;}
-        #makeWizard { background-color:#b0232a; color:#fff; padding:5px 10px; text-decoration:none; font-size:18px;}
-        #makeWizard:hover { background-color:#000;}
+        
     </style>
 	<script type="text/javascript">
 	var $j = jQuery.noConflict();
@@ -81,8 +71,8 @@
       <fieldset>
         <legend>Identificaci&oacute;n</legend>
           <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
-		  <g:textField name="primerApellido" value="${params.primerApellido}" />
-        
+		  <g:textField name="primerApellido" value="${params.primerApellido}"/>
+                  
           <label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
           <g:textField name="segundoApellido" value="${params.segundoApellido}" />
 		  
@@ -94,94 +84,94 @@
 		  
           <label for="identificador"><g:message code="persona.identificador" /></label>
           <g:textField name="extension" value="${params.identificador}" />
-          <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
+          <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
 		  
           <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-          <br/>
-          <br/>
           <g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
-          <br/>
         
           <label for="sexo"><g:message code="persona.sexo" /></label>
-          <br/>
-          <br/>
-            <g:select name="sexo" noSelection="['':'']" from="['M', 'F']" value="${params.sexo}" />
-          <br/>
-          <br/>
+            <g:select name="sexo" class="selectsex" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
         
       </fieldset>
 	  
       <fieldset>
         <legend>Procedencia</legend>
           <label for="etnia"><g:message code="persona.etnia" /></label>
-          <g:select name="etnia.id" value="${params.etnia}" from="${etniasIds}" optionKey="id" optionValue="nombre" noSelection="['':'- Seleccione Etnia']"/>
+          <g:select name="etnia.id" class="selectci" value="${params.etnia}" from="${etniasIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione Etnia']"/>
           
 		  <label for="nacionalidad"><g:message code="persona.nacionalidad" /></label>
-          <g:select name="nacionalidad.id" from="${paisesIds}" optionKey="id" optionValue="nombre" />
+          <g:select name="nacionalidad.id" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" />
 		  
           <label for="paisnacimiento"><g:message code="persona.paisnace"/></label>
-		  <g:select name="paisnace" from="${paisesIds}" optionKey="id" optionValue="nombre" noSelection="['':'- Seleccione País']" onchange="updateSubCats(this.value)" />
+		  <g:select name="paisnace" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione País']" onchange="updateSubCats(this.value)" />
 		  
           <label for="entidadnacimiento"><g:message code="persona.entidadnace"/></label>
-		  <g:select name="entidadnace"  disabled="false" class="comboboxlugar" noSelection="['':'- Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
+		  <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['-1':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
 		  
           <label for="municipionacimiento">
-            <g:message code="persona.municipionace"/>
-            <g:select name="lugar.id" id="municnace" value="${params.lugarnacimiento}" disabled="false" class="comboboxlugar" noSelection="['':'- Seleccione Municipio']"/>
+            <g:message code="persona.municipionace"/></br>
+            <g:select name="lugar.id" id="municnace" class="selectci" value="${params.lugarnacimiento}" disabled="false" noSelection="['-1':'Seleccione Municipio']"/>
           </label>
 		  
           <label for="ciudadnacimiento"><g:message code="persona.ciudadnace"/></label>
 		  <g:textField name="ciudadnacimiento" value="${params.ciudadnacimiento}" />
-		  
+                  </br>
       </fieldset>
       
       
       <fieldset>
         <legend>Datos Personales</legend>
           <label for="situacionconyugal"><g:message code="persona.situacionConyugal"/></label>
-		  
-			<g:each var="conyugal" in="${conyugalIds}">
+          <table style="margin-left:10px; font-size: 13px;">
+            <g:each var="conyugal" in="${conyugalIds}">
               <g:if test="${conyugal.id == 1}">
-                ${conyugal.nombre} <g:radio name="situacionconyugal" value="${conyugal.id}" checked="true"/>
-                &nbsp;
+                <tr>
+                  <td>${conyugal.nombre}</td><td> <g:radio name="situacionconyugal" value="${conyugal.id}" checked="true"/></td>
+                </tr>
               </g:if>
               <g:else>
-                ${conyugal.nombre} <g:radio name="situacionconyugal" value="${conyugal.id}"/>
-                &nbsp;
+                <tr>
+                  <td>${conyugal.nombre}</td><td> <g:radio name="situacionconyugal" value="${conyugal.id}"/></td>
+                </tr>
               </g:else>
             </g:each>
-		  
+          </table>
           <label for="analfabeta"><g:message code="persona.analfabeta"/> &nbsp;&nbsp;</label>
-			Si <g:radio name="analfabeta" value="1" optionValue="Si"/>
+            Si <g:radio name="analfabeta" value="1" optionValue="Si"/>
             No <g:radio name="analfabeta" value="0" checked="true"/>
 			
           <label for="niveleducativo"><g:message code="persona.niveleducativo"/></label>
-		  <g:each var="niveledu" in="${nivelEducIds}">
+          <table style="margin-left:10px; font-size: 13px;">
+              <g:each var="niveledu" in="${nivelEducIds}">
               <g:if test="${niveledu.id == 1}">
-                ${niveledu.nombre} <g:radio name="niveleducativo" value="${niveledu.id}" checked="true"/>
+                <tr>
+                  <td>${niveledu.nombre}</td><td> <g:radio name="niveleducativo" value="${niveledu.id}" checked="true"/></td>
+                </tr>
               </g:if>
               <g:else>
-                ${niveledu.nombre} <g:radio name="niveleducativo" value="${niveledu.id}" />
+                <tr>
+                  <td>${niveledu.nombre}</td> <td><g:radio name="niveleducativo" value="${niveledu.id}" /></td>
+                </tr>
               </g:else>
             </g:each>
-			
+          </table>		
           <label for="anosaprobados"><g:message code="persona.anosaprobados"/></label>
 		  <g:textField name="anosaprobados" value="${params.anosaprobados}" />
 		  
           <label for="ocupacion"><g:message code="persona.ocupacion"/></label>
-		  <g:select name="ocupacion.id" from="${ocupacionIds}" optionKey="id" optionValue="nombre" noSelection="['':'- Seleccione Ocupación']" />  
+		  <g:select name="ocupacion.id" id="ocupacion" class="selectci" from="${ocupacionIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione Ocupación']" />  
       </fieldset>
       
       <fieldset>
         <legend>Direcci&oacute;n de Habitaci&oacute;n</legend>
           <label for="entidadresidencia"><g:message code="persona.entidadreside"/></label>
-		  <g:select name="entidresid" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'- Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" />
+		  <g:select name="entidresid" class="selectci" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" />
 		  
           <label for="municipioresidencia"><g:message code="persona.municipioreside"/></label>
-		  <g:select name="municresid" disabled="false" class="comboboxlugar" noSelection="['':'- Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
+		  <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'- Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
 		  
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>
-		  <g:select name="direccion.id" id="parroresid" disabled="false" class="comboboxlugar" noSelection="['':'- Seleccione Parroquia']"/>
+		  <g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['-1':'Seleccione Parroquia']"/>
 		  
           <label for="localidadreside"><g:message code="persona.localidadreside"/></label>
 		  <g:textField name="ciudad" value="${params.ciudad}" />
@@ -201,7 +191,7 @@
           <label for="ptoreferencia"><g:message code="persona.puntoreferencia"/></label>
 		  <g:textField name="ptoreferenica" value="${params.ptoreferenica}" />
           
-		  <label for="tiemporesidencia"><g:message code="persona.tiemporesidencia"/></label> 
+          <label for="tiemporesidencia"><g:message code="persona.tiemporesidencia"/></label> 
 		  <g:textField name="tiemporesidencia" value="${params.tiemporesidencia}" />
         </fieldset>
 		
@@ -227,12 +217,12 @@
 		  <g:textField name="nombrepadre" value="${params.nombrepadre}" />
 		  
           <label for="otradireccion"><g:message code="persona.otradireccion"/></label>
-		  <g:textArea name="otradireccion" value="${params.otradireccion}" rows="1" cols="20"/>
+		  <g:textArea name="otradireccion" class="inputtextfield" value="${params.otradireccion}" rows="1" cols="20"/>
 		  
 		  <label for="contactoemergencia"><g:message code="persona.contactoemergencia"/></label>
-		  <g:textArea name="contactoemergencia" value="${params.contactoemergencia}" rows="1" cols="20"/>
+		  <g:textArea name="contactoemergencia" class="inputtextfield" value="${params.contactoemergencia}" rows="1" cols="20"/>
 	  </fieldset>
-        <p class="submit">
+        <p>
           <g:submitButton name="doit" value="${message(code:'demographic.agregar_paciente.agregar')}" />
           <g:link action="admisionPaciente"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
         </p>    

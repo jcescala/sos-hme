@@ -22,8 +22,8 @@ class TipoIdentificador {
     {
         def ret = []
         
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1", nombre:"Cédula de Identidad Uruguaya", nombreCorto:"CI")
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.858", nombre:"Pasaporte Uruguayo", nombreCorto:"Pasaporte Uruguayo")
+        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1", nombre:"Cédula de Identidad", nombreCorto:"CI")
+        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.858", nombre:"Pasaporte", nombreCorto:"Pasaporte")
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.3", nombre:"Libreta de Conducción Uruguaya", nombreCorto:"Libreta de Conducción")
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.4", nombre:"Documento Fronterizo Uruguay-Brasil", nombreCorto:"Documento Fronterizo Uruguay-Brasil")
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.666", nombre:"Id en CC local", nombreCorto:"Id en CC local")

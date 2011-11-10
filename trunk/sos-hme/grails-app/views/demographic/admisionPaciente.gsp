@@ -1,7 +1,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <html>
   <head>
-    <meta name="layout" content="ehr-modal" />
+    <meta name="layout" content="basic" />
     <title><g:message code="demographic.admision_paciente.title" /></title>
     <style>
       label {
@@ -9,7 +9,7 @@
       }
     </style>
   </head>
-  <body>
+  <body style="height: 1100px;">
     <h1><g:message code="demographic.admision_paciente.title" /></h1>
 
     <ul class="top_actions">
