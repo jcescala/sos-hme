@@ -23,4 +23,19 @@ class DvDateTime extends DvTemporal {
         
    //this.value
         }
+
+      /*  String toDate12(){
+
+            Date date = this.toDate()
+
+            SimpleDateFormat sdf
+
+            sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+
+            sdf.format(date);
+
+        }*/
+
+
 }
+

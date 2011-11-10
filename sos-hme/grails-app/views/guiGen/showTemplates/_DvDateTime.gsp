@@ -22,10 +22,13 @@ in: dataValue (DvDateTime)
   </g:hasErrors>
   
   <g:set var="aomNode" value="${archetype.node(pathFromOwner)}" />
-
-  <g:datePicker name="${archetype.archetypeId.value +refPath+ aomNode.path()}"
+  
+ <%-- <g:datePicker name="${archetype.archetypeId.value +refPath+ aomNode.path()}"
                 value="${dataValue.toDate()}"
                 precision="minute" />
+--%>
+  <p> <input name="${archetype.archetypeId.value +refPath+ aomNode.path()}" value="${g.format(date: dataValue.toDate())}" type="text" class="DateTimeSos"> </p>
+
 
 </g:if>
 <g:else>

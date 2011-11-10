@@ -37,7 +37,7 @@ class BootStrap {
         println "======= Bootstrap ======="
         println "======= +++++++++ ======="
         println ""
-        
+   /*
         // TEST Folder
         //def g = new org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib()
         def appContext = WebApplicationContextUtils.getWebApplicationContext( servletContext )
@@ -75,10 +75,10 @@ class BootStrap {
         // http://groovy.codehaus.org/JN0545-Dates
         // Esto si lo corrige!!!!
         //HORA DE CARACAS-VENEZUELA GMT-04:30
-        
+  */
         TimeZone.'default'= TimeZone.getTimeZone('GMT-04:30') //set the default time zone
         
-     
+  /*
         println " - START: Carga tablas maestras"
         
         // saco para acelerar la carga
@@ -263,7 +263,10 @@ class BootStrap {
         
         // /Creacion de episodio
         */
-       /*DATA INICIAL*/
+
+        /*DATA INICIAL*/
+       
+      /*
         println " - Datos Iniciales Tablas Demograficas"
         
         
@@ -276,6 +279,7 @@ class BootStrap {
             sql.execute(it)
         }
         */
+     /*
         String sqlFilePath = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/lugarOptimo.sql")
         String sqlString = new File(sqlFilePath).eachLine {
             sql.execute(it)
@@ -305,7 +309,7 @@ class BootStrap {
         String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
             sql.execute(it)
         }
-        
+       */
         /*FIN DATA INICIAL*/ 
         println ""
         println "======= +++++++++ ======="
