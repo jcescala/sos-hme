@@ -15,6 +15,10 @@ class AuthorizationController {
             def login = authorizationService.getLogin(params.user, params.pass)
             if (login)
             {
+
+                //Asigna el tiempo a la session
+                session.setMaxInactiveInterval(1800);
+
                 // Pone al usuario en session
                 session.traumaContext = new HCESession( userId: login.id )
                 
