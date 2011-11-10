@@ -27,6 +27,8 @@ import hce.core.common.archetyped.*
 import hce.core.support.identification.*
 
 import com.thoughtworks.xstream.XStream
+import java.text.SimpleDateFormat
+
 
 /**
  * @author Leandro Carrasco, Pablo Pazos Gutierrez
@@ -447,6 +449,15 @@ class BindingAOMRM {
                 bindedObject[0].path = cco.path()
             }
         }
+        /*
+        Ejemplo bindedObject
+        Objeto de bindeo Observation-> [at0000] name: Motivo De Consulta
+
+        println "**************"
+        println "Objeto de bindeo " +bindedObject
+        println "**************"
+        */
+        
         return bindedObject
     }
 
@@ -2533,12 +2544,14 @@ if (rmObj)
         {
             return result
         }
-
+            String year
+            String month
+            String day
         if (pathValor.size() >= 3) // Si viene una path
         {
-            String year = pathValor.find{it.key.endsWith("year")}?.value
-            String month = pathValor.find{it.key.endsWith("month")}?.value
-            String day = pathValor.find{it.key.endsWith("day")}?.value
+            year = pathValor.find{it.key.endsWith("year")}?.value
+            month = pathValor.find{it.key.endsWith("month")}?.value
+            day = pathValor.find{it.key.endsWith("day")}?.value
 
             if ((year != null) && (month != null) && (day != null)){
                 try
@@ -2566,6 +2579,30 @@ if (rmObj)
 
             return result // puede ser vacia
         }
+         if (pathValor.size() == 1){ // Si viene un solo String
+
+            String valor = pathValor.find{it.key.endsWith("value")}?.value
+            println "Valor "+ valor
+
+            def date = Date.parse("dd-MM-yyyy",valor)
+
+            SimpleDateFormat sdf
+
+            sdf = new SimpleDateFormat("yyyy");
+            year = sdf.format(date);
+
+            sdf = new SimpleDateFormat("MM");
+            month = sdf.format(date);
+
+            sdf = new SimpleDateFormat("dd");
+            day = sdf.format(date);
+
+            println "Resultado fecha : " + year+"-"+month+"-"+day
+
+            result << rmFactory.createDV_DATE(year, month, day, arquetipo, cco.nodeID, tempId)
+            return result // puede ser vacia
+        }
+
         // por ahora no hay un caso donde venga el valor y otro dato.
         throw new Exception("No hay 3 path para bindDV_DATE, hay: " + pathValor.size())
 
@@ -2585,15 +2622,23 @@ if (rmObj)
         {
             return result
         }
+            String year = ""
+            String month = ""
+            String day = ""
+            String hour = ""
+            String minute = ""
+            String seg = ""
+
+
 
         if (pathValor.size() >= 4) // Si viene una path
         {
-            String year = pathValor.find{it.key.endsWith("year")}?.value
-            String month = pathValor.find{it.key.endsWith("month")}?.value
-            String day = pathValor.find{it.key.endsWith("day")}?.value
-            String hour = pathValor.find{it.key.endsWith("hour")}?.value
-            String minute = pathValor.find{it.key.endsWith("minute")}?.value
-            String seg = pathValor.find{it.key.endsWith("seg")}?.value
+            year = pathValor.find{it.key.endsWith("year")}?.value
+            month = pathValor.find{it.key.endsWith("month")}?.value
+            day = pathValor.find{it.key.endsWith("day")}?.value
+            hour = pathValor.find{it.key.endsWith("hour")}?.value
+            minute = pathValor.find{it.key.endsWith("minute")}?.value
+            seg = pathValor.find{it.key.endsWith("seg")}?.value
 
 
             if ((year != null) && (month != null) && (day != null) && (hour != null)){
@@ -2626,8 +2671,42 @@ if (rmObj)
 
             return result // puede ser vacia
         }
+        if (pathValor.size() == 1){ // Si viene un solo String
+
+            String valor = pathValor.find{it.key.endsWith("value")}?.value
+            println "Valor "+ valor
+
+            def date = Date.parse("dd-MM-yyyy hh:mm aa",valor)
+
+            SimpleDateFormat sdf
+
+            sdf = new SimpleDateFormat("yyyy");
+            year = sdf.format(date);
+
+            sdf = new SimpleDateFormat("MM");
+            month = sdf.format(date);
+
+            sdf = new SimpleDateFormat("dd");
+            day = sdf.format(date);
+
+            sdf = new SimpleDateFormat("HH");
+            hour = sdf.format(date);
+
+            sdf = new SimpleDateFormat("mm");
+            minute = sdf.format(date);
+
+            sdf = new SimpleDateFormat("ss");
+            seg = sdf.format(date);
+
+
+            println "Resultado fecha : " + year+"-"+month+"-"+day+" "+hour+":"+minute+":"+seg
+
+            result << rmFactory.createDV_DATE_TIME(year, month, day, hour, minute, seg, arquetipo, cco.nodeID, tempId)
+            return result // puede ser vacia
+        }
+
         // por ahora no hay un caso donde venga el valor y otro dato.
-        throw new Exception("No hay al menos 4 path para bindDV_DATE_TIME, hay: " + pathValor.size())
+         throw new Exception("No hay al menos 4 path para bindDV_DATE_TIME, hay: " + pathValor.size())
 
     } // bindDV_DATE_TIME
 

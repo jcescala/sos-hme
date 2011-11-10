@@ -23,7 +23,7 @@ Este arquetipo puede registrar cualquiera de estos eventos">
 	other_contributors = <>
 	other_details = <
 		["references"] = <"-SOS Telemedicina, UCV">
-		["MD5-CAM-1.0.1"] = <"F14ECA7084341D15DA8783F9B6C6C824">
+		["MD5-CAM-1.0.1"] = <"17854C13DDFE944720753B5E5278D4F0">
 	>
 
 definition
@@ -39,8 +39,8 @@ definition
 										items cardinality matches {3..*; unordered} matches {
 											ELEMENT[at0006] matches {	-- Día y hora
 												value matches {
-													DV_DATE_TIME matches {
-														value matches {yyyy-mm-ddTHH:??:??}
+													DV_DATE matches {
+														value matches {yyyy-mm-dd}
 													}
 												}
 											}

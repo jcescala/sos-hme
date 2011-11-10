@@ -440,8 +440,20 @@ class GuiGenController {
     
        // Pongo archivos (puede no venir ninguno)
        pathValue += files
-    
-    
+
+        /*
+        println "*****************"
+        println "Path value: " + pathValue
+        println "*****************"
+    */
+        //Ejemplo del valor de pathValue
+        /******************
+        Path value: [templateId:MOTIVO-motivo_de_consulta, openEHR-EHR-OBSERVATION.motiv
+        o_de_consulta.v1/data[at0001]/events[at0002]/data[at0003]/items[at0004]/items[at
+        0005]/value:Hola, doit:Guardar, action:save, controller:guiGen]
+        ******************/
+
+
        // Bind
        //BindingAOMRM bindingAOMRM = new BindingAOMRM()
        BindingAOMRM bindingAOMRM = new BindingAOMRM(session)

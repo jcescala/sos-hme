@@ -77,6 +77,55 @@
     --%>
     <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'ehr_contenido_grande.css')}" />
     <g:layoutHead />
+
+
+        <r:require module="jquery-ui"/>
+  <g:javascript library="jquery" />
+  <jqui:resources themeCss="/sos/css/jquery/jquery-ui-1.8.16.custom.css"/>
+
+  <script type="text/javascript" src="/sos/js/jquery/jquery-ui-i18n.min.js"></script>
+  <script type="text/javascript" src="/sos/js/jquery/jquery-ui-timepicker-addon.js"> </script>
+  <script type="text/javascript">
+     $(document).ready(function()
+      {
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+
+        $(".DateSos").datepicker({dateFormat: 'dd-mm-yy',
+                                     changeYear: true,
+                                     altField: '#actualDate',
+                                     buttonText: 'Calendario',
+                                     showOn: 'both',
+                                     buttonImage: '/sos/images/datepicker.gif',
+                                     maxDate: new Date(),
+                                     minDate: new Date(2007, 9, 15),
+                                     constrainInput: true,
+                                     showButtonPanel: true,
+                                     showOn: 'both'
+
+
+        });
+
+        $('.DateTimeSos').datetimepicker({dateFormat: 'dd-mm-yy',
+                                     ampm: true,
+                                     changeYear: true,
+                                     buttonText: 'Calendario',
+                                     buttonImage: '/sos/images/datepicker.gif',
+                                     maxDate: new Date(),
+                                     minDate: new Date(2007, 9, 15),
+                                     showButtonPanel: true,
+                                     showOn: 'both'
+
+        });
+
+
+ });
+  </script>
+
+
+
+
+
   </head>
   <body>
     <div id="user_bar">
