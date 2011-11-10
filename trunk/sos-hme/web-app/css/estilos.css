@@ -104,7 +104,7 @@
 	border-bottom-style:solid;	border-bottom-width:thin; margin-bottom:4px;
 }
 .basicregistro{
-	height:750px;
+	height:1000px;
 }
 .listadominios{
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -166,4 +166,27 @@
 .tdrecords{
 	border-bottom-color:#4f677f;
 	border-bottom-width:thin;
+}
+label.error {
+		background: url('../images/unchecked.gif') no-repeat;
+		padding-left: 16px;
+		width: 200px;
+		height: 15px;
+}
+label.valid {
+		background: url('http://dev.jquery.com/view/trunk/plugins/validate/demo/images/checked.gif') no-repeat;
+		display: block;
+		width: 100px;
+		height: 16px;
+}
+.selectancho, .inputtextfield{
+	width:270px;
+}
+.selectci, .inputtextfield{
+	width:300px; color:#ecb421; border-color:#ecb421; font-weight:bold; height:30px;
+}
+.selectsex, #fechaNacimiento_day, #fechaNacimiento_month, #fechaNacimiento_year{ width:97px; color:#ecb421; border-color:#ecb421; font-weight:bold; height:30px;}
+
+.inputtextfield{
+	height:80px;
 }
