@@ -19,7 +19,7 @@
     <META Http-Equiv="Cache-Control" Content="no-cache">
     <META Http-Equiv="Pragma" Content="no-cache">
     <META Http-Equiv="Expires" Content="0"> 
-    
+   <%--
     <g:javascript>
       // Para evitar el boton de volver del navegador.
       window.history.go(1);
@@ -70,7 +70,7 @@
         });
       });
     </g:javascript>
-    
+    --%>
     <title><g:layoutTitle/> | SOS Historia Médica | v${ApplicationHolder.application.metadata['app.version']}</title>
     <%--
     <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'ehr.css')}" />
