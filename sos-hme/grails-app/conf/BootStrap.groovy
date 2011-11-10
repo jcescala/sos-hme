@@ -136,7 +136,7 @@ class BootStrap {
         paciente.addToIdentities( new PersonName(primerNombre:'Pedro', primerApellido:'Perez') )
         paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
         paciente.type = "Persona" // FIXME: el type no se setea solo con el nombre de la clase? (Person)
-        paciente.sexo = "M"
+        paciente.sexo = "Masculino"
         if (!paciente.save()) println paciente.errors
         
         def pac2 = new Person()
@@ -147,7 +147,7 @@ class BootStrap {
         pac2.addToIdentities( new PersonName(primerNombre:'Luis', primerApellido:'Lopez') )
         pac2.fechaNacimiento = new Date(82, 10, 25)
         pac2.type = "Persona"
-        pac2.sexo = "M"
+        pac2.sexo = "Masculino"
         if (!pac2.save()) println pac2.errors
         
         def persona3 = new Person()
@@ -158,7 +158,7 @@ class BootStrap {
         persona3.addToIdentities( new PersonName(primerNombre:'Mata', primerApellido:'Lozano') )
         persona3.fechaNacimiento = new Date(83, 11, 26)
         persona3.type = "Persona"
-        persona3.sexo = "F"
+        persona3.sexo = "Femenino"
         if (!persona3.save()) println persona3.errors
         
         def persona4 = new Person()
@@ -167,7 +167,7 @@ class BootStrap {
         persona4.addToIdentities( new PersonName(primerNombre:'Carlos', primerApellido:'Cardozo') )
         persona4.fechaNacimiento = new Date(85, 9, 24) // 24/10/1981
         persona4.type = "Persona"
-        persona4.sexo = "M"
+        persona4.sexo = "Masculino"
         if (!persona4.save()) println persona4.errors
         
         def persona5 = new Person()
@@ -176,7 +176,7 @@ class BootStrap {
         persona5.addToIdentities( new PersonName(primerNombre:'Marcos', primerApellido:'Carisma') )
         persona5.fechaNacimiento = new Date(80, 11, 26)
         persona5.type = "Persona"
-        persona5.sexo = "M"
+        persona5.sexo = "Masculino"
         if (!persona5.save()) println persona5.errors
         
         // Paciente con estudios imagenologicos en el CCServer local

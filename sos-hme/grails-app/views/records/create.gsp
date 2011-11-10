@@ -17,10 +17,10 @@
     </style>
   <r:require module="jquery-ui"/>
   <g:javascript library="jquery" />
-  <jqui:resources themeCss="/sos/css/jquery/jquery-ui-1.8.16.custom.css"/>
+  <jqui:resources themeCss="../css/jquery/jquery-ui-1.8.16.custom.css"/>
   
-  <script type="text/javascript" src="/sos/js/jquery/jquery-ui-i18n.min.js"></script>
-  <script type="text/javascript" src="/sos/js/jquery/jquery-ui-timepicker-addon.js"> </script>
+  <script type="text/javascript" src="../js/jquery/jquery-ui-i18n.min.js"></script>
+  <script type="text/javascript" src="../js/jquery/jquery-ui-timepicker-addon.js"> </script>
 
   <script type="text/javascript">
       $(document).ready(function()
@@ -32,7 +32,7 @@ $.datepicker.setDefaults($.datepicker.regional['es']);
                                      altField: '#actualDate',
                                      buttonText: 'Calendario',
                                      showOn: 'both',
-                                     buttonImage: '/sos/images/datepicker.gif',
+                                     buttonImage: '../images/datepicker.gif',
                                      maxDate: new Date(),
                                      minDate: new Date(2007, 9, 15),
                                      constrainInput: true,
@@ -46,7 +46,7 @@ $.datepicker.setDefaults($.datepicker.regional['es']);
         changeYear: true,
                                      
                                      buttonText: 'Calendario',
-                                     buttonImage: '/sos/images/datepicker.gif',
+                                     buttonImage: '../images/datepicker.gif',
                                      maxDate: new Date(),
                                      minDate: new Date(2007, 9, 15),
 
