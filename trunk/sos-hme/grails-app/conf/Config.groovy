@@ -58,7 +58,7 @@ templates2 {
       INTERROGATORIO=['interrogatorio']
       MOTIVO=['motivo_de_consulta']
       EVALUACION=['exploracion_funcional']
-      OBSERVACION=['enfermedad_actual']
+      OBSERVATION=['enfermedad_actual']
       EXAMEN_FISICO=['examen_fisico']
       DIAGNOSTICO=['diagnosticos'] //PRESENTA PROBLEMAS
       MOVIMIENTO=['movimiento_de_paciente']
