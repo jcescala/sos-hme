@@ -135,11 +135,17 @@ if ( errors && errors.hasErrorsForPath(archetype.archetypeId.value, cComplexObje
         
         <g:if test="${cComplexObject.rmTypeName == 'DV_DATE_TIME'}">
           <%-- Si datetime se muestra desde CComplexObject, no tiene restricciones sobre la forma de la fecha o las fechas posibles. --%>
-          <g:datePicker name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${new Date()}" precision="minute" />
+        <%--  <g:datePicker name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${new Date()}" precision="minute" />
+        --%>
+         <p> <input name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${g.formatDate(date: new Date(), format: g.message(code: 'default.date.format1'))}" type="text" class="DateSos"> </p>
+
         </g:if>
         <g:if test="${cComplexObject.rmTypeName == 'DV_DATE'}">
           <%-- Si date se muestra desde CComplexObject, no tiene restricciones sobre la forma de la fecha o las fechas posibles. --%>
-          <g:datePicker name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${new Date()}" precision="day" />
+        <%--  <g:datePicker name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${new Date()}" precision="day" />
+        --%>
+       <p> <input name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${g.formatDate(date: new Date(), format: g.message(code: 'default.date.format1'))}" type="text" class="DateSos"> </p>
+
         </g:if>
         
         <%-- TODO: tipo DV_TIME --%>
