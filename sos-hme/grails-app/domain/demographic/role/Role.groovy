@@ -19,7 +19,12 @@ class Role extends Party {
     static String MEDICO         = 'medico'
     static String ENFERMERIA     = 'enfermeria'
     static String ADMINISTRATIVO = 'administrativo'
-    
+    static String ADMIN = 'admin'
+
+    static List getRoleCodes()
+    {
+    	return [PACIENTE, MEDICO, ENFERMERIA, ADMINISTRATIVO, ADMIN]
+    }
     // Intervalo de validez del rol: en el modelo de OpenEHR es un Interval<DvDate>
     Date timeValidityFrom
     Date timeValidityTo
@@ -32,4 +37,9 @@ class Role extends Party {
     static constraints = {
         timeValidityTo(nullable:true)
     }
+
+
+
+
+
 }
