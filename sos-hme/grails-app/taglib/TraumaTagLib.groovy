@@ -354,7 +354,23 @@ class TraumaTagLib {
         if ( roleKeys.intersect([Role.MEDICO,Role.ENFERMERIA]).size() > 0 )
         out << body()
     }
-    
+
+    def canFillAdmin = { attrs, body ->
+
+        def login = LoginAuth.get( session.traumaContext.userId )
+
+        // Roles de la persona
+        def roles = Role.withCriteria {
+            eq('performer', login.person)
+        }
+
+        def roleKeys = roles.type
+
+        if ( roleKeys.intersect([Role.ADMIN]).size() > 0 )
+        out << body()
+    }
+
+
     def langSelector = { attrs, body ->
         
         grailsApplication.config.langs.each {
