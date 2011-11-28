@@ -13,4 +13,8 @@ import demographic.role.Role
 class Actor extends Party {
 
     static hasMany = [roles: Role]
+
+	static mapping = {
+		roles cascade:'delete-orphan'
+	}
 }

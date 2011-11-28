@@ -21,14 +21,13 @@ class Person extends Actor {
     {
     	return [SEXO_MASCULINO, SEXO_FEMENINO]
     }
-   
+
+    
+
+
     String toString()
     {
-        return "Person: \n"+
-               "  nombres: " + this.identities + "\n" +
-               "  ids: " + this.ids + "\n" +
-               "  fnac: " + this.fechaNacimiento + "\n" + 
-               "  sexo: " + this.sexo
+        return " " + this.identities + "\n"
     }
     
     static constraints = {
