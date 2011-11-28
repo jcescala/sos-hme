@@ -12,8 +12,12 @@
       <div id="logo" class="logobasic"></div>
       <div id="ucvbasic" class="ucvbasic"></div>
       <div id="sessionbasic" class="sessionbasic">
-        <g:datosUsuario userId="${session.traumaContext.userId}" /> | <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
+        <g:canFillAdmin>
+          <g:link controller="loginAuth" action="list">administrar</g:link>
+        </g:canFillAdmin>
+		<g:datosUsuario userId="${session.traumaContext.userId}" /> | <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
       </div>
+
     </div>
     <div id="barrabasic" class="barrabasic"></div>
     
