@@ -37,7 +37,7 @@ class BootStrap {
         println "======= Bootstrap ======="
         println "======= +++++++++ ======="
         println ""
-   /*
+
         // TEST Folder
         //def g = new org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib()
         def appContext = WebApplicationContextUtils.getWebApplicationContext( servletContext )
@@ -75,10 +75,10 @@ class BootStrap {
         // http://groovy.codehaus.org/JN0545-Dates
         // Esto si lo corrige!!!!
         //HORA DE CARACAS-VENEZUELA GMT-04:30
-  */
+
         TimeZone.'default'= TimeZone.getTimeZone('GMT-04:30') //set the default time zone
 
-  /*
+
         println " - START: Carga tablas maestras"
 
         // saco para acelerar la carga
@@ -133,7 +133,7 @@ class BootStrap {
         //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'6677') )
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567') )
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::6677') )
-        paciente.addToIdentities( new PersonName(primerNombre:'Pedro', primerApellido:'Perez') )
+        paciente.addToIdentities( new PersonNameUser(primerNombre:'Pedro', primerApellido:'Perez') )
         paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
         paciente.type = "Persona" // FIXME: el type no se setea solo con el nombre de la clase? (Person)
         paciente.sexo = "Masculino"
@@ -144,7 +144,7 @@ class BootStrap {
         //pac2.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'3366') )
         pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.4::2345678') )
         pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::3366') )
-        pac2.addToIdentities( new PersonName(primerNombre:'Luis', primerApellido:'Lopez') )
+        pac2.addToIdentities( new PersonNameUser(primerNombre:'Luis', primerApellido:'Lopez') )
         pac2.fechaNacimiento = new Date(82, 10, 25)
         pac2.type = "Persona"
         pac2.sexo = "Masculino"
@@ -155,7 +155,7 @@ class BootStrap {
         //pac3.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'444') )
         persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.858::6667778') )
         persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::444') )
-        persona3.addToIdentities( new PersonName(primerNombre:'Mata', primerApellido:'Lozano') )
+        persona3.addToIdentities( new PersonNameUser(primerNombre:'Mata', primerApellido:'Lozano') )
         persona3.fechaNacimiento = new Date(83, 11, 26)
         persona3.type = "Persona"
         persona3.sexo = "Femenino"
@@ -164,7 +164,7 @@ class BootStrap {
         def persona4 = new Person()
         persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234888') )
         persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::44556') )
-        persona4.addToIdentities( new PersonName(primerNombre:'Carlos', primerApellido:'Cardozo') )
+        persona4.addToIdentities( new PersonNameUser(primerNombre:'Carlos', primerApellido:'Cardozo') )
         persona4.fechaNacimiento = new Date(85, 9, 24) // 24/10/1981
         persona4.type = "Persona"
         persona4.sexo = "Masculino"
@@ -173,7 +173,7 @@ class BootStrap {
         def persona5 = new Person()
         persona5.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.858::45687543') )
         persona5.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::2233445') )
-        persona5.addToIdentities( new PersonName(primerNombre:'Marcos', primerApellido:'Carisma') )
+        persona5.addToIdentities( new PersonNameUser(primerNombre:'Marcos', primerApellido:'Carisma') )
         persona5.fechaNacimiento = new Date(80, 11, 26)
         persona5.type = "Persona"
         persona5.sexo = "Masculino"
@@ -182,13 +182,13 @@ class BootStrap {
         // Paciente con estudios imagenologicos en el CCServer local
         def persona6 = new Person()
         persona6.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.666::2178309') ) // id en el CCServer
-        persona6.addToIdentities( new PersonName(primerNombre:'CT', primerApellido:'Mister') )
+        persona6.addToIdentities( new PersonNameUser(primerNombre:'CT', primerApellido:'Mister') )
         persona6.type = "Persona"
         if (!persona6.save()) println persona6.errors
 
         def persona_administrativo = new Person()
         persona_administrativo.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::3334442') )
-        persona_administrativo.addToIdentities( new PersonName(primerNombre:'John', primerApellido:'Doe') )
+        persona_administrativo.addToIdentities( new PersonNameUser(primerNombre:'John', primerApellido:'Doe') )
         persona_administrativo.type = "Persona"
         if (!persona_administrativo.save()) println persona_administrativo.errors
 
@@ -205,8 +205,8 @@ class BootStrap {
         def role4 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:persona5)
         if (!role4.save()) println role4.errors
 
-        //def role5 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:persona6)
-        //if (!role5.save()) println role5.errors
+        /*def role5 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:persona6)
+        if (!role5.save()) println role5.errors*/
 
         // Medico
         def role6 = new Role(timeValidityFrom:new Date(), type:Role.MEDICO, performer:persona3)
@@ -216,8 +216,10 @@ class BootStrap {
         def role_adm = new Role(timeValidityFrom:new Date(), type:Role.ADMINISTRATIVO, performer:persona_administrativo)
         if (!role_adm.save()) println role_adm.errors
 
+		// Admin
         def role_sudo = new Role(timeValidityFrom:new Date(), type:Role.ADMIN, performer:persona6)
         if (!role_sudo.save()) println role_sudo.errors
+
 
         // LOGINS
 
@@ -229,6 +231,7 @@ class BootStrap {
         def login_adm = new LoginAuth(user:'adm', pass:'1234', person:persona_administrativo)
         if (!login_adm.save())  println login_adm.errors
 
+		// Login para el administrador o super usuario
         def login_sudo = new LoginAuth(user:'suuu', pass:'1234', person:persona6)
         if (!login_sudo.save())  println login_sudo.errors
 
@@ -271,7 +274,7 @@ class BootStrap {
 
         /*DATA INICIAL*/
 
-      /*
+
         println " - Datos Iniciales Tablas Demograficas"
 
 
@@ -284,7 +287,7 @@ class BootStrap {
             sql.execute(it)
         }
         */
-     /*
+
         String sqlFilePath = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/lugarOptimo.sql")
         String sqlString = new File(sqlFilePath).eachLine {
             sql.execute(it)
@@ -314,7 +317,7 @@ class BootStrap {
         String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
             sql.execute(it)
         }
-       */
+
         /*FIN DATA INICIAL*/
         println ""
         println "======= +++++++++ ======="
