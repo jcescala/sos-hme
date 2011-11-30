@@ -26,6 +26,9 @@
         <li>
           <g:link controller="demographic" action="admisionPaciente" class="find"><g:message code="demographic.admision_paciente.buscar_paciente" /></g:link>
         </li>
+        <li>
+          <g:link controller="demographic" action="reportIndex" class="find"><g:message code="reportes.link.title" /></g:link>
+        </li>
       </ul>
     </div>  
     
@@ -42,7 +45,6 @@
       <g:each in="${compositions}" var="composition">
         <tr>
           <td>${composition.id}</td>
-          
           <td><g:person param1="${composition}" /></td>
           <td><g:format date="${composition.context.startTime?.toDate()}" /></td>
           <td><g:format date="${composition.context.endTime?.toDate()}" /></td>

@@ -30,6 +30,9 @@ import util.RandomGenerator
 
 /*Demograficos paciente*/
 import demographic.identity.*
+import java.text.SimpleDateFormat
+import java.util.*
+import java.text.*
 /**/
 
 import hce.core.common.directory.Folder
@@ -89,8 +92,9 @@ class DemographicController{
         
         def id = null
         if (params.identificador)
+            //println "identificador->: "+params.identificador
             id = new UIDBasedID(value:params.root+'::'+params.identificador)
-        
+            println "IdRequerido"+id
         // TODO: usar rango de fechas... si viene solo una se usa esa como bd.
         
         // Para la fecha no funciona el bindData, lo hago a mano
@@ -113,6 +117,9 @@ class DemographicController{
         if (params.'personName.primerNombre'  || params.'personName.segundoNombre'||
             params.'personName.primerApellido' || params.'personName.segundoApellido')
         {
+            //pn = new PersonName()
+            
+            //new 
             pn = new PersonName()
             bindData(pn, params, 'personName')
             //println "Person Name: " + pn
@@ -125,7 +132,7 @@ class DemographicController{
         */
         
         println "======================================="
-        println "busca por: "
+        println "buscando por: "
         println "   PN: "+ pn
         println "   BD: "+ bd
         println "======================================="
@@ -441,8 +448,11 @@ class DemographicController{
 
             person.addToIds( id )
             
-            def name = new PersonName(params)
-            person.addToIdentities( name )
+            //def name = new PersonName(params)
+            //person.addToIdentities( name )
+            
+            def datos = new PersonNamePatient(params)
+            person.addToIdentities(datos)
             
             if (!person.save()) println person.errors
             
@@ -538,6 +548,11 @@ class DemographicController{
         return [patient:patient, pn:pn, tiposIds:tiposIds]
     }
     
+    /*
+     *@author Juan Carlos Escalante
+     *
+     *returna los estados asociados a un país en particulo (inicialmente solo Venezuela)
+     *@param id corresponde a la entidad de padre para la busqueda recursiva de sus hijos */
     def ajaxGetEstados = {
         
         if(params.id.toLong() == 1){
@@ -554,6 +569,11 @@ class DemographicController{
         }
     }
     
+    /*
+     *@author Juan Carlos Escalante
+     *
+     *returna los municpios y parroquias para entidades seleccionadas (inicialmente solo Venezuela)
+     *@param id corresponde a la entidad de padre para la busqueda recursiva de sus hijos */
     def ajaxGetMunicipios = {
         
         if(params.id.toLong() >= 1){
@@ -568,5 +588,129 @@ class DemographicController{
             def list = Lugar.findByNombreLike("Venezuela")
             render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
         }
+    }
+    /*
+     *@author Juan Carlos Escalante
+     *
+     *suite de reportes estadísticos sobre episodios clínicos*/
+    def reportIndexOld = {
+        //def ids = new UIDBasedID
+        def list =  UIDBasedID.list()
+        def patient = []
+        //def patient = new PersonNamePatient()
+        
+        def loop = null
+        def i=0;
+        while (list[i]!=null){
+            loop = list[i]
+            def patients = demographicService.findPersonById( loop )
+            if(patients.size()==1){
+                
+               //Recopilando las informacion necesaria para la invocacion del metodo de busqueda por rol 
+               //def nombres = patients[0].identities.find{ it.purpose == 'PersonName' }
+                
+               //def pn = null
+               
+                /*
+                if(nombres.primerNombre || nombres.segundoNombre ||
+                  nombres.primerApellido || nombres.segundoApellido){
+                      println "entra"
+                      if(nombres.primerNombre){
+                          println "entra if"
+                          params.'personName.primerNombre'=nombres.primerNombre
+                          println "parametros"+params
+                          
+                      }
+                      pn = new PersonName()
+                      bindData(pn, params, 'personName')
+                      
+                  }
+               
+               println "nombres:-->"+pn
+                */
+                
+                /*
+                def pn = null
+                if (params.'personName.primerNombre'  || params.'personName.segundoNombre'||
+                    params.'personName.primerApellido' || params.'personName.segundoApellido')
+                {
+                    pn = new PersonName()
+                    bindData(pn, params, 'personName')
+                    println "Person Name ->" + pn
+                }
+                */
+                /*
+                def bd=null
+                if(patients[0].fechaNacimiento){
+                   DateFormat myFormatter
+                   myFormatter = new SimpleDateFormat("yyyy-MM-dd")
+                   bd = (Date) myFormatter.parse(patients[0].fechaNacimiento.toString())
+                   println "Fecha de nacimiento ->" + bd
+                }else{
+                   println "no entra"  
+                }
+               */
+                
+                //println "ids loop: "+loop
+                println "****************"
+                
+               //busqueda solamente con el id del Person y que su rol sea PACIENTE
+               
+                if(demographicService.findByPersonDataAndIdAndRole(
+                    null,
+                    null,
+                    null,
+                    loop,
+                    Role.PACIENTE )){
+                    println "======================================="
+                    println "   ID: "+ loop    
+                    println "======================================="
+                    patient << patients[0]
+               }
+            }
+            i++
+        }
+        
+        patient = PersonNamePatient.list()
+        println(patient)
+        
+        //return [patient: patient]
+    }
+    
+    def reportIndex = {
+        def compos = []
+        def paciente = []
+        Folder domain = Folder.findByPath( session.traumaContext.domainPath )
+        
+        compos = Composition.withCriteria{
+            eq('rmParentId',domain.id)
+            maxResults(15)
+            if (params.offset)
+              firstResult( Integer.parseInt(params.offset) )
+            order("id", "desc")
+        }
+        println(compos)
+        
+        
+        
+        def composition = null
+        def j = 0
+        while (compos[j]!=null){
+            composition = compos[j]
+            //println(composition.id)
+            
+            session.traumaContext.episodioId = composition.id
+            def composi = Composition.get(composition.id)
+            def patient = hceService.getPatientFromComposition(composi)
+            def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
+            if(datos!=null){
+                print("datos-->")
+                println(datos.lugar)
+                
+                paciente << patient
+            }
+            j++
+        }
+        return [patient: paciente]
     }
 }
