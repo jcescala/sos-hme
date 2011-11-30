@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="CdaService" targetNamespace="http://cda/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cda/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://cda/" xmlns:tns="http://cda/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="buscarCDAByRango" type="tns:buscarCDAByRango"/>
+<xsd:complexType name="buscarCDAByRango">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="desde" type="xsd:dateTime"/>
+<xsd:element minOccurs="0" name="hasta" type="xsd:dateTime"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAByRangoResponse" type="tns:buscarCDAByRangoResponse"/>
+<xsd:complexType name="buscarCDAByRangoResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAByPacienteAndOrganizacion" type="tns:buscarCDAByPacienteAndOrganizacion"/>
+<xsd:complexType name="buscarCDAByPacienteAndOrganizacion">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="paciente" type="xsd:string"/>
+<xsd:element minOccurs="0" name="organizacion" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAByPacienteAndOrganizacionResponse" type="tns:buscarCDAByPacienteAndOrganizacionResponse"/>
+<xsd:complexType name="buscarCDAByPacienteAndOrganizacionResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAByPaciente" type="tns:buscarCDAByPaciente"/>
+<xsd:complexType name="buscarCDAByPaciente">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="paciente" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAByPacienteResponse" type="tns:buscarCDAByPacienteResponse"/>
+<xsd:complexType name="buscarCDAByPacienteResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="serviceMethod" type="tns:serviceMethod"/>
+<xsd:complexType name="serviceMethod">
+<xsd:sequence/>
+</xsd:complexType>
+<xsd:element name="serviceMethodResponse" type="tns:serviceMethodResponse"/>
+<xsd:complexType name="serviceMethodResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="registrarCDA" type="tns:registrarCDA"/>
+<xsd:complexType name="registrarCDA">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="cda" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="registrarCDAResponse" type="tns:registrarCDAResponse"/>
+<xsd:complexType name="registrarCDAResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="logueo" type="tns:logueo"/>
+<xsd:complexType name="logueo">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="login" type="xsd:string"/>
+<xsd:element minOccurs="0" name="password" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="logueoResponse" type="tns:logueoResponse"/>
+<xsd:complexType name="logueoResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAById" type="tns:buscarCDAById"/>
+<xsd:complexType name="buscarCDAById">
+<xsd:sequence>
+<xsd:element name="id" type="xsd:int"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="buscarCDAByIdResponse" type="tns:buscarCDAByIdResponse"/>
+<xsd:complexType name="buscarCDAByIdResponse">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="return" type="xsd:anyType"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="buscarCDAById">
+    <wsdl:part element="tns:buscarCDAById" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByRango">
+    <wsdl:part element="tns:buscarCDAByRango" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByPaciente">
+    <wsdl:part element="tns:buscarCDAByPaciente" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registrarCDAResponse">
+    <wsdl:part element="tns:registrarCDAResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByIdResponse">
+    <wsdl:part element="tns:buscarCDAByIdResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logueoResponse">
+    <wsdl:part element="tns:logueoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByRangoResponse">
+    <wsdl:part element="tns:buscarCDAByRangoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByPacienteAndOrganizacion">
+    <wsdl:part element="tns:buscarCDAByPacienteAndOrganizacion" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registrarCDA">
+    <wsdl:part element="tns:registrarCDA" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceMethodResponse">
+    <wsdl:part element="tns:serviceMethodResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByPacienteResponse">
+    <wsdl:part element="tns:buscarCDAByPacienteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarCDAByPacienteAndOrganizacionResponse">
+    <wsdl:part element="tns:buscarCDAByPacienteAndOrganizacionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceMethod">
+    <wsdl:part element="tns:serviceMethod" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logueo">
+    <wsdl:part element="tns:logueo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CdaServicePortType">
+    <wsdl:operation name="buscarCDAByRango">
+      <wsdl:input message="tns:buscarCDAByRango" name="buscarCDAByRango">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarCDAByRangoResponse" name="buscarCDAByRangoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCDAByPacienteAndOrganizacion">
+      <wsdl:input message="tns:buscarCDAByPacienteAndOrganizacion" name="buscarCDAByPacienteAndOrganizacion">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarCDAByPacienteAndOrganizacionResponse" name="buscarCDAByPacienteAndOrganizacionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCDAByPaciente">
+      <wsdl:input message="tns:buscarCDAByPaciente" name="buscarCDAByPaciente">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarCDAByPacienteResponse" name="buscarCDAByPacienteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceMethod">
+      <wsdl:input message="tns:serviceMethod" name="serviceMethod">
+    </wsdl:input>
+      <wsdl:output message="tns:serviceMethodResponse" name="serviceMethodResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registrarCDA">
+      <wsdl:input message="tns:registrarCDA" name="registrarCDA">
+    </wsdl:input>
+      <wsdl:output message="tns:registrarCDAResponse" name="registrarCDAResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logueo">
+      <wsdl:input message="tns:logueo" name="logueo">
+    </wsdl:input>
+      <wsdl:output message="tns:logueoResponse" name="logueoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCDAById">
+      <wsdl:input message="tns:buscarCDAById" name="buscarCDAById">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarCDAByIdResponse" name="buscarCDAByIdResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CdaServiceSoapBinding" type="tns:CdaServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="buscarCDAByRango">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarCDAByRango">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarCDAByRangoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCDAByPacienteAndOrganizacion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarCDAByPacienteAndOrganizacion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarCDAByPacienteAndOrganizacionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCDAByPaciente">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarCDAByPaciente">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarCDAByPacienteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registrarCDA">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="registrarCDA">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="registrarCDAResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceMethod">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="serviceMethod">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="serviceMethodResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logueo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="logueo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logueoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarCDAById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarCDAById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarCDAByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CdaService">
+    <wsdl:port binding="tns:CdaServiceSoapBinding" name="CdaServicePort">
+      <soap:address location="http://localhost:8888/imp-cda/services/cda"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
