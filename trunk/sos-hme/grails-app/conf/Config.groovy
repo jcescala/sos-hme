@@ -148,18 +148,36 @@ grails.converters.encoding="UTF-8" //"UTF-8"
 // enabled native2ascii conversion of i18n properties files
 grails.enable.native2ascii = true
 
-// set per-environment serverURL stem for creating absolute links
+// IMPORTANT - these must be set externally to env if you want to refer to them later for use
+// via cxf.  You can also simply hardcode the url in the cxf section and NOT refer to a variable
+// as well
+service.simple.url = ""
+service.complex.url = ""
+service.secure.url = ""
+
+// set per-environment service url
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// port is set to 9090 for test use -Dserver.port=9090 during test
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 environments {
     production {
         grails.serverURL = "http://www.changeme.com"
+        service.simple.url = "${grails.serverURL}/services/simple"
+        service.complex.url = "${grails.serverURL}/services/complex"
+        service.secure.url = "${grails.serverURL}/services/secure"
     }
     development {
         grails.serverURL = "http://localhost:8080/${appName}"
+        service.simple.url = "http://localhost:8080/imp-cda/services/cda"
+        service.complex.url = "${grails.serverURL}/services/complex"
+        service.secure.url = "http://localhost:8080/imp-cda/services/cda"
     }
     test {
-        grails.serverURL = "http://localhost:8080/${appName}"
+        grails.serverURL = "http://localhost:9090/${appName}"
+        service.simple.url = "${grails.serverURL}/services/simple"
+        service.complex.url = "${grails.serverURL}/services/complex"
+        service.secure.url = "${grails.serverURL}/services/secure"
     }
-
 }
 
 // log4j configuration
@@ -192,4 +210,68 @@ log4j = {
 }
 
 
+
+//Indice Maestro de Pacientes
+
+
+wsdl = ['http://localhost:8080/imp-cda/services/imp?wsdl', 'http://localhost:8080/imp-cda/services/cda?wsdl']
+
+
+cxf {
+    installDir = "C:/apps/apache-cxf-2.4.4" //only used for wsdl2java script target
+    client {
+        simpleServiceClient {
+            wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
+            clientInterface = cda.CdaServicePortType //cxf.client.demo.simple.SimpleServicePortType
+            serviceEndpointAddress = "${service.simple.url}"
+            namespace = "cda"
+        }
+
+     /*   complexServiceClient {
+            wsdl = "docs/ComplexService.wsdl" //only used for wsdl2java script target
+            clientInterface = cxf.client.demo.complex.ComplexServicePortType
+            serviceEndpointAddress = "${service.complex.url}"
+            namespace = "cda"
+        }*/
+/*
+        insecureServiceClient {
+            wsdl = "docs/SecureService.wsdl" //only used for wsdl2java script target
+            namespace = "cxf.client.demo.secure"
+            clientInterface = cxf.client.demo.secure.SecureServicePortType
+            secured = false
+            serviceEndpointAddress = "${service.secure.url}"
+            namespace = "cxf.client.demo.secure"
+        }
+*/
+        customSecureServiceClient {
+            wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
+            namespace = "cda"
+            clientInterface = cda.CdaServicePortType
+            secured = true
+            securityInterceptor = 'myCustomInterceptor'
+            serviceEndpointAddress = "${service.secure.url}"
+            //namespace = "cxf.client.demo.secure"
+        }
+
+        /*secureServiceClient {
+            wsdl = "docs/secure.wsdl" //only used for wsdl2java script target
+            namespace = "cda"
+            clientInterface = cda.SecureServicePortType
+            secured = true
+            username = "ususer"
+            password = "secret"
+            serviceEndpointAddress = "${service.secure.url}"
+            //namespace = "cxf.client.demo.secure"
+        }*/
+/*
+        //Another real service to use against wsd2java script
+        stockQuoteClient {
+            wsdl = "http://www.webservicex.net/stockquote.asmx?WSDL"
+            clientInterface = net.webservicex.StockQuoteSoap
+            serviceEndpointAddress = "http://www.webservicex.net/stockquote.asmx"
+        }
+
+    */
+    }
+}
      
