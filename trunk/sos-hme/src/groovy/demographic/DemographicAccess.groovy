@@ -45,5 +45,5 @@ abstract class DemographicAccess {
     abstract public List<Person> findByPersonDataAndIdsAndRole( PersonName n, Date bithdate, String sex, List<UIDBasedID> ids, Role role );
     
     // busca la parroquia, municipio y estado a partir de la parroquia, de forma recursiva
-    abstract public String findFullAddress(Integer lugar);
+    //abstract public String findFullAddress(Integer lugar);
 }
