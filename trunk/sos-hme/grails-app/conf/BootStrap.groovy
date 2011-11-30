@@ -317,8 +317,25 @@ class BootStrap {
         String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
             sql.execute(it)
         }
+<<<<<<< .mine
+       */
+        /*FIN DATA INICIAL*/
+
+
+
+        
+
+
+
+
+
+
+
+
+=======
 
         /*FIN DATA INICIAL*/
+>>>>>>> .r63
         println ""
         println "======= +++++++++ ======="
         println "======= /Bootstrap ======="
