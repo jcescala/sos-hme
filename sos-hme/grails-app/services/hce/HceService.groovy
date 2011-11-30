@@ -465,9 +465,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
      * @return List<Composition>
      */
     public List<Composition>  getAllCompositionForPatient( Person person, Date desde, Date hasta)
-    {
-
-       
+    {  
         // Busca un PartySelf (un paciente) por cada id de la persona,
         // ese es el criterio de comparacion de personas por ahora.
         def iter = person.ids.iterator()
@@ -691,4 +689,103 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         println xml
         println "-----------------"
     }
+    
+   //------------------------------------------------------------- 
+    /*
+     *@author Juan Carlos Escalante
+     *
+     *Metodo que devuelve todas composiciones registradas en un rago de fechas*/
+    
+    public List<Composition>  getAllCompositionForDate(Date desde, Date hasta)
+    {
+
+       
+        // Busca un PartySelf (un paciente) por cada id de la persona,
+        // ese es el criterio de comparacion de personas por ahora.
+        def iter = person.ids.iterator()
+        def personId
+        while (iter.hasNext())
+        {
+            personId = iter.next()
+
+            // PUeden ser varios partySelfs, dependiendo si la persona fue ingresada mas de una vez.
+            def partySelfs = PartySelf.withCriteria {
+                externalRef { // PartSelf>PartyRef
+                    objectId { // PartyRef>ObjectId
+                        eq('value',personId.value)
+                    }
+                }
+            }
+
+            //Convierto los Date en DvDateTime para poder aplicar el Criteria correctamente
+           /* def des = new DvDateTime()
+            des.value = desde.toString()
+
+            def has = new DvDateTime()
+            has.value = hasta.toString()
+            */
+           
+           hasta ++
+           //desde --
+           
+           println "desde-" + desde
+           println "hasta-" + hasta
+           println "format desde-" + desde.format("yyyy-MM-dd hh:mm:ss a")
+
+            // Busca el contexto con la participacion del partySelf que no tenga fecha de fin (el espisodio esta activo)
+            def contexts = EventContext.withCriteria {
+                //isNull('endTime') // episodio activo
+                //eq('startTime', desde)
+               startTime{
+                   between("value", desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd") )
+               }
+              /* endTime{
+                   le('value', hasta)
+               }*/
+                
+                
+                participations {
+                    performer {
+                        or {
+                            partySelfs.id.each { pSelfId -> // pueden ser varios pSelf
+                                eq('id', pSelfId)
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (contexts.size>0)
+            {
+                // Devuelve el episodio para el contexto
+                //return Composition.findByContext(contexts[0])
+
+                def compos = Composition.withCriteria{
+
+                    //Listar solo un dominio
+                    // eq('rmParentId', 1)
+                    or {
+                        contexts.each{ contx ->
+
+                            eq('context', contx)
+
+                        }
+                    }
+                }
+               /* OTRA MANERA DE HACERLO (MENOS EFICIENTE)
+                * def compos=[]
+                contexts.each{
+
+                    compos.add(Composition.findByContext(it))
+                }*/
+                return compos
+                
+            }
+        }
+
+        // No se encuentra el episodio, puede ser que todavia no se haya creado,
+        // pero si se haya identificado al paciente.
+        return null
+    }
+    
 }

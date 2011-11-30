@@ -121,4 +121,17 @@ class DemographicService {
     {
         return demographicAccess.findByPersonDataAndIdsAndRole(n, bithdate, sex, ids, role)
     }
+    
+    /*
+     *@author Juan Carlos Escalante
+     *regresa el nombre en los lugares recursivos a partir del id del ultimo hijo 
+     *dicho id esta identificado con el nombre Lugar y Direccion de la clase PersonNamePatient*/
+    public String findFullAddress(Integer lugar){
+        def parroquia = null
+        def municipio = null
+        def estado = null
+        def pais = null
+        def fullAddress = null
+        
+    }
 }

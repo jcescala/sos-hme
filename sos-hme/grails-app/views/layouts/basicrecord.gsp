@@ -20,9 +20,10 @@
       </div>
       <div id="menubar" class="menubar">
         <ul>
-          <li><a href="domain/list">Dominios</a></li>
-          <li><a href="domain">Registros</a></li>
-          <li><a href="demographic/admisionPaciente">Admisión</a></li>
+          <!--li><a href="../domain/list">Dominios</a></li-->
+          <li><g:link controller="domain" action="list">Dominios</g:link></li>
+          <li><g:link controller="records" action="index">Registros</g:link></li>
+          <li><g:link controller="demographic" action="admisionPaciente">Admisión</g:link></li>
         </ul>
       </div>
       

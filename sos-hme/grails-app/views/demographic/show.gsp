@@ -5,7 +5,7 @@
 <html>
   <head>
     <!--meta name="layout" content="ehr-modal" /-->
-    <meta name="layout" content="basicregistro" />
+    <meta name="layout" content="basicrecord" />
     <title><g:message code="demographic.show.title" /></title>
     <style>
         table #list {
@@ -23,6 +23,7 @@
       </style>
   </head>
   <body>
+    <div class="bodydomainlist">
     <h1><g:message code="demographic.show.title" /></h1>
   
     <ul class="top_actions">
@@ -35,7 +36,7 @@
       <%-- TODO: que otra accion sea seleccionar un episodio existente --%>
     </ul>
   
-    <table id="list">
+    <table id="list" class="listrecords">
       <tr>
         <th><g:message code="persona.identificadores" /></th>
         <th><g:message code="persona.primerNombre" /></th>
@@ -47,7 +48,7 @@
       </tr>
       <tr>
         <td><g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></td>
-        <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonName'} }" />
+        <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
         <td>${name?.primerNombre}</td>
         <td>${name?.segundoNombre}</td>
         <td>${name?.primerApellido}</td>
@@ -135,5 +136,6 @@
         </tr>
       </g:each>
     </table>
+    </div>
   </body>
 </html>

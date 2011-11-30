@@ -95,7 +95,7 @@
 	      <g:each in="${candidatos}" var="persona">
 	        <tr>
 	          <td><g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></td>
-	          <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonName'} }" />
+	          <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
 	          <td>${name?.primerNombre}</td>
 	          <td>${name?.segundoNombre}</td>
 	          <td>${name?.primerApellido}</td>
