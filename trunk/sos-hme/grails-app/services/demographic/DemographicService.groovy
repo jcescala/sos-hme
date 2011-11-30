@@ -9,8 +9,10 @@ import demographic.LocalDemographicAccess
 import hce.core.support.identification.UIDBasedID
 
 import demographic.identity.PersonName
+import demographic.identity.*
 import demographic.party.Person
 import demographic.role.Role
+
 
 // Configuracion de consulta local o remota
 import org.codehaus.groovy.grails.commons.ApplicationHolder
@@ -126,6 +128,7 @@ class DemographicService {
      *@author Juan Carlos Escalante
      *regresa el nombre en los lugares recursivos a partir del id del ultimo hijo 
      *dicho id esta identificado con el nombre Lugar y Direccion de la clase PersonNamePatient*/
+    /*
     public String findFullAddress(Integer lugar){
         def parroquia = null
         def municipio = null
@@ -133,5 +136,7 @@ class DemographicService {
         def pais = null
         def fullAddress = null
         
+        return demographicAccess.fullAddress
     }
+    */
 }
