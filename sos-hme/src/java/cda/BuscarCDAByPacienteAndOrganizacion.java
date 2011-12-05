@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="paciente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="organizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,12 +30,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "buscarCDAByPacienteAndOrganizacion", propOrder = {
     "paciente",
-    "organizacion"
+    "organizacion",
+    "offset"
 })
 public class BuscarCDAByPacienteAndOrganizacion {
 
     protected String paciente;
     protected String organizacion;
+    protected Object offset;
 
     /**
      * Gets the value of the paciente property.
@@ -82,6 +85,30 @@ public class BuscarCDAByPacienteAndOrganizacion {
      */
     public void setOrganizacion(String value) {
         this.organizacion = value;
+    }
+
+    /**
+     * Gets the value of the offset property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public Object getOffset() {
+        return offset;
+    }
+
+    /**
+     * Sets the value of the offset property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setOffset(Object value) {
+        this.offset = value;
     }
 
 }

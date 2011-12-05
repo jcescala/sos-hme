@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for buscarCDAByRangoResponse complex type.
+ * <p>Java class for cdaResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="buscarCDAByRangoResponse">
+ * &lt;complexType name="cdaResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://cda/}cdaArr" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="cda" type="{http://cda/}cdaArr" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,27 +29,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "buscarCDAByRangoResponse", propOrder = {
-    "_return"
+@XmlType(name = "cdaResponse", propOrder = {
+    "cda"
 })
-public class BuscarCDAByRangoResponse {
+public class CdaResponse {
 
-    @XmlElement(name = "return")
-    protected List<CdaArr> _return;
+    @XmlElement(nillable = true)
+    protected List<CdaArr> cda;
 
     /**
-     * Gets the value of the return property.
+     * Gets the value of the cda property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the return property.
+     * This is why there is not a <CODE>set</CODE> method for the cda property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getReturn().add(newItem);
+     *    getCda().add(newItem);
      * </pre>
      * 
      * 
@@ -59,11 +59,11 @@ public class BuscarCDAByRangoResponse {
      * 
      * 
      */
-    public List<CdaArr> getReturn() {
-        if (_return == null) {
-            _return = new ArrayList<CdaArr>();
+    public List<CdaArr> getCda() {
+        if (cda == null) {
+            cda = new ArrayList<CdaArr>();
         }
-        return this._return;
+        return this.cda;
     }
 
 }
