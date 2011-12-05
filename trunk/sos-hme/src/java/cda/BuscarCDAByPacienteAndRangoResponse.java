@@ -10,12 +10,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for buscarCDAByRangoResponse complex type.
+ * <p>Java class for buscarCDAByPacienteAndRangoResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="buscarCDAByRangoResponse">
+ * &lt;complexType name="buscarCDAByPacienteAndRangoResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "buscarCDAByRangoResponse", propOrder = {
+@XmlType(name = "buscarCDAByPacienteAndRangoResponse", propOrder = {
     "_return"
 })
-public class BuscarCDAByRangoResponse {
+public class BuscarCDAByPacienteAndRangoResponse {
 
     @XmlElement(name = "return")
     protected List<CdaArr> _return;

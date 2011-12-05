@@ -7,15 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for buscarCDAByRango complex type.
+ * <p>Java class for buscarCDAByPacienteAndRango complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="buscarCDAByRango">
+ * &lt;complexType name="buscarCDAByPacienteAndRango">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="paciente" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
  *         &lt;element name="desde" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
  *         &lt;element name="hasta" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
@@ -28,16 +29,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "buscarCDAByRango", propOrder = {
+@XmlType(name = "buscarCDAByPacienteAndRango", propOrder = {
+    "paciente",
     "desde",
     "hasta",
     "offset"
 })
-public class BuscarCDAByRango {
+public class BuscarCDAByPacienteAndRango {
 
+    protected Object paciente;
     protected Object desde;
     protected Object hasta;
     protected Object offset;
+
+    /**
+     * Gets the value of the paciente property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public Object getPaciente() {
+        return paciente;
+    }
+
+    /**
+     * Sets the value of the paciente property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setPaciente(Object value) {
+        this.paciente = value;
+    }
 
     /**
      * Gets the value of the desde property.

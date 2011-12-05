@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://cda/}cdaArr" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class BuscarCDAByIdResponse {
 
     @XmlElement(name = "return")
-    protected Object _return;
+    protected CdaArr _return;
 
     /**
      * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link CdaArr }
      *     
      */
-    public Object getReturn() {
+    public CdaArr getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class BuscarCDAByIdResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link CdaArr }
      *     
      */
-    public void setReturn(Object value) {
+    public void setReturn(CdaArr value) {
         this._return = value;
     }
 
