@@ -38,7 +38,7 @@ class BootStrap {
                
                     WSPasswordCallback pc = (WSPasswordCallback) callbacks[0]
 
-                    println "El usuario es: " + pc.getPassword()
+                 //   println "El usuario es: " + pc.getPassword()
 
                     //VERIFICAR QUIEN SE ESTÁ CONECTANDO
                     pc.setPassword("keystore");

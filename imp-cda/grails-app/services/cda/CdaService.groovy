@@ -6,30 +6,24 @@ import converters.DateConverter
 import javax.jws.*
 import org.springframework.web.context.request.RequestContextHolder
 
+import converters.*
+import com.cxf.demo.CdaResponse
+import com.cxf.demo.CdaArr
+
 class CdaService {
     
     
     
     static expose=['cxf']
     static transactional = true
+    def max = 10
+   
 
-    def serviceMethod() {
-
-        println "Es seguro el servicio"
-
-    }
-    def logueo(String login, String password){
-
-    println "L : "+ login
-    println "P : "+ password
-
-      }
-
-  def registrarCDA(String cda){
+    def registrarCDA(String cda){
 
         //cda es un documento xml CDA completo para ser parseado
 
-       def f = new File("CDAs/CDA-4-V0-20100930215321.xml")
+        def f = new File("CDAs/CDA-4-V0-20100930215321.xml")
 
         if(!f.exists()){
 
@@ -127,21 +121,6 @@ class CdaService {
         docCda.setPaciente(pac)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         def org2 = Organizacion.existeOrganizacion(nombreCustodio)
         if(!org2){
             org2=new Organizacion()
@@ -185,178 +164,265 @@ class CdaService {
             return true
         }
 
-return true
+        return true
 
     }
-    def buscarCDAByRango(Date desde, Date hasta){
-        def x = new XStream();
+
+   
+    /**
+     * Busca un conjunto de documentos CDA en un rango de fechas
+     *
+     * @param desde rango de fecha de inicio
+     * @param desde rango de fecha de final
+     * @return List<CdaArr> una lista de documentos CDA´s,
+     * retorna null en caso de no encontrar coincidencias.
+     */
+    List<CdaArr> buscarCDAByRango(def desde, def hasta, def offset){
+
+        //Formateando los datos a tipo java.lang.Date
+        desde= XMLGregorianCalendarConverter.asDate(desde)
+        hasta= XMLGregorianCalendarConverter.asDate(hasta)
 
 
         def result = Cda.withCriteria{
             between('fechaCreacion',desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd"))
+            order("fechaCreacion","desc")
+            maxResults(this.max)
+            firstResult(offset)
         }
 
         if(result){
 
-            //OMITO LOS CAMPOS INDICE, CDAS Y ID para estar de acorde al POJO
-            x.omitField(result[0].class, "paciente")
-            x.omitField(result[0].class, "personalAutor")
-            x.omitField(result[0].class, "personalAutentificador")
-            x.omitField(result[0].class, "organizacionAutora")
-            x.omitField(result[0].class, "organizacionCustodia")
-            x.omitField(result[0].class, "organizacionAutentificadora")
+            def cd
+            cd = []
+            result.each{
 
+                def cda = new CdaArr()
+                cda.id=it.id.toString()
+                cda.fechaCreacion=it.fechaCreacion
+                cda.titulo=it.titulo
+                cda.documento=""
+                cd.add(cda)
+           
+            }
 
-            def aux = x.toXML(result)
-            println aux
-            println "Hay resultados"
-            return aux
-
+            println "La clase es:"+  cd.getClass()
+            return cd
         }else{
 
-            return false
+            return null
 
         }
 
-        /*    def resultado = Cda.executeQuery("select cda.documento from Cda cda")
-
-        if(resultado){
-
-        return x.toXML(resultado)
-
-        }else{
-
-        return false
-        }
-         */
-
+        
     }
-    def buscarCDAById(int id){
-        XStream x = new XStream()
-        def result = Cda.findAllById(id)
+    
+    /**
+     * Busca un documentos CDA por su identificador unico
+     *
+     * @param id identificador del documento
+     * @return CdaArr documento CDA,
+     * retorna null en caso de no encontrar coincidencia.
+     */
+    CdaArr buscarCDAById(int id){
+
+        def result = Cda.findById(id)
 
         if(result){
-            println "Hay resultados"
-            println "Resultado: "+ result
 
+            
+            def cda = new CdaArr()
+            cda.id=result.id.toString()
+            cda.fechaCreacion=result.fechaCreacion
+            cda.titulo=result.titulo
+            cda.documento=result.documento
+            
+            
 
-            x.omitField(result[0].class, "paciente")
-            x.omitField(result[0].class, "personalAutor")
-            x.omitField(result[0].class, "personalAutentificador")
-            x.omitField(result[0].class, "organizacionAutora")
-            x.omitField(result[0].class, "organizacionCustodia")
-            x.omitField(result[0].class, "organizacionAutentificadora")
-
-
-            def aux = x.toXML(result)
-            println aux
-            // println "Hay resultados"
-            return aux
-
-
-
+            println "La clase es:"+  cda.getClass()
+            return cda
         }else{
 
-            return false
+            return null
 
         }
 
     }
-    def buscarCDAByPaciente(String paciente){
-        XStream x = new XStream()
-        def result = Paciente.findByIdPaciente(paciente)
+
+    /**
+     * Busca un conjunto de documentos CDA pertenecientes a un paciente
+     *
+     * @param paciente identificador unico de paciente
+     * perteneciente a la organizacion que realiza la consulta
+     * @return List<CdaArr> una lista de documentos CDA´s,
+     * retorna null en caso de no encontrar coincidencias.
+     */
+    List<CdaArr> buscarCDAByPaciente(String paciente, def offset){
+
+        //  XStream x = new XStream()
+      /*  def result = Paciente.findByIdPaciente(paciente)
         //def result = Paciente.findAllById(paciente)
         if(result){
-
-
             //DEBERIA EXISTIR UN SOLO PACIENTE CON ESE ID
-            println result.cdas.id[0]
-            result = Cda.findAllById(result.cdas.id[0])
+            //result = Cda.findAllById(result.cdas.id)
+            def cd
+            cd = []
+            result.cdas.each{
+
+                def cda = new CdaArr()
+                cda.id=it.id.toString()
+                cda.fechaCreacion=it.fechaCreacion
+                cda.titulo=it.titulo
+                cda.documento=""
+                cd.add(cda)
+
+            }
+
+            return cd
+        }else{
+            return null
+        }*/
+
+        def pac = Paciente.findByIdPaciente(paciente)
+
+        def result = Cda.findAllByPaciente(pac, [max:this.max, offset: offset])
+
+        def cd = []
+        if(result){
+
+            result.each{
+
+                def cda = new CdaArr()
+                cda.id=it.id.toString()
+                cda.fechaCreacion=it.fechaCreacion
+                cda.titulo=it.titulo
+                cda.documento=""
+                cd.add(cda)
 
 
-            x.omitField(result[0].class, "paciente")
-            x.omitField(result[0].class, "personalAutor")
-            x.omitField(result[0].class, "personalAutentificador")
-            x.omitField(result[0].class, "organizacionAutora")
-            x.omitField(result[0].class, "organizacionCustodia")
-            x.omitField(result[0].class, "organizacionAutentificadora")
+            }
+            return cd
 
-
-
-            def aux = x.toXML(result)
-            println aux
-            return aux
         }else{
 
-
-            return false
+            return null
         }
 
 
     }
-    def buscarCDAByPacienteAndOrganizacion(String paciente, String organizacion){
-        XStream x = new XStream()
-        // def result = Paciente.findByIdPacienteAndCentro(paciente,organizacion)
-        //def result = Paciente.findAllById(paciente)
+
+    /**
+     * Busca un conjunto de documentos CDA pertenecientes a un paciente y
+     * en un rango determinado
+     *
+     * @param paciente identificador unico de paciente
+     * perteneciente a la organizacion que realiza la consulta
+     * @param desde rango de fecha de inicio
+     * @param desde rango de fecha de final
+     * @return List<CdaArr> una lista de documentos CDA´s,
+     * retorna null en caso de no encontrar coincidencias.
+     */
+    List<CdaArr> buscarCDAByPacienteAndRango(def paciente, def desde, def hasta, def offset){
+        //Formateando los datos a tipo java.lang.Date
+        desde= XMLGregorianCalendarConverter.asDate(desde)
+        hasta= XMLGregorianCalendarConverter.asDate(hasta)
+
+        def pac = Paciente.findByIdPaciente(paciente)
+        def result = Cda.withCriteria{
+            between("fechaCreacion",desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd"))
+            eq("paciente", pac)
+            maxResults(this.max)
+            firstResult(offset)
+
+        }
+
+        if(result){
+
+            def cd
+            cd = []
+            result.each{
+
+                def cda = new CdaArr()
+                cda.id=it.id.toString()
+                cda.fechaCreacion=it.fechaCreacion
+                cda.titulo=it.titulo
+                cda.documento=""
+                cd.add(cda)
+
+            }
+
+            println "La clase es:"+  cd.getClass()
+            return cd
+        }else{
+
+            return null
+
+        }
+
+
+
+    }
+
+
+    /**
+     * Busca un conjunto de documentos CDA pertenecientes a un paciente y
+     * a una organizacion determinada
+     *
+     * @param paciente identificador unico de paciente
+     * perteneciente a la organizacion que realiza la consulta
+     * @param organizacion identificador unico de la organizacion a consultar
+     * @return List<CdaArr> una lista de documentos CDA´s,
+     * retorna null en caso de no encontrar coincidencias.
+     */
+    List<CdaArr> buscarCDAByPacienteAndOrganizacion(String paciente, String organizacion,def offset){
 
         //CUAL ES LA ORGANIZACION ID ????
-        def org = Organizacion.get(1)
+        def org = Organizacion.get(organizacion.toInteger())
 
-        def result = Paciente.withCriteria{
+        //SI PREGUNTO CON CRITERIA DEVUELVE UN OBJETO Y NO UN LIST
+        /*        def result = Paciente.withCriteria{
 
-            and {
-                eq('idPaciente', paciente)
-                eq('centro',org)
-            }
+        and {
+        eq('cedula', paciente)
+        eq('centro',org)
         }
-
-
-       // def result = Paciente.findAll("from Paciente as pac where pac.centro=?", [1])
+        }
+         */
+        def pac = Paciente.findByIdPacienteAndCentro(paciente,org)
+        def result = Cda.findAllByPaciente(pac, [max:this.max, offset: offset])
 
         if(result){
             println "HAY RESULTADO POSITIVO: "+result
 
             //DEBERIA EXISTIR UN SOLO PACIENTE CON ESE ID
-            println result.cdas.id[0]
-            result = Cda.getAll(result.cdas.id[0])
+            def cd
+            cd = []
+            result.each{
 
+                def cda = new CdaArr()
+               
+                cda.id=it.id.toString()
+                cda.fechaCreacion=it.fechaCreacion
+                cda.titulo=it.titulo
+                cda.documento=""
+                cd.add(cda)
 
-            x.omitField(result[0].class, "paciente")
-            x.omitField(result[0].class, "personalAutor")
-            x.omitField(result[0].class, "personalAutentificador")
-            x.omitField(result[0].class, "organizacionAutora")
-            x.omitField(result[0].class, "organizacionCustodia")
-            x.omitField(result[0].class, "organizacionAutentificadora")
+            }
 
-
-
-            def aux = x.toXML(result)
-            println aux
-            return aux
+            return cd
         }else{
 
-             println "NO HAY RESULTADO POSITIVO"
-            return false
+            println "NO HAY RESULTADO POSITIVO"
+            return null
         }
 
-        return true
+       
 
     }
 
-/*
-
-    def buscarCDAByPacienteAndRango(String paciente){
-
-        return true
-    }
-
-    def buscarCDAByCustodio(String custodio){
-        return true
-    }
-    def buscarCDAByCustodioAndRango(String custodio){
-        return true
-    }
-*/
+    
+   
+    
 
     
 }
