@@ -7,6 +7,8 @@ import org.apache.ws.security.WSConstants
 import org.apache.ws.security.WSPasswordCallback
 import org.apache.ws.security.handler.WSHandlerConstants
 import imp.Organizacion
+import admin.*
+
 class BootStrap {
 
     def secureServiceFactory
@@ -16,10 +18,23 @@ class BootStrap {
 
     def init = { servletContext ->
 
+        def rol = new Role()
+        rol.setAuthority("ROLE_ADMIN")
+        rol.save()
+        def usr = new User()
+        usr.setUsername("user")
+	usr.setPassword("pass")
+        usr.setEnabled(true)
+        usr.save()
+
+        UserRole.create usr, rol
+        //UserRole.remove usr, rol
+
+
         def org = new Organizacion()
         org.setNombre("Hospital")
-        org.setLogin("abc")
-        org.setPassword("123")
+        org.setLogin("myAlias")
+        org.setPassword("keystore")
         org.save()
 
         //CONFIGURACION PARA LEER HEADERS DE ENTRADA
@@ -41,26 +56,22 @@ class BootStrap {
                  //   println "El usuario es: " + pc.getPassword()
 
                     //VERIFICAR QUIEN SE ESTÁ CONECTANDO
-                    pc.setPassword("keystore");
 
-                  /* def resultado =  Organizacion.withCriteria{
+                    def resultado =  Organizacion.withCriteria{
 
                         eq("login", pc.identifier)
-                        eq("password", pc.password)
+                       // eq("password", pc.password)
 
                     }
                     if(!resultado){
-                    println "error :: wrong password"
-                    throw new IOException("wrong password")
+                    println "error :: wrong user"
+                    throw new IOException("wrong user")
                     }else{
-                        println "Organizacion conectada: "+ resultado
-                    }*/
 
+                        pc.setPassword(resultado.password)
 
-                /*if(pc.identifier != "ususer" || pc.password != "secret") {
-                    println "error :: wrong password"
-                    throw new IOException("wrong password")
-                }*/
+                    }
+                  
             }
         })
 

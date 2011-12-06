@@ -98,3 +98,21 @@ grails.plugins.springsecurity.filterChain.chainMap = [
    //'/**': 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter'
 ]
 */
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'admin.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'admin.UserRole'
+grails.plugins.springsecurity.authority.className = 'admin.Role'
+
+grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
+
+grails.plugins.springsecurity.interceptUrlMap = [
+
+   '/js/**':        ['IS_AUTHENTICATED_ANONYMOUSLY'],
+   '/css/**':       ['IS_AUTHENTICATED_ANONYMOUSLY'],
+   '/images/**':    ['IS_AUTHENTICATED_ANONYMOUSLY'],
+   '/login/**':     ['IS_AUTHENTICATED_ANONYMOUSLY'],
+   '/logout/**':    ['IS_AUTHENTICATED_ANONYMOUSLY'],
+   '/secure/**':    ['ROLE_ADMIN'],
+    '/**':           ['ROLE_ADMIN']
+    
+]

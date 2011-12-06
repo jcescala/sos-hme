@@ -22,7 +22,7 @@ class Organizacion {
 
 
     static constraints = {
-
+        login(unique:true)
     }
 
       static def existeOrganizacion(String nombre){
