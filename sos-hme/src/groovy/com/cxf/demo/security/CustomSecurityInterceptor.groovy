@@ -42,5 +42,10 @@ class CustomSecurityInterceptor implements SecurityInterceptor {
         outProps.put(WSHandlerConstants.ENC_PROP_FILE, "client_sign_key.properties")
 
         new WSS4JOutInterceptor(outProps)
+
+
+
+        
+
     }
 }
