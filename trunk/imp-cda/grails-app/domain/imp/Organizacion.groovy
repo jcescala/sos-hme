@@ -1,31 +1,37 @@
 package imp
+import admin.User
 
 class Organizacion {
 
     static scaffold = true
-
+    
+    String uniqueIdentifier
     String nombre
-    String login
+    User user
+    /*String login
     String password
-
+     */
     static hasMany = [pacientes: Paciente,personal: Personal]
-  
+
 
     static mapping = {
 
-  //  id column: 'id_organizacion'
-    version false
+        //  id column: 'id_organizacion'
+        version false
 
 
     }
-
-
 
     static constraints = {
-        login(unique:true)
+        user(unique:true)
+        uniqueIdentifier(nullable:true)
     }
 
-      static def existeOrganizacion(String nombre){
+    transient beforeInsert = {
+        uniqueIdentifier = java.util.UUID.randomUUID().toString()
+    }
+
+    static def existeOrganizacion(String nombre){
 
         def p = Organizacion.findByNombre(nombre)
         //SE USA EL OPERADOR TERNARIO
