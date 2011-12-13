@@ -33,15 +33,6 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="login"><g:message code="organizacion.login.label" default="Login" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: organizacionInstance, field: 'login', 'errors')}">
-                                    <g:textField name="login" value="${organizacionInstance?.login}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                   <label for="nombre"><g:message code="organizacion.nombre.label" default="Nombre" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: organizacionInstance, field: 'nombre', 'errors')}">
@@ -49,12 +40,37 @@
                                 </td>
                             </tr>
                         
+                          <!--  <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="pacientes"><g:message code="organizacion.pacientes.label" default="Pacientes" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: organizacionInstance, field: 'pacientes', 'errors')}">
+                                    
+<ul>
+<g:each in="${organizacionInstance?.pacientes?}" var="p">
+    <li><g:link controller="paciente" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+</g:each>
+</ul>
+<g:link controller="paciente" action="create" params="['organizacion.id': organizacionInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'paciente.label', default: 'Paciente')])}</g:link>
+
+                                </td>
+                            </tr>
+                        
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="password"><g:message code="organizacion.password.label" default="Password" /></label>
+                                  <label for="personal"><g:message code="organizacion.personal.label" default="Personal" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: organizacionInstance, field: 'password', 'errors')}">
-                                    <g:textField name="password" value="${organizacionInstance?.password}" />
+                                <td valign="top" class="value ${hasErrors(bean: organizacionInstance, field: 'personal', 'errors')}">
+                                    <g:select name="personal" from="${imp.Personal.list()}" multiple="yes" optionKey="id" size="5" value="${organizacionInstance?.personal*.id}" />
+                                </td>
+                            </tr>
+                        -->
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="user"><g:message code="organizacion.user.label" default="User" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: organizacionInstance, field: 'user', 'errors')}">
+                                    <g:select name="user.id" from="${listUsers}" optionKey="id" optionValue="username" value="${organizacionInstance?.user?.id}"  />
                                 </td>
                             </tr>
                         

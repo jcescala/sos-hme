@@ -4,11 +4,13 @@ import com.thoughtworks.xstream.*
 import java.io.OutputStream.*
 import converters.DateConverter
 import javax.jws.*
-import org.springframework.web.context.request.RequestContextHolder
+//import org.springframework.web.context.request.RequestContextHolder
 
 import converters.*
 import com.cxf.demo.CdaResponse
 import com.cxf.demo.CdaArr
+
+import admin.User
 
 class CdaService {
     
@@ -91,8 +93,9 @@ class CdaService {
         if(!org1){
             org1=new Organizacion()
             org1.nombre = nombreOrganizacionAutor
-            org1.login = "ninguno1"
-            org1.password = "ninguno"
+
+            org1.user = User.get(1)
+
 
             org1.save()
         }
@@ -125,8 +128,8 @@ class CdaService {
         if(!org2){
             org2=new Organizacion()
             org2.nombre = nombreCustodio
-            org2.login = "ninguno2"
-            org2.password = "ninguno"
+            org2.user = User.get(1)
+
             org2.save()
         }
         docCda.setOrganizacionCustodia(org2)
@@ -145,8 +148,8 @@ class CdaService {
         if(!org3){
             org3=new Organizacion()
             org3.nombre = nombreOrganizacionAutentificador
-            org3.login = "ninguno3"
-            org3.password = "ninguno"
+            org3.user = User.get(1)
+
             org3.save()
         }
         docCda.setOrganizacionAutentificadora(org3)
@@ -168,7 +171,7 @@ class CdaService {
 
     }
 
-   
+
     /**
      * Busca un conjunto de documentos CDA en un rango de fechas
      *
@@ -203,7 +206,7 @@ class CdaService {
                 cda.titulo=it.titulo
                 cda.documento=""
                 cd.add(cda)
-           
+
             }
 
             println "La clase es:"+  cd.getClass()
@@ -214,9 +217,9 @@ class CdaService {
 
         }
 
-        
+
     }
-    
+
     /**
      * Busca un documentos CDA por su identificador unico
      *
@@ -230,14 +233,14 @@ class CdaService {
 
         if(result){
 
-            
+
             def cda = new CdaArr()
             cda.id=result.id.toString()
             cda.fechaCreacion=result.fechaCreacion
             cda.titulo=result.titulo
             cda.documento=result.documento
-            
-            
+
+
 
             println "La clase es:"+  cda.getClass()
             return cda
@@ -400,7 +403,7 @@ class CdaService {
             result.each{
 
                 def cda = new CdaArr()
-               
+
                 cda.id=it.id.toString()
                 cda.fechaCreacion=it.fechaCreacion
                 cda.titulo=it.titulo
@@ -416,13 +419,13 @@ class CdaService {
             return null
         }
 
-       
+
 
     }
 
-    
-   
-    
+
+
+
 
     
 }

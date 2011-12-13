@@ -11,13 +11,18 @@ import admin.*
 
 class BootStrap {
 
+//    IMPORTANTE INYECTAR LOS FACTORY PARA QUE FUNCIONEN LOS INTERCEPTORES
+//    EN ESOS SERVICIOS
     def secureServiceFactory
     def cdaServiceFactory
+    def impServiceFactory
+
 
     def authInterceptor
 
     def init = { servletContext ->
 
+//CREANDO ROL DE ADMINISTRADOR
         def rol = new Role()
         rol.setAuthority("ROLE_ADMIN")
         rol.save()
@@ -28,15 +33,22 @@ class BootStrap {
         usr.save()
 
         UserRole.create usr, rol
+
+
+
         //UserRole.remove usr, rol
 
 
-        def org = new Organizacion()
+/*        def org = new Organizacion()
         org.setNombre("Hospital")
+
+
+
         org.setLogin("myAlias")
         org.setPassword("keystore")
-        org.save()
-
+       
+       org.save()
+*/
         //CONFIGURACION PARA LEER HEADERS DE ENTRADA
       
 
@@ -57,7 +69,7 @@ class BootStrap {
 
                     //VERIFICAR QUIEN SE ESTÁ CONECTANDO
 
-                    def resultado =  Organizacion.withCriteria{
+                    /*def resultado =  Organizacion.withCriteria{
 
                         eq("login", pc.identifier)
                        // eq("password", pc.password)
@@ -69,8 +81,11 @@ class BootStrap {
                     }else{
 
                         pc.setPassword(resultado.password)
+                        
+                    }*/
 
-                    }
+                    pc.setPassword("keystore")
+
                   
             }
         })
@@ -83,17 +98,43 @@ class BootStrap {
         
         secureServiceFactory.getInInterceptors().add(new WSS4JInInterceptor(inProps))
         cdaServiceFactory.getInInterceptors().add(new WSS4JInInterceptor(inProps))
+        impServiceFactory.getInInterceptors().add(new WSS4JInInterceptor(inProps))
 
         //---------------------------------------------------------------------------
 
 
 
         //AÑADIENDO HEADERS AL MENSAJE DE SALIDA
-        Map<String, Object> outProps = [:]
-        outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.TIMESTAMP);
-        secureServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
-        cdaServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
-
+        /*FUNCIONA SOLO QUE EL CLIENTE NO ENTIENDE "POR AHORA" LA RESPUESTA*/
+//        Map<String, Object> outProps = [:]
+//        outProps.put(WSHandlerConstants.ACTION, org.apache.ws.security.handler.WSHandlerConstants.USERNAME_TOKEN+" "+ org.apache.ws.security.handler.WSHandlerConstants.TIMESTAMP +" "+org.apache.ws.security.handler.WSHandlerConstants.SIGNATURE+ " "+org.apache.ws.security.handler.WSHandlerConstants.ENCRYPT);
+//
+//
+//        outProps.put(WSHandlerConstants.USER, "myAlias")
+//        outProps.put(WSHandlerConstants.PASSWORD_TYPE, org.apache.ws.security.WSConstants.PW_DIGEST)
+//
+//        outProps.put(WSHandlerConstants.PW_CALLBACK_REF, new CallbackHandler() {
+//
+//                void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+//                    WSPasswordCallback pc = (WSPasswordCallback) callbacks[0]
+//                    pc.password = "keystore"
+//                }
+//            })
+//
+//
+//        String WSU_NS= "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+//        outProps.put("signatureParts",
+//                    "{Element}{" + WSU_NS + "}Timestamp;"+
+//                    "{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body")
+//
+//        outProps.put(WSHandlerConstants.SIG_PROP_FILE, "server.properties")
+//        outProps.put(WSHandlerConstants.ENC_PROP_FILE, "server_key.properties")
+//
+//
+//        secureServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
+//        cdaServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
+//        impServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
+//
     }
 
     def destroy = {

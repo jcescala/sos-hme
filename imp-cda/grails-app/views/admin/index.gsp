@@ -71,24 +71,22 @@
             <p>Ingresar texto aquí:</p>
 
             <div id="controllerList" class="dialog">
-                <h2>Administrar IMP:</h2>
+                <h2>Panel de Control:</h2>
                 <ul>
-                  <li><g:link controller="organizacion">Administrar Organizaciones</g:link></li>
-                  <br />
-                  <li><g:link controller="paciente">Administrar Pacientes</g:link></li>
+                  
+               <!--   <li><g:link controller="paciente">Administrar Pacientes</g:link></li>
                   <br />
                   <li><g:link controller="cda">Administrar Cdas</g:link></li>
                   <br />
                   <li><g:link controller="personal">Administrar Personal</g:link></li>
-
-                </ul>
-                <h2>Administrar Usuarios y Roles:</h2>
-                <ul>
+               -->
+               
                   <li><g:link controller="role">Administrar Roles</g:link></li>
                   <br />
                   <li><g:link controller="user">Administrar Usuarios</g:link></li>
                   <br />
-                
+                  <li><g:link controller="organizacion">Administrar Organizaciones</g:link></li>
+                  <br />
 
 
                 </ul>

@@ -24,11 +24,9 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'organizacion.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="login" title="${message(code: 'organizacion.login.label', default: 'Login')}" />
-                        
                             <g:sortableColumn property="nombre" title="${message(code: 'organizacion.nombre.label', default: 'Nombre')}" />
                         
-                            <g:sortableColumn property="password" title="${message(code: 'organizacion.password.label', default: 'Password')}" />
+                            <th><g:message code="organizacion.user.label" default="User" /></th>
                         
                         </tr>
                     </thead>
@@ -38,11 +36,9 @@
                         
                             <td><g:link action="show" id="${organizacionInstance.id}">${fieldValue(bean: organizacionInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: organizacionInstance, field: "login")}</td>
-                        
                             <td>${fieldValue(bean: organizacionInstance, field: "nombre")}</td>
                         
-                            <td>${fieldValue(bean: organizacionInstance, field: "password")}</td>
+                            <td>${fieldValue(bean: organizacionInstance, field: "user.username")}</td>
                         
                         </tr>
                     </g:each>

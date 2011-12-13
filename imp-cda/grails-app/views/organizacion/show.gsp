@@ -30,23 +30,18 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="organizacion.login.label" default="Login" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: organizacionInstance, field: "login")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="organizacion.nombre.label" default="Nombre" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: organizacionInstance, field: "nombre")}</td>
                             
                         </tr>
                     
+                       
+                    
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="organizacion.password.label" default="Password" /></td>
+                            <td valign="top" class="name"><g:message code="organizacion.user.label" default="User" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: organizacionInstance, field: "password")}</td>
+                            <td valign="top" class="value"><g:link controller="user" action="show" id="${organizacionInstance?.user?.id}">${organizacionInstance?.user?.username.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

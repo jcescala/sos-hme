@@ -1,9 +1,11 @@
 package imp
 
-class Paciente {
+class Paciente implements Serializable{
     static scaffold = true
 
-    String idPaciente
+   
+
+    String idPacienteOrg //el id que tiene asignado en la organizacion
     String cedula
     String pasaporte
 
@@ -13,30 +15,33 @@ class Paciente {
     String segundoApellido
     
     static hasMany = [cdas: Cda]
-    static belongsTo = [indice: IndicePaciente]
-    Organizacion centro
+    static belongsTo = [indice: IndicePaciente, centro: Organizacion]
+   
     
     static mapping = {
     
     table 'paciente'
     version false
+    id composite:['idPacienteOrg', 'centro']
   //  id column: 'id_paciente'
     }
 
     static constraints = {
 
-        idPaciente(nullable:false)
-        cedula(unique:true, nullable:true)
-        pasaporte(unique:true, nullable:true)
+        idPacienteOrg(nullable:false)
+        cedula(nullable:true)
+        pasaporte(nullable:true)
         primerNombre(nullable:true)
         segundoNombre(nullable:true)
         primerApellido(nullable:true)
         segundoApellido(nullable:true)
-        
-
-
+     
     }
 
+   
+
+
+    
     static def existePaciente(String cedula){
 
         def p = Paciente.findByCedula(cedula)

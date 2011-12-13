@@ -16,12 +16,13 @@ environments {
 //          dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 //			url = "jdbc:hsqldb:mem:devDB"
 
-	        pooling = true
+	       // pooling = true
 	        driverClassName = "com.mysql.jdbc.Driver"
 	        url = "jdbc:mysql://localhost:3306/imp_dev?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8"
 	        dbCreate = "create-drop"
 	        username = "root"
 	        password = ""
+               // dialect = 'org.hibernate.dialect.MySQL5InnoDBDialect'
 
             //loggingSql = true
 		}

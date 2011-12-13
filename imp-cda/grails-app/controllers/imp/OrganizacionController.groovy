@@ -1,22 +1,32 @@
 package imp
-
+import admin.User
 class OrganizacionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    
     def index = {
         redirect(action: "list", params: params)
     }
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
+
+
+
         [organizacionInstanceList: Organizacion.list(params), organizacionInstanceTotal: Organizacion.count()]
     }
 
     def create = {
         def organizacionInstance = new Organizacion()
         organizacionInstance.properties = params
-        return [organizacionInstance: organizacionInstance]
+
+
+        def users= User.executeQuery("from User as usr where usr in(select ur.user from UserRole as ur where ur.role.authority ='ROLE_ORGANIZACION') and usr not in (select org.user from Organizacion as org)")
+
+       
+
+        return [organizacionInstance: organizacionInstance, listUsers: users]
     }
 
     def save = {
@@ -48,7 +58,12 @@ class OrganizacionController {
             redirect(action: "list")
         }
         else {
-            return [organizacionInstance: organizacionInstance]
+         def users=[]
+         users.add(organizacionInstance.user)
+         users = users + User.executeQuery("from User as usr where usr in(select ur.user from UserRole as ur where ur.role.authority ='ROLE_ORGANIZACION') and usr not in (select org.user from Organizacion as org)")
+         
+            return [organizacionInstance: organizacionInstance, listUsers: users]
+    
         }
     }
 
