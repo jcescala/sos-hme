@@ -25,11 +25,11 @@ class OrganizacionPanelController {
             def list = Organizacion.list(params)
             list.remove(org)
 
-            def orgAutora =Cda.countByOrganizacionAutora(org)
-            def orgCustodia =Cda.countByOrganizacionCustodia(org)
-            def orgAutentificadora =Cda.countByOrganizacionAutentificadora(org)
+          //  def orgAutora =Cda.countByOrganizacionAutora(org)
+          //  def orgCustodia =Cda.countByOrganizacionCustodia(org)
+          //  def orgAutentificadora =Cda.countByOrganizacionAutentificadora(org)
 
-            def cdas = [autora:orgAutora, custodia:orgCustodia, autentifica:orgAutentificadora]
+            def cdas = [autora:0, custodia:0, autentifica:0]
 
             render(view:"/organizacionPanel/index", model: [organizacion: org, cdas:cdas, organizacionInstanceList: list, organizacionInstanceTotal: Organizacion.count()])
 
