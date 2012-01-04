@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlAccessorType
 class PacienteArr {
 
     String idPaciente
+    long idCentro
+    String nombreCentro
     String cedula
     String pasaporte
     String primerNombre

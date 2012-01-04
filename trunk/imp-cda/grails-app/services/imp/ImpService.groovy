@@ -1,45 +1,30 @@
 package imp
 import imp.*
 import admin.User
-
-//import com.thoughtworks.xstream.*
-//import java.io.OutputStream.*
 import converters.DateConverter
-//mport javax.jws.*
-//import org.springframework.web.context.request.RequestContextHolder
-
-
 import com.cxf.demo.PacienteArr
+import com.cxf.demo.ConjuntoPaciente
 
+
+
+
+/**
+ * Web Service indice Maestro de Pacientes
+ *
+ * @author Armando Prieto
+ * @version 1.0
+ */
 class ImpService {
     
     static expose=['cxf']
     static transactional = true
-    
+    def max = 10
    
-
-
+    /**Descripcion del metodo agregarPaciente
+     *@param paciente Paciente para ser agregado al IMP
+     *@param idOrganizacion Token de la organizacion a la que pertenece el paciente
+     */
     boolean agregarPaciente(PacienteArr paciente, String idOrganizacion){
-
-        //        def x = new XStream();
-        //
-        //        def objPaciente = (Paciente) x.fromXML(paciente)
-        //
-        //        //FIXME: debe buscarse en el indice primero para seleccionar un paciente
-        //
-        //        //Crear un indice cableado
-        //
-        //        def indice = new IndicePaciente()
-        //        indice.save()
-        //        objPaciente.setIndice(indice)
-        //        if(objPaciente.save()){
-        //
-        //
-        //            return true
-        //        }else{
-        //
-        //            return false
-        //        }
 
         def p = new Paciente()
 
@@ -56,6 +41,9 @@ class ImpService {
         //PREGUNTAR SI SE DESEA CRUZAR O AGREGAR UNO NUEVO!!!
         def indice = new IndicePaciente()
         indice.save()
+
+        //def indice = IndicePaciente.get(18)
+
         p.setIndice(indice)
         ////////////////////////////////////////////////////
 
@@ -71,12 +59,13 @@ class ImpService {
             if(!Paciente.findByIdPacienteOrgAndCentro(paciente.getIdPaciente(),org)){
                 p.setCentro(org)
                 if(p.save()){
-
+                    /*  indice.addToPacientes(p)
+                    indice.save()*/
                     return true
 
                 }else{
                 
-                    throw new RuntimeException("Error al guardar paciente")
+                    throw new RuntimeException("No se pudo efectuar la operacion 'AgregarPaciente'")
                     return false
                 }
             
@@ -97,37 +86,67 @@ class ImpService {
 
     }
 
-    def editarPaciente(String paciente){
-        //MANDAR UUID ???
+    
+    
+    /**Verifica si existe el paciente en el IMP
+     *@param idPacienteOrg Identificador perteneciente al paciente en la organizacion 'cruzadora'
+     *@param idOrganizacion Token de la organizacion 'cruzadora'
+     */
+    boolean existePaciente(String idPacienteOrg, String idOrganizacion) throws RuntimeException{
+        def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
 
-        return true
+        //Si existe la organizacion
+        if(org){
+            def paciente = Paciente.findByIdPacienteOrgAndCentro(idPacienteOrg, org)
+            //Si existe el idPacienteOrg para esa organizacion
+            if(paciente){
+                return true
+
+            }else{
+
+                return false
+            }
+        }else{
+
+            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return false
+        }
     }
 
-    boolean eliminarPaciente(String IdPacienteOrg, String idOrganizacion){
+    /**Elimina un paciente del IMP
+     *@param paciente paciente a ser eliminado del IMP
+     *@param idOrganizacion Token de la organizacion a la que pertenece el paciente
+     */
+    boolean eliminarPaciente(String idPacienteOrg, String idOrganizacion){
 
-
+        //println "QUE PASA ID :" +idOrganizacion
         def org = Organizacion.findByUniqueIdentifier(idOrganizacion)
 
         if(org){
 
 
-            def paciente = Paciente.findByIdPacienteOrgAndCentro(IdPacienteOrg, org)
+            def paciente = Paciente.findByIdPacienteOrgAndCentro(idPacienteOrg, org)
 
             if(paciente){
-
-             /* def ind = IndicePaciente.findByUniqueIdentifier(paciente.indice.uniqueIdentifier)
-              println "INDICE "+ind
-              */
-
-                //COMO 'paciente' es una instancia de trancision debo llamar a delete(flush:true)
-                //de lo contrario de generaria un error en la eliminacion
+                
+                def ind = IndicePaciente.findByUniqueIdentifier(paciente.indice.uniqueIdentifier)
+                println "Es aqui no"
                 try {
-                    paciente.delete(flush:true)
+
+                    if(ind.pacientes.size()==1){
+
+                        ind.delete(flush: true)
+                    }else{
+
+                        ind.removeFromPacientes(paciente)
+                        paciente.delete()
+                    }
+                 
                     return true
                 }
-                catch(org.springframework.dao.DataIntegrityViolationException e) {
+                catch(Exception e) {
                     e.printStackTrace()
-                    throw new RuntimeException("No se pudo eliminar el paciente")
+                    throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar Paciente'")
                     return false
                 }
                
@@ -145,76 +164,248 @@ class ImpService {
 
     }
 
-
-    def buscarCandidatos(){
-
-
-        return true
-    }
-
-    def agregarRelacionPaciente(){
-        
-        
-        return true
-    }
-
-    def modificarRelacionPaciente(){
-        return true
-    }
-
-    def eliminarRelacionPaciente(){
-        return true
-    }
-
-    /*
-    def buscarPaciente(String paciente){
-    def x = new XStream();
-    def objPaciente = (Paciente) x.fromXML(paciente)
-
-    //Plantear algoritmo de busqueda que coloque los resultados según su coincidencia
-    //BUSCAR LISTA DE CANDIDATOS
-    def candidatos = Paciente.withCriteria(){
-    or{
-    eq('cedula', objPaciente.getCedula())
-    eq('pasaporte', objPaciente.getPasaporte())
-    eq('primerNombre', objPaciente.getPrimerNombre())
-    eq('segundoNombre', objPaciente.getSegundoNombre())
-    eq('primerApellido', objPaciente.getPrimerApellido())
-    eq('segundoApellido', objPaciente.getSegundoApellido())
-    }
-    }
-    //println "Clase: " + candidatos
-
-        
-
-    //def candidatos = Paciente.executeQuery("select pac.primerNombre, pac.primerApellido from Paciente pac")
-    if(candidatos){
-
-
-    candidatos = OrderService.ordenarCandidatos(objPaciente, candidatos)
-
-    //OMITO LOS CAMPOS INDICE, CDAS Y ID para estar de acorde al POJO
-    x.omitField(candidatos[0].class, "indice")
-    x.omitField(candidatos[0].class, "cdas")
-    x.omitField(candidatos[0].class, "id")
-    x.omitField(candidatos[0].class, "centro")
-
-
-    //println "CandidatoS: " + candidatos
-        
-    def aux = x.toXML(candidatos)
-
-    //println aux
-    return aux
-    }else{
-
-    return false
-    }
-
-
-        
-    }
+    /**Busqueda de candidatos
+     *@param paciente paciente a ser buscado por coincidencias en el IMP
+     *@return lista de pacientes candidatos
      */
+    ConjuntoPaciente buscarCandidatos(PacienteArr paciente, def offset, String idOrganizacion){
+               
+          def centro = Organizacion.findByUniqueIdentifier(idOrganizacion)
+        //Plantear algoritmo de busqueda que coloque los resultados según su coincidencia
+        //BUSCAR LISTA DE CANDIDATOS
+
+        println "IDIDIDID::::___________"+ paciente.getIdPaciente()
+        println "IDIDIDID::::___________"+ centro.id
+
+        def p = Paciente.createCriteria()
+        def count = p.count {
+            or{
+                eq('cedula', paciente.getCedula())
+                eq('pasaporte', paciente.getPasaporte())
+                eq('primerNombre', paciente.getPrimerNombre())
+                eq('segundoNombre', paciente.getSegundoNombre())
+                eq('primerApellido', paciente.getPrimerApellido())
+                eq('segundoApellido', paciente.getSegundoApellido())
+            }
+            and{
+                ne('idPacienteOrg',paciente.getIdPaciente())
+                ne('centro',centro)
+            }
+        }
+
+
+      
+
+
+
+
+
+        def candidatos = Paciente.withCriteria(){
+            or{
+                eq('cedula', paciente.getCedula())
+                eq('pasaporte', paciente.getPasaporte())
+                eq('primerNombre', paciente.getPrimerNombre())
+                eq('segundoNombre', paciente.getSegundoNombre())
+                eq('primerApellido', paciente.getPrimerApellido())
+                eq('segundoApellido', paciente.getSegundoApellido())
+            }
+            and{
+                ne('idPacienteOrg',paciente.getIdPaciente())
+                ne('centro',centro)
+            }
+            maxResults(this.max)
+            firstResult(offset)
+        }
+
+
+
+
+
+        if(candidatos){
+
+
+            def listPacienteArr = OrderService.ordenarCandidatos(paciente, candidatos)
+            def conjuntoPaciente = new ConjuntoPaciente()
+            conjuntoPaciente.total = count
+            conjuntoPaciente.listPacienteArr = listPacienteArr
+            return conjuntoPaciente
+        }
+            
+        return null
+    }
+
+
+    /**Relaciona un paciente de una organizacion con algun otro perteneciente al IMP
+     *@param idCentroImp identificador de la organizacion en el IMP 'receptora'
+     *@param idPacienteImp Identificador perteneciente al paciente en el IMP 'receptora'
+     *@param idPacienteOrg Identificador perteneciente al paciente en la organizacion 'cruzadora'
+     *@param idOrganizacion Token de la organizacion 'cruzadora'
+     */
+    boolean agregarRelacionPaciente(Long idCentroImp,String idPacienteImp, String idPacienteOrg, String idOrganizacion){
+        
+        def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
+        
+        //Si existe la organizacion
+        if(org){
+            def pacienteOrg = Paciente.findByIdPacienteOrgAndCentro(idPacienteOrg, org)
+            //Si existe el idPacienteOrg para esa organizacion
+            if(pacienteOrg){
+
+                try{
+                    def orgImp = Organizacion.get(idCentroImp)
+                    def pacienteImp = Paciente.findByIdPacienteOrgAndCentro(idPacienteImp, orgImp)
+                    //Si el idPacienteImp existe
+                    if(pacienteImp){
+
+
+                    
+                        //def ind = IndicePaciente.findByUniqueIdentifier(pacienteImp.indice.uniqueIdentifier)
+                        def ind = pacienteImp.indice
+                        //Enlazar el pacienteOrg al indice ind al que pertenece el pacienteImp
+                        //
+                        //Copio el indice viejo en un auxiliar
+                        def indiceAux = pacienteOrg.getIndice()
+                        //remouevo del indice la relacion
+                        indiceAux.removeFromPacientes(pacienteOrg)
+                        //seteo el nuevo indice en el paciente
+                        pacienteOrg.setIndice(ind)
+                        pacienteOrg.save()
+                        //elimino el indice viejo, si no tiene mas pacientes
+                        if(indiceAux.pacientes.size()==0){
+                            indiceAux.delete()
+                        }
+                    
+                        return true
+                    }
+                    
+
+
+                }
+
+                catch(Exception e) {
+                    e.printStackTrace()
+                    throw new RuntimeException("No se pudo efectuar la operacion 'Agregar Relacion Paciente'")
+                    return false
+                }
+                    
+                
+            }else{
+
+                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                return false
+
+
+            }
+        }else{
+
+            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return false
+
+        }
+        return false
+    }
+
+   
+    
+    /**Verifica si existe alguna relacion con otro paciente
+     *@param idPacienteOrg Identificador perteneciente al paciente en la organizacion 'cruzadora'
+     *@param idOrganizacion Token de la organizacion 'cruzadora'
+     */
+    boolean existeRelacionPaciente(String idPacienteOrg, String idOrganizacion){
+
+        def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
+
+        //Si existe la organizacion
+        if(org){
+            def paciente = Paciente.findByIdPacienteOrgAndCentro(idPacienteOrg, org)
+            //Si existe el idPacienteOrg para esa organizacion
+            if(paciente){
+
+                if(paciente.indice.pacientes.size()>1){
+
+                    return true
+                }else{
+
+                    return false
+                }
+                
+            
+            }else{
+                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                return false
+
+            }
+
+        }else{
+
+            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return false
+
+        }
+    }
+
+    /**Elimina la relacion exitente entre un paciente de una organizacion con algun otro perteneciente al IMP
+     *@param idPacienteOrg Identificador perteneciente al paciente en la organizacion 'cruzadora'
+     *@param idOrganizacion Token de la organizacion 'cruzadora'
+     */
+    boolean eliminarRelacionPaciente(String idPacienteOrg, String idOrganizacion){
+
+        //Cuando se elimina una relacion debe crearse
+        //un IndicePaciente nuevo para el nodo que queda flotando
+
+        def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
+
+        //Si existe la organizacion
+        if(org){
+            def paciente = Paciente.findByIdPacienteOrgAndCentro(idPacienteOrg, org)
+            //Si existe el idPacienteOrg para esa organizacion
+            if(paciente){
+
+                try{
+
+                    if(paciente.indice.pacientes.size()>1){
+                        //nuevo indice de paciente
+                        def ind = new IndicePaciente()
+                        ind.save()
+
+                        def indiceAux = paciente.getIndice()
+                        //remuevo del indice la relacion
+                        indiceAux.removeFromPacientes(paciente)
+
+                        paciente.setIndice(ind)
+                        paciente.save()
+                        return true
+                    }
+
+                }
+                catch(Exception e) {
+                    e.printStackTrace()
+                    throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar Relacion Paciente'")
+                    return false
+                }
+
+
+            }else{
+
+                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                return false
+
+
+            }
+
+        }else{
+
+            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return false
+
+        }
+
+
+        
+        return false
+    }
+
+   
     
 
     

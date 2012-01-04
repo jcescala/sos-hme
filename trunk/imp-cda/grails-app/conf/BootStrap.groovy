@@ -23,16 +23,16 @@ class BootStrap {
     def init = { servletContext ->
 
 //CREANDO ROL DE ADMINISTRADOR
-        def rol = new Role()
-        rol.setAuthority("ROLE_ADMIN")
-        rol.save()
-        def usr = new User()
-        usr.setUsername("user")
-	usr.setPassword("pass")
-        usr.setEnabled(true)
-        usr.save()
-
-        UserRole.create usr, rol
+//        def rol = new Role()
+//        rol.setAuthority("ROLE_ADMIN")
+//        rol.save()
+//        def usr = new User()
+//        usr.setUsername("user")
+//	usr.setPassword("pass")
+//        usr.setEnabled(true)
+//        usr.save()
+//
+//        UserRole.create usr, rol
 
 
 
