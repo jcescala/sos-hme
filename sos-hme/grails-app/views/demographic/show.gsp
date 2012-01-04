@@ -1,141 +1,279 @@
-<%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
-<%@ page import="hce.core.common.change_control.Version" %>
-<%@ page import="hce.core.composition.Composition" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+
 <html>
   <head>
-    <!--meta name="layout" content="ehr-modal" /-->
-    <meta name="layout" content="basicrecord" />
-    <title><g:message code="demographic.show.title" /></title>
-    <style>
-        table #list {
-          background-color: #ffffdd;
-          width: 100%;
-          font-size: 12px;
-          border: 1px solid #000;
-        }
-        #list th {
-          background-color: #ccccdd;
-        }
-        #list td {
-          text-align: center;
-        }
-      </style>
-  </head>
-  <body>
-    <div class="bodydomainlist">
-    <h1><g:message code="demographic.show.title" /></h1>
-  
+    <meta name="layout" content="ehr-modal" />
+  <g:javascript library="jquery" />
+
+  <g:javascript>
+
+    $(document).ready( function() {
+    $('#message').delay(1000).fadeOut();
+    });
+    function cargando(etiqueta){
+
+
+
+    $(etiqueta).html("<img src='${createLinkTo(dir:"images", file:"spinner.gif")}'/> Cargando...");
+
+
+    }
+
+  </g:javascript>
+
+
+  <title><g:message code="demographic.show.title" /></title>
+  <style>
+    table #list {
+      background-color: #ffffdd;
+      width: 100%;
+      font-size: 12px;
+      border: 1px solid #000;
+    }
+    #list th {
+      background-color: #ccccdd;
+    }
+    #list td {
+      text-align: center;
+    }
+  </style>
+
+
+
+
+</head>
+<body>
+  <div class="bodydomainlist">
+
+    <h2><g:message code="demographic.show.title" /></h2>
+
     <ul class="top_actions">
       <li>
-        <g:link action="admisionPaciente" class="back"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
+      <g:link action="admisionPaciente" class="back"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
       </li>
       <li>
-        <g:link controller="records" action="create" params="[root:root, extension:extension]" class="create"><g:message code="demographic.show.action.createEpisode" /></g:link>
+      <g:link controller="records" action="create" params="[root:root, extension:extension]" class="create"><g:message code="demographic.show.action.createEpisode" /></g:link>
       </li>
-      <%-- TODO: que otra accion sea seleccionar un episodio existente --%>
+      <!--
+       <li>
+       <g:link controller="service" action="agregarRalacionPaciente" params="[]" class="create">Agregar Relacion Paciente</g:link>
+       </li>
+       <li>
+       <g:link controller="service" action="agregarRalacionPaciente" params="[]" class="create">Eliminar Relacion Paciente</g:link>
+       </li>-->
+
+<%-- TODO: que otra accion sea seleccionar un episodio existente --%>
     </ul>
-  
-    <table id="list" class="listrecords">
-      <tr>
-        <th><g:message code="persona.identificadores" /></th>
+
+
+    <g:set var="person_id" value="${persona.id}" />
+
+
+
+
+
+<%-- DATOS DEMOGRAFICOS--%>
+    <div id="demograficos">
+      <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
+
+
+<%-- Preguntar primero si tiene foto--%>
+
+      <g:if test="${persona.sexo=='Masculino'}">
+        <img src="${createLinkTo(dir:"images", file:"man.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+      </g:if>
+      <g:else>
+        <img src="${createLinkTo(dir:"images", file:"woman.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+      </g:else>
+
+      <h2>${name.toString()}</h2>
+      <table id="list" class="listrecords">
+        <tr>
+          <th><g:message code="persona.identificadores" /></th>
         <th><g:message code="persona.primerNombre" /></th>
         <th><g:message code="persona.segundoNombre" /></th>
         <th><g:message code="persona.primerApellido" /></th>
         <th><g:message code="persona.segundoApellido" /></th>
         <th><g:message code="persona.fechaNacimiento" /></th>
         <th><g:message code="persona.sexo" /></th>
-      </tr>
-      <tr>
-        <td><g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></td>
-        <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
+        </tr>
+        <tr>
+          <td><g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></td>
+
         <td>${name?.primerNombre}</td>
         <td>${name?.segundoNombre}</td>
         <td>${name?.primerApellido}</td>
         <td>${name?.segundoApellido}</td>
         <td>${persona.fechaNacimiento}</td>
         <td>${persona.sexo}</td>
-      </tr>
-    </table>
-
- <%-- FIXME: NO TE REPITAS TU MISMO , Armando, generar template list.gsp --%>
-    <g:set var="person_id" value="${persona.id}" />
-    <g:form controller="demographic" action="seleccionarPaciente" params="[id: person_id]">
-  <br/>
-    <label for="rangoFechas">
-      <g:message code="buscar.rango_fechas" />
-    </label>
-
-      <br />
-      
-    <label for="desde">
-      <g:message code="buscar.desde" />
-    </label>
-    <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
-  <br />
-
-    
-    <label for="hasta">
-      <g:message code="buscar.hasta" />
-    </label>
-    <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
-
-
-
-    
-    <br/>
-    <g:submitButton name="doit" value="${message(code:'buscar.filtro')}" />
-
-  </g:form>
-
-    <table id="list1">
-      <tr>
-        <th><g:message code="trauma.list.label.id" /></th>
-        <th><g:message code="trauma.list.label.startTime" /></th>
-        <th><g:message code="trauma.list.label.endTime" /></th>
-        <th><g:message code="trauma.list.label.observations" /></th>
-        <th><g:message code="trauma.list.label.state" /></th>
-        <th><g:message code="trauma.list.label.actions" /></th>
-      </tr>
-      <g:each in="${compositions}" var="composition">
-        <tr>
-          <td>${composition.id}</td>
-          <td><g:format date="${composition.context.startTime?.toDate()}" /></td>
-          <td><g:format date="${composition.context.endTime?.toDate()}" /></td>
-          <td>
-            <%-- OJO: Solo funciona si el otherContext es ItemSingle y el value del Element es DvText --%>
-            ${composition.context.otherContext.item.value.value}
-          </td>
-          <td>
-            <%--
-            // El .toString es por esto:
-	        // Exception Message: No signature of method:
-	        // org.codehaus.groovy.grails.context.support.PluginAwareResourceBundleMessageSource.getMessage()
-	        // is applicable for argument types: (org.codehaus.groovy.grails.web.util.StreamCharBuffer, null,
-	        // org.codehaus.groovy.grails.web.util.StreamCharBuffer, java.util.Locale) values:
-	        // [ehr.lifecycle.incomplete, null, ehr.lifecycle.incomplete, es]
-            --%>
-            <g:message code="${g.stateForComposition(episodeId:composition.id).toString()}" />
-          </td>
-          <td>
-            <g:link controller="records" action="show" id="${composition.id}"><g:message code="trauma.list.action.show" /></g:link>
-            <br />
-              <g:if test="${(g.stateForComposition(episodeId:composition.id) == Version.STATE_SIGNED)}">
-                <g:set var="version" value="${Version.findByData(composition)}"/>
-                <g:set var="archivoCDA" value="${new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + version.nombreArchCDA)}"/>
-                <g:if test="${!archivoCDA.exists()}">
-                  <g:link controller="cda" action="create" id="${composition.id}">Crear CDA</g:link>
-                </g:if>
-                <g:else>
-                  <g:message code="Documento Clinico Creado" /> <!-- TODO i18n -->
-                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}"><g:message code="Ver CDA" /></g:link> <!-- TODO i18n -->
-
-                </g:else>
-              </g:if>
-          </td>
         </tr>
-      </g:each>
-    </table>
+      </table>
     </div>
-  </body>
+<%-- DATOS OPCIONES DE IMP--%>
+
+    <div id="imp">
+
+      <h4>Opciones de IMP</h4>
+      <ul>
+
+        <g:if test="${!agregadoImp}">
+          <li><g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="create">Agregar Paciente a IMP</g:link></li>
+        </g:if>
+        <g:else>
+          <li><g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="create">Eliminar Paciente de IMP</g:link></li>
+
+
+
+
+          <g:if test="${!relacionadoImp}">
+            <li><g:remoteLink controller="service"
+                              action="buscarPaciente"
+                              params="[id: person_id, offset: '0']"
+                              update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
+                              onLoading="cargando('#resultadoCandidatos')"
+                              class="create">Agregar Relacion Paciente</g:remoteLink></li>
+          </g:if>
+          <g:else>
+            <li><g:link controller="service" action="listarOrganizaciones" params="[id: person_id]" class="create">Mostrar Organizaciones Relacionadas</g:link></li>
+            <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create">Eliminar Relacion Paciente</g:link></li>
+          </g:else>
+
+        </g:else>
+      </ul>
+
+    </div>
+
+    <div id="resultadoCandidatos">
+
+
+    </div>
+    <div id="errorResultadoCandidatos">
+
+
+    </div>
+
+
+
+
+<%-- REGISTROS INTERNOS --%>
+    <div id="registroInterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
+      <h3>Registros Internos</h3> <hr/>
+      <g:formRemote name="busquedaInterna"
+                    url="[controller:'demographic',action:'busquedaInterna', params: [id: person_id,marca: 'fil']]"
+                    update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
+                    onLoading="cargando('#resultadoInterno')">
+        <br/>
+        <label for="rangoFechas">
+          <b> <g:message code="buscar.rango_fechas" /></b>
+        </label>
+
+
+
+        <label for="desde">
+          <g:message code="buscar.desde" />
+        </label>
+        <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
+
+
+
+        <label for="hasta">
+          <g:message code="buscar.hasta" />
+        </label>
+        <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
+
+
+        <g:submitButton name="doit" value="${message(code:'buscar.filtro')}" />
+
+
+      </g:formRemote>
+      <g:remoteLink name="busquedaAllInterna"
+                    url="[controller:'demographic',action:'busquedaAllInterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
+                    update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
+                    onLoading="cargando('#resultadoInterno')">Todos los registros
+
+      </g:remoteLink>
+
+
+
+
+      <div id="resultadoInterno"></div>
+      <div id="errorResultadoInterno"></div>
+
+
+    </div>
+
+
+<g:if test="${agregadoImp}">
+<%-- REGISTROS EXTERNOS --%>
+
+
+    <div id="registroExterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
+      <h3>Registros Externos</h3> <hr/>
+      <div id="busquedaExterna">
+        <g:formRemote name="busquedaExterna"
+                      url="[controller:'demographic',action:'busquedaExterna',params: [id: person_id, offset:0, marca: 'fil']]"
+                      update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
+                      onLoading="cargando('#resultadoExterno')">
+          <br/>
+          <label for="rangoFechas">
+            <b> <g:message code="buscar.rango_fechas" /></b>
+          </label>
+
+
+
+          <label for="desde">
+            <g:message code="buscar.desde" />
+          </label>
+          <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
+
+
+
+          <label for="hasta">
+            <g:message code="buscar.hasta" />
+          </label>
+          <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
+
+          <g:submitButton name="doit" type="submit" value="${message(code:'buscar.filtro')}" />
+        </g:formRemote>
+        <g:remoteLink name="busquedaAllExterna"
+                      url="[controller:'demographic',action:'busquedaAllExterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
+                      update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
+                      onLoading="cargando('#resultadoExterno')">Todos los CDAs
+
+        </g:remoteLink>
+
+      </div>
+      <div id="resultadoExterno" >
+
+
+      </div>
+
+      <div id="errorResultadoExterno"></div>
+
+
+
+    </div>
+
+<%-- ORGANIZACIONES RELACIONADAS--%>
+
+    <div id="listadoOrganizaciones" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
+      <h3>Listado de Organizaciones</h3> <hr/>
+
+
+      <g:remoteLink controller="service"
+                    action="listarOrganizaciones"
+                    id="${person_id}"
+                    update="[success:'resultadoOrganizaciones',failure:'errorResultadoOrganizaciones']"
+                    on404="alert('not found');">Ver Organizaciones</g:remoteLink>
+      <div id="resultadoOrganizaciones">
+      </div>
+      <div id="errorResultadoOrganizaciones">
+      </div>
+
+
+    </div>
+</g:if>
+    
+  </div>
+
+</body>
 </html>

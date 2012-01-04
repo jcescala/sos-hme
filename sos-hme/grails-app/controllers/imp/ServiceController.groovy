@@ -1,6 +1,6 @@
 package imp
 
-//import org.grails.plugins.wsclient.service.WebService
+
 import imp.Paciente
 import com.thoughtworks.xstream.*
 import java.io.OutputStream.*
@@ -15,8 +15,11 @@ import cda.BuscarCDAByPacienteAndOrganizacionResponse
 import cda.BuscarCDAByPacienteAndRangoResponse
 
 import cda.CdaArr
+import imp.PacienteArr
 import converters.*
 import java.util.ArrayList
+
+import demographic.party.*
 
 class ServiceController {
     /*
@@ -24,53 +27,77 @@ class ServiceController {
     def wsdl = ApplicationHolder.application.config.wsdl
     def proxy
      */
-    def customSecureServiceClient
+    def customSecureServiceClientCda
+    def customSecureServiceClientImp
     // def complexServiceClient
+
+    def demographicService
+
     def index = {
 
-        customSecureServiceClient.serviceMethod()
+        customSecureServiceClientCda.serviceMethod()
 
         render("<h1>Bien</h1>")
     }
 
 
     def registrarCda = {
-        XStream x = new XStream()
 
-    
+        //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
 
-        println "----------------------"
+        def cda = new CdaArr()
 
-        println "Cosumiendo web service"
+        cda.id = params.id //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
+        cda.titulo = "Algun titulo"
+        cda.fechaCreacion = "1988-05-20" //formato dd-MM-yyyy
+        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + params.id + '.xml')
 
-        // String cda_string = cadenaXML.toString()
+        if(!cda_xml.exists()){
 
-        def result1 = customSecureServiceClient.registrarCDA("")
-
-        //  println cadenaXML.toString()
-        println "----------------------"
-
-       
+            render "<p> Archivo: NO Existe</p>"
+            return false
+        }else{
 
 
-        render "<p>Listo revisar </p> <p>${result1}</p>"
+            cda.documento = cda_xml.getText() //xml
+
+            def result1 = customSecureServiceClientCda.registrarCDA(cda,"15",idOrganizacion)
+            render "<p>Listo revisar </p> <p>${result1}</p>"
+            return true
+
+        }
+
+        
 
 
 
     }
+    def eliminarCda = {
+        //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
 
- 
-    def buscarCda = {
-       
-        List<cda.BuscarCDAByRangoResponse> result = customSecureServiceClient.buscarCDAByRango(
-            XMLGregorianCalendarConverter.getXMLCalendar("2010-08-30","yyyy-MM-dd"),
-            XMLGregorianCalendarConverter.getXMLCalendar("2010-10-30","yyyy-MM-dd"),
-            0)
+        long a = 19
+        def result = customSecureServiceClientCda.eliminarCDA(a,"15",idOrganizacion)
+
+        render "<p>"+result+"</p>"
+
+    }
+
+    def buscarCdaByRango = {
         
-        println "Resultado CDAs: "+ result
+       //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        cda.ConjuntoCda result = customSecureServiceClientCda.buscarCDAByRango(
+            XMLGregorianCalendarConverter.getXMLCalendar("1987-08-30","yyyy-MM-dd"),
+            XMLGregorianCalendarConverter.getXMLCalendar("2010-10-30","yyyy-MM-dd"),
+            0,
+            idOrganizacion)
+        
+       // println "Resultado CDAs: "+ result
         if(result){
             
-            render(view: "listaCdas", model: [result: result])
+            render(view: "listaCdas", model: [result: result.listCdaArr, total: result.total])
         
         }else{
             render(view: "listaCdas", model: [result: null])
@@ -78,18 +105,18 @@ class ServiceController {
         }
 
     }
-
     def buscarCdaByPaciente = {
-
+        
     
-        //CUAL ES MI ID DE ORGANIZACION ????
+        //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
 
-        List<cda.BuscarCDAByPacienteResponse> result = customSecureServiceClient.buscarCDAByPaciente("12345678",0)
-        println "Resultado CDAs: "+ result
+        cda.ConjuntoCda result = customSecureServiceClientCda.buscarCDAByPaciente(params.id,0,idOrganizacion)
+        //println "Resultado CDAs: "+ result
 
         if(result){
 
-            render(view: "listaCdas", model: [result: result])
+            render(view: "listaCdas", model: [result: result.listCdaArr, total: result.total])
         }else{
             render(view: "listaCdas", model: [result: null])
             //  render "<p>No se encontró CDA </p>"
@@ -98,30 +125,36 @@ class ServiceController {
 
     }
     def buscarCdaByPacienteAndOrganizacion = {
-
-        //CUAL ES MI ID DE ORGANIZACION ????
-
-        List<cda.BuscarCDAByPacienteAndOrganizacionResponse> result = customSecureServiceClient.buscarCDAByPacienteAndOrganizacion("12345678","2",0)
-        println "Resultado CDAs: "+ result.id
+        //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        
+        long a= params.org.toLong()
+        cda.ConjuntoCda result = customSecureServiceClientCda.buscarCDAByPacienteAndOrganizacion(
+            params.pac,
+            a,
+            0,
+            idOrganizacion)
+    
+      //  println "Resultado CDAs: "+ result.id
         if(result){
-            render(view: "listaCdas", model: [result: result])
+            render(view: "listaCdas", model: [pacienteId: params.pac, result: result.listCdaArr, total: result.total, llamar:'busquedaAllExterna'])
         }else{
-            render(view: "listaCdas", model: [result: null])
+            render(view: "listaCdas", model: [pacienteId: params.pac,result: null])
             //  render "<p>No se encontró CDA </p>"
         }
 
 
     }
+    def buscarCdaByPacienteAndRango = {
 
-     def buscarCdaByPacienteAndRango = {
-
-        //CUAL ES MI ID DE ORGANIZACION ????
-
-        List<cda.BuscarCDAByPacienteAndRangoResponse> result = customSecureServiceClient.buscarCDAByPacienteAndRango(
-            "12345678",
-            XMLGregorianCalendarConverter.getXMLCalendar("2010-08-30","yyyy-MM-dd"),
-            XMLGregorianCalendarConverter.getXMLCalendar("2010-10-30","yyyy-MM-dd"),
-            0)
+        
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        List<cda.BuscarCDAByPacienteAndRangoResponse> result = customSecureServiceClientCda.buscarCDAByPacienteAndRango(
+            params.id,
+            XMLGregorianCalendarConverter.getXMLCalendar("1950-08-30","yyyy-MM-dd"),
+            XMLGregorianCalendarConverter.getXMLCalendar("2000-10-30","yyyy-MM-dd"),
+            0,
+            idOrganizacion)
         
         println "Resultado CDAs: "+ result.id
         if(result){
@@ -133,15 +166,9 @@ class ServiceController {
 
 
     }
-
-
     def buscarCdaById = {
-        // XStream x = new XStream()
-
-        /*  def wsdlURL = wsdl[1]
-        proxy = webService.getClient(wsdlURL)
-         */
-        cda.CdaArr result = customSecureServiceClient.buscarCDAById(params.id.toInteger())
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        cda.CdaArr result = customSecureServiceClientCda.buscarCDAById(params.id.toInteger(), idOrganizacion)
         println "Resultado CDAs: "+ result
         if(result){
             // Object string = (Object) x.fromXML(result)
@@ -173,71 +200,189 @@ class ServiceController {
         }
 
     }
-    
-   
+    def listarOrganizaciones = {
 
-    /* def crearPaciente = {
-    XStream x = new XStream()
-       
-    def wsdlURL = wsdl[0]
-    proxy = webService.getClient(wsdlURL)
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        List<cda.OrgArr> result = customSecureServiceClientCda.listarOrganizacionesByPaciente(params.id, idOrganizacion)
 
-    def objPaciente = new Paciente()
-    objPaciente.setIdPaciente("18-F")
-    objPaciente.setPrimerNombre("Armando")
-    objPaciente.setPrimerApellido("Prieto")
-    objPaciente.setCedula("18304748")
-    objPaciente.setPasaporte("456987")
         
-    def xmlPaciente= x.toXML(objPaciente)
+        render(template: "../demographic/listadoOrganizaciones", model: [pacienteId:params.id, result: result])
         
-    def result = proxy.crearPaciente(xmlPaciente)
 
-    if(result){
 
-    render "<p>Bien</p>"
-    }else{
-    render "<p>Mal</p>"
+    }
+    def agregarPaciente = {
+
+        def person=   Person.get(params.id)
+
+        def personNamePatient = person.identities.find{
+            it.purpose == 'PersonNamePatient'
+        }
+
+        
+        if(personNamePatient){
+            //   def paciente = Paciente.get(params.id)
+
+            //RECIBIR PARAMS DEL PACIENTE
+
+            def p = new PacienteArr()
+            p.setIdPaciente(params.id) //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
+            //  p.setCedula(paciente.getCedula())
+            //  p.setPasaporte(paciente.getPasaporte())
+            p.setPrimerNombre(personNamePatient.getPrimerNombre())
+            p.setSegundoNombre(personNamePatient.getSegundoNombre())
+            p.setPrimerApellido(personNamePatient.getPrimerApellido())
+            p.setSegundoApellido(personNamePatient.getSegundoApellido())
+
+
+
+            //ID 'token' asignado a la organizacion en el IMP
+            String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+            def result = customSecureServiceClientImp.agregarPaciente(p, idOrganizacion)
+            if(result){
+               flash.message = "service.imp.agregarPaciente.true"
+                flash.clase = "ok"
+
+                 
+            }else{
+               flash.message = "service.imp.agregarPaciente.false"
+                flash.clase = "error"
+            }
+            
+            redirect(controller:'demographic', action: 'seleccionarPaciente', params: [id: params.id] )
+
+        }else{
+
+            render("<p>El paciente no existe</p>")
+
+        }
+    }
+    def eliminarPaciente = {
+
+        def person=   Person.get(params.id)
+
+        if(person){
+            def personNamePatient = person.identities.find{
+                it.purpose == 'PersonNamePatient'
+            }
+
+            if(personNamePatient){
+                String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+                def result = customSecureServiceClientImp.eliminarPaciente(params.id, idOrganizacion)
+                if(result){
+                    flash.message = "service.imp.eliminarPaciente.true"
+                    flash.clase = "ok"
+                  
+
+                }else{
+                    flash.message = "service.imp.eliminarPaciente.false"
+                    flash.clase = "error"
+                   
+                }
+
+                redirect(controller:'demographic', action: 'seleccionarPaciente', params: [id: params.id] )
+            }else{
+
+                render("<p>El paciente no existe</p>")
+
+            }
+        }else{
+
+            render("<p>El Person no existe</p>")
+        }
+
+    }
+    def buscarPaciente = {
+        println "OFFSET PARAMS::::"+params.offset
+        def persona = Person.get(params.id)
+        def name = persona.identities.find{ it.purpose == 'PersonNamePatient'}
+        
+        def objPaciente = new PacienteArr()
+        objPaciente.setIdPaciente(params.id)
+        
+        objPaciente.setPrimerNombre(name.primerNombre)
+        objPaciente.setSegundoNombre(name.segundoNombre)
+        objPaciente.setPrimerApellido(name.primerApellido)
+        objPaciente.setSegundoApellido(name.segundoApellido)
+
+
+        // objPaciente.setCedula("18304748")
+        //  objPaciente.setPasaporte("45697")
+
+       // def offset= (Integer) (params.offset.toInteger() / 10)
+        def offset= params.offset.toInteger()
+        println "El otro::::"+offset
+         String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        imp.ConjuntoPaciente result = customSecureServiceClientImp.buscarCandidatos(objPaciente,offset,idOrganizacion )
+        //println result
+        if(result){
+
+            //println "Este es el resultado: "+aux
+
+            // render result.idCentro
+
+
+            render(template: "candidatos", model: [idPacienteOrg: params.id, result: result.listPacienteArr, total: result.total])
+        }else{
+            render(template: "candidatos", model: [idPacienteOrg: params.id, result: null])
+        }
+
+
+
+    }
+    def agregarRelacionPaciente = {
+
+        //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+        long idCentroImp= params.idCentroImp.toLong()
+        String idPacienteImp= params.idPacienteImp
+        String idPacienteOrg = params.idPacienteOrg
+        def result = customSecureServiceClientImp.agregarRelacionPaciente(idCentroImp,idPacienteImp,idPacienteOrg,idOrganizacion)
+
+         if(result){
+                    flash.message = "service.imp.agregarRelacionPaciente.true"
+                    flash.clase = "ok"
+                   // flash.args = [ "The Stand" ]
+                   // flash.default = "Paciente eliminado"
+
+                }else{
+                    flash.message = "service.imp.agregarRelacionPaciente.false"
+                    flash.clase = "error"
+                   // flash.args = [ "The Stand" ]
+                  //  flash.default = "Paciente no eliminado"
+                }
+
+                redirect(controller:'demographic', action: 'seleccionarPaciente', params: [id: params.idPacienteOrg] )
+
+
+    }
+    def eliminarRelacionPaciente = {
+
+        //ID 'token' asignado a la organizacion en el IMP
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+        def result = customSecureServiceClientImp.eliminarRelacionPaciente(params.id,idOrganizacion)
+
+          if(result){
+                    flash.message = "service.imp.eliminarRelacionPaciente.true"
+                    flash.clase = "ok"
+                   // flash.args = [ "The Stand" ]
+                   // flash.default = "Paciente eliminado"
+
+                }else{
+                    flash.message = "service.imp.eliminarRelacionPaciente.false"
+                    flash.clase = "error"
+                   // flash.args = [ "The Stand" ]
+                  //  flash.default = "Paciente no eliminado"
+                }
+
+                redirect(controller:'demographic', action: 'seleccionarPaciente', params: [id: params.id] )
+
+
     }
 
-
-    }*/
-
-
-    /*   def buscarPaciente = {
-
-    XStream x = new XStream()
-    def wsdlURL = wsdl[0]
-    proxy = webService.getClient(wsdlURL)
-
-    def objPaciente = new Paciente()
-    objPaciente.setIdPaciente("18-F")
-    objPaciente.setPrimerNombre("Armando")
-    //   objPaciente.setSegundoNombre("Armando")
-
-    objPaciente.setPrimerApellido("Prieto")
-    // objPaciente.setSegundoApellido("Padron")
-
-
-    // objPaciente.setCedula("18304748")
-    //  objPaciente.setPasaporte("45697")
-
-    def xmlPaciente= x.toXML(objPaciente)
-
-    def result = proxy.buscarPaciente(xmlPaciente)
-    //println result
-    if(result){
-    def aux =  x.fromXML(result)
-    //println "Este es el resultado: "+aux
-        
-    render(view: "listaPacientes", model: [result: aux])
-    }else{
-    render(view: "listaPacientes", model: [result: null])
-    }
-
-
-       
-    }*/
 
     /* def alcance = {
 

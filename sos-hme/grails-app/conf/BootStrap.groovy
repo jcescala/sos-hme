@@ -23,12 +23,18 @@ import groovy.sql.Sql
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 
+
+
+
+
 class BootStrap {
 
     def hceService
     
     // Reference to Grails application. Lo inyecta.
     def grailsApplication
+   
+
     
     def init = { servletContext ->
      
@@ -313,9 +319,7 @@ class BootStrap {
         /*FIN DATA INICIAL*/
 
 
-
-        
-
+ 
 
 
 

@@ -16,10 +16,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="paciente" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="paciente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="desde" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
  *         &lt;element name="hasta" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="idOrganizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,24 +34,26 @@ import javax.xml.bind.annotation.XmlType;
     "paciente",
     "desde",
     "hasta",
-    "offset"
+    "offset",
+    "idOrganizacion"
 })
 public class BuscarCDAByPacienteAndRango {
 
-    protected Object paciente;
+    protected String paciente;
     protected Object desde;
     protected Object hasta;
     protected Object offset;
+    protected String idOrganizacion;
 
     /**
      * Gets the value of the paciente property.
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public Object getPaciente() {
+    public String getPaciente() {
         return paciente;
     }
 
@@ -59,10 +62,10 @@ public class BuscarCDAByPacienteAndRango {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public void setPaciente(Object value) {
+    public void setPaciente(String value) {
         this.paciente = value;
     }
 
@@ -136,6 +139,30 @@ public class BuscarCDAByPacienteAndRango {
      */
     public void setOffset(Object value) {
         this.offset = value;
+    }
+
+    /**
+     * Gets the value of the idOrganizacion property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdOrganizacion() {
+        return idOrganizacion;
+    }
+
+    /**
+     * Sets the value of the idOrganizacion property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdOrganizacion(String value) {
+        this.idOrganizacion = value;
     }
 
 }

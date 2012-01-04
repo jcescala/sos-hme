@@ -8,40 +8,29 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <meta name="layout" content="ehr-modal" />
+       <g:javascript library="jquery" />
     <title>Sample title</title>
   </head>
   <body>
+
+    <ul class="top_actions">
+      <li>
+      <g:link controller="demographic" action="seleccionarPaciente" params="[id: pacienteId ]" class="back">Atras</g:link>
+      </li>
+      
+    </ul>
+
     <h1>Lista de CDAs</h1>
 
-    <g:if test="${!result}">
-
-  <p>No hay CDAs coincidentes</p>
-</g:if>
-      <g:else>
-        <table border="1px">
-
-          <tr>
-          <th>Titulo</th>
-          <th>Fecha Creacion</th>
-        <th colspan="2">Acciones</th>
+     <div id="resultadoExterno" >
 
 
-          </tr>
+    <g:render template="../demographic/registroExterno" model="['externo':result, 'total': total, llamar: llamar]" />
 
-          <g:each in="${result}" var="cda">
-	        <tr>
-                  <td>${cda.titulo}</td>
-                  <td>${cda.fechaCreacion}</td>
-
-
-                  <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[render: 'cda']">Ver CDA </g:link></td>
-                  <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[render: 'xml']">Ver XML </g:link></td>
-
-                </tr>
-	      </g:each>
-        </table>
-      </g:else>
-
-
+    
+      </div>
+      <div id="errorResultadoExterno" >
+      </div>
   </body>
 </html>

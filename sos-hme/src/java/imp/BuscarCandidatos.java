@@ -16,6 +16,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="paciente" type="{http://imp/}pacienteArr" minOccurs="0"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="idOrganizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -25,8 +28,87 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "buscarCandidatos")
+@XmlType(name = "buscarCandidatos", propOrder = {
+    "paciente",
+    "offset",
+    "idOrganizacion"
+})
 public class BuscarCandidatos {
 
+    protected PacienteArr paciente;
+    protected Object offset;
+    protected String idOrganizacion;
+
+    /**
+     * Gets the value of the paciente property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PacienteArr }
+     *     
+     */
+    public PacienteArr getPaciente() {
+        return paciente;
+    }
+
+    /**
+     * Sets the value of the paciente property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PacienteArr }
+     *     
+     */
+    public void setPaciente(PacienteArr value) {
+        this.paciente = value;
+    }
+
+    /**
+     * Gets the value of the offset property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public Object getOffset() {
+        return offset;
+    }
+
+    /**
+     * Sets the value of the offset property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setOffset(Object value) {
+        this.offset = value;
+    }
+
+    /**
+     * Gets the value of the idOrganizacion property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdOrganizacion() {
+        return idOrganizacion;
+    }
+
+    /**
+     * Sets the value of the idOrganizacion property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdOrganizacion(String value) {
+        this.idOrganizacion = value;
+    }
 
 }
