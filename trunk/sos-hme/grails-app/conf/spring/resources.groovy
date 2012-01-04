@@ -3,7 +3,9 @@
 beans = {
     myCustomInterceptor(com.cxf.demo.security.CustomSecurityInterceptor){
     user = "myAlias"
-        pass = "keystore"
+    pass = "keystore"
 
     }
+  
+
 }

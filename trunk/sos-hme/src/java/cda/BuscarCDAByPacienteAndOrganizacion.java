@@ -17,8 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="paciente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="organizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="numeroOrg" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="idOrganizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,14 +31,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "buscarCDAByPacienteAndOrganizacion", propOrder = {
     "paciente",
-    "organizacion",
-    "offset"
+    "numeroOrg",
+    "offset",
+    "idOrganizacion"
 })
 public class BuscarCDAByPacienteAndOrganizacion {
 
     protected String paciente;
-    protected String organizacion;
+    protected Long numeroOrg;
     protected Object offset;
+    protected String idOrganizacion;
 
     /**
      * Gets the value of the paciente property.
@@ -64,27 +67,27 @@ public class BuscarCDAByPacienteAndOrganizacion {
     }
 
     /**
-     * Gets the value of the organizacion property.
+     * Gets the value of the numeroOrg property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Long }
      *     
      */
-    public String getOrganizacion() {
-        return organizacion;
+    public Long getNumeroOrg() {
+        return numeroOrg;
     }
 
     /**
-     * Sets the value of the organizacion property.
+     * Sets the value of the numeroOrg property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Long }
      *     
      */
-    public void setOrganizacion(String value) {
-        this.organizacion = value;
+    public void setNumeroOrg(Long value) {
+        this.numeroOrg = value;
     }
 
     /**
@@ -109,6 +112,30 @@ public class BuscarCDAByPacienteAndOrganizacion {
      */
     public void setOffset(Object value) {
         this.offset = value;
+    }
+
+    /**
+     * Gets the value of the idOrganizacion property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdOrganizacion() {
+        return idOrganizacion;
+    }
+
+    /**
+     * Sets the value of the idOrganizacion property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdOrganizacion(String value) {
+        this.idOrganizacion = value;
     }
 
 }

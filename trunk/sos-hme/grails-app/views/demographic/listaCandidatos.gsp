@@ -101,7 +101,7 @@
 	          <td>${name?.primerApellido}</td>
 	          <td>${name?.segundoApellido}</td>
 	          <%-- TODO: taglib --%>
-	          <td><g:if test="${persona.fechaNacimiento}">${format.format(persona.fechaNacimiento)}</g:if></td>
+	          <td><g:if test="${persona?.fechaNacimiento}">${format.format(persona?.fechaNacimiento)}</g:if></td>
 	          <td>${persona.sexo}</td>
 	          <td>
 	            <!-- Si la persona esta en la base tiene id pero si no (p.e. consulta a imp reomoto),
@@ -122,6 +122,16 @@
 	            <g:link action="seleccionarPaciente" id="${persona.id}">
 	              <g:message code="demographic.lista_candidatos.action.seleccionarPaciente" />
 	            </g:link>
+                     |
+                    <g:link controller="service" action="agregarPaciente" id="${persona.id}">
+	              <g:message code="imp.agregarPaciente" />
+	            </g:link>
+                     |
+                    <g:link controller="service" action="eliminarPaciente" id="${persona.id}">
+	              <g:message code="imp.eliminarPaciente" />
+	            </g:link>
+
+
 	          </td>
 	        </tr>
 	      </g:each>

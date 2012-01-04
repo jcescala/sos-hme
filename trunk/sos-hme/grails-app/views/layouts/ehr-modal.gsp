@@ -4,25 +4,24 @@
 <%--<?xml version="1.0" encoding="ISO-8859-1?>--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<g:set var="startmsec" value="${System.currentTimeMillis()}"/>
+    <g:set var="startmsec" value="${System.currentTimeMillis()}"/>
   <head>
+    
+    
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 
-    <%-- No quiero paginas cacheadas --%>
-    <%--
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
-    <META HTTP-EQUIV="Expires" CONTENT="-1" />
-    <!-- META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" /-->
-    <META HTTP-EQUIV="Cache-Control" content="no-cache, must-revalidate" />
-    --%>
-    <%-- en FF no funca --%>
+    
     <META Http-Equiv="Cache-Control" Content="no-cache">
     <META Http-Equiv="Pragma" Content="no-cache">
     <META Http-Equiv="Expires" Content="0"> 
-    
+
+   
+
     <g:javascript>
       // Para evitar el boton de volver del navegador.
       window.history.go(1);
+
+      
     </g:javascript>
     
     <title><g:layoutTitle/> | SOS Historia Médica | v${ApplicationHolder.application.metadata['app.version']}</title>
@@ -85,8 +84,8 @@
   
     <div id="body">
       <g:if test="${flash.message}">
-        <div id="message" class="error">
-          <g:message code="${flash.message}" args="${flash.args}" />
+        <div id="message" class="${flash.clase}">
+          <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}" />
         </div>
       </g:if>
       

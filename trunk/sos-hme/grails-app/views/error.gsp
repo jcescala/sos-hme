@@ -1,6 +1,6 @@
 <html>
   <head>
-	  <title>Grails Runtime Exception</title>
+	  <title>Historia Médica Electrónica - SOS Telemedicina Error</title>
 	  <style type="text/css">
 	  		.message {
 	  			border: 1px solid black;
@@ -24,8 +24,8 @@
   </head>
 
   <body>
-    <h1>Grails Runtime Exception</h1>
-    <h2>Error Details</h2>
+    <h1>Historia Médica Electrónica - SOS Telemedicina Error</h1>
+    <h2>Detalles del error</h2>
 
   	<div class="message">
 		<strong>Error ${request.'javax.servlet.error.status_code'}:</strong> ${request.'javax.servlet.error.message'.encodeAsHTML()}<br/>
@@ -45,7 +45,7 @@
 		</g:if>
   	</div>
 	<g:if test="${exception}">
-	    <h2>Stack Trace</h2>
+	    <h2>Seguimiento de pila</h2>
 	    <div class="stack">
 	      <pre><g:each in="${exception.stackTraceLines}">${it.encodeAsHTML()}<br/></g:each></pre>
 	    </div>

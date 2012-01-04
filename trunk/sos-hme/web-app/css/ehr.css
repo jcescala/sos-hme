@@ -70,6 +70,23 @@ body {
         padding: 2px;
         margin-bottom: 3px;
       }
+
+      .ok{
+        /* TODO: meter icono de ok ! */
+        border: 1px solid #f00;
+        background-color: #99FF99;
+        padding: 2px;
+        margin-bottom: 3px;
+      }
+      .aviso {
+        /* TODO: meter icono de aviso ! */
+        border: 1px solid #f00;
+        background-color: #FFFF99;
+        padding: 2px;
+        margin-bottom: 3px;
+      }
+
+
       .error ul {
         list-style:none;
         margin:0;

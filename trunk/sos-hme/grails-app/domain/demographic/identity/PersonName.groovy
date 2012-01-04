@@ -39,7 +39,7 @@ class PersonName extends PartyIdentity {
             nombreCompleto += primerApellido+' '
 
         if(segundoApellido != null)
-            nombreCompleto += segundoApellido+' '
+            nombreCompleto += segundoApellido
 
         return nombreCompleto
         /*return "PersonName: " +

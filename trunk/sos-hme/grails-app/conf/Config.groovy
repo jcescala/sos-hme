@@ -153,7 +153,9 @@ grails.enable.native2ascii = true
 // as well
 service.simple.url = ""
 service.complex.url = ""
-service.secure.url = ""
+service.secure.url.cda = ""
+service.secure.url.imp = ""
+
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -168,9 +170,11 @@ environments {
     }
     development {
         grails.serverURL = "http://localhost:8080/${appName}"
-        service.simple.url = "http://localhost:8080/imp-cda/services/cda"
-        service.complex.url = "${grails.serverURL}/services/complex"
-        service.secure.url = "http://localhost:8080/imp-cda/services/cda"
+        service.simple.url = "http://localhost:8080/imp-cda/services/imp"
+        service.complex.url = "http://localhost:8080/imp-cda/services/imp"
+        service.secure.url.cda = "http://localhost:8080/imp-cda/services/cda"
+        service.secure.url.imp = "http://localhost:8080/imp-cda/services/imp"
+
     }
     test {
         grails.serverURL = "http://localhost:9090/${appName}"
@@ -214,21 +218,20 @@ log4j = {
 //Indice Maestro de Pacientes
 
 
-wsdl = ['http://localhost:8080/imp-cda/services/imp?wsdl', 'http://localhost:8080/imp-cda/services/cda?wsdl']
-
+imp.organizacion.id = "766e8035-3c8e-4209-9934-3c05059f5cab"
 
 cxf {
     installDir = "C:/apps/apache-cxf-2.4.4" //only used for wsdl2java script target
     client {
-        simpleServiceClient {
-            wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
-            clientInterface = cda.CdaServicePortType //cxf.client.demo.simple.SimpleServicePortType
+       /* simpleServiceClient {
+            wsdl = "docs/imp.wsdl" //only used for wsdl2java script target
+            clientInterface = imp.ImpServicePortType //cxf.client.demo.simple.SimpleServicePortType
             serviceEndpointAddress = "${service.simple.url}"
-            namespace = "cda"
-        }
+            namespace = "imp"
+        }*/
 
-     /*   complexServiceClient {
-            wsdl = "docs/ComplexService.wsdl" //only used for wsdl2java script target
+        /*complexServiceClient {
+            wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
             clientInterface = cxf.client.demo.complex.ComplexServicePortType
             serviceEndpointAddress = "${service.complex.url}"
             namespace = "cda"
@@ -243,13 +246,22 @@ cxf {
             namespace = "cxf.client.demo.secure"
         }
 */
-        customSecureServiceClient {
+        customSecureServiceClientCda {
             wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
             namespace = "cda"
             clientInterface = cda.CdaServicePortType
             secured = true
             securityInterceptor = 'myCustomInterceptor'
-            serviceEndpointAddress = "${service.secure.url}"
+            serviceEndpointAddress = "${service.secure.url.cda}"
+            //namespace = "cxf.client.demo.secure"
+        }
+        customSecureServiceClientImp {
+            wsdl = "docs/imp.wsdl" //only used for wsdl2java script target
+            namespace = "imp"
+            clientInterface = imp.ImpServicePortType
+            secured = true
+            securityInterceptor = 'myCustomInterceptor'
+            serviceEndpointAddress = "${service.secure.url.imp}"
             //namespace = "cxf.client.demo.secure"
         }
 
@@ -274,4 +286,6 @@ cxf {
     */
     }
 }
+
+grails.views.javascript.library="jquery"
      

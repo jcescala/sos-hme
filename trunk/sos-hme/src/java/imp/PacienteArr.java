@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="idPaciente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="idCentro" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="nombreCentro" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="cedula" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="pasaporte" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="primerNombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -34,6 +36,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "pacienteArr", propOrder = {
     "idPaciente",
+    "idCentro",
+    "nombreCentro",
     "cedula",
     "pasaporte",
     "primerNombre",
@@ -44,6 +48,8 @@ import javax.xml.bind.annotation.XmlType;
 public class PacienteArr {
 
     protected String idPaciente;
+    protected long idCentro;
+    protected String nombreCentro;
     protected String cedula;
     protected String pasaporte;
     protected String primerNombre;
@@ -73,6 +79,46 @@ public class PacienteArr {
      */
     public void setIdPaciente(String value) {
         this.idPaciente = value;
+    }
+
+    /**
+     * Gets the value of the idCentro property.
+     * 
+     */
+    public long getIdCentro() {
+        return idCentro;
+    }
+
+    /**
+     * Sets the value of the idCentro property.
+     * 
+     */
+    public void setIdCentro(long value) {
+        this.idCentro = value;
+    }
+
+    /**
+     * Gets the value of the nombreCentro property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNombreCentro() {
+        return nombreCentro;
+    }
+
+    /**
+     * Sets the value of the nombreCentro property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNombreCentro(String value) {
+        this.nombreCentro = value;
     }
 
     /**

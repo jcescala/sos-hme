@@ -25,17 +25,21 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _BuscarCDAById_QNAME = new QName("http://cda/", "buscarCDAById");
-    private final static QName _BuscarCDAByPacienteAndRango_QNAME = new QName("http://cda/", "buscarCDAByPacienteAndRango");
-    private final static QName _BuscarCDAByPacienteAndOrganizacion_QNAME = new QName("http://cda/", "buscarCDAByPacienteAndOrganizacion");
+    private final static QName _EliminarCDAResponse_QNAME = new QName("http://cda/", "eliminarCDAResponse");
     private final static QName _BuscarCDAByRango_QNAME = new QName("http://cda/", "buscarCDAByRango");
     private final static QName _BuscarCDAByPaciente_QNAME = new QName("http://cda/", "buscarCDAByPaciente");
-    private final static QName _RegistrarCDA_QNAME = new QName("http://cda/", "registrarCDA");
     private final static QName _RegistrarCDAResponse_QNAME = new QName("http://cda/", "registrarCDAResponse");
     private final static QName _BuscarCDAByPacienteAndRangoResponse_QNAME = new QName("http://cda/", "buscarCDAByPacienteAndRangoResponse");
+    private final static QName _ListarOrganizacionesByPacienteResponse_QNAME = new QName("http://cda/", "listarOrganizacionesByPacienteResponse");
     private final static QName _BuscarCDAByIdResponse_QNAME = new QName("http://cda/", "buscarCDAByIdResponse");
+    private final static QName _BuscarCDAByRangoResponse_QNAME = new QName("http://cda/", "buscarCDAByRangoResponse");
+    private final static QName _BuscarCDAByPacienteAndRango_QNAME = new QName("http://cda/", "buscarCDAByPacienteAndRango");
+    private final static QName _BuscarCDAByPacienteAndOrganizacion_QNAME = new QName("http://cda/", "buscarCDAByPacienteAndOrganizacion");
+    private final static QName _ListarOrganizacionesByPaciente_QNAME = new QName("http://cda/", "listarOrganizacionesByPaciente");
+    private final static QName _RegistrarCDA_QNAME = new QName("http://cda/", "registrarCDA");
     private final static QName _BuscarCDAByPacienteResponse_QNAME = new QName("http://cda/", "buscarCDAByPacienteResponse");
     private final static QName _BuscarCDAByPacienteAndOrganizacionResponse_QNAME = new QName("http://cda/", "buscarCDAByPacienteAndOrganizacionResponse");
-    private final static QName _BuscarCDAByRangoResponse_QNAME = new QName("http://cda/", "buscarCDAByRangoResponse");
+    private final static QName _EliminarCDA_QNAME = new QName("http://cda/", "eliminarCDA");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: cda
@@ -53,19 +57,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BuscarCDAByRangoResponse }
-     * 
-     */
-    public BuscarCDAByRangoResponse createBuscarCDAByRangoResponse() {
-        return new BuscarCDAByRangoResponse();
-    }
-
-    /**
      * Create an instance of {@link BuscarCDAByPacienteAndOrganizacionResponse }
      * 
      */
     public BuscarCDAByPacienteAndOrganizacionResponse createBuscarCDAByPacienteAndOrganizacionResponse() {
         return new BuscarCDAByPacienteAndOrganizacionResponse();
+    }
+
+    /**
+     * Create an instance of {@link EliminarCDA }
+     * 
+     */
+    public EliminarCDA createEliminarCDA() {
+        return new EliminarCDA();
     }
 
     /**
@@ -77,11 +81,51 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link BuscarCDAByPacienteAndOrganizacion }
+     * 
+     */
+    public BuscarCDAByPacienteAndOrganizacion createBuscarCDAByPacienteAndOrganizacion() {
+        return new BuscarCDAByPacienteAndOrganizacion();
+    }
+
+    /**
+     * Create an instance of {@link ListarOrganizacionesByPaciente }
+     * 
+     */
+    public ListarOrganizacionesByPaciente createListarOrganizacionesByPaciente() {
+        return new ListarOrganizacionesByPaciente();
+    }
+
+    /**
+     * Create an instance of {@link RegistrarCDA }
+     * 
+     */
+    public RegistrarCDA createRegistrarCDA() {
+        return new RegistrarCDA();
+    }
+
+    /**
+     * Create an instance of {@link BuscarCDAByRangoResponse }
+     * 
+     */
+    public BuscarCDAByRangoResponse createBuscarCDAByRangoResponse() {
+        return new BuscarCDAByRangoResponse();
+    }
+
+    /**
      * Create an instance of {@link BuscarCDAById }
      * 
      */
     public BuscarCDAById createBuscarCDAById() {
         return new BuscarCDAById();
+    }
+
+    /**
+     * Create an instance of {@link EliminarCDAResponse }
+     * 
+     */
+    public EliminarCDAResponse createEliminarCDAResponse() {
+        return new EliminarCDAResponse();
     }
 
     /**
@@ -93,27 +137,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BuscarCDAByPacienteAndOrganizacion }
-     * 
-     */
-    public BuscarCDAByPacienteAndOrganizacion createBuscarCDAByPacienteAndOrganizacion() {
-        return new BuscarCDAByPacienteAndOrganizacion();
-    }
-
-    /**
      * Create an instance of {@link RegistrarCDAResponse }
      * 
      */
     public RegistrarCDAResponse createRegistrarCDAResponse() {
         return new RegistrarCDAResponse();
-    }
-
-    /**
-     * Create an instance of {@link RegistrarCDA }
-     * 
-     */
-    public RegistrarCDA createRegistrarCDA() {
-        return new RegistrarCDA();
     }
 
     /**
@@ -133,6 +161,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ListarOrganizacionesByPacienteResponse }
+     * 
+     */
+    public ListarOrganizacionesByPacienteResponse createListarOrganizacionesByPacienteResponse() {
+        return new ListarOrganizacionesByPacienteResponse();
+    }
+
+    /**
      * Create an instance of {@link BuscarCDAByPacienteAndRangoResponse }
      * 
      */
@@ -149,6 +185,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ConjuntoCda }
+     * 
+     */
+    public ConjuntoCda createConjuntoCda() {
+        return new ConjuntoCda();
+    }
+
+    /**
+     * Create an instance of {@link OrgArr }
+     * 
+     */
+    public OrgArr createOrgArr() {
+        return new OrgArr();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAById }{@code >}}
      * 
      */
@@ -158,21 +210,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByPacienteAndRango }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminarCDAResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByPacienteAndRango")
-    public JAXBElement<BuscarCDAByPacienteAndRango> createBuscarCDAByPacienteAndRango(BuscarCDAByPacienteAndRango value) {
-        return new JAXBElement<BuscarCDAByPacienteAndRango>(_BuscarCDAByPacienteAndRango_QNAME, BuscarCDAByPacienteAndRango.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByPacienteAndOrganizacion }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByPacienteAndOrganizacion")
-    public JAXBElement<BuscarCDAByPacienteAndOrganizacion> createBuscarCDAByPacienteAndOrganizacion(BuscarCDAByPacienteAndOrganizacion value) {
-        return new JAXBElement<BuscarCDAByPacienteAndOrganizacion>(_BuscarCDAByPacienteAndOrganizacion_QNAME, BuscarCDAByPacienteAndOrganizacion.class, null, value);
+    @XmlElementDecl(namespace = "http://cda/", name = "eliminarCDAResponse")
+    public JAXBElement<EliminarCDAResponse> createEliminarCDAResponse(EliminarCDAResponse value) {
+        return new JAXBElement<EliminarCDAResponse>(_EliminarCDAResponse_QNAME, EliminarCDAResponse.class, null, value);
     }
 
     /**
@@ -194,15 +237,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RegistrarCDA }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://cda/", name = "registrarCDA")
-    public JAXBElement<RegistrarCDA> createRegistrarCDA(RegistrarCDA value) {
-        return new JAXBElement<RegistrarCDA>(_RegistrarCDA_QNAME, RegistrarCDA.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RegistrarCDAResponse }{@code >}}
      * 
      */
@@ -221,12 +255,66 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListarOrganizacionesByPacienteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://cda/", name = "listarOrganizacionesByPacienteResponse")
+    public JAXBElement<ListarOrganizacionesByPacienteResponse> createListarOrganizacionesByPacienteResponse(ListarOrganizacionesByPacienteResponse value) {
+        return new JAXBElement<ListarOrganizacionesByPacienteResponse>(_ListarOrganizacionesByPacienteResponse_QNAME, ListarOrganizacionesByPacienteResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByIdResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByIdResponse")
     public JAXBElement<BuscarCDAByIdResponse> createBuscarCDAByIdResponse(BuscarCDAByIdResponse value) {
         return new JAXBElement<BuscarCDAByIdResponse>(_BuscarCDAByIdResponse_QNAME, BuscarCDAByIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByRangoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByRangoResponse")
+    public JAXBElement<BuscarCDAByRangoResponse> createBuscarCDAByRangoResponse(BuscarCDAByRangoResponse value) {
+        return new JAXBElement<BuscarCDAByRangoResponse>(_BuscarCDAByRangoResponse_QNAME, BuscarCDAByRangoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByPacienteAndRango }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByPacienteAndRango")
+    public JAXBElement<BuscarCDAByPacienteAndRango> createBuscarCDAByPacienteAndRango(BuscarCDAByPacienteAndRango value) {
+        return new JAXBElement<BuscarCDAByPacienteAndRango>(_BuscarCDAByPacienteAndRango_QNAME, BuscarCDAByPacienteAndRango.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByPacienteAndOrganizacion }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByPacienteAndOrganizacion")
+    public JAXBElement<BuscarCDAByPacienteAndOrganizacion> createBuscarCDAByPacienteAndOrganizacion(BuscarCDAByPacienteAndOrganizacion value) {
+        return new JAXBElement<BuscarCDAByPacienteAndOrganizacion>(_BuscarCDAByPacienteAndOrganizacion_QNAME, BuscarCDAByPacienteAndOrganizacion.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListarOrganizacionesByPaciente }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://cda/", name = "listarOrganizacionesByPaciente")
+    public JAXBElement<ListarOrganizacionesByPaciente> createListarOrganizacionesByPaciente(ListarOrganizacionesByPaciente value) {
+        return new JAXBElement<ListarOrganizacionesByPaciente>(_ListarOrganizacionesByPaciente_QNAME, ListarOrganizacionesByPaciente.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RegistrarCDA }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://cda/", name = "registrarCDA")
+    public JAXBElement<RegistrarCDA> createRegistrarCDA(RegistrarCDA value) {
+        return new JAXBElement<RegistrarCDA>(_RegistrarCDA_QNAME, RegistrarCDA.class, null, value);
     }
 
     /**
@@ -248,12 +336,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarCDAByRangoResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminarCDA }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://cda/", name = "buscarCDAByRangoResponse")
-    public JAXBElement<BuscarCDAByRangoResponse> createBuscarCDAByRangoResponse(BuscarCDAByRangoResponse value) {
-        return new JAXBElement<BuscarCDAByRangoResponse>(_BuscarCDAByRangoResponse_QNAME, BuscarCDAByRangoResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://cda/", name = "eliminarCDA")
+    public JAXBElement<EliminarCDA> createEliminarCDA(EliminarCDA value) {
+        return new JAXBElement<EliminarCDA>(_EliminarCDA_QNAME, EliminarCDA.class, null, value);
     }
 
 }

@@ -24,19 +24,19 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _ExistePaciente_QNAME = new QName("http://imp/", "existePaciente");
     private final static QName _EliminarRelacionPaciente_QNAME = new QName("http://imp/", "eliminarRelacionPaciente");
     private final static QName _AgregarPaciente_QNAME = new QName("http://imp/", "agregarPaciente");
     private final static QName _AgregarPacienteResponse_QNAME = new QName("http://imp/", "agregarPacienteResponse");
     private final static QName _EliminarPacienteResponse_QNAME = new QName("http://imp/", "eliminarPacienteResponse");
     private final static QName _BuscarCandidatos_QNAME = new QName("http://imp/", "buscarCandidatos");
     private final static QName _AgregarRelacionPacienteResponse_QNAME = new QName("http://imp/", "agregarRelacionPacienteResponse");
-    private final static QName _EditarPacienteResponse_QNAME = new QName("http://imp/", "editarPacienteResponse");
-    private final static QName _ModificarRelacionPacienteResponse_QNAME = new QName("http://imp/", "modificarRelacionPacienteResponse");
+    private final static QName _ExistePacienteResponse_QNAME = new QName("http://imp/", "existePacienteResponse");
     private final static QName _AgregarRelacionPaciente_QNAME = new QName("http://imp/", "agregarRelacionPaciente");
-    private final static QName _EditarPaciente_QNAME = new QName("http://imp/", "editarPaciente");
     private final static QName _BuscarCandidatosResponse_QNAME = new QName("http://imp/", "buscarCandidatosResponse");
     private final static QName _EliminarPaciente_QNAME = new QName("http://imp/", "eliminarPaciente");
-    private final static QName _ModificarRelacionPaciente_QNAME = new QName("http://imp/", "modificarRelacionPaciente");
+    private final static QName _ExisteRelacionPacienteResponse_QNAME = new QName("http://imp/", "existeRelacionPacienteResponse");
+    private final static QName _ExisteRelacionPaciente_QNAME = new QName("http://imp/", "existeRelacionPaciente");
     private final static QName _EliminarRelacionPacienteResponse_QNAME = new QName("http://imp/", "eliminarRelacionPacienteResponse");
 
     /**
@@ -55,27 +55,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EditarPacienteResponse }
-     * 
-     */
-    public EditarPacienteResponse createEditarPacienteResponse() {
-        return new EditarPacienteResponse();
-    }
-
-    /**
-     * Create an instance of {@link ModificarRelacionPacienteResponse }
-     * 
-     */
-    public ModificarRelacionPacienteResponse createModificarRelacionPacienteResponse() {
-        return new ModificarRelacionPacienteResponse();
-    }
-
-    /**
      * Create an instance of {@link EliminarPacienteResponse }
      * 
      */
     public EliminarPacienteResponse createEliminarPacienteResponse() {
         return new EliminarPacienteResponse();
+    }
+
+    /**
+     * Create an instance of {@link ExistePaciente }
+     * 
+     */
+    public ExistePaciente createExistePaciente() {
+        return new ExistePaciente();
     }
 
     /**
@@ -119,19 +111,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EditarPaciente }
-     * 
-     */
-    public EditarPaciente createEditarPaciente() {
-        return new EditarPaciente();
-    }
-
-    /**
      * Create an instance of {@link EliminarPaciente }
      * 
      */
     public EliminarPaciente createEliminarPaciente() {
         return new EliminarPaciente();
+    }
+
+    /**
+     * Create an instance of {@link ExistePacienteResponse }
+     * 
+     */
+    public ExistePacienteResponse createExistePacienteResponse() {
+        return new ExistePacienteResponse();
     }
 
     /**
@@ -143,14 +135,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ModificarRelacionPaciente }
-     * 
-     */
-    public ModificarRelacionPaciente createModificarRelacionPaciente() {
-        return new ModificarRelacionPaciente();
-    }
-
-    /**
      * Create an instance of {@link EliminarRelacionPacienteResponse }
      * 
      */
@@ -159,11 +143,44 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ExisteRelacionPaciente }
+     * 
+     */
+    public ExisteRelacionPaciente createExisteRelacionPaciente() {
+        return new ExisteRelacionPaciente();
+    }
+
+    /**
+     * Create an instance of {@link ExisteRelacionPacienteResponse }
+     * 
+     */
+    public ExisteRelacionPacienteResponse createExisteRelacionPacienteResponse() {
+        return new ExisteRelacionPacienteResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConjuntoPaciente }
+     * 
+     */
+    public ConjuntoPaciente createConjuntoPaciente() {
+        return new ConjuntoPaciente();
+    }
+
+    /**
      * Create an instance of {@link PacienteArr }
      * 
      */
     public PacienteArr createPacienteArr() {
         return new PacienteArr();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ExistePaciente }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "existePaciente")
+    public JAXBElement<ExistePaciente> createExistePaciente(ExistePaciente value) {
+        return new JAXBElement<ExistePaciente>(_ExistePaciente_QNAME, ExistePaciente.class, null, value);
     }
 
     /**
@@ -221,21 +238,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EditarPacienteResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ExistePacienteResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://imp/", name = "editarPacienteResponse")
-    public JAXBElement<EditarPacienteResponse> createEditarPacienteResponse(EditarPacienteResponse value) {
-        return new JAXBElement<EditarPacienteResponse>(_EditarPacienteResponse_QNAME, EditarPacienteResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ModificarRelacionPacienteResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://imp/", name = "modificarRelacionPacienteResponse")
-    public JAXBElement<ModificarRelacionPacienteResponse> createModificarRelacionPacienteResponse(ModificarRelacionPacienteResponse value) {
-        return new JAXBElement<ModificarRelacionPacienteResponse>(_ModificarRelacionPacienteResponse_QNAME, ModificarRelacionPacienteResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://imp/", name = "existePacienteResponse")
+    public JAXBElement<ExistePacienteResponse> createExistePacienteResponse(ExistePacienteResponse value) {
+        return new JAXBElement<ExistePacienteResponse>(_ExistePacienteResponse_QNAME, ExistePacienteResponse.class, null, value);
     }
 
     /**
@@ -245,15 +253,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://imp/", name = "agregarRelacionPaciente")
     public JAXBElement<AgregarRelacionPaciente> createAgregarRelacionPaciente(AgregarRelacionPaciente value) {
         return new JAXBElement<AgregarRelacionPaciente>(_AgregarRelacionPaciente_QNAME, AgregarRelacionPaciente.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EditarPaciente }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://imp/", name = "editarPaciente")
-    public JAXBElement<EditarPaciente> createEditarPaciente(EditarPaciente value) {
-        return new JAXBElement<EditarPaciente>(_EditarPaciente_QNAME, EditarPaciente.class, null, value);
     }
 
     /**
@@ -275,12 +274,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ModificarRelacionPaciente }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ExisteRelacionPacienteResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://imp/", name = "modificarRelacionPaciente")
-    public JAXBElement<ModificarRelacionPaciente> createModificarRelacionPaciente(ModificarRelacionPaciente value) {
-        return new JAXBElement<ModificarRelacionPaciente>(_ModificarRelacionPaciente_QNAME, ModificarRelacionPaciente.class, null, value);
+    @XmlElementDecl(namespace = "http://imp/", name = "existeRelacionPacienteResponse")
+    public JAXBElement<ExisteRelacionPacienteResponse> createExisteRelacionPacienteResponse(ExisteRelacionPacienteResponse value) {
+        return new JAXBElement<ExisteRelacionPacienteResponse>(_ExisteRelacionPacienteResponse_QNAME, ExisteRelacionPacienteResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ExisteRelacionPaciente }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "existeRelacionPaciente")
+    public JAXBElement<ExisteRelacionPaciente> createExisteRelacionPaciente(ExisteRelacionPaciente value) {
+        return new JAXBElement<ExisteRelacionPaciente>(_ExisteRelacionPaciente_QNAME, ExisteRelacionPaciente.class, null, value);
     }
 
     /**
