@@ -32,6 +32,7 @@ class ServiceController {
     // def complexServiceClient
 
     def demographicService
+    def hceService
 
     def index = {
 
@@ -271,6 +272,10 @@ class ServiceController {
                 String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
                 def result = customSecureServiceClientImp.eliminarPaciente(params.id, idOrganizacion)
                 if(result){
+
+                    //Cambiar el atributo inIMP de todos los CDA´s de el paciente eeliminado del IMP
+                    hceService.changeVersionInIMP(params.id)
+
                     flash.message = "service.imp.eliminarPaciente.true"
                     flash.clase = "ok"
                   
