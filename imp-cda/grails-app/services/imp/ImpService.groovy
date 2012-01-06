@@ -92,7 +92,7 @@ class ImpService {
      *@param idPacienteOrg Identificador perteneciente al paciente en la organizacion 'cruzadora'
      *@param idOrganizacion Token de la organizacion 'cruzadora'
      */
-    boolean existePaciente(String idPacienteOrg, String idOrganizacion) throws RuntimeException{
+    boolean existePaciente(String idPacienteOrg, String idOrganizacion){
         def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
 
         //Si existe la organizacion
