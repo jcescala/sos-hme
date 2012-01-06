@@ -21,7 +21,10 @@ class Version {
     // implementada pero es necesario el atributo de la fecha para saber
     // cuando fue creada la nueva version, y asi saber cual es la ultima.
     DvDateTime timeCommited
-    PartyProxy committer
+    PartyProxy committer //responsable del registro, se guarda cuando la versión no es la actual y 'data' se setea en NULL
+    PartyProxy partySelf //paciente del registro, se guarda cuando la versión no es la actual y 'data' se setea en NULL
+
+    boolean inIMP = false//Si esta registrado en el IMP, 'true' en caso afirmativo, 'false' en caso negativo
 
     // FIXME: Por ahora se seguira actualizando el atributo timeCommited, pero luego
     // seria bueno dejarlo de utilizar y quitarlo ya que AuditDetails tiene un atributo
@@ -51,8 +54,8 @@ class Version {
     // No se va a usar todavia, se usara cuando se implemente el control de cambios.
     ObjectVersionID uid
     
-    int numeroVers
-    String nombreArchCDA
+    int numeroVers //Numero de la version
+    String nombreArchCDA //nombre del archivo CDA asociado a la version
 
     static constraints = {
         uid(nullable:true)
@@ -63,6 +66,8 @@ class Version {
         nombreArchCDA(nullable:true)
         data(nullable:true)
         committer(nullable:true)
+        partySelf(nullable:true)
+
     }
     static mapping = {
         timeCommited cascade: "save-update"

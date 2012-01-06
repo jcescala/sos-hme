@@ -6,6 +6,7 @@ import demographic.role.Role
 import hce.core.data_types.encapsulated.DvMultimedia
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 import cda.*
+import imp.*
 import util.*
 
 import hce.core.common.directory.Folder
@@ -529,6 +530,18 @@ class RecordsController {
             version.save()
 
             flash.message = "trauma.sign.recordCorrectlySigned"
+
+
+            //AÑADIENDO CREACION AUTOMATICA DE CDA
+
+            if(CdaRecords.registrarCda(params.id)){
+
+            //CDA CREADO AUTOMATICAMENTE
+            println "CDA CREADO AUTOMATICAMENTE"
+            }
+
+
+
             return model
         }
         
@@ -626,6 +639,23 @@ class RecordsController {
                             subsections: subsections,
                             allSubsections: this.getDomainTemplates()
                            ]
+                }
+
+
+                if(!hceService.setVersionPatient(version, composition)){
+
+                    // TODO: i18n
+                    flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+                    return [episodeId: session.traumaContext?.episodioId,
+                            userId: session.traumaContext.userId,
+                            composition: composition,
+                            patient: patient,
+                            sections: sections,
+                            subsections: subsections,
+                            allSubsections: this.getDomainTemplates()
+                           ]
+
+
                 }
 
                 // Cambia el estado del regsitro en su VERSION

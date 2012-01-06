@@ -9,6 +9,9 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
+//service
+import imp.CdaRecords
+
 class CdaController {
 
     void imprimirObjetoXML(Object o){
@@ -27,32 +30,14 @@ class CdaController {
         int idEpisodio = Integer.parseInt(params['id'])
         println "IdEpisodio: " + idEpisodio
 
-        //def composition = Composition.get( params.id )
-        //imprimirObjetoXML(composition)
-        
-        /*
-        Composition new_composition = RMLoader.loadComposition(idEpisodio)
-        //Composition new_composition = new Composition()
-        //recorrerComposition(composition, new_composition) // Al recorrer el composition cargo toda su estructura
-
-        if(new_composition != null)
-        {
-        println "...====================================..."
-        imprimirObjetoXML(new_composition)
-        println "...====================================..."
-        }
-        else
-        {
-        flash.message = "trauma.list.messageError2"
-        redirect(controller:'trauma', action:'list')
-        }
-         */
-
+        def cd = new CdaRecords()
+       def nombreArchCDA=  cd.registrarCda(idEpisodio)
+       redirect(controller: "service", action: "registrarCda", id: nombreArchCDA)
         // Creo el archivo CDA
-        def cdaMan = new ManagerCDA()
-        cdaMan.createFileCDA(idEpisodio)
+//        def cdaMan = new ManagerCDA()
+//        cdaMan.createFileCDA(idEpisodio)
 
-        redirect(controller:'records', action:'list')
+      //  redirect(controller:'records', action:'list')
     }
 
     def ver = {

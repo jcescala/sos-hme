@@ -283,6 +283,87 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
     }
 
     /**
+     * Le pone la referencia al paciente involucrado en una versión. by Armando Prieto.
+     * @param version
+     * @param composition
+     * @return boolean
+     */
+    def boolean setVersionPatient(Version version, Composition composition){
+
+      version.partySelf = this.getPartySelfFromComposition(composition)
+
+      return version.save()
+
+
+    }
+
+
+    /**
+     * Setea todos los CDA´s pertenecientes a un paciente como no colocados en el IMP
+     * El atributo inIMP se coloca 'false'.
+     * @autor Armando Prieto
+     */
+    def boolean changeVersionInIMP(def pacienteId){
+
+        def person = Person.get(pacienteId)
+        def iter = person.ids.iterator()
+        def personId
+        while (iter.hasNext())
+        {
+            personId = iter.next()
+
+
+            // PUeden ser varios partySelfs, dependiendo si la persona fue ingresada mas de una vez.
+            def partySelfs = PartySelf.withCriteria {
+                externalRef { // PartSelf>PartyRef
+                    objectId { // PartyRef>ObjectId
+                        eq('value',personId.value)
+                    }
+                }
+            }
+
+            if(partySelfs){
+
+                def versions = Version.withCriteria{
+                partySelf {
+                        or {
+                            partySelfs.id.each { pSelfId -> // pueden ser varios pSelf
+                                eq('id', pSelfId)
+                            }
+                        }
+                    }
+                }
+
+                if(versions){
+
+                    versions.each{
+
+
+                        it.inIMP = false
+                        it.save()
+
+                    }
+                }
+            }
+        }
+        
+        def compositions = getAllCompositionForPatient(person, new Date(1), new Date())
+        def version
+        compositions.each{composition ->
+        version = Version.findByData( composition ) 
+        if (version.lifecycleState == Version.STATE_SIGNED)
+        {
+            //nombreArchCDA deberia ser != null
+            version.inIMP = false
+            version.save()
+            
+        }
+        }
+
+
+    }
+
+    /**
      * Crea una participacion con el performer dado.
      */
     def Participation createParticipationToPerformer( PartyProxy _performer )
@@ -473,6 +554,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         while (iter.hasNext())
         {
             personId = iter.next()
+            
 
             // PUeden ser varios partySelfs, dependiendo si la persona fue ingresada mas de una vez.
             def partySelfs = PartySelf.withCriteria {
@@ -482,7 +564,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
                     }
                 }
             }
-
+            
             //Convierto los Date en DvDateTime para poder aplicar el Criteria correctamente
            /* def des = new DvDateTime()
             des.value = desde.toString()
@@ -497,9 +579,10 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
            println "desde-" + desde
            println "hasta-" + hasta
            println "format desde-" + desde.format("yyyy-MM-dd hh:mm:ss a")
-
+           def contexts
+            if (partySelfs && partySelfs.size>0){
             // Busca el contexto con la participacion del partySelf que no tenga fecha de fin (el espisodio esta activo)
-            def contexts = EventContext.withCriteria {
+            contexts = EventContext.withCriteria {
                 //isNull('endTime') // episodio activo
                 //eq('startTime', desde)
                startTime{
@@ -520,8 +603,9 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
                     }
                 }
             }
+        }
 
-            if (contexts.size>0)
+            if (contexts && contexts.size>0)
             {
                 // Devuelve el episodio para el contexto
                 //return Composition.findByContext(contexts[0])
