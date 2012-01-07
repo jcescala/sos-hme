@@ -65,20 +65,20 @@ class ImpService {
 
                 }else{
                 
-                    throw new RuntimeException("No se pudo efectuar la operacion 'AgregarPaciente'")
+                   // throw new RuntimeException("No se pudo efectuar la operacion 'AgregarPaciente'")
                     return false
                 }
             
             
             }else{
 
-                throw new RuntimeException("El ID paciente ya esta registrado para la organizacion")
+               // throw new RuntimeException("El ID paciente ya esta registrado para la organizacion")
                 return false
 
             }
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+           // throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
 
         }
@@ -108,7 +108,7 @@ class ImpService {
             }
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+           // throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
         }
     }
@@ -145,17 +145,17 @@ class ImpService {
                     return true
                 }
                 catch(Exception e) {
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar Paciente'")
+                   // e.printStackTrace()
+                   // throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar Paciente'")
                     return false
                 }
                
             }else{
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+               // throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
                 return false
             }
 
-        }else{throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+        }else{//throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
 
 
@@ -174,9 +174,10 @@ class ImpService {
         //Plantear algoritmo de busqueda que coloque los resultados según su coincidencia
         //BUSCAR LISTA DE CANDIDATOS
 
-        println "IDIDIDID::::___________"+ paciente.getIdPaciente()
-        println "IDIDIDID::::___________"+ centro.id
+     //   println "IDIDIDID::::___________"+ paciente.getIdPaciente()
+      //  println "IDIDIDID::::___________"+ centro.id
 
+      if(centro){
         def p = Paciente.createCriteria()
         def count = p.count {
             or{
@@ -230,6 +231,7 @@ class ImpService {
             conjuntoPaciente.listPacienteArr = listPacienteArr
             return conjuntoPaciente
         }
+    }
             
         return null
     }
@@ -283,22 +285,22 @@ class ImpService {
                 }
 
                 catch(Exception e) {
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Agregar Relacion Paciente'")
+                   // e.printStackTrace()
+                   // throw new RuntimeException("No se pudo efectuar la operacion 'Agregar Relacion Paciente'")
                     return false
                 }
                     
                 
             }else{
 
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+               // throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
                 return false
 
 
             }
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+           // throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
 
         }
@@ -331,14 +333,14 @@ class ImpService {
                 
             
             }else{
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+               // throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
                 return false
 
             }
 
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+          //  throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
 
         }
@@ -379,15 +381,15 @@ class ImpService {
 
                 }
                 catch(Exception e) {
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar Relacion Paciente'")
+                   // e.printStackTrace()
+                  //  throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar Relacion Paciente'")
                     return false
                 }
 
 
             }else{
 
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+               // throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
                 return false
 
 
@@ -395,7 +397,7 @@ class ImpService {
 
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+           // throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
 
         }
