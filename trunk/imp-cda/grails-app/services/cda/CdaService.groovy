@@ -33,7 +33,7 @@ class CdaService {
      * @param idOrganizacion identificador unico (UUID) de la organizacion registradora
      * @return true or false.
      */
-    def registrarCDA(CdaArr cda, String idPacienteOrg, String idOrganizacion){
+    boolean registrarCDA(CdaArr cda, String idPacienteOrg, String idOrganizacion){
 
 
         def org = Organizacion.findByUniqueIdentifier(idOrganizacion)
@@ -59,22 +59,22 @@ class CdaService {
                     }
 
                 }catch(Exception e) {
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Registrar CDA'")
+                   // e.printStackTrace()
+                  //  throw new RuntimeException("No se pudo efectuar la operacion 'Registrar CDA'")
                     return false
                 }
 
 
 
             }else{
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+              //  throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
                 return false
 
 
             }
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+           // throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
 
         }
@@ -235,7 +235,7 @@ class CdaService {
      * @param idOrganizacion identificador unico (UUID) de la organizacion eliminadora
      * @return true or false, true: al efectuarse la eliminacion, false: por no existencia del cda.
      */
-    def eliminarCDA(Long idCda, String idPacienteOrg, String idOrganizacion){
+    boolean eliminarCDA(Long idCda, String idPacienteOrg, String idOrganizacion){
 
     def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
 
@@ -264,21 +264,21 @@ class CdaService {
                 }
 
                 }catch(Exception e) {
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar CDA'")
+                   // e.printStackTrace()
+                   // throw new RuntimeException("No se pudo efectuar la operacion 'Eliminar CDA'")
                     return false
                 }
             }else{
 
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+              //  throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
                 return false
 
             }
         }else{
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+          //  throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
             return false
         }
-    return true
+   
 
     }
 
@@ -319,13 +319,13 @@ class CdaService {
 
                 }
             }catch(Exception e) {
-                e.printStackTrace()
-                throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente'")
-                return false
+              //  e.printStackTrace()
+              //  throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente'")
+                return null
             }
         }else{
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
-            return false
+           // throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return null
 
 
 
@@ -386,15 +386,15 @@ class CdaService {
 
                 }
             }catch(Exception e) {
-                e.printStackTrace()
-                throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por rango'")
-                return false
+               // e.printStackTrace()
+               // throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por rango'")
+                return null
             }
 
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
-            return false
+            //throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return null
 
         }
 
@@ -455,22 +455,22 @@ class CdaService {
                     
                 
                 }catch(Exception e) {
-                    println "_______________________________________________________"
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente'")
-                    return false
+                   // println "_______________________________________________________"
+                   // e.printStackTrace()
+                   // throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente'")
+                    return null
                 }
                 
             }else{
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
-                return false
+               // throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                return null
 
             }
         }else{
 
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
-            return false
+            //throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return null
 
 
         }
@@ -545,22 +545,22 @@ class CdaService {
                     }
 
                 }catch(Exception e) {
-                    e.printStackTrace()
-                    throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente y rango'")
-                    return false
+                   // e.printStackTrace()
+                   // throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente y rango'")
+                    return null
                 }
                 
 
             }else{
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
-                return false
+               // throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                return null
 
 
             }
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
-            return false
+            //throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return null
 
         }
 
@@ -640,22 +640,22 @@ class CdaService {
                         }
 
                     }catch(Exception e) {
-                        e.printStackTrace()
-                        throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente y organizacion'")
-                        return false
+                       // e.printStackTrace()
+                       // throw new RuntimeException("No se pudo efectuar la operacion 'Buscar CDA por paciente y organizacion'")
+                        return null
                     }
                 }else{
 
-                    throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
-                    return false
+                    //throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                    return null
 
 
 
                 }
             }else{
 
-                throw new RuntimeException("La organizacion ("+numeroOrg+") no existe")
-                return false
+                //throw new RuntimeException("La organizacion ("+numeroOrg+") no existe")
+                return null
 
             }
 
@@ -664,8 +664,8 @@ class CdaService {
 
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
-            return false
+            //throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return null
 
 
         }
@@ -711,15 +711,15 @@ class CdaService {
                 
             }else{
 
-                throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
-                return false
+                //throw new RuntimeException("El ID paciente no esta registrado para la organizacion")
+                return null
 
             }
 
         }else{
 
-            throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
-            return false
+            //throw new RuntimeException("El ID-TOKEN ("+idOrganizacion+") de Organizacion es invalido")
+            return null
 
         }
     }
