@@ -16,7 +16,7 @@
 
     <ul class="top_actions">
       <li>
-      <g:link controller="demographic" action="seleccionarPaciente" params="[id: pacienteId ]" class="back">Atras</g:link>
+      <g:link controller="demographic" action="seleccionarPaciente" params="[id: idPaciente ]" class="back">Atras</g:link>
       </li>
       
     </ul>
@@ -26,7 +26,7 @@
      <div id="resultadoExterno" >
 
 
-    <g:render template="../demographic/registroExterno" model="['externo':result, 'total': total, llamar: llamar]" />
+    <g:render template="registroExterno" model="[conexionImp:conexionImp,idPaciente: idPaciente,idOrg: idOrg,externo:result, total: total, llamar: llamar]" />
 
     
       </div>

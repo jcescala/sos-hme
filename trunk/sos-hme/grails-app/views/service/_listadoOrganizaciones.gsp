@@ -1,7 +1,12 @@
-  <g:if test="${!result}">
+<g:if test="${!conexionImp}">
+
+          <p>No hay conexion con Imp</p>
+</g:if>
+
+<g:elseif test="${!result}">
 
   <p>No hay Organizaciones coincidentes</p>
-</g:if>
+</g:elseif>
       <g:else>
         <table>
 
