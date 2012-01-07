@@ -1,9 +1,11 @@
+        <g:if test="${!conexionImp}">
 
-
-        <g:if test="${!externo}">
+          <p>No hay conexion con Imp</p>
+        </g:if>
+        <g:elseif test="${!externo}">
 
           <p>No hay CDAs coincidentes</p>
-        </g:if>
+        </g:elseif>
         <g:else>
           <table >
 
@@ -21,16 +23,16 @@
                 <td>${cda.fechaCreacion}</td>
 
 
-                <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[render: 'cda']">Ver CDA </g:link></td>
-              <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[render: 'xml']">Ver XML </g:link></td>
+                <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'cda']">Ver CDA </g:link></td>
+              <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'xml']">Ver XML </g:link></td>
 
               </tr>
             </g:each>
           </table>
 
-          <util:remotePaginate controller="demographic"
+          <util:remotePaginate controller="service"
                            action="${llamar}"
-                           params="[id: idPaciente, desde: desde, hasta: hasta, marca:'pag']"
+                           params="[id: idPaciente, idOrg:idOrg,desde: desde, hasta: hasta, marca:'pag']"
                            total="${total}"
                            update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
                            max="10"

@@ -15,8 +15,9 @@ import hce.core.common.generic.*
 import demographic.*
 import cda.CdaArr
 import org.codehaus.groovy.grails.commons.ApplicationHolder
+import converters.DateConverter
 //import org.springframework.web.context.request.RequestContextHolder
-class MyJob {
+class SubirCdaToImpJob {
 
     def hceService
     def demographicService
@@ -115,12 +116,7 @@ class MyJob {
         def cda = new CdaArr()
 
         cda.id = nombreArchCDA //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
-
-     //   def domain_path = RequestContextHolder.currentRequestAttributes().getSession().traumaContext.domainPath
-     //   def path = Folder.findByPath(domain_path)
         
-        cda.titulo = "SOS Telemedicina - " //+path.name.value //Deberia ser el titulo del dominio
-        cda.fechaCreacion = "1988-05-20" //formato dd-MM-yyyy
         def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + nombreArchCDA)
 
         if(!cda_xml.exists()){
@@ -128,8 +124,13 @@ class MyJob {
             return null
         }else{
 
-            cda.documento = cda_xml.getText() //xml
-            return cda
+        
+        def ClinicalDocument = new XmlParser().parseText(cda_xml.getText())
+        cda.titulo = ClinicalDocument.title.text() //Titulo del CDA
+        cda.fechaCreacion= DateConverter.fromHL7DateFormat(ClinicalDocument.effectiveTime.@value[0]).format("yyyy-MM-dd")
+        cda.documento = cda_xml.getText() //xml
+        return cda
+
         }
     }
     boolean registrarCda(CdaArr cda, String idPaciente){
@@ -139,15 +140,26 @@ class MyJob {
 
 
         //FIXME: PREGUNTAR PRIMERO SI EXISTE EL PACIENTE EN EL IMP
+        def result = false
+        try{
+        
         if(customSecureServiceClientImp.existePaciente(idPaciente,idOrganizacion)){
+        
 
-        def result = customSecureServiceClientCda.registrarCDA(cda,idPaciente,idOrganizacion)
-        return result
+        result = customSecureServiceClientCda.registrarCDA(cda,idPaciente,idOrganizacion)
+        
         }else{
-            return false
+            //El paciente no existe en el Imp
+            result= false
 
         }
+        }catch(Exception e ){
+        println "No existe coneccion con IMP"
+        //Ocurrio un error al conectarse con el IMP
+        result= false
 
+        }
+        return result
 
         
     }

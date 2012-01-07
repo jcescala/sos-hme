@@ -1,7 +1,11 @@
-<g:if test="${!result}">
+<g:if test="${!conexionImp}">
+<p>No hay conexion con IMP</p>
+</g:if>
+
+<g:elseif test="${!result}">
 
   <p>No hay pacientes coincidentes</p>
-</g:if>
+</g:elseif>
       <g:else>
 
         

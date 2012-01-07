@@ -57,7 +57,7 @@ ${composition.context.otherContext.item.value.value}
       </tr>
     </g:each>
   </table>
-  <util:remotePaginate controller="demographic"
+  <util:remotePaginate controller="service"
                            action="${llamar}"
                            params="[id: idPaciente, desde: desde, hasta: hasta, marca: 'pag']"
                            total="${compositionsSize}"

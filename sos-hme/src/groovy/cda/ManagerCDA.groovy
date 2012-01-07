@@ -314,7 +314,7 @@ class ManagerCDA {
 
 
     //--------------------------------------------------------------------------
-
+    //Convierte la composition en texto HTML mediante uso de los templates
     public String convertirObjetoXML(Object o) //, Object template)
     {
         //XStream xstream = new XStream();
