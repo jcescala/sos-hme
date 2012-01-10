@@ -12,7 +12,7 @@ class AuthorizationController {
         
         if (params.doit)
         {
-            def login = authorizationService.getLogin(params.user, params.pass)
+            def login = authorizationService.getLogin(params.user, params.pass.encodeAsPassword())
             if (login)
             {
 
