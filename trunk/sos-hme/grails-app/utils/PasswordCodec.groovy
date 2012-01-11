@@ -11,7 +11,7 @@ import sun.misc.CharacterEncoder
  */
 class PasswordCodec {
 	static encode = { str ->
-		MessageDigest md = MessageDigest.getInstance('SHA')
+		MessageDigest md = MessageDigest.getInstance('SHA-512')
 		md.update(str.getBytes('UTF-8'))
 		return (new BASE64Encoder()).encode(md.digest())
 	}
