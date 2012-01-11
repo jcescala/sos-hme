@@ -6,8 +6,8 @@ class AuthorizationService {
     
     def loginExists( String user, String pass )
     {
-        // TODO: pass 2 md5
-        def login = LoginAuth.findByUserAndPass(user, pass)
+        // TODO: pass 2 md5 params.pass.encodeAsPassword()
+        def login = LoginAuth.findByUserAndPass(user, pass.encodeAsPassword())
         
         return login != null
     }
@@ -15,7 +15,7 @@ class AuthorizationService {
     def getLogin( String user, String pass )
     {
         // TODO: pass 2 md5
-        def login = LoginAuth.findByUserAndPass(user, pass)
+        def login = LoginAuth.findByUserAndPass(user, pass.encodeAsPassword())
         
         return login
     }
