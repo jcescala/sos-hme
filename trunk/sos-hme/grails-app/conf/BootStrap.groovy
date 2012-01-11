@@ -81,10 +81,10 @@ class BootStrap {
         // http://groovy.codehaus.org/JN0545-Dates
         // Esto si lo corrige!!!!
         //HORA DE CARACAS-VENEZUELA GMT-04:30
-  */
+*/
         TimeZone.'default'= TimeZone.getTimeZone('GMT-04:30') //set the default time zone
         
-  /*
+ /* 
         println " - START: Carga tablas maestras"
         
         // saco para acelerar la carga
