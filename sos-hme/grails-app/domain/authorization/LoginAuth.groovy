@@ -7,6 +7,6 @@ class LoginAuth extends PersonAuth {
 
     static constraints = {
         user(size:3..20, unique: true)
-        pass(size:3..8)
+        pass(size:3..32)
     }
 }
