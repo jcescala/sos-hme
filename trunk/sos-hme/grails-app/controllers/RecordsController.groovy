@@ -477,7 +477,7 @@ class RecordsController {
                 return model
             }
             
-            def auth = authorizationService.getLogin(params.user, params.pass)
+            def auth = authorizationService.getLogin(params.user, params.pass.encodeAsPassword())
             if (!auth)
             {
                 flash.error = "trauma.sign.wrongSignature"
@@ -586,7 +586,7 @@ class RecordsController {
             if (params.doit)
             {
 
-                def auth = authorizationService.getLogin(params.user, params.pass)
+                def auth = authorizationService.getLogin(params.user, params.pass.encodeAsPassword())
                 if (!auth)
                 {
                     // TODO: i18n

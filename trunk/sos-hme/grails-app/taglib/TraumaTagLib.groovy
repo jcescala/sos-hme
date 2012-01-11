@@ -122,7 +122,7 @@ class TraumaTagLib {
             
             
             // TODO: mostrar un identificador
-            def nombres = responsable.identities.find{ it.purpose == 'PersonName' }
+            def nombres = responsable.identities.find{ it.purpose == 'PersonNameUser' }
             
             out << '<div style="padding: 4px;">'
             out << message(code:'trauma.list.label.composer') + ': ' +
