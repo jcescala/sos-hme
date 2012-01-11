@@ -476,8 +476,8 @@ class RecordsController {
                 flash.error = "trauma.sign.registryAlreadySigned"
                 return model
             }
-            
-            def auth = authorizationService.getLogin(params.user, params.pass.encodeAsPassword())
+            //en esta linea se verifica el usuario y password  para firmar una HME
+            def auth = authorizationService.getLogin(params.user, params.pass)
             if (!auth)
             {
                 flash.error = "trauma.sign.wrongSignature"
@@ -585,8 +585,8 @@ class RecordsController {
 
             if (params.doit)
             {
-
-                def auth = authorizationService.getLogin(params.user, params.pass.encodeAsPassword())
+				//en esta linea se verifica el usuario y password  para reabrir la HME.
+                def auth = authorizationService.getLogin(params.user, params.pass)
                 if (!auth)
                 {
                     // TODO: i18n
