@@ -10,7 +10,7 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            
         </div>
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -22,17 +22,17 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'loginAuth.id.label', default: 'Id')}" />
-                        
+                            <!--<g:sortableColumn property="id" title="${message(code: 'loginAuth.id.label', default: 'Id')}" />
+                        -->
                             <!--<g:sortableColumn property="purpose" title="${message(code: 'loginAuth.purpose.label', default: 'Purpose')}" />-->
 
                             <g:sortableColumn property="user" title="${message(code: 'loginAuth.user.label', default: 'User')}" />
 
-                            <g:sortableColumn property="pass" title="${message(code: 'loginAuth.pass.label', default: 'Pass')}" />
+                            
                         
                             <th><g:message code="loginAuth.person.label" default="Person" /></th>
                         
-                            
+                            <th><g:message code="loginAuth.person.detail" default="Detalle" /></th>
                         
                         </tr>
                     </thead>
@@ -40,17 +40,17 @@
                     <g:each in="${loginAuthInstanceList}" status="i" var="loginAuthInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${loginAuthInstance.id}">${fieldValue(bean: loginAuthInstance, field: "id")}</g:link></td>
-                        
+                            <!--<td><g:link action="show" id="${loginAuthInstance.id}">${fieldValue(bean: loginAuthInstance, field: "id")}</g:link></td>
+                        -->
                             <!--<td>${fieldValue(bean: loginAuthInstance, field: "purpose")}</td>-->
                         
                             <td>${fieldValue(bean: loginAuthInstance, field: "user")}</td>
 
-                            <td>${fieldValue(bean: loginAuthInstance, field: "pass")}</td>
+                            
                         
                             <td>${loginAuthInstance?.person?.identities?.toString()}</td>
                         
-                            
+                            <td><g:link action="show" id="${loginAuthInstance.id}">detalle</g:link></td>
                         
                         </tr>
                     </g:each>
@@ -59,6 +59,7 @@
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${loginAuthInstanceTotal}" />
+                <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
             </div>
         </div>
     </body>
