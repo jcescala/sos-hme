@@ -189,17 +189,10 @@ class ImpService {
                 eq('segundoApellido', paciente.getSegundoApellido())
             }
             and{
-                ne('idPacienteOrg',paciente.getIdPaciente())
+               // ne('idPacienteOrg',paciente.getIdPaciente())
                 ne('centro',centro)
             }
         }
-
-
-      
-
-
-
-
 
         def candidatos = Paciente.withCriteria(){
             or{
@@ -211,7 +204,7 @@ class ImpService {
                 eq('segundoApellido', paciente.getSegundoApellido())
             }
             and{
-                ne('idPacienteOrg',paciente.getIdPaciente())
+               // ne('idPacienteOrg',paciente.getIdPaciente())
                 ne('centro',centro)
             }
             maxResults(this.max)
