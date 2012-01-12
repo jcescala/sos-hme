@@ -20,14 +20,22 @@ class LoginAuthController {
     }
 
     def save = {
+
+
+        
         def loginAuthInstance = new LoginAuth(params)
-        if (loginAuthInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
-            redirect(action: "show", id: loginAuthInstance.id)
-        }
-        else {
-            render(view: "create", model: [loginAuthInstance: loginAuthInstance])
-        }
+
+
+
+            if (loginAuthInstance.save(flush: true)) {
+                flash.message = "${message(code: 'default.created.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
+                redirect(action: "show", id: loginAuthInstance.id)
+            }
+            else {
+                render(view: "create", model: [loginAuthInstance: loginAuthInstance])
+            }
+
+
     }
 
     def show = {
@@ -64,16 +72,43 @@ class LoginAuthController {
                     return
                 }
             }
-            loginAuthInstance.properties = params
-            if (!loginAuthInstance.hasErrors() && loginAuthInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
-                redirect(action: "show", id: loginAuthInstance.id)
-            }
-            else {
+
+
+            
+            /*se verifica que las claves coincidan y que no sean vacias*/
+            if(params.pass.equals(params.pass2) && !params.pass.isEmpty()){
+                /*se codifica la clave*/
+                params.pass =  params.pass.encodeAsPassword()
+
+
+                /*se verifica que la clave no sea igual a la anterior*/
+                if(!loginAuthInstance.pass.equals(params.pass)){
+                
+                
+                loginAuthInstance.properties = params
+                    if (!loginAuthInstance.hasErrors() && loginAuthInstance.save(flush: true)) {
+                        
+			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
+                        redirect(action: "show", id: loginAuthInstance.id)
+                    }else {
+
+                        render(view: "edit", model: [loginAuthInstance: loginAuthInstance])
+                    }
+                }else{
+                        flash.message = "${message(code: 'default.repeated.key.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
+                        render(view: "edit", model: [loginAuthInstance: loginAuthInstance])
+                        println "la nueva clave debe ser distinta a la anterior\n\n"
+                }
+            }else{
+                /*en caso que el usuario no confirme la clave correctamente*/
+                flash.message = "${message(code: 'default.failur.key.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
+                println "ingrese y confirme su clave correctamente\n\n"
                 render(view: "edit", model: [loginAuthInstance: loginAuthInstance])
             }
         }
         else {
+
+            /*login no encontrado*/
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
             redirect(action: "list")
         }
