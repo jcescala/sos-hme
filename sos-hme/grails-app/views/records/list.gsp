@@ -10,7 +10,7 @@
   </head>
   <body>
      <div class="bodydomainlist">
-     <div id="logoucvhor" class="logoucvhor"></div>
+     
     <div id="listadominios" class="listadominios">
         <g:message code="episodio.list.title" />
     </div>

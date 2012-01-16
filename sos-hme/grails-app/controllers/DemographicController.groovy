@@ -236,15 +236,237 @@ class DemographicController{
         
     } // findPatient
     
-    
-   
-
-   
-
     /**
      * Selecciona a un paciente en el sistema para ser atendido (identificacion positiva).
      * PRE: el paciente debe tener por lo menos 1 id.
      */
+    def abc = {
+
+        render "<h1><p>SI FunCA</p></h1>"
+        //render(template: 'digo')//[arm: "digo yo"]
+    }
+
+    def busquedaExterna = {
+
+        println "ID:::::"+params.id
+        println "params.offsetoFFSET::::"+params.offset
+        println "params.desde::::"+params.desde
+        println "params.hasta::::"+params.hasta
+        //params.max
+        // params.offset
+
+
+        def desde = params.desde
+        def hasta = params.hasta
+
+        def d
+        def h
+        def offset
+
+        if(params.marca=='fil'){
+
+
+            if(desde==null) desde = new Date()
+            if(hasta==null) hasta = new Date()
+
+            d = desde.format("yyyy-MM-dd").toString()
+            h = hasta.format("yyyy-MM-dd").toString()
+            offset = 0
+
+        }else if(params.marca=='pag'){
+
+          
+            offset= (Integer) params.offset.toInteger()
+            d= desde
+            h = hasta
+        }
+
+        //BUSCAR EN EL SERVICIO IMP ------------------------
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        cda.ConjuntoCda result = customSecureServiceClientCda.buscarCDAByPacienteAndRango(
+            params.id,
+            XMLGregorianCalendarConverter.getXMLCalendar(d,"yyyy-MM-dd"),
+            XMLGregorianCalendarConverter.getXMLCalendar(h,"yyyy-MM-dd"),
+            offset,
+            idOrganizacion)
+
+        //-------------------------------
+        if(result){
+
+            render(template: 'registroExterno', model: [idPaciente: params.id, externo: result.listCdaArr, total: result.total, llamar: 'busquedaExterna', desde:d,hasta:h] )
+        }else{
+
+            render(template: 'registroExterno', model: [externo: null])
+
+
+        }
+
+
+    }
+    def busquedaAllExterna = {
+
+        println "ID:::::"+params.id
+        println "params.offsetoFFSET::::"+params.offset
+        
+        def offset
+
+        if(params.marca=='fil'){
+  
+            offset = 0
+
+        }else if(params.marca=='pag'){
+
+        
+            offset= (Integer) params.offset.toInteger()
+        }
+
+        //BUSCAR EN EL SERVICIO IMP ------------------------
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+        cda.ConjuntoCda result = customSecureServiceClientCda.buscarCDAByPaciente(
+            params.id,
+            offset,
+            idOrganizacion)
+
+        //-------------------------------
+        if(result){
+
+            render(template: 'registroExterno', model: [idPaciente: params.id,externo: result.listCdaArr, total: result.total, llamar: 'busquedaAllExterna' ])
+        }else{
+
+            render(template: 'registroExterno', model: [externo: null])
+
+
+        }
+
+
+    }
+
+    def busquedaInterna = {
+        println "ID:::::"+params.id
+        println "params.offsetoFFSET::::"+params.offset
+        println "params.desde::::"+params.desde
+        println "params.hasta::::"+params.hasta
+
+
+        def persona = Person.get(params.id)
+        def compos = [] //lista de composiciones (registros internos)
+
+        def desde
+        def hasta
+        def offset
+        def max
+
+            
+        if(params.marca=='fil'){
+            desde = params.desde
+            hasta = params.hasta
+            offset =0
+            max = 4
+
+            if(desde==null) desde = new Date()
+            if(hasta==null) hasta = new Date()
+        
+            
+            
+        }else if(params.marca=='pag'){
+
+            offset = params.offset.toInteger()
+            max = params.max.toInteger()
+
+            desde = Date.parse("yyyy-MM-dd", params.desde)
+            hasta = Date.parse("yyyy-MM-dd", params.hasta)
+
+
+
+        }
+
+
+        compos = hceService.getAllCompositionForPatient(persona, desde, hasta)
+        if(compos){
+
+            //if(max >= compos.size()){
+            //    max = compos.size()
+            //}
+            def set = offset + max - 1
+            if(set>=compos.size()){
+                set = compos.size()-1
+            }
+
+            def rango = new IntRange(offset, set)
+            def rangoCompos = compos.getAt(rango)
+            def d = desde.format("yyyy-MM-dd").toString()
+            def h = hasta.format("yyyy-MM-dd").toString()
+            
+            render(template: 'registroInterno', model: [idPaciente: params.id , compositions: rangoCompos, compositionsSize: compos.size(), compositionsMax: max,desde:d,hasta:h,llamar: 'busquedaInterna'])
+                
+        }else{
+            render(template: 'registroInterno', model: [idPaciente: params.id , compositions: compos, compositionsSize: 0,compositionsMax: max ])
+                
+        }
+
+
+        
+
+       
+        
+    }
+    
+    def busquedaAllInterna = {
+        println "ID:::::"+params.id
+        println "params.offsetoFFSET::::"+params.offset
+           
+
+
+        def persona = Person.get(params.id)
+        def compos = [] //lista de composiciones (registros internos)
+
+          
+        def offset
+        def max
+
+
+        if(params.marca=='fil'){
+           
+            offset =0
+            max = 4
+
+                
+        }else if(params.marca=='pag'){
+
+            offset = params.offset.toInteger()
+            max = params.max.toInteger()
+        }
+
+
+        compos = hceService.getAllCompositionForPatient(persona, new Date(0), new Date())
+        if(compos){
+
+            //if(max >= compos.size()){
+            //    max = compos.size()
+            //}
+            def set = offset + max - 1
+            if(set>compos.size()){
+                set = compos.size()-1
+            }
+
+            def rango = new IntRange(offset, set)
+            def rangoCompos = compos.getAt(rango)
+            render(template: 'registroInterno', model: [idPaciente: params.id, compositions: rangoCompos, compositionsSize: compos.size(), compositionsMax: max, llamar: 'busquedaAllInterna'])
+
+        }else{
+            render(template: 'registroInterno', model: [idPaciente: params.id, compositions: compos, compositionsSize: 0,compositionsMax: max ])
+
+        }
+
+
+
+
+
+
+    }
+
+
     def seleccionarPaciente = {
         
         // FIXME: esta hecho en base al id en la base, que pasa cuando la
@@ -252,9 +474,7 @@ class DemographicController{
         
         // Guardo los resultados de consultar el IMP remoto en la base como cache.
         def persona = Person.get(params.id)
-       
-       
-
+        
         
         // =====================================================================
         // 1) Si no hay un episodio seleccionado, muestro la patalla de show del
@@ -285,12 +505,7 @@ class DemographicController{
             String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
             def agreImp
             def relaImp
-            def conexionImp = true
-
-
-            //MANEJANDO EXCEPCION DE CONEXION AL IMP
-
-            try{
+               
             agreImp = customSecureServiceClientImp.existePaciente(params.id, idOrganizacion)
                 
             if(agreImp){
@@ -300,18 +515,13 @@ class DemographicController{
                 relaImp = false
 
             }
-
-            }catch(Exception e){
-
-                //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
-                conexionImp = false
-            }
+               
 
 
             def ids = persona.ids.toArray()
 
             println "ObjectID ": ids[0].root +"::"+ids[0].extension
-            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp])
+            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, agregadoImp: agreImp, relacionadoImp:relaImp])
            
 
                 
@@ -476,6 +686,15 @@ class DemographicController{
             //person.addToIdentities( name )
             
             def datos = new PersonNamePatient(params)
+            
+            //foto del paciente
+            def f = request.getFile('foto')
+            def okcontents = ['image/png' , 'image/jpeg' , 'image/gif']
+            if(okcontents.contains(f.getContentType())){
+                datos.foto = f.getBytes()
+                datos.tipofoto = f.getContentType()
+            }
+            
             person.addToIdentities(datos)
             
             if (!person.save()) println person.errors
@@ -736,5 +955,19 @@ class DemographicController{
             j++
         }
         return [patient: paciente]
+    }
+    
+    def fotopaciente = {
+       def paciente = Person.get(params.persona)
+       def datos = paciente.identities.find{ it.purpose == 'PersonNamePatient'}
+       if(!datos || !datos.foto || !datos.tipofoto){
+           response.sendError(404)
+           return
+       }
+       response.setContentType(datos.tipofoto)
+       response.setContentLength(datos.foto.size())
+       OutputStream out = response.getOutputStream()
+       out.write(datos.foto)
+       out.close()
     }
 }
