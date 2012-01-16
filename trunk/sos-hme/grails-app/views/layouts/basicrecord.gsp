@@ -18,7 +18,8 @@
       <div id="sessionbasic" class="sessionbasic">
         <g:datosUsuario userId="${session.traumaContext.userId}" /> | <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
       </div>
-      <div id="menubar" class="menubar">
+    </div>
+    <div id="menubar" class="menubar">
         <ul>
           <!--li><a href="../domain/list">Dominios</a></li-->
           <li><g:link controller="domain" action="list">Dominios</g:link></li>
@@ -26,8 +27,6 @@
           <li><g:link controller="demographic" action="admisionPaciente">Admisión</g:link></li>
         </ul>
       </div>
-      
-    </div>
     <div id="barrabasic" class="barrabasic"></div>
     
     <div id="contenidobasic" class="contenidobasic">

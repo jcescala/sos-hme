@@ -1,7 +1,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <html>
   <head>
-    <meta name="layout" content="basic" />
+    <meta name="layout" content="basicrecord" />
     <title><g:message code="demographic.admision_paciente.title" /></title>
     <style>
       label {

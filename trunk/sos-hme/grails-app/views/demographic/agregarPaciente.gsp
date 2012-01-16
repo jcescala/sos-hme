@@ -67,7 +67,7 @@
         <g:message code="${flash.message}" />
       </div>
     </g:if>
-    <g:form action="agregarPaciente" name="nuevopaciente">
+    <g:form action="agregarPaciente" name="nuevopaciente" enctype="multipart/form-data">
       <fieldset>
         <legend>Identificaci&oacute;n</legend>
           <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
@@ -91,7 +91,10 @@
         
           <label for="sexo"><g:message code="persona.sexo" /></label>
             <g:select name="sexo" class="selectsex" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
-        
+          
+            <label for="foto"><g:message code="persona.foto" /></label>
+            <!--label for="foto">Foto del Paciente</label-->
+            <input type="file" name="foto" id="foto"/>  
       </fieldset>
 	  
       <fieldset>

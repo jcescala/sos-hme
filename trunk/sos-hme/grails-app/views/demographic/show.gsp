@@ -77,14 +77,18 @@
 
 
 <%-- Preguntar primero si tiene foto--%>
-
-      <g:if test="${persona.sexo=='Masculino'}">
-        <img src="${createLinkTo(dir:"images", file:"man.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+      <g:if test="${name.foto}">
+          <img src="${createLink(action:'fotopaciente' , params:['persona':person_id])}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>     
       </g:if>
       <g:else>
-        <img src="${createLinkTo(dir:"images", file:"woman.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+          <g:if test="${persona.sexo=='Masculino'}">
+            <img src="${createLinkTo(dir:"images", file:"man.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+          </g:if>
+          <g:else>
+            <img src="${createLinkTo(dir:"images", file:"woman.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+          </g:else>
       </g:else>
-
+      
       <h2>${name.toString()}</h2>
       <table id="list" class="listrecords">
         <tr>
@@ -110,8 +114,6 @@
     </div>
 <%-- DATOS OPCIONES DE IMP--%>
 
-    <g:if test="${conexionImp}">
-
     <div id="imp">
 
       <h4>Opciones de IMP</h4>
@@ -135,7 +137,7 @@
                               class="create">Agregar Relacion Paciente</g:remoteLink></li>
           </g:if>
           <g:else>
-            
+            <li><g:link controller="service" action="listarOrganizaciones" params="[id: person_id]" class="create">Mostrar Organizaciones Relacionadas</g:link></li>
             <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create">Eliminar Relacion Paciente</g:link></li>
           </g:else>
 
@@ -153,10 +155,6 @@
 
     </div>
 
-    </g:if>
-    <g:else>
-    <p>No hay conexion con IMP</p>
-    </g:else>
 
 
 
@@ -164,7 +162,7 @@
     <div id="registroInterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
       <h3>Registros Internos</h3> <hr/>
       <g:formRemote name="busquedaInterna"
-                    url="[controller:'service',action:'busquedaInterna', params: [id: person_id,marca: 'fil']]"
+                    url="[controller:'demographic',action:'busquedaInterna', params: [id: person_id,marca: 'fil']]"
                     update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
                     onLoading="cargando('#resultadoInterno')">
         <br/>
@@ -192,7 +190,7 @@
 
       </g:formRemote>
       <g:remoteLink name="busquedaAllInterna"
-                    url="[controller:'service',action:'busquedaAllInterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
+                    url="[controller:'demographic',action:'busquedaAllInterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
                     update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
                     onLoading="cargando('#resultadoInterno')">Todos los registros
 
@@ -207,8 +205,8 @@
 
     </div>
 
- 
-<g:if test="${conexionImp && agregadoImp}">
+
+<g:if test="${agregadoImp}">
 <%-- REGISTROS EXTERNOS --%>
 
 
@@ -216,7 +214,7 @@
       <h3>Registros Externos</h3> <hr/>
       <div id="busquedaExterna">
         <g:formRemote name="busquedaExterna"
-                      url="[controller:'service',action:'busquedaExterna',params: [id: person_id, offset:0, marca: 'fil']]"
+                      url="[controller:'demographic',action:'busquedaExterna',params: [id: person_id, offset:0, marca: 'fil']]"
                       update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
                       onLoading="cargando('#resultadoExterno')">
           <br/>
@@ -241,7 +239,7 @@
           <g:submitButton name="doit" type="submit" value="${message(code:'buscar.filtro')}" />
         </g:formRemote>
         <g:remoteLink name="busquedaAllExterna"
-                      url="[controller:'service',action:'busquedaAllExterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
+                      url="[controller:'demographic',action:'busquedaAllExterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
                       update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
                       onLoading="cargando('#resultadoExterno')">Todos los CDAs
 

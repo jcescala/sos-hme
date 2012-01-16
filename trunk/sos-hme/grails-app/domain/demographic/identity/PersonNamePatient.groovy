@@ -2,7 +2,8 @@ package demographic.identity
 
 class PersonNamePatient extends PersonName{
 
-
+    byte[] foto
+    String tipofoto
     Etnia etnia
     Lugar nacionalidad
     Lugar lugar //hace referencia al id del municipio
@@ -30,6 +31,8 @@ class PersonNamePatient extends PersonName{
     String contactoemergencia
 
       static constraints = {
+        foto(nullable:true, maxSize: 204800 /* 200Kb */)
+        tipofoto(nullable:true)  
         primerNombre (blank:false, matches: "[a-zA-Z]+")
         segundoNombre (blank:false, matches: "[a-zA-Z]+")
         primerApellido (blank:false, matches: "[a-zA-Z]+")
@@ -63,6 +66,11 @@ class PersonNamePatient extends PersonName{
         nombremadre (nullable:true, matches: "[a-zA-Z]+")
         otradireccion (nullable:true)
         contactoemergencia (blank:false)
+    }
+    
+    static mapping = {
+        foto type: "binary" // or "blob"?
+        foto column: "foto", sqlType: "blob"
     }
 
 
