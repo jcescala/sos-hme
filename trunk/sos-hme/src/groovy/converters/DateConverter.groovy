@@ -134,14 +134,43 @@ class DateConverter {
         def hour = ''
         def minute = ''
 
+        StringTokenizer tok = new StringTokenizer(fecha," ");
+
+        if(tok.countTokens()>2){
+        fecha = tok.nextToken()
+
+
+           StringTokenizer hor = new StringTokenizer(tok.nextToken(),":")
+           hour = hor.nextToken()
+           minute = hor.nextToken()
+
+           def aux = tok.nextToken()
+           if(aux == "pm" || aux=='PM'){
+
+                hour = (((hour.toInteger()+12) <= 23)?(hour.toInteger()+12):12).toString()
+
+           }else if((aux == "am" || aux=='AM') && hour == "12") {
+
+            hour = "00"
+
+           }
+
+        }else{
+        hour = "00"
+        minute = "00"
+
+        }
         StringTokenizer tokens = new StringTokenizer(fecha,"-");
 
         day = tokens.nextToken();
         month = tokens.nextToken();
         year = tokens.nextToken();
-        hour = "00"
-        minute = "00"
+
+
         
+
+
+
         return year+'-'+
         ((month.size()==2)?month:'0'+month)+'-'+
         ((day.size()==2)?day:'0'+day)+' '+
@@ -149,6 +178,8 @@ class DateConverter {
         ((minute.size()==2)?minute:'0'+minute)+":"+
               '00'
     }
+
+   
     
     static Date dateFromParams( Map params, String prefix )
     {

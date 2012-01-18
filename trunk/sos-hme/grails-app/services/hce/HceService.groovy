@@ -94,6 +94,8 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
             path: "/context",
           
             startTime: new DvDateTime(value:_startTime),
+           // endTime: new DvDateTime(value:_startTime),
+
             //startTime: RMExamples.getDvDateTime1('2009-11-23 23:14:00'), // Se tendria que poner al iniciar un nuevo episodio
             //endTime: RMExamples.getDvDateTime1('2009-11-24 06:37:00'), // Se tendira que poner al cerra el episodio
             //location: 'cama 5', // es el "point of care" con granularidad maxima, por ejemplo "cama 5", es opcional y no lo vamos a usar
@@ -180,6 +182,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         {
             def now = new Date()
             endTime = DateConverter.toIso8601ExtendedDateTimeFormat( now )
+
         }
         
         // TODO: cambiar el estado creando un VERSION
@@ -188,10 +191,26 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         def version = Version.findByData( composition )
         version.lifecycleState = Version.STATE_COMPLETE
         version.save()
-        
-        composition.context.endTime = new DvDateTime(value:endTime)
-        
+
+
+        composition.context.setEndTime(new DvDateTime(value:endTime))
+        //composition.context.save(flush: true)
         // true o false
+       /* if(!composition.context.endTime.save()){
+            
+            println "Error DE ESTO: " + composition.context.endTime.errors
+        }
+
+        if(!composition.context.save()){
+
+            println "Error DE ESTO: " + composition.context.errors
+        }
+
+        if(!composition.save()){
+            
+            println "Error DE ESTO: " + composition.errors
+        }*/
+
         return composition.save()
     }
     

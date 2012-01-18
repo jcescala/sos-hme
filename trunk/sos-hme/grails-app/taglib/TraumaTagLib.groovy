@@ -88,8 +88,8 @@ class TraumaTagLib {
         out <<   '<div style="width:90%; float: left;">' // comienzo-fin-observaciones-responsable
         out <<     '<div style="padding: 4px;">'
         out <<       '<span>' +  message(code:'trauma.list.label.startTime') +' / '+ message(code:'trauma.list.label.endTime') +': </span>'
-        out <<       '<span>' + g.format( date: composition.context.startTime?.toDate() ) + ' / '
-        out <<                  g.format( date: composition.context.endTime?.toDate() ) + '</span>'
+        out <<       '<span>' + g.formatDate( date: composition.context.startTime?.toDate(), formatName: 'default.date.format.text' ) + ' / '
+        out <<                  g.formatDate( date: composition.context.endTime?.toDate(),formatName: 'default.date.format.text' ) + '</span>'
         out <<     '</div>'
 
         //out << '</div>' // /comienzo-fin
