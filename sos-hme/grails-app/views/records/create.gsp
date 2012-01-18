@@ -27,21 +27,8 @@
       {
 $.datepicker.setDefaults($.datepicker.regional['es']);
       
-        $("#datepicker").datepicker({dateFormat: 'dd-mm-yy',
-                                     changeYear: true,
-                                     altField: '#actualDate',
-                                     buttonText: 'Calendario',
-                                     showOn: 'both',
-                                     buttonImage: '../images/datepicker.gif',
-                                     maxDate: new Date(),
-                                     minDate: new Date(2007, 9, 15),
-                                     constrainInput: true,
-                                     showButtonPanel: true,
-                                     showOn: 'both'
-                          
-                          
-                         });
-       $('#datepicker1').datetimepicker({dateFormat: 'dd-mm-yy',
+      
+       $('#datepicker').datetimepicker({dateFormat: 'dd-mm-yy',
 	ampm: true,
         changeYear: true,
                                      
@@ -84,7 +71,7 @@ $.datepicker.setDefaults($.datepicker.regional['es']);
 --%>
 <div>
     <p> <input name="startDate" type="text" id="datepicker"> </p>
-    <p> <input name="startDate1" type="text" id="datepicker1"> </p>
+  
 
 </div>
   <g:message code="trauma.create.label.observaciones" /><br/>

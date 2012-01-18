@@ -10,10 +10,12 @@ class DvDateTime extends DvTemporal {
     static constraints = {
         // TODO
     }
+
+   
     
     Date toDate()
     {
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // Convertir la fecha en formato 12 horas AM/PM //
 

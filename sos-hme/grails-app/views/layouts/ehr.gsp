@@ -143,7 +143,7 @@
         
         <%-- FECHA ACTUAL --%>
         <span class="currentDate">
-          <g:format date="${new Date()}" />
+          <g:formatDate date="${new Date()}" formatName="default.date.format.text" />
         </span>
         
         <ul class="userBar">

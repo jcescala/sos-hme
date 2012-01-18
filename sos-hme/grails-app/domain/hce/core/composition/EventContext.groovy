@@ -31,5 +31,6 @@ class EventContext extends Locatable {
     static constraints = {
         startTime (nullable: false)
         setting (nullable: false)
+        location (nullable: true)
     }
 }

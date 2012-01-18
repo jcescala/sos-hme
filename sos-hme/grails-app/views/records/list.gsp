@@ -46,8 +46,8 @@
         <tr>
           <td>${composition.id}</td>
           <td><g:person param1="${composition}" /></td>
-          <td><g:format date="${composition.context.startTime?.toDate()}" /></td>
-          <td><g:format date="${composition.context.endTime?.toDate()}" /></td>
+          <td><g:formatDate date="${composition.context.startTime?.toDate()}" formatName="default.date.format.text"   /></td>
+          <td><g:formatDate date="${composition.context.endTime?.toDate()}" formatName="default.date.format.text" /></td>
           <td>
             <%-- OJO: Solo funciona si el otherContext es ItemSingle y el value del Element es DvText --%>
             ${composition.context.otherContext.item.value.value}

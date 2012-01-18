@@ -64,6 +64,13 @@ templates2 {
       MOVIMIENTO=['movimiento_de_paciente']
       
     }
+    '/domain.materno_infantil' {
+        
+         MOTIVO=['motivo_de_consulta']
+               
+    }
+
+
 }
 
 /* templates2 es el nuevo
