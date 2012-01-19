@@ -162,7 +162,8 @@ service.simple.url = ""
 service.complex.url = ""
 service.secure.url.cda = ""
 service.secure.url.imp = ""
-
+//service.serverURL = "http://190.169.161.50"
+service.serverURL = "http://127.0.0.1:8080"
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -176,11 +177,11 @@ environments {
         service.secure.url = "${grails.serverURL}/services/secure"
     }
     development {
-        grails.serverURL = "http://190.169.161.50/${appName}"
-        service.simple.url = "http://190.169.161.50/imp-cda/services/imp"
-        service.complex.url = "http://190.169.161.50/imp-cda/services/imp"
-        service.secure.url.cda = "http://190.169.161.50/imp-cda/services/cda"
-        service.secure.url.imp = "http://190.169.161.50/imp-cda/services/imp"
+        grails.serverURL = "${service.serverURL}/${appName}"
+        service.simple.url = "${service.serverURL}/imp-cda/services/imp"
+        service.complex.url = "${service.serverURL}/imp-cda/services/imp"
+        service.secure.url.cda = "${service.serverURL}/imp-cda/services/cda"
+        service.secure.url.imp = "${service.serverURL}/imp-cda/services/imp"
 
     }
     test {
@@ -225,8 +226,8 @@ log4j = {
 //Indice Maestro de Pacientes
 
 
-imp.organizacion.id = "62ad6b53-484c-496c-b08f-5ebb8c387d3c"
-
+//imp.organizacion.id = "62ad6b53-484c-496c-b08f-5ebb8c387d3c"
+imp.organizacion.id ="766e8035-3c8e-4209-9934-3c05059f5cab"
 cxf {
     installDir = "C:/apps/apache-cxf-2.4.4" //only used for wsdl2java script target
     client {
