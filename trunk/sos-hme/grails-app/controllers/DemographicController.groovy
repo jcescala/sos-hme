@@ -493,41 +493,51 @@ class DemographicController{
         if (!session.traumaContext?.episodioId) // caso 1)
         {
             println "No hay epidosio seleccionado"
-            
+
             if (persona.ids.size() == 0) // Debe tener un id!
             {
                 redirect( action : 'findPatient',
                     params : ['flash.message': 'El paciente seleccionado no tiene identificadores, debe tener por lo menos uno.'] )
                 return
             }
-           
+
             //Folder domain = Folder.findByPath( session.traumaContext.domainPath )
             String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
             def agreImp
             def relaImp
-               
+            def conexionImp = true
+
+
+            //MANEJANDO EXCEPCION DE CONEXION AL IMP
+
+            try{
             agreImp = customSecureServiceClientImp.existePaciente(params.id, idOrganizacion)
-                
+
             if(agreImp){
-            
+
                 relaImp = customSecureServiceClientImp.existeRelacionPaciente(params.id, idOrganizacion)
             }else{
                 relaImp = false
 
             }
-               
+
+            }catch(Exception e){
+
+                //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
+                conexionImp = false
+            }
 
 
             def ids = persona.ids.toArray()
 
             println "ObjectID ": ids[0].root +"::"+ids[0].extension
-            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, agregadoImp: agreImp, relacionadoImp:relaImp])
-           
+            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp])
 
-                
-           
 
-                
+
+
+
+
         }
         else // caso 2)
         {
