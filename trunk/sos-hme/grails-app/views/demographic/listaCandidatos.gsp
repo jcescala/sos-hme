@@ -122,14 +122,7 @@
 	            <g:link action="seleccionarPaciente" id="${persona.id}">
 	              <g:message code="demographic.lista_candidatos.action.seleccionarPaciente" />
 	            </g:link>
-                     |
-                    <g:link controller="service" action="agregarPaciente" id="${persona.id}">
-	              <g:message code="imp.agregarPaciente" />
-	            </g:link>
-                     |
-                    <g:link controller="service" action="eliminarPaciente" id="${persona.id}">
-	              <g:message code="imp.eliminarPaciente" />
-	            </g:link>
+                   
 
 
 	          </td>
