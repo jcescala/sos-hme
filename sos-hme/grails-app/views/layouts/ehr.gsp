@@ -72,7 +72,7 @@
       });
     </g:javascript>
     --%>
-    <title><g:layoutTitle/> | SOS Historia Médica | v${ApplicationHolder.application.metadata['app.version']}</title>
+    <title><g:layoutTitle/> | <g:message code="hce.nombre" /> | v${ApplicationHolder.application.metadata['app.version']}</title>
     <%--
     <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'ehr.css')}" />
     --%>
@@ -138,7 +138,7 @@
   </head>
   <body>
     <div id="user_bar">
-      <b>SOS Historia Médica</b> v${ApplicationHolder.application.metadata['app.version']} |
+      <b><g:message code="hce.nombre" /></b> v${ApplicationHolder.application.metadata['app.version']} |
       <g:datosUsuario userId="${userId}" />
       <span class="user_actions">
         
