@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
      <meta name="layout" content="ehr-modal" />
        <g:javascript library="jquery" />
-    <title>Sample title</title>
+    <title><g:message code="hce.service.listadCdas.title" /></title>
   </head>
   <body>
 
@@ -21,7 +21,7 @@
       
     </ul>
 
-    <h1>Lista de CDAs</h1>
+    <h1><g:message code="hce.service.listadCdas.title" /></h1>
 
      <div id="resultadoExterno" >
 

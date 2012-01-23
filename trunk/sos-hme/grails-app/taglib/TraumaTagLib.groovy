@@ -198,11 +198,11 @@ class TraumaTagLib {
         // FIXME: usar un template para mostrar el Person Name
         if (login.person.sexo == Person.SEXO_FEMENINO)
         {
-            out << "Bienvenida: "
+            out << "${message(code:'default.bienvenida.femenino')}"
         }
         else
         {
-            out << "Bienvenido: "
+            out << "${message(code:'default.bienvenida.masculino')}"
         }
         out << personName.primerNombre + " " + personName.primerApellido
     }

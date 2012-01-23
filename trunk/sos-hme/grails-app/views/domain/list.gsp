@@ -12,7 +12,7 @@
     --%>
     <div class="bodydomainlist">
       <div id="listadominios" class="listadominios">
-        Listado de dominios
+        ${message(code:'domain.list.label.listadoDominios')}
       </div>
       <div id="logoucvhor" class="logoucvhor"></div>
       <g:if test="${flash.message}">

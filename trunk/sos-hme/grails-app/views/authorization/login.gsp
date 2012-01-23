@@ -32,10 +32,10 @@ function replaceT(obj){
             </div> 
             <div id="userlogin" class="userlogin">
               <!--g:textField name="user" id="user" value="Usuario" class="userlogin"/-->
-              <input type="text" id="user" name="user" class="userlogin" value="Usuario" onmousedown="javascript:this.value='';"/>
+              <input type="text" id="user" name="user" class="userlogin" value="${message(code:'auth.login.label.userid')}" onmousedown="javascript:this.value='';"/>
             </div>
             <div id="passlogin" class="userlogin">
-              <input name="pass" type="text" value="Contraseña" class="userlogin" onfocus="replaceT(this)"/>
+              <input name="pass" type="text" value="${message(code:'auth.login.label.password')}" class="userlogin" onfocus="replaceT(this)"/>
             </div>
             <div id="ingresarboton" class="ingresarboton">
               <input type="submit" name="doit" id="doit" value="${message(code:'auth.login.action.signin')}" class="buttonlogin"/>

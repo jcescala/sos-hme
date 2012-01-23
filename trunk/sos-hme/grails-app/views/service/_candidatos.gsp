@@ -1,10 +1,10 @@
 <g:if test="${!conexionImp}">
-<p>No hay conexion con IMP</p>
+<p><g:message code="service.imp.conexionImp.false" /></p>
 </g:if>
 
 <g:elseif test="${!result}">
 
-  <p>No hay pacientes coincidentes</p>
+  <p><g:message code="service.imp.pacientesCoincidentes.false" /></p>
 </g:elseif>
       <g:else>
 
@@ -12,24 +12,24 @@
         <table >
 
           <tr>
-          <th>ID Paciente</th>
-          <th>ID Organizacion</th>
+         <%--  <th>ID Paciente</th> --%>
+          <th><g:message code="hce.service.candidatos.idOrganizacion" /></th>
 
-          <th>Identificadores</th>
+          <th><g:message code="hce.service.candidatos.identificadores" /></th>
           
-          <th>Primer Nombre</th>
-          <th>Segundo Nombre</th>
+          <th><g:message code="hce.service.candidatos.primerNombre" /></th>
+          <th><g:message code="hce.service.candidatos.segundoNombre" /></th>
 
-          <th>Primer Apellido</th>
-          <th>Segundo Apellido</th>
+          <th><g:message code="hce.service.candidatos.primerApellido" /></th>
+          <th><g:message code="hce.service.candidatos.segundoApellido" /></th>
 
-          <th>Acciones</th>
+          <th><g:message code="hce.service.candidatos.acciones" /></th>
 
           </tr>
 
           <g:each in="${result}" var="paciente">
 	        <tr>
-                  <td>${paciente.idPaciente}</td>
+                 <%-- <td>${paciente.idPaciente}</td>--%>
                   <td>${paciente.nombreCentro}</td>
 
 
