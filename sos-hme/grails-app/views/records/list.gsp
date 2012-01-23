@@ -73,9 +73,9 @@
                   <g:link controller="cda" action="create" id="${composition.id}">Crear CDA</g:link>
                 </g:if>
                 <g:else>
-                  <g:message code="Documento Clinico Creado" /> <!-- TODO i18n -->
-                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}"><g:message code="Ver CDA" /></g:link> <!-- TODO i18n -->
-
+                 <%-- <g:message code="Documento Clinico Creado" /> <!-- TODO i18n -->
+                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}"><g:message code="hce.cda.verCda" /></g:link> <!-- TODO i18n -->
+                    --%>
                 </g:else>
               </g:if>
           </td>

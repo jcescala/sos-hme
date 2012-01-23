@@ -1,4 +1,6 @@
 <%@ page import="com.thoughtworks.xstream.XStream" %>
+<%@ page import="hce.core.common.change_control.Version" %>
+<%@ page import="hce.core.composition.Composition" %>
 <html>
   <head>
     <meta name="layout" content="ehr" />
@@ -34,6 +36,7 @@
     </style>
   </head>
   <body>
+    
     <h1><g:message code="trauma.show.title" /></h1>
     <g:if test="${flash.message}">
       <div class="message"><g:message code="${flash.message}" /></div>
@@ -61,8 +64,20 @@
           <g:link action="registroClinico">
             <g:message code="trauma.title.registroClinico" />
           </g:link>
+
+          <div id="cda">
+            <g:isSignedRecord episodeId="${episodeId}">
+                  <g:set var="version" value="${Version.findByData(composition)}"/>
+                  <br />
+                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}"><g:message code="hce.cda.verCda" /></g:link> <!-- TODO i18n -->
+
+                 
+            </g:isSignedRecord>
+          </div>
         </div>
       </g:canFillClinicalRecord>
+      
+
     </div>
     <br/>
       
@@ -79,6 +94,7 @@
       <g:link controller="guiGen" action="showRecord"><g:message code="trauma.list.action.showRecord" /></g:link>
 
     </div>
-    
+   
   </body>
+ 
 </html>
