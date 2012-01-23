@@ -1,6 +1,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
 <%@ page import="hce.core.common.directory.Folder" %>
+
 <%--<?xml version="1.0" encoding="ISO-8859-1?>--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -276,10 +277,11 @@
                     <g:link controller="records" action="signRecord" id="${episodeId}">
                       <g:message code="registro.menu.close" />
                       <g:isSignedRecord episodeId="${episodeId}">
-                        (+)                     
+                        (+)
                       </g:isSignedRecord>
                     </g:link>
                   </li>
+
                   
                 </g:canFillClinicalRecord>
               </ul>
