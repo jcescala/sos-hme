@@ -5,7 +5,7 @@
 
 <g:if test="${!compositions}">
 
-  <p>No hay episodios coincidentes</p>
+  <p><g:message code="service.imp.episodiosCoincidentes.false" /></p>
 </g:if>
 <g:else>
 

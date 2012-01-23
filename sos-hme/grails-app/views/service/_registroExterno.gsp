@@ -1,18 +1,18 @@
         <g:if test="${!conexionImp}">
 
-          <p>No hay conexion con Imp</p>
+          <p><g:message code="service.imp.conexionImp.false" /></p>
         </g:if>
         <g:elseif test="${!externo}">
 
-          <p>No hay CDAs coincidentes</p>
+          <p><g:message code="service.imp.cdaCoincidentes.false" /></p>
         </g:elseif>
         <g:else>
           <table >
 
             <tr>
-              <th>Titulo</th>
-              <th>Fecha Creacion</th>
-              <th colspan="2">Acciones</th>
+              <th><g:message code="hce.service.registroExterno.titulo" /></th>
+              <th><g:message code="hce.service.registroExterno.fechaCreacion" /></th>
+              <th colspan="2"><g:message code="hce.service.registroExterno.acciones" /></th>
 
 
             </tr>
@@ -23,8 +23,8 @@
                 <td>${cda.fechaCreacion}</td>
 
 
-                <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'cda']">Ver CDA </g:link></td>
-              <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'xml']">Ver XML </g:link></td>
+                <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'cda']"><g:message code="hce.cda.verCda" /> </g:link></td>
+              <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'xml']"><g:message code="hce.cda.verXML" /> </g:link></td>
 
               </tr>
             </g:each>

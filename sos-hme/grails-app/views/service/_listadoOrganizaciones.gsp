@@ -1,18 +1,18 @@
 <g:if test="${!conexionImp}">
 
-          <p>No hay conexion con Imp</p>
+          <p><g:message code="service.imp.conexionImp.false" /></p>
 </g:if>
 
 <g:elseif test="${!result}">
 
-  <p>No hay Organizaciones coincidentes</p>
+  <p><g:message code="service.imp.pacientesCoincidentes.false" /></p>
 </g:elseif>
       <g:else>
         <table>
 
           <tr>
-          <th>Nombre</th>
-          <th>Acciones</th>
+          <th><g:message code="hce.service.listadoOrganizaciones.nombre" /></th>
+          <th><g:message code="hce.service.listadoOrganizaciones.acciones" /></th>
 
 
           </tr>

@@ -42,7 +42,7 @@ import hce.core.common.directory.Folder
 import hce.core.common.generic.*
 
 import java.io.*
-
+import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
 
 class DemographicController{
 
@@ -505,11 +505,11 @@ class DemographicController{
             String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
             def agreImp
             def relaImp
-            def conexionImp = true
+            def conexionImp = SCH.servletContext.conexionImp
 
 
             //MANEJANDO EXCEPCION DE CONEXION AL IMP
-
+            if(conexionImp){
             try{
             agreImp = customSecureServiceClientImp.existePaciente(params.id, idOrganizacion)
 
@@ -526,7 +526,7 @@ class DemographicController{
                 //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
                 conexionImp = false
             }
-
+            }
 
             def ids = persona.ids.toArray()
 

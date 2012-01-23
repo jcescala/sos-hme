@@ -37,12 +37,15 @@ class BootStrap {
 
     
     def init = { servletContext ->
-     
+
         println ""
         println "======= +++++++++ ======="
         println "======= Bootstrap ======="
         println "======= +++++++++ ======="
         println ""
+        servletContext.conexionImp  = false //Se setea en falso el semaforo de conexion al IMP
+
+
    /*
         // TEST Folder
         //def g = new org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib()
