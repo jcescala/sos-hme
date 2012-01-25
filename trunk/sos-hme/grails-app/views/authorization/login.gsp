@@ -20,8 +20,19 @@ function replaceT(obj){
 </script>
   </head>
   <body>
-      <div id="outer" class="outerlogin">
-      </br>   
+    
+    <div id="outer" class="outerlogin">
+       <ul class="langBar">
+          <g:langSelector>
+            <li ${(session.locale.getLanguage()==it)?'class="active"':''}>
+                        
+                <a href="?sessionLang=${it}"><g:message code="common.lang.${it}" /></a>
+             
+            </li>
+          </g:langSelector>
+        </ul>
+      <br />
+     
         <div id="ingreseimage" class="ingreseimage"></div>
         <div id="formwrap">
           <g:form url="[action:'login']" method="post" id="form1">

@@ -241,7 +241,7 @@
     <g:form action="save" class="ehrform" method="post" enctype="multipart/form-data">
     
       <input type="hidden" name="templateId" value="${template.id}" />
-      <input type="hidden" name="mode" value="${mode}" />
+      <input id="mode" type="hidden" name="mode" value="${mode}" />
       
       <table class="container" cellpadding="0" cellspacing="3">
         <tr>

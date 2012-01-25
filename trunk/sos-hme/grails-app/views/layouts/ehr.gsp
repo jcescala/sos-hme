@@ -77,19 +77,63 @@
     <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'ehr.css')}" />
     --%>
     <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'ehr_contenido_grande.css')}" />
-    <g:layoutHead />
+   
 
 
         <r:require module="jquery-ui"/>
   <g:javascript library="jquery" />
   <jqui:resources themeCss="/sos/css/jquery/jquery-ui-1.8.16.custom.css"/>
 
+  <script type="text/javascript" src="/sos/js/jquery/jquery.form.js"></script>
   <script type="text/javascript" src="/sos/js/jquery/jquery-ui-i18n.min.js"></script>
   <script type="text/javascript" src="/sos/js/jquery/jquery-ui-timepicker-addon.js"> </script>
   <script type="text/javascript">
-     $(document).ready(function()
-      {
-    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    function deseaGuardar(){
+      
+      return confirm("Desea guardar los cambios efectuados?");
+    }
+    function guardadoAutomatico(seccion, generarShow, itemId){
+
+      if(deseaGuardar()){
+      //SI generarShow es true, significa que el registro ya está guardado previamente
+      //<input id="mode" type="hidden" name="mode" value="show" />
+      if ($(".ehrform").length > 0){
+        
+          if($('#mode').val() =='edit'){
+            
+          $(".ehrform").append("<input type='hidden' name='autoSave' value='"+seccion+"' />");
+          $(".ehrform").submit();
+          }else if($('#mode').val() =='show'){
+
+            if(generarShow==true){
+                $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
+            }else{
+                $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+            }
+
+          }else{
+            //AQUI DEBERIA ENTRAR CUANDO SE GUARDA POR PRIMERA VEZ
+            $(".ehrform").append("<input type='hidden' name='autoSave' value='"+seccion+"' />");
+             $(".ehrform").submit();
+          }
+      
+      }else if(generarShow==true){
+        $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
+      }else{
+        $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+      }
+  }else{
+
+
+    $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+
+  }
+    }
+
+
+   $(document).ready(function(){
+    $.datepicker.setDefaults($.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
 
 
         $(".DateSos").datepicker({dateFormat: 'dd-mm-yy',
@@ -131,7 +175,7 @@
  });
   </script>
 
-
+ <g:layoutHead />
 
 
 
@@ -164,17 +208,17 @@
         </ul>
 
         <ul class="userBar">
-          <li ${(['domain'].contains(controllerName))?'class="active"':''}>
+          <li ${(['domain'].contains(controllerName))?"class='active'":''}>
             <g:link controller="domain" action="list"><g:message code="domain.action.list" /></g:link>
           </li>
           <li>
            <g:set var="folder" value="${Folder.findByPath(session.traumaContext.domainPath)}" />
            (${folder.name.value})
           </li>
-          <li ${(['records'].contains(controllerName))?'class="active"':''}>
+          <li ${(['records'].contains(controllerName))?"class='active'":''}>
             <g:link controller="records" action="list"><g:message code="records.action.list" /></g:link>
           </li>
-          <li ${(controllerName=='demographic')?'class="active"':''}>
+          <li ${(controllerName=='demographic')?"class='active'":''}>
             <g:link controller="demographic" action="admisionPaciente"><g:message code="demographic.action.admisionPaciente" /></g:link>
           </li>
         </ul>
@@ -198,6 +242,8 @@
         <tr>
           <td id="body_table" rowspan="2">
             <g:resumenEpisodio episodeId="${episodeId}" />
+
+           
             <g:layoutBody />
           </td>
           <td>
@@ -219,13 +265,16 @@
               </g:else>
             </div>
             <div id="menu">
+              
               <ul>
+                <br />
                 <li>
                   <g:link controller="records" action="list">
                     <g:message code="trauma.menu.list" />
                   </g:link>
                 </li>
-                <li ${((controllerName=='records'&&['show'].contains(actionName)) ? 'class="active"' : '')}>
+                <br />
+                <li ${((controllerName=='records'&&['show'].contains(actionName)) ? "class='active'" : '')}>
                   <g:link controller="records" action="show" id="${episodeId}">
                     <g:message code="trauma.menu.show" />
                   </g:link>
@@ -233,7 +282,7 @@
                 
                 <g:canFillClinicalRecord>
                 
-                  <li ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? 'class="active"' : '')}>
+                  <li ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? "class='active'" : '')}>
                     <g:link controller="records" action="registroClinico" id="${episodeId}">
                       <g:message code="trauma.menu.registroClinico" />
                     </g:link>
@@ -245,9 +294,12 @@
                   --%>
                   
                   <g:if test="${( ['guiGen','records','ajaxApi'].contains(controllerName) && ['generarShow','generarTemplate','show','saveDiagnostico','showRecord'].contains(actionName) )}">
-                    
+                    <br />
+                   
                     <g:each in="${sections}" var="section">
-                      <li ${(( template?.id?.startsWith(section) ) ? 'class="active"' : '')}>
+
+                      <li ${(( template?.id?.startsWith(section) ) ? "class='active'" : '')}>
+                      
                         <%-- allSubsections: ${allSubsections}<br/> --%>
                         <%-- se fija si el registro ya fue hecho --%>
                         <%
@@ -259,21 +311,31 @@
                         <%-- subsection: ${subsection}<br/> --%>
                         <g:hasContentItemForTemplate episodeId="${episodeId}" templateId="${section+'-'+subsection}">
                           <g:if test="${it.hasItem}">
-                            <g:link controller="guiGen" action="generarShow" id="${it.itemId}">
+                           <%-- GUARDADO PREVIAMENTE, GENERAR SHOW --%>
+
+                           <%-- <g:link controller="guiGen" action="generarShow" id="${it.itemId}">
                               <g:message code="${'section.'+section}" /> (+) <%-- + es que se hizo algun registro en la seccion --%>
-                            </g:link>
+                           <%-- </g:link>
+                            --%>
+                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});"><g:message code='${"section."+section}' /> (+)</a>
                           </g:if>
                           <g:else>
-                            <g:link controller="records" action="registroClinico2" params="[section:section]">
+                            <%-- SIN GUARDAR, GENERAR RECORDS INPUTS (registrao clinico2) --%>
+
+                         <a href="#" onClick="guardadoAutomatico('${section}',false,false);"><g:message code='${"section."+section}' /></a>
+                           <%--<g:link controller="records" action="registroClinico2" params="[section:section]">
                               <g:message code="${'section.'+section}" />
                             </g:link>
+                            --%>
+
+
                           </g:else>
                         </g:hasContentItemForTemplate>
                       </li>
                     </g:each>
                   </g:if>
-                  
-                  <li ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? 'class="active"' : '')}>
+                  <br />
+                  <li ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='active'" : '')}>
                     <g:link controller="records" action="signRecord" id="${episodeId}">
                       <g:message code="registro.menu.close" />
                       <g:isSignedRecord episodeId="${episodeId}">
