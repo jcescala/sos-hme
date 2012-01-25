@@ -4,7 +4,111 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <html>
   <head>
-    <meta name="layout" content="basic" />
+    <meta name="layout" content="ehr" />
+    
+   <script type="text/javascript">
+    
+      var codigos;
+      
+     
+
+    $('#form_diagnosticos').ajaxForm({
+        // dataType identifies the expected content type of the server response
+        dataType:  'json',
+
+        // success identifies the function to invoke when the server response
+        // has been received
+        success:   _after
+    });
+    
+
+      function select( id )
+      {
+        alert('select id:'+id);
+      
+        var code = null;
+        
+        // codigos es global
+        $.each(codigos, function(c) {
+          if (this.id == id) code = this;
+        });
+        
+        if (code)
+        {
+          //alert(code.id + ' ' + code.nombre);
+          
+          // TODO: esto deberia ser un form con campos hidden con los
+          //       ids de los codigos seleccionados para diagnosticos.
+          //
+          $('#seleccionados').append('<div id="selected_'+code.id+'">' +
+                                          '<input type="hidden" name="codes" value="'+ code.id +'" />'+
+                                          '('+ ((code.codigo) ? code.codigo : code.subgrupo) + ') ' + code.nombre + // si no es un codigo, para que no muestre null
+                                          ' <a href="javascript:unselect(\'' + code.id + '\');">[borrar]</a> ' +
+                                          '</div>');
+        }
+        else
+          alert('code es null');
+      }
+      
+      
+      function unselect( id )
+      {
+         $('#selected_'+id).remove();
+      }
+      
+    
+      function _after(response)
+      {
+      
+        var json = response;
+        //codigos es una variable global
+        codigos = json.codigos;
+        var odd = 0;
+        var html = '';
+        
+        // Si no se encuentran codigos para el texto ingresado.
+        if (codigos.length == 0)
+        {
+           html += '<g:message code="section.DIAGNOSTICO-diagnosticos.label.emptySearchResult" />';
+        }
+        else
+        {
+          html = '<table cellpadding="3" cellspacing="1">';
+          
+          $.each(response.codigos ,function(index) {
+           
+            if (!this.codigo)
+            {
+              html += '<tr class="group">';
+            }
+            else
+            {
+              html += '<tr'+ ((odd)?' class="odd"':' class="even"') +'>';
+            }
+            
+            html += '<td>' + this.subgrupo + '</td>';
+            html += '<td>' + ((this.codigo) ? this.codigo : '') + '</td>'; // si no muestra 'null'
+            html += '<td class="name">' + this.nombre + '</td>';
+            html += '<td class="select_code">';
+            html += '<a href="javascript:select(\'' + this.id + '\');">[seleccionar]</a>';
+            html += '</td>';
+            
+            html += '</tr>';
+            
+            odd = (odd+1)%2;
+            
+         });
+         
+         html += '</table>'
+          
+        } // si hay algun resultado
+
+        $('#result').html(html);
+     
+  }
+    </script>
+  
+
     <style>
       #result table {
          border: 1px solid #000000;
@@ -39,109 +143,7 @@
         font-size: 11px;
       }
     </style>
-    <g:javascript library="prototype" />
-    <g:javascript>
-    
-      var codigos;
-    
-      function select( id )
-      {
-        //alert('select id:'+id);
-      
-        var code = null;
-        
-        // codigos es global
-        codigos.each( function(c) {
-          if (c.id == id) code = c;
-        });
-        
-        if (code)
-        {
-          //alert(code.id + ' ' + code.nombre);
-          
-          // TODO: esto deberia ser un form con campos hidden con los
-          //       ids de los codigos seleccionados para diagnosticos.
-          //
-          $('seleccionados').innerHTML += '<div id="selected_'+code.id+'">' +
-                                          '<input type="hidden" name="codes" value="'+ code.id +'" />'+
-                                          '('+ ((code.codigo) ? code.codigo : code.subgrupo) + ') ' + code.nombre + // si no es un codigo, para que no muestre null
-                                          ' <a href="javascript:unselect(\'' + code.id + '\');">[borrar]</a> ' +
-                                          '</div>';
-        }
-        else
-          alert('code es null');
-      }
-      
-      
-      function unselect( id )
-      {
-         $('selected_'+id).remove();
-      }
-      
-    
-      function _after(response)
-      {
-        //alert( response.responseText );
-        
-        /* para el JSON hecho a mano
-        
-        var json = eval('(' + response.responseText + ')')
-        //alert( codigos );
-        
-        alert( json.codigos.size() ); 
-        
-        json.codigos.each( function(c) { alert(c.codigo.id) } );
-        */
-        
-        // variable global
-        var json = eval('(' + response.responseText + ')'); // con JSON hecho por mi
-        codigos = json.codigos
-        
-        //codigos = eval('(' + response.responseText + ')'); // con as JSON
-        //codigos.each( function(c) { alert(c.id) } );
-        
-        var odd = 0;
-        html = '';
-        
-        // Si no se encuentran codigos para el texto ingresado.
-        if (codigos.length == 0)
-        {
-           html += '<g:message code="section.DIAGNOSTICO-diagnosticos.label.emptySearchResult" />';
-        }
-        else
-        {
-          html = '<table cellpadding="3" cellspacing="1">';
-          codigos.each( function(c) {
-            
-            if (!c.codigo)
-            {
-              html += '<tr class="group">';
-            }
-            else
-            {
-              html += '<tr'+ ((odd)?' class="odd"':' class="even"') +'>';
-            }
-            
-            html += '<td>' + c.subgrupo + '</td>';
-            html += '<td>' + ((c.codigo) ? c.codigo : '') + '</td>'; // si no muestra 'null'
-            html += '<td class="name">' + c.nombre + '</td>';
-            html += '<td class="select_code">';
-            html += '<a href="javascript:select(\'' + c.id + '\');">[seleccionar]</a>';
-            html += '</td>';
-            
-            html += '</tr>';
-            
-            odd = (odd+1)%2;
-            
-          } );
-          html += '</table>'
-          
-        } // si hay algun resultado
-
-        $('result').innerHTML = html;
-      }
-    </g:javascript>
-  </head>
+   </head>
   <body>
     <h1>Diagnosticos</h1>
   
@@ -159,17 +161,17 @@
   
     <%-- update="[success:'message',failure:'error']" --%>
     <%-- onSuccess="_after(codigos)" --%>
-    <div class="ehrform">
-      <g:formRemote url="[controller:'ajaxApi', action:'findCIE10']"
-                    onSuccess="_after(e)"
-                    name="form_diagnosticos">
+    <div class="ehrform1">
+      <g:form url="[controller:'ajaxApi', action:'findCIE10']"
+                    name="form_diagnosticos"
+                    id="form_diagnosticos">
                     
         <input type="text" name="text" />
-        <input type="submit" value="Buscar" />
+        <input id="buscarDiagnostico" type="submit" value="Buscar" />
         
         p.e: 'traumatismo cuello', 'quemadura cabeza', 'esguince tobillo', ...
         
-      </g:formRemote >
+      </g:form >
       
       <div id="message"></div>
       <div id="error"></div>
@@ -177,7 +179,7 @@
       <h3><g:message code="section.DIAGNOSTICO-diagnosticos.label.diagnosesSearchResult" /></h3>
       <div id="result"></div><br/>
       
-      <g:form controller="ajaxApi" action="saveDiagnostico">
+      <g:form class="ehrform" controller="ajaxApi" action="saveDiagnostico">
         
         <input type="hidden" name="mode" value="${mode}" />
         

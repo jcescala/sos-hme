@@ -105,6 +105,7 @@ class AjaxApiController {
      */
     def findCIE10 = {
         
+        
         def partes = params.text.split(" ") // saco palabras por espacios
         
         println partes
@@ -151,35 +152,37 @@ class AjaxApiController {
         render( html )
         */
         
-        
-        render(builder:'json') {
-          codigos {
+
+        //Armando: Se codifica el return en JSON para ser atajado con JQUERY
+
+        render(contentType: "text/json") {
+         codigos = array {
             _codigos.each { _codigo ->
-            
+
               // a negrita los textos de entrada en el texto de salida
               def _nombre = _codigo.nombre
               partes.each { parte ->
-              
+
                 // El texto en la base esta en upper
                 _nombre = _nombre.replaceAll(parte.toUpperCase(), '<b class="highlight">'+parte.toUpperCase()+'</b>')
               }
               //println "nombre: "+_nombre
-            
-              codigo (
+
+             codigo (
                 id: _codigo.id,
                 grupo: _codigo.grupo,
                 subgrupo: _codigo.subgrupo,
                 codigo: _codigo.codigo,
-                
-                
+
+
                 //nombre: _codigo.nombre
                 nombre: _nombre
               )
+
             }
           }
         }
-        
-        //render _codigos as JSON // manda class, deleted y demas
+
 
     } // findCIE10
     
@@ -334,10 +337,35 @@ class AjaxApiController {
                 else
                 {
                     println "SALVADA COMPOSITION OK"
-                     redirect(controller: 'guiGen',
+
+                    //Pregunto cual vista renderizar
+
+                    if(params.autoSave){
+
+                    redirect(controller: 'records', action: 'registroClinico2', params: [section: params.autoSave]
+
+                           )
+
+
+                    return
+
+                    }else{
+
+                   // Redirige a show para mostrar el registro ingresado.
+
+                    redirect(action: 'generarShow',
+                            params: [id:rmobj.id]
+                           )
+
+                    return
+                    }
+                    
+                    /*  redirect(controller: 'guiGen',
                               action: 'generarShow',
                               params: [id: rmobj.id])
-                    return
+                    return*/
+
+
                 }
             }
         }

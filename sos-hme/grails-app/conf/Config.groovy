@@ -306,3 +306,5 @@ graphviz {
     dot.executable = "C:/Program Files/Graphviz 2.28/bin/dot" // include full file path if not on path
 }
 //graphviz.dot.executable =
+
+grails.json.legacy.builder = false

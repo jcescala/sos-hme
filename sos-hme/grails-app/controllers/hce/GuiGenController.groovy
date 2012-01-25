@@ -537,12 +537,29 @@ class GuiGenController {
                    // Hay un handler que se encarga de verificar si se dan
                    // las condiciones de cierre del registro.
                    EventManager.getInstance().handle("post_save_ok", [composition:comp])
-                
+
+
+                 //Pregunto cual vista renderizar
+
+                    if(params.autoSave){
+
+                    redirect(controller: 'records', action: 'registroClinico2', params: [section: params.autoSave]
+                           
+                           )
+
+
+                    return
+
+                    }else{
+
                    // Redirige a show para mostrar el registro ingresado.
-                   redirect(action: 'generarShow',
+                  
+                    redirect(action: 'generarShow',
                             params: [id:rmobj.id]
                            )
-                   return
+
+                    return
+                    }
                }
            }
        }

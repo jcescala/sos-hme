@@ -25,7 +25,7 @@
   <script type="text/javascript">
       $(document).ready(function()
       {
-$.datepicker.setDefaults($.datepicker.regional['es']);
+$.datepicker.setDefaults($.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
       
       
        $('#datepicker').datetimepicker({dateFormat: 'dd-mm-yy',

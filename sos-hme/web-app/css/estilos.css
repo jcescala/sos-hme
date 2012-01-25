@@ -195,3 +195,42 @@ label.valid {
 ul li{
 list-style:none;
 }
+ ul.langBar {
+         list-style: none;
+         display: inline;
+         margin: 0px;
+         float: right;
+        
+         padding: 0px 10px 0px 0px;
+      }
+      ul.langBar li {
+         /*margin-bottom: 3px;*/
+         /*padding: 0;*/
+         /*padding: 4px 10px 7px 7px;*/
+         display: inline;
+         color: #666;
+         /*border-bottom: 1px solid #000000;*/
+         /*background-color: #efefef;*/
+         /*padding-top: 18px;*/
+      }
+      ul.langBar li a {
+         /*display: block;*/
+         /*width: 193px;*/
+         /*padding: 7px 0px 7px 7px;*/
+         margin-top: 6px;
+         padding: 4px 10px 5px 10px;
+         text-decoration:none;
+         color: #597a80;
+         border: solid 1px #000000;
+         background-color: #f2f2f2;
+       }
+       ul.langBar li a:hover {
+         color: #000000;
+         background-color: #ffee00;
+       }
+       ul.langBar li.active a {
+         color: #000000;
+         border: 1px solid #000000;
+         border-bottom: 1px solid #ffffff;
+         background-color: #ffffff;
+       }
