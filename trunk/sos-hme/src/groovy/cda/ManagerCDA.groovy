@@ -48,7 +48,7 @@ class ManagerCDA {
         def version = Version.findByData(composition)
 
         String nombreArch = getNombreArchCDA(idEpisodio,version.getNumVersion(),new Date())
-        def archivo = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + "\\" + nombreArch)
+        def archivo = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + "//" + nombreArch)
         archivo.write(xmlCDA);
         version.nombreArchCDA = nombreArch
         version.save()

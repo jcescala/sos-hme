@@ -43,7 +43,7 @@ ${composition.context.otherContext.item.value.value}
       <br />
       <g:if test="${(g.stateForComposition(episodeId:composition.id) == Version.STATE_SIGNED)}">
         <g:set var="version" value="${Version.findByData(composition)}"/>
-        <g:set var="archivoCDA" value="${new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + version.nombreArchCDA)}"/>
+        <g:set var="archivoCDA" value="${new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + version.nombreArchCDA)}"/>
         <g:if test="${!archivoCDA.exists()}">
           <g:link controller="cda" action="create" id="${composition.id}">Crear CDA</g:link>
         </g:if>

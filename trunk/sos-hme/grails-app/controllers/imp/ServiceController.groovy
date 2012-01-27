@@ -52,7 +52,7 @@ class ServiceController {
 //        cda.id = params.id //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
 //        cda.titulo = "Algun titulo"
 //        cda.fechaCreacion = "1988-05-20" //formato dd-MM-yyyy
-//        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + params.id + '.xml')
+//        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + params.id + '.xml')
 //
 //        if(!cda_xml.exists()){
 //
@@ -165,8 +165,8 @@ class ServiceController {
 
                 
                 def cda_xml = new StringReader(result.getDocumento())
-                def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + 'CDA.xsl')
-                //def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + 'CDA_CDATA.xsl')
+                def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + 'CDA.xsl')
+                //def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + 'CDA_CDATA.xsl')
 
                 def factory = TransformerFactory.newInstance()
                 def transformer = factory.newTransformer(new StreamSource(cda_xsl))
