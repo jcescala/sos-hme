@@ -122,7 +122,7 @@ openEHR.RMVersion = '1.0.2'
 
 // Ruta a directorio en donde se almacenan los CDAs generados
 
-hce.rutaDirCDAs = ".\\CDAs"
+hce.rutaDirCDAs = ".//CDAs"
 
 // grails.config.locations = [ "classpath:${appName}-config.properties",
 //                             "classpath:${appName}-config.groovy",

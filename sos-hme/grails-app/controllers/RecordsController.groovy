@@ -665,7 +665,7 @@ class RecordsController {
 
 
                 // Creo CDA si no existe
-                def archivoCDA = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + version.nombreArchCDA)
+                def archivoCDA = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + version.nombreArchCDA)
                 if (!archivoCDA.exists())
                 {
                     def cdaMan = new ManagerCDA()

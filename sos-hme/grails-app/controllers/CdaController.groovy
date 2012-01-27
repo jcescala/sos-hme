@@ -50,9 +50,9 @@ class CdaController {
         //VER EL CDA ASOCIADO AL EPISODIO
       
 
-        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + params['id'] + '.xml')
-        def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + 'CDA.xsl')
-      //def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + 'CDA_CDATA.xsl')
+        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + params['id'] + '.xml')
+        def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + 'CDA.xsl')
+      //def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + 'CDA_CDATA.xsl')
 
         def factory = TransformerFactory.newInstance()
         def transformer = factory.newTransformer(new StreamSource(cda_xsl))

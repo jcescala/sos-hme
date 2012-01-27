@@ -117,7 +117,7 @@ class SubirCdaToImpJob {
 
         cda.id = nombreArchCDA //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
         
-        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '\\' + nombreArchCDA)
+        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + nombreArchCDA)
 
         if(!cda_xml.exists()){
          
