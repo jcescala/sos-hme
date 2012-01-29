@@ -16,7 +16,7 @@
       </div>
       <div id="logoucvhor" class="logoucvhor"></div>
       <g:if test="${flash.message}">
-        <div class="message">${flash.message}</div>
+        <div class="message"><g:message code="${flash.message}"/></div>
       </g:if>
       <div class="list">
         <g:each in="${folders}" status="i" var="folder">

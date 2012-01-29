@@ -32,7 +32,7 @@ class TraumaTagLib {
         out << (name?.primerNombre?:"") + " "+ (name?.segundoNombre?:"") +" "+ (name?.primerApellido?:"") + " "+(name?.segundoApellido?:"")
         out << "</a>"
         }else{
-        out << "Sin paciente asignado"
+        out << message(code:'records.list.paciente.false')
 
 
         }
