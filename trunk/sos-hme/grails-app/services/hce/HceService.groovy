@@ -67,12 +67,12 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         
         // Sacado de openehr terms en codeset languages
         compo.language = new CodePhrase(
-            codeString: 'es-uy',
+            codeString: 'es',
             terminologyId: TerminologyID.create('ISO_639-1', null)
         )
         // sacado de openehr terms en codeset countries
         compo.territory = new CodePhrase(
-            codeString: 'UY',
+            codeString: 'VE',
             terminologyId: TerminologyID.create('ISO_3166-1', null)
         )
         
@@ -118,7 +118,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
                     value: new DvText(
                         value: _otherContext,
                         language: new CodePhrase(
-                            codeString: 'es-uy',
+                            codeString: 'es',
                             terminologyId: TerminologyID.create('ISO_639-1', null)
                         ),
                         encoding: new CodePhrase(

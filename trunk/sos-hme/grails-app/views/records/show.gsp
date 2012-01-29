@@ -46,7 +46,7 @@
   
     <div id="show_body">
       <div id="demographic">
-        <h2>REGISTRO DEMOGRAFICO</h2>
+        <h2><g:message code="records.show.registroDemografico" /></h2>
         <%-- permite asociar un paciente al episodio solo si el mismo no esta ya asignado --%>
         <g:if test="${patient}">
           <g:render template="../demographic/Person" model="[person:patient]" />
@@ -60,7 +60,7 @@
       </div>
       <g:canFillClinicalRecord>
         <div id="clinical">
-          <h2>REGISTRO CLINICO</h2>
+          <h2><g:message code="records.show.registroClinico" /></h2>
           <g:link action="registroClinico">
             <g:message code="trauma.title.registroClinico" />
           </g:link>

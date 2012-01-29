@@ -57,6 +57,7 @@ class RecordsController {
     {
         def sections = []
         this.getDomainTemplates().keySet().each {
+            
             sections << it
         }
         
@@ -367,6 +368,7 @@ class RecordsController {
            // la vista si tiene que generar how o generar template siempre llame
            // a registoClinico2.
            // Se fija si el episodio tiene o no registro para el template dado.
+           //Si item es NULL no tiene registro para el template dado, entonces se genera el template
            //if (it.hasItem)
            if (item)
            {

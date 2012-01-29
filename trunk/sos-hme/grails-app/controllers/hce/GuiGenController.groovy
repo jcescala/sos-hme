@@ -66,7 +66,7 @@ class GuiGenController {
     {
         def sections = []
         this.getDomainTemplates().keySet().each {
-
+            
             sections << it
         }
         
@@ -86,7 +86,8 @@ class GuiGenController {
         // Lista de ids de templates
         def subsections = []
 
-        this.getDomainTemplates()."$section".each { subsection ->
+       this.getDomainTemplates()."$section".each { subsection ->
+
            subsections << section + "-" + subsection
         }
         

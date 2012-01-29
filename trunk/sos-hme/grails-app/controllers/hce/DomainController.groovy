@@ -41,7 +41,7 @@ class DomainController {
       
       if (!hceService.domainHasTemplates(params.path))
       {
-         flash.message = "El dominio aún no tiene registros asociados"
+         flash.message = 'domain.selectDomain.flash'
          redirect(action: "list")
          return
       }
