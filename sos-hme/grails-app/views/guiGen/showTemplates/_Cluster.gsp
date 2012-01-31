@@ -1,4 +1,5 @@
 <%@ page import="com.thoughtworks.xstream.XStream" %>
+<%@ page import="util.UniqueIdIssuer" %>
 <%--
 
 in: rmNode (Cluster)
@@ -25,6 +26,8 @@ modo = show? (si el modo no es edit es show)
 }
 
 --%>
+
+
 <div class="CLUSTER">
   <%--
   arhcID: ${rmNode.archetypeDetails.archetypeId},
@@ -58,48 +61,97 @@ modo = show? (si el modo no es edit es show)
 	    Recorro los CObject de attributes[0].
 	    Attributes[0] es la restriccion sobre el atributo cluster.items
 	    --%>
-	    <g:each in="${aomNode.attributes[0].children}" var="children">
+           
+	    <g:each status="i" in="${aomNode.attributes[0].children}" var="children" >
 	      <%
+               def aux
+               // permite guardar el ultimo valor 'item' de un grupo de
+               //rmItems , aux se utiliza para preguntar si ese conjunto es multiple
+               
+              
+
 	      //println "Children: "+children.getClass() + "<br/>"
 	      // El cluster del RM tiene algun item con la path del AOM?
 	      def rmItems = rmNode.items.findAll{ it.path == children.path() }
 	      if (rmItems.size()==0) // No hay items RM para esa path, genero usando el AOM
 	      {
+                
 	        // USO AOM
 	        //print "_Cluster usa AOM"
+                
 	        print render(template:"../guiGen/templates2/cObject",
 	                     model:[cObject: children,
 	                            archetype: archetype,
 	                            template: template,
 	                            pathFromParent: children.path()])
+                
 	      }
 	      else
 	      {
+                
 	        // USO RM
 	        //print "_Cluster usa RM<br/>"
-	        rmItems.each { item ->
-                  
+	       
+                rmItems.each{ item->
+
+                 
 	          //print item.path + "<br/>"
 	          def templateName = item.getClassName()
 	         // print templateName + "<br/>"
+                 
 	          print render(template: "../guiGen/showTemplates/${templateName}",
 	                       model: [rmNode: item,
 	                               archetype: archetype,
 	                               template: template,
-	                               pathFromParent: item.path])
-	        }
+	                               pathFromParent: item.path,
+                                       ])
+	        aux= item
+                }
+               
+                //print aomNode.attributes[0].children.size()
+                
+              %>
+
+              <%-- Agregado por Armando--%>
+              <g:if test="${mode && mode=='edit' }">
+              <%--ES UN CLUSTER, PREGUNTAR SI ES MULTIPLE--%>
+              <g:parentElementIsMultiple archetypeId="${archetype.archetypeId.value}" nodePath="${aux.path}">
+                <%-- Para que al agregar una entrada no haga scroll al inicio de la pagina --%>
+        <g:set var="anchor" value="${UniqueIdIssuer.getId()}" />
+        
+         
+
+
+              <div class="multiple">
+                
+              <a href="#${anchor}" class="clone"><g:message code="view.guiGen.showTemplates.cComplexObject.agregar" /></a>
+              </div>
+             </g:parentElementIsMultiple>
+             <%-- PREGUNTAR SI ES MULTIPLE --%>
+             </g:if>
+              <%-- FIN Agregado por Armando--%>
+
+
+              <%
 	      }
 	      %>
-             
+
+              
 	    </g:each>
 
            
             
             
     </span>
+
+  
   </g:if>
+
+ 
+
+
   <g:else>
-    <span class="label">
+       <span class="label">
       ${rmNode.name.value}
     </span>
     <span class="content">
@@ -117,4 +169,3 @@ modo = show? (si el modo no es edit es show)
   
 </div>
 
- 
