@@ -15,6 +15,8 @@
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
+		
+
         <div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -66,7 +68,7 @@
                                 </td>
 
                             </tr>
-                        <!--
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="contacts"><g:message code="person.contacts.label" default="Contacts" /></label>
@@ -75,18 +77,42 @@
                                     <g:select name="contacts" from="${demographic.contact.Contact.list()}" multiple="No" optionKey="id" size="5" value="${personInstance?.contacts*.id}" />
                                 </td>
                             </tr>-->
-                        
-
-                      <!--
+							
+							<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="identificador"><g:message code="persona.identificador" /></label>
+                                </td>
+								<td valign="top" style="text-align: left;" class="value">
+									<ul>
+									<g:each in="${personInstance.ids}" var="r2">
+										<li>${r2?.value.split('::')[0]} : <g:link controller="role" action="show" id="${r2.id}">${r2?.value.split('::')[1]}</g:link></li>
+									</g:each>
+									</ul>
+								</td>
+							</tr>
+							
+							
+							
+							<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="identificador"><g:message code="persona.identificador" /></label>
+                                </td>							
+							
+                                <td valign="top" class="name">
+									  <g:select name="root"  from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
+                                </td>
+							</tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="ids"><g:message code="person.ids.label" default="Ids" /></label>
                                 </td>
+								
                                 <td valign="top" class="value ${hasErrors(bean: personInstance, field: 'ids', 'errors')}">
-                                    <g:select name="ids" from="${hce.core.support.identification.UIDBasedID.list()}" multiple="yes" optionKey="id" size="5" value="${personInstance?.ids*.id}" />
+                                    <g:textField name="extension" value="" />
+									<!--<g:select name="ids" from="${hce.core.support.identification.UIDBasedID.findAllByValueLike('%2.16.840.1.113883.2.14.2.1%')}" multiple="yes" optionKey="id" size="5" value="${personInstance?.ids*.id}" />-->
                                 </td>
-                            </tr>-->
-                        
+                            </tr> 
+							
                          <!--   <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="relationships"><g:message code="person.relationships.label" default="Relationships" /></label>
@@ -143,6 +169,8 @@
                     </table>
                 </div>
                 <div class="buttons">
+					<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+					<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </div>

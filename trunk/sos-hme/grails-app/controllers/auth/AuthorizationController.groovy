@@ -2,7 +2,7 @@ package auth;
 
 import auth.AuthorizationService
 import util.HCESession
-
+import demographic.role.*
 
 class AuthorizationController {
     
@@ -18,16 +18,51 @@ class AuthorizationController {
             if (login)
             {
 
-                //Asigna el tiempo a la session
-                session.setMaxInactiveInterval(1800);
+				// se busca el rol asociado con la clase persona asignada al login
+                def roles = Role.withCriteria {
+                    eq('performer', login.person)
+                }
 
-                // Pone al usuario en session
-                session.traumaContext = new HCESession( userId: login.id )
+                def roleKeys = roles.type
                 
-                //redirect(controller:'records', action:'list')
-                redirect(controller:'domain', action:'list')
-                return
-            }
+				// si el usuario posee login de administrador 
+                if ( roleKeys.intersect([Role.ADMIN]).size() > 0 ){
+
+                    
+					//Asigna el tiempo a la session
+					session.setMaxInactiveInterval(1800);
+
+					// Pone al usuario en session
+					session.traumaContext = new HCESession( userId: login.id )
+					
+					//se redirecciona a el area de administracion usuarios
+					redirect(controller:'loginAuth', action:'list')
+					return
+
+						// de lo contrario
+                }else{
+                
+					//Asigna el tiempo a la session
+					session.setMaxInactiveInterval(1800);
+
+					// Pone al usuario en session
+					session.traumaContext = new HCESession( userId: login.id )
+					
+					//se redirecciona a la vista de dominios medicos.
+					redirect(controller:'domain', action:'list')
+					return
+
+                    
+                }			
+			
+
+            
+			
+			
+			
+			
+			
+		}
             else
             {
                 // FIXME: i18n

@@ -7,6 +7,9 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'person.label', default: 'Person')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+		
+
+		
     </head>
     <body>
         <div class="nav">
@@ -58,21 +61,21 @@
                                     <g:textField name="sexo" value="${personInstance?.sexo}" />
                                 </td>-->
                                 <td valign="top" class="value ${hasErrors(bean: personInstance, field: 'sexo', 'errors')}">
-                                    <g:select name="sexo" from="${personInstance.getSexCodes()}" multiple="No"  size="2" value="sexo" />
+                                    <g:select name="sexo" from="${Person.getSexCodes()}" multiple="No"  size="2" value="sexo" />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="type"><g:message code="person.type.label" default="Type" /></label>
+                                    <label for="identificador"><g:message code="persona.identificador" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
-                                    <g:select name="type" from="${demographic.role.Role.getRoleCodes()}" multiple="No" size="4" value="type" />
+                                <td valign="top" class="name">
+									  <g:textField name="extension" value="${params.identificador}" />
+									  <g:select name="root"  from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
                                 </td>
 
 
                             </tr>
-
 
 
 
@@ -81,6 +84,7 @@
                     </table>
                 </div>
                 <div class="buttons">
+					<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
                     <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
             </g:form>

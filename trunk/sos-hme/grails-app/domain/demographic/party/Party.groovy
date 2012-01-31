@@ -37,7 +37,7 @@ class Party {
     // de Party en PartyRel: es el source.
     static mappedBy = [relationships:'source']
     static mapping = {
-        ids cascade: "save-update"
+        ids cascade: "save-update" //delet all orphan
         identities cascade: "save-update"
         contacts cascade: "save-update"
     }
