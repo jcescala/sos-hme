@@ -173,7 +173,7 @@
 
 
      $('.clone').click(function(){
-       alert('clonando');
+       //alert('clonando');
        var nodeToClone = $(this).parent().prev();
        var newNode = nodeToClone.clone();
 
