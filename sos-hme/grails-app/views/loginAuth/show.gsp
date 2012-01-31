@@ -8,11 +8,7 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            
-        </div>
+
         <div class="body">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -22,19 +18,19 @@
                 <table>
                     <tbody>
                     
-                        <!--<tr class="prop">
+                        <%--<tr class="prop">
                             <td valign="top" class="name"><g:message code="loginAuth.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "id")}</td>
                             
-                        </tr>
+                        </tr>--%>
                     
-                       <!-- <tr class="prop">
+                       <%-- <tr class="prop">
                             <td valign="top" class="name"><g:message code="loginAuth.purpose.label" default="Purpose" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "purpose")}</td>
                             
-                        </tr>-->
+                        </tr>--%>
 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="loginAuth.user.label" default="User" /></td>
@@ -42,14 +38,14 @@
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "user")}</td>
 
                         </tr>
-                        <!--
+                        <%--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="loginAuth.pass.label" default="Pass" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "pass")}</td>
                             
                         </tr>
-                    -->
+                    --%>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="loginAuth.person.label" default="Person" /></td>
                             
