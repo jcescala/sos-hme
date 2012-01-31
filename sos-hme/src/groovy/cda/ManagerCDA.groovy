@@ -300,16 +300,37 @@ class ManagerCDA {
             component {
                 nonXMLBody {
                   text(mediaType: 'text/html', "<![CDATA[" + component_nonxmlbody + "]]>") // Con esto valida contra el XSD del CDA...
-                  //text(mediaType: 'text/html', component_nonxmlbody )
-                  //("\n      " + component_nonxmlbody.replace("\n","\n    ")) // Hago el replace para que se muestre tabulado correctamente
+                
                 }
             }
         }
 
-        return writer.toString().replace("&lt;","<").replace("&gt;",">").replace("_DOS_PUNTOS_", ":") // component_nonxmlbody viene con los caracteres '<'' y '>' cambiados.
+        return convertir(writer.toString())
+    }
+
+   def convertir(String conver)
+  {
+
+  return conver.replace("&amp;","&")
+           .replace("&nbsp;"," ")
+           .replace("&lt;","<")
+           .replace("&gt;",">")
+           .replace("&ntilde;","ñ")
+           .replace("&Ntilde;","Ñ")
+           .replace("&aacute;","á")
+           .replace("&eacute;","é")
+           .replace("&iacute;","í")
+           .replace("&oacute;","ó")
+           .replace("&uacute;","ú")
+           .replace("&iquest;","¿")
+           .replace("&iexcl;","¡")
+           .replace("&quot;","\"")
+           .replace("&#039;","'")
+           .replace("_DOS_PUNTOS_", ":") // component_nonxmlbody viene con los caracteres '<'' y '>' cambiados.
                                                                                                       // Como no puedo poner ":" en los nombres de las etiquetas, le
                                                                                                       // pongo _DOS_PUNTOS_ a las etiquetas cuando la defino y luego hago el replace
-    }
+
+ }
 
 
 
@@ -324,7 +345,7 @@ class ManagerCDA {
         //def tagLib = applicationContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
         def tagLib = ctx.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
 
-        def xml = tagLib.render(template:'/guiGen/showRecord', model:
+        def xml = tagLib.render(template:'/guiGen/showRecord',encoding:"UTF-8", model:
         [
         composition:    o,
         episodeId: o.id, // necesario para el layout

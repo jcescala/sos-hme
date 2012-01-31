@@ -69,7 +69,7 @@
             <g:isSignedRecord episodeId="${episodeId}">
                   <g:set var="version" value="${Version.findByData(composition)}"/>
                   <br />
-                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}"><g:message code="hce.cda.verCda" /></g:link> <!-- TODO i18n -->
+                  <g:link controller="cda" action="ver" id="${version.nombreArchCDA}" params="[idComposition:idComposition]"><g:message code="hce.cda.verCda" /></g:link> <!-- TODO i18n -->
 
                  
             </g:isSignedRecord>

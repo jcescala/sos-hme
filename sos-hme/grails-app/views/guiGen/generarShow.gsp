@@ -261,12 +261,14 @@
                   <g:set var="fieldPaths" value="${archRef.getFieldPaths()}" />
                 </g:if>
                 <!-- RM -->
+                
                 <g:render template="../guiGen/showTemplates/Locatable"
                           model="[rmNode: index[archRef.id], fieldPaths: fieldPaths,
                                   archetype: archRef.getReferencedArchetype()]" />
               </g:if>
               <g:else><%-- No hay estructura del RM, voy por el AOM --%>
                 <!-- AOM -->
+                
                 <g:each in="${archRef.getReferencedConstraints()}" var="node">
                   <g:render template="../guiGen/templates2/cComplexObject"
                             model="[cComplexObject: node, params: params,

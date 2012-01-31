@@ -37,6 +37,7 @@ modo = show? (si el modo no es edit es show)
       ${rmNode.name.value}
     </span>
     <span class="content">
+      
 	    <g:set var="aomNode" value="${archetype.node(rmNode.path)}" />
 	    
 	    <%--
@@ -77,9 +78,10 @@ modo = show? (si el modo no es edit es show)
 	        // USO RM
 	        //print "_Cluster usa RM<br/>"
 	        rmItems.each { item ->
+                  
 	          //print item.path + "<br/>"
 	          def templateName = item.getClassName()
-	          print templateName + "<br/>"
+	         // print templateName + "<br/>"
 	          print render(template: "../guiGen/showTemplates/${templateName}",
 	                       model: [rmNode: item,
 	                               archetype: archetype,
@@ -88,7 +90,12 @@ modo = show? (si el modo no es edit es show)
 	        }
 	      }
 	      %>
+             
 	    </g:each>
+
+           
+            
+            
     </span>
   </g:if>
   <g:else>
@@ -107,4 +114,7 @@ modo = show? (si el modo no es edit es show)
       </g:each>
     </span>
   </g:else>
+  
 </div>
+
+ 

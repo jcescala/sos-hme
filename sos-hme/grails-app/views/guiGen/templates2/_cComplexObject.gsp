@@ -17,7 +17,7 @@ if (refPath) _refPath = refPath
 <%-- Por si el elemento tiene varias ocurencias, ojo puede ser * --%>
 <%
   // Si no es null, es eso, si no es 1.
-  def max = ((cComplexObject.occurrences.upper) ? cComplexObject.occurrences.upper : 1) //Se pude modificar por operador Elvis, Armando
+  def max = ((cComplexObject.occurrences.upper) ? cComplexObject.occurrences.upper : 1) 
   for (i in 1..max) {
 %>
 
@@ -169,14 +169,14 @@ if ( errors && errors.hasErrorsForPath(archetype.archetypeId.value, cComplexObje
       </g:parentElementIsMultiple>
 
     </span>
-    
+   </div>
     <g:parentElementIsMultiple archetypeId="${archetype.archetypeId.value}" nodePath="${cComplexObject.path()}">
       <div class="multiple">
-        <a href="#${anchor}" class="clone">Agregar entrada</a>
+        <a href="#${anchor}" class="clone"><g:message code="view.guiGen.showTemplates.cComplexObject.agregar" /></a>
       </div>
     </g:parentElementIsMultiple>
-    
-  </div>
+
+  
 </g:if>
 
 <% } // si occurrences.upper >1 y no es * repito el nodo %>

@@ -173,9 +173,16 @@ class ServiceController {
 
                 StringWriter salida = new StringWriter()
                 transformer.transform(new StreamSource(cda_xml), new StreamResult(salida))
+                 //AÑADIENDO BOTON ATRAS
+                        String cadena=salida.toString()
+                        int indice = cadena.lastIndexOf("</body>")
+                        String cadena_punta = cadena.substring(0,indice)
+                        String cadena_cola = cadena.substring(indice, cadena.length())
+                        //boton
+                        String agregado = "<a href='../../demographic/seleccionarPaciente/"+params.idPaciente+"' class='atras'>Regresar</a>"
+                        cadena = cadena_punta + agregado +cadena_cola
 
-                render(text:salida.toString().replace("&lt;","<").replace("&gt;",">"),contentType:"text/html",encoding:"UTF-8")
-
+                        render(text:cadena.replace("&lt;","<").replace("&gt;",">"),contentType:"text/html",encoding:"UTF-8")
             }
         }else{
             render(view: "listaCdas", model: [idPaciente:params.idPaciente,conexionImp:conexionImp,result: null])
