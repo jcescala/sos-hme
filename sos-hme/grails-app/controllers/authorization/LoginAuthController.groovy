@@ -1,5 +1,6 @@
 package authorization
-
+import java.util.regex.Matcher /*para uso de expresiones regulares*/
+import java.util.regex.Pattern
 class LoginAuthController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -22,11 +23,11 @@ class LoginAuthController {
     def save = {
 
 
-        
+        params.pass =  params.pass.encodeAsPassword()
         def loginAuthInstance = new LoginAuth(params)
+		
 
-
-
+			 
             if (loginAuthInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
                 redirect(action: "show", id: loginAuthInstance.id)
@@ -59,7 +60,9 @@ class LoginAuthController {
             return [loginAuthInstance: loginAuthInstance]
         }
     }
-
+	
+	
+	// este update es usado unicamente para cambiar de clave en caso de perdida de la anterior.
     def update = {
         def loginAuthInstance = LoginAuth.get(params.id)
         if (loginAuthInstance) {
@@ -88,7 +91,7 @@ class LoginAuthController {
                 loginAuthInstance.properties = params
                     if (!loginAuthInstance.hasErrors() && loginAuthInstance.save(flush: true)) {
                         
-			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
+						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
                         redirect(action: "show", id: loginAuthInstance.id)
                     }else {
 

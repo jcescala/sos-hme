@@ -21,20 +21,20 @@
             <div class="dialog">
                 <table>
                     <tbody>
-                    
+                    <!--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="person.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personInstance, field: "id")}</td>
                             
-                        </tr>
+                        </tr>-->
                         <tr  class="prop">
                             <td valign="top" class="name"><g:message code="person.identities.label" default="Identities" /></td>
 
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
                                 <g:each in="${personInstance.identities}" var="i">
-                                    <li><g:link controller="personName" action="show" id="${i.id}">${i?.encodeAsHTML()}</g:link></li>
+                                    <li><g:link controller="personNameUser" action="show" id="${i.id}">${i?.encodeAsHTML()}</g:link></li>
                                 </g:each>
                                   
                                 </ul>
@@ -86,6 +86,20 @@
                             </td>
                             
                         </tr>
+						
+						
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="person.ids.label" default="identificaciones" /></td>
+														
+                            <td valign="top" style="text-align: left;" class="value">
+                                <g:render template="UIDBasedID" collection="${personInstance.ids}" var="id" />
+                                </ul>
+                            </td>
+
+
+						
+						</tr>
+						
                     <!--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="person.type.label" default="Type" /></td>
@@ -101,7 +115,10 @@
                 <g:form>
                     <g:hiddenField name="id" value="${personInstance?.id}" />
                     <g:hiddenField name="roles" value="${personInstance?.roles}" />
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
+                    
+					<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+					<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+					<span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </g:form>
             </div>

@@ -18,13 +18,13 @@ class AdminFilters {
                 if ( roleKeys.intersect([Role.ADMIN]).size() > 0 ){
 
                     
-                    println "soy admin\n"
+                    //println "soy admin\n"
 
                     
 
                 }else{
                     redirect(controller:'domain', action:'list')
-                    println "no soy admin\n"
+                    //println "no soy admin\n"
 
                     
                 }

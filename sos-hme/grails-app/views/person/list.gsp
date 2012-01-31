@@ -67,6 +67,7 @@
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${personInstanceTotal}" />
+				<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
             </div>
         </div>
     </body>

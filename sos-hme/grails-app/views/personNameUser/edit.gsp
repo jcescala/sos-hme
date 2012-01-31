@@ -94,19 +94,14 @@
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="purpose"><g:message code="personNameUser.purpose.label" default="Purpose" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: personNameUserInstance, field: 'purpose', 'errors')}">
-                                    <g:textField name="purpose" value="${personNameUserInstance?.purpose}" />
-                                </td>
-                            </tr>
+
                         
                         </tbody>
                     </table>
                 </div>
                 <div class="buttons">
+					<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+					<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </div>

@@ -87,7 +87,7 @@ class BootStrap {
 */
         TimeZone.'default'= TimeZone.getTimeZone('GMT-04:30') //set the default time zone
         
- /* 
+ /*
         println " - START: Carga tablas maestras"
         
         // saco para acelerar la carga
@@ -135,12 +135,15 @@ class BootStrap {
         
         // ----------------------------------------------------------------------------
         
-        println " - Creacion de pacientes de prueba"
+println " - Creacion de pacientes de prueba"
+		//def ci = new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1", nombre:"Cédula de Identidad", nombreCorto:"CI")
         
-        def paciente = new Person()
+		def paciente = new Person()
         //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.2.1', value:'1234567') )
         //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'6677') )
-        paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567') )
+        def id1 = new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567')
+		
+		paciente.addToIds( id1 )
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::6677') )
         paciente.addToIdentities( new PersonNameUser(primerNombre:'Pedro', primerApellido:'Perez') )
         paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
@@ -283,11 +286,11 @@ class BootStrap {
         }
         
         // /Creacion de episodio
-        */
+    */
 
         /*DATA INICIAL*/
        
-      /*
+    /*  
         println " - Datos Iniciales Tablas Demograficas"
         
         
@@ -330,7 +333,7 @@ class BootStrap {
         String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
             sql.execute(it)
         }
-       */
+      */ 
         /*FIN DATA INICIAL*/
 
 

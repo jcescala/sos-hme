@@ -1,59 +1,171 @@
 package demographic.party
-
+import hce.core.support.identification.UIDBasedID
+import converters.DateConverter
+import tablasMaestras.TipoIdentificador
 import demographic.role.Role
+import util.RandomGenerator
 
 class PersonController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
+	
+	
         redirect(action: "list", params: params)
     }
 
     def list = {
+		//def tiposIds = TipoIdentificador.list()
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         return [personInstanceList: Person.list(params), personInstanceTotal: Person.count()]
+		
+		
     }
 
     def create = {
+	
+		def tiposIds = TipoIdentificador.list()
         def personInstance = new Person()
         personInstance.properties = params
-        return [personInstance: personInstance]
+        return [personInstance: personInstance, tiposIds: tiposIds]
     }
 
     def save = {
-        def personInstance = new Person(params)
-        if (personInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"
-            redirect(action: "show", id: personInstance.id)
-        }
-        else {
-            render(view: "create", model: [personInstance: personInstance])
-        }
+	
+	
+
+		if (params.create){	
+
+		    def id = null
+            if (params.root == TipoIdentificador.AUTOGENERADO)
+            {
+                // Verificar si este ID existe, para no repetir
+                def extension = RandomGenerator.generateDigitString(8)
+                id = UIDBasedID.create(params.root, extension)
+                
+                // Se deberia hacer con doWhile para no repetir el codigo pero groovy no tiene doWhile
+                while ( UIDBasedID.findByValue(id.value) )
+                {
+                    extension = RandomGenerator.generateDigitString(8)
+                    id = UIDBasedID.create(params.root, extension)
+                }
+            }else{
+				// se verifica que ambos parametros no sean null
+                if (params.extension && params.root)
+                {
+                    id = UIDBasedID.create(params.root, params.extension) // TODO: if !hasExtension => error
+                    
+                    // FIXME: verificar que no hay otro usuario con el mismo id
+                    println "===================================================="
+                    println "Busco por id para ver si existe: " + id.value
+                    
+					def existId = UIDBasedID.findByValue(id.value)
+                    if (existId)
+                    {
+                        println "Ya existe!"
+                        flash.message = "Ya existe la persona con id: " + id.value + ", verifique el id ingresado o vuelva a buscar la persona"
+                        def tiposIds = TipoIdentificador.list()
+                        render(view: "create", model: [tiposIds: tiposIds])
+						return
+                    }
+                    else
+                    println "No existe!"
+                }
+                else
+                {
+                    // Vuelve a la pagina
+                    flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
+                    def tiposIds = TipoIdentificador.list()
+                    return [tiposIds: tiposIds]
+                }
+			}
+            
+			
+			
+			
+			
+			def personInstance = new Person( params ) // sexo, fechaNac (no mas)
+            
+            def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
+            personInstance.setFechaNacimiento( bd )
+
+            personInstance.addToIds( id )
+            
+            //def name = new PersonName(params)
+            //person.addToIdentities( name )
+            
+            //def datos = new PersonNameUser(params)
+            //personInstance.addToIdentities(datos)
+            
+            
+			
+			
+			/*
+			
+			if (!person.save()) println person.errors
+            
+            
+            def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
+            if (!role.save()) println role.errors
+            
+            redirect(action:'seleccionarPaciente', id:person.id)
+            return		
+		
+		*/
+		
+		
+			
+		
+			
+			if (personInstance.save(flush: true)) {
+				flash.message = "${message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"
+				redirect(action: "show", id: personInstance.id)
+			}
+			else {
+				render(view: "create", model: [personInstance: personInstance])
+			}
+		
+		
+		
+		
+		}
     }
+	
+
+	
+
 
     def show = {
+	
+		def tiposIds = TipoIdentificador.list()
         def personInstance = Person.get(params.id)
         if (!personInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])}"
             redirect(action: "list")
         }
         else {
-            [personInstance: personInstance]
+            return [personInstance: personInstance, tiposIds: tiposIds]
         }
-    }
+		
+	}
 
     def edit = {
+		def tiposIds = TipoIdentificador.list()
         def personInstance = Person.get(params.id)
         if (!personInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])}"
             redirect(action: "list")
         }
         else {
-            return [personInstance: personInstance]
+            return [personInstance: personInstance, tiposIds: tiposIds]
         }
     }
 
+	
+
+	
+	
     def update = {
         def personInstance = Person.get(params.id)
         if (personInstance) {
@@ -66,10 +178,82 @@ class PersonController {
                     return
                 }
             }
+//ini
+		    def id = null
+            if (params.root == TipoIdentificador.AUTOGENERADO)
+            {
+                // Verificar si este ID existe, para no repetir
+                def extension = RandomGenerator.generateDigitString(8)
+                id = UIDBasedID.create(params.root, extension)
+                
+                // Se deberia hacer con doWhile para no repetir el codigo pero groovy no tiene doWhile
+                while ( UIDBasedID.findByValue(id.value) )
+                {
+                    extension = RandomGenerator.generateDigitString(8)
+                    id = UIDBasedID.create(params.root, extension)
+                }
+            }else{
+                if (params.extension && params.root)
+                {
+                    id = UIDBasedID.create(params.root, params.extension) // TODO: if !hasExtension => error
+                    
+                    // FIXME: verificar que no hay otro paciente con el mismo id
+                    println "===================================================="
+                    println "Busco por id para ver si existeee: " + id.value
+                    def existId = UIDBasedID.findByValueLike(id.value)
+                    // id.value.split("::")[0]
+					
+					
+					if (existId)
+                    {
+                        println "Ya existe!"
+                        flash.message = "Ya existe la persona con id: " + id.value + ", verifique el id ingresado o vuelva a buscar la persona"
 
+						def tiposIds = TipoIdentificador.list()
+						render(view: "edit", model: [personInstance: personInstance, tiposIds: tiposIds])
+						
+						return
+                    }
+                    else
+                    println "No existe!"
+                }
+                else
+                {
+                    // Vuelve a la pagina
+                    flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
+                    def tiposIds = TipoIdentificador.list()
+                    //return [tiposIds: tiposIds]
+                }
+			}
 
+//fin		
+			if(id){
+				def existExtension = false
+				for( i in personInstance.ids){
+					println(i.value.split('::')[0]+"\n\t"+params.root+"\n")
+				   if( i.value.split('::')[0].toString() == (params.root)){
+					   println("son iguales\n")
+						i.value = id.value
+						existExtension = true
+						break
+				   }
 
-            personInstance.properties = params
+					
+				}
+				
+				
+				//verificar si existe
+
+				if(!existExtension){
+					personInstance.addToIds( id )
+					println("no exite y fue agregado!! \n")
+				}else{
+
+					println("existe y no fue agregado!!\n")
+
+				}
+			}
+			personInstance.properties = params
             if (!personInstance.hasErrors() && personInstance.save(flush: true)) {
 
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"
@@ -88,6 +272,14 @@ class PersonController {
         }
     }
 
+	
+	
+	
+	
+	
+	
+	
+	
     def delete = {
 
         def personInstance = Person.get(params.id)

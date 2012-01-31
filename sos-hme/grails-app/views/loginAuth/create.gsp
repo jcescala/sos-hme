@@ -62,16 +62,17 @@
                                     <label for="person"><g:message code="loginAuth.person.label" default="Person" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'person', 'errors')}">
-                                    <g:select name="person.id" from="${demographic.identity.PersonName.list()}" optionKey="id" value="${loginAuthInstance?.person?.id}"  />
+                                    <g:select name="person.id" from="${demographic.party.Person.list()}" optionKey="id" value="${loginAuthInstance?.person?.id}"  />
                                 </td>
                             </tr>
                         
 
-                        
+										
                         </tbody>
                     </table>
                 </div>
                 <div class="buttons">
+					<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
                     <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
             </g:form>
