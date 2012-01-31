@@ -285,7 +285,8 @@ class RecordsController {
 
        // patient puede ser null si todavia no se selecciono un paciente para el episodio,
        // p.e. si la atencion es de urgencia, se atiente primero y luego se identifica al paciente.
-       return [composition: composition,
+       return [idComposition: params.id,
+               composition: composition,
                patient: patient,
                episodeId: session.traumaContext?.episodioId,
                userId: session.traumaContext.userId,

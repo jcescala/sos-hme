@@ -172,6 +172,32 @@
 
 
 
+     $('.clone').click(function(){
+       alert('clonando');
+       var nodeToClone = $(this).parent().prev();
+       var newNode = nodeToClone.clone();
+
+       //Blanquear text areas
+       newNode.find( 'textarea' ).each(function(i){
+        $(this).val('');
+       });
+       //Blanquear combos
+       newNode.find( 'select' ).each(function(i){
+        $(this).val('');
+       });
+       //Blanquear inputs
+       newNode.find( 'input' ).each(function(i){
+        $(this).val('');
+       });
+
+
+
+
+       newNode.insertAfter(nodeToClone);
+
+
+      });
+
  });
   </script>
 

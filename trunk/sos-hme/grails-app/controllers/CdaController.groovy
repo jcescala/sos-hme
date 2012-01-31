@@ -50,8 +50,8 @@ class CdaController {
         //VER EL CDA ASOCIADO AL EPISODIO
       
 
-        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + params['id'] + '.xml')
-        def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + 'CDA.xsl')
+        def cda_xml = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + params['id'] + '.xml')
+        def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + 'CDA.xsl')
       //def cda_xsl = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '/' + 'CDA_CDATA.xsl')
 
         def factory = TransformerFactory.newInstance()
@@ -60,7 +60,16 @@ class CdaController {
         StringWriter salida = new StringWriter()
         transformer.transform(new StreamSource(cda_xml), new StreamResult(salida))
 
-        render(text:salida.toString().replace("&lt;","<").replace("&gt;",">"),contentType:"text/html",encoding:"UTF-8")
+        //AÑADIENDO BOTON ATRAS
+        String cadena=salida.toString()
+        int indice = cadena.lastIndexOf("</body>")
+        String cadena_punta = cadena.substring(0,indice)
+        String cadena_cola = cadena.substring(indice, cadena.length())
+        //boton
+        String agregado = "<a href='../../records/show/"+params.idComposition+"' class='atras'>Regresar</a>"
+        cadena = cadena_punta + agregado +cadena_cola
+
+        render(text:cadena.replace("&lt;","<").replace("&gt;",">"),contentType:"text/html",encoding:"UTF-8")
     }
 
     //--------------------------------------------------------------------------

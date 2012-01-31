@@ -34,7 +34,7 @@ in: archetype
     <g:set var="aomChildNode" value="${archetype.node( pathFromParent+'/value' )}" />
   </g:else>
   <span class="label">
-    ${rmNode.name.value}
+    ${rmNode.name.value} 
   </span>
   <span class="content">
     <g:set var="templateName" value="${rmNode.value.getClassName()}" />

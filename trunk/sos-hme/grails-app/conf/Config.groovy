@@ -13,7 +13,8 @@ langs = ['es','en','pt'] // ISO 639-1 Code
 // ver http://code.google.com/p/open-ehr-gen-framework/issues/detail?id=12
 domains = [
            '/domain.integral',
-           '/domain.materno_infantil'
+           '/domain.materno_infantil',
+           '/domain.pediatria'
            ]
 
 // FIXME: no deberia ir a buscar los templates a distintos directorios,
@@ -56,7 +57,7 @@ templates2 {
    
     '/domain.integral'  {
       INTERROGATORIO=['interrogatorio']
-      MOTIVO=['motivo_de_consulta']
+      MOTIVO = ['motivo_de_consulta']
       EVALUACION=['exploracion_funcional']
       OBSERVATION=['enfermedad_actual']
       EXAMEN_FISICO=['examen_fisico']
@@ -69,6 +70,14 @@ templates2 {
          MOTIVO=['motivo_de_consulta']
                
     }
+ /*   '/domain.pediatria'{
+        INTERROGATORIO=['interrogatorio']
+        MOTIVO{ repet = true
+                cardinalidad = 'inf'
+                subsections = ['motivo_de_consulta']
+             }
+
+    }*/
 
 
 }
