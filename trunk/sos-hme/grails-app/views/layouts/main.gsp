@@ -20,8 +20,15 @@
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
         </div>	
         <div class="logo">
-          <a href="http://code.google.com/p/open-ehr-gen-framework/" target="_blank"><img src="${resource(dir:'images', file:'ehr-gen_logo.png')}" alt="Open EHR-Gen Framework" /></a>
+          <a href="#" target="_blank"><img src="${resource(dir:'images', file:'logoSos.jpg')}" alt="Open EHR-Gen Framework" /></a>
         </div>
+        <div class="nav">
+            
+            <span class="menuButton"><g:link class="list" controller="loginAuth" action="list"><g:message code="default.loginAuth.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="list" controller="person" action="list"><g:message code="default.person.label" args="[entityName]" /></g:link></span>
+			<span class="menuButton"><g:link class="list" controller="personNameUser" action="list"><g:message code="default.personNameUser.label" args="[entityName]" /></g:link></span>
+			<span class="menuButton"><g:link class="list" controller="role" action="list"><g:message code="default.role.label" args="[entityName]" /></g:link></span>
+		</div>
         <g:layoutBody />		
     </body>	
 </html>
