@@ -88,13 +88,19 @@
   <script type="text/javascript" src="/sos/js/jquery/jquery-ui-i18n.min.js"></script>
   <script type="text/javascript" src="/sos/js/jquery/jquery-ui-timepicker-addon.js"> </script>
   <script type="text/javascript">
-
+    // 'modificado' establece si los valores de la seccion han sido modificados
+    var modificado = false;
+    // 'secc' establece seccion actual
+    var secc = '${section}';
     function deseaGuardar(){
       
       return confirm("Desea guardar los cambios efectuados?");
     }
     function guardadoAutomatico(seccion, generarShow, itemId){
-
+      if(!modificado){
+        $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+        return;
+      }
       if(deseaGuardar()){
       //SI generarShow es true, significa que el registro ya está guardado previamente
       //<input id="mode" type="hidden" name="mode" value="show" />
@@ -132,7 +138,49 @@
     }
 
 
+    
+
+
    $(document).ready(function(){
+       //Capturar cambios realizados en el registro
+       $('input, textarea, select').change(function() {
+        modificado = true;
+       });
+
+       $('.contextoEhr').click(function(event){
+         
+         //si mode no existe, estamos fuera de contexto de alguna seccion
+         //si mode es diferente a show es porque se está editando
+         if(($('#mode').length > 0) && ($('#mode').val() !='show')){
+         
+         //capturar el valor del href, desde el controlador se realizará en direccioamiento
+          var href = $(this).attr('href');
+          if(href !='#'){
+          
+             if(!modificado){
+              return;
+              }
+              if(deseaGuardar()){
+                //detener el vinculo
+                event.preventDefault();
+
+              //SI generarShow es true, significa que el registro ya está guardado previamente
+              //<input id="mode" type="hidden" name="mode" value="show" />
+                  if ($(".ehrform").length > 0){
+                  alert('guardando');
+                  //pasar el valor del href al controlador
+                  $(".ehrform").append("<input type='hidden' name='autoSaveHref' value='"+href+"' />");
+                  $(".ehrform").submit();
+                
+                }
+              }
+          }
+        }
+
+     });
+
+ 
+
     $.datepicker.setDefaults($.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
 
 
@@ -224,10 +272,10 @@
                    http://code.google.com/p/open-ehr-sa/issues/detail?id=65
               --%>
               <g:if test="${actionName=='save'}">
-                 <a href="#"><g:message code="common.lang.${it}" /></a>
+                 <a href="#" class="contextoEhr"><g:message code="common.lang.${it}" /></a>
               </g:if>
               <g:else>
-                <a href="?sessionLang=${it}&templateId=${params.templateId}"><g:message code="common.lang.${it}" /></a>
+                <a href="?sessionLang=${it}&templateId=${params.templateId}" class="contextoEhr"><g:message code="common.lang.${it}" /></a>
               </g:else>
             </li>
           </g:langSelector>
@@ -280,12 +328,12 @@
                 <g:render template="../demographic/Person" model="[person:patient]" />
                 
                 <g:canEditPatient patient="${patient}">
-                  <g:link controller="demographic" action="edit" id="${patient.id}">Completar datos</g:link>
+                  <g:link controller="demographic" action="edit" id="${patient.id}" class="contextoEhr">Completar datos</g:link>
                 </g:canEditPatient>
               </g:if>
               <g:else>
                 <g:message code="trauma.layout.pacienteNoIdentificado.label" />:<br/>
-                <g:link controller="demographic" action="admisionPaciente">
+                <g:link controller="demographic" action="admisionPaciente" class="contextoEhr">
                   <g:message code="trauma.layout.identificarPaciente.action" />
                 </g:link>
               </g:else>
@@ -295,13 +343,13 @@
               <ul>
                 <br />
                 <li>
-                  <g:link controller="records" action="list">
+                  <g:link controller="records" action="list" class="contextoEhr">
                     <g:message code="trauma.menu.list" />
                   </g:link>
                 </li>
                 <br />
                 <li ${((controllerName=='records'&&['show'].contains(actionName)) ? "class='active'" : '')}>
-                  <g:link controller="records" action="show" id="${episodeId}">
+                  <g:link controller="records" action="show" id="${episodeId}" class="contextoEhr">
                     <g:message code="trauma.menu.show" />
                   </g:link>
                 </li>
@@ -309,7 +357,7 @@
                 <g:canFillClinicalRecord>
                 
                   <li ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? "class='active'" : '')}>
-                    <g:link controller="records" action="registroClinico" id="${episodeId}">
+                    <g:link controller="records" action="registroClinico" id="${episodeId}" class="contextoEhr">
                       <g:message code="trauma.menu.registroClinico" />
                     </g:link>
                   </li>
@@ -325,6 +373,11 @@
                     <g:each in="${sections}" var="section">
 
                       <li ${(( template?.id?.startsWith(section) ) ? "class='active'" : '')}>
+
+                       <g:if test="${template?.id?.startsWith(section)}">
+                       <%--Valor de la seccion actual--%>
+                       <g:javascript> secc = '${section}';</g:javascript>
+                       </g:if>
                       
                         <%-- allSubsections: ${allSubsections}<br/> --%>
                         <%-- se fija si el registro ya fue hecho --%>
@@ -343,12 +396,12 @@
                               <g:message code="${'section.'+section}" /> (+) <%-- + es que se hizo algun registro en la seccion --%>
                            <%-- </g:link>
                             --%>
-                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});"><g:message code='${"section."+section}' /> (+)</a>
+                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});" class="contextoEhr"><g:message code='${"section."+section}' /> (+)</a>
                           </g:if>
                           <g:else>
                             <%-- SIN GUARDAR, GENERAR RECORDS INPUTS (registrao clinico2) --%>
 
-                         <a href="#" onClick="guardadoAutomatico('${section}',false,false);"><g:message code='${"section."+section}' /></a>
+                         <a href="#" onClick="guardadoAutomatico('${section}',false,false);" class="contextoEhr"><g:message code='${"section."+section}' /></a>
                            <%--<g:link controller="records" action="registroClinico2" params="[section:section]">
                               <g:message code="${'section.'+section}" />
                             </g:link>
@@ -362,7 +415,7 @@
                   </g:if>
                   <br />
                   <li ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='active'" : '')}>
-                    <g:link controller="records" action="signRecord" id="${episodeId}">
+                    <g:link controller="records" action="signRecord" id="${episodeId}" class="contextoEhr">
                       <g:message code="registro.menu.close" />
                       <g:isSignedRecord episodeId="${episodeId}">
                         (+)

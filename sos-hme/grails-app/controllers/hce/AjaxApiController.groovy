@@ -349,11 +349,15 @@ class AjaxApiController {
 
                     return
 
+                   }else if(params.autoSaveHref){
+
+                        redirect(url:params.autoSaveHref)
+
                     }else{
 
                    // Redirige a show para mostrar el registro ingresado.
 
-                    redirect(action: 'generarShow',
+                    redirect(controller:'guiGen',action: 'generarShow',
                             params: [id:rmobj.id]
                            )
 

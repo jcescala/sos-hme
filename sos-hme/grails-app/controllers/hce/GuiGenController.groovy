@@ -551,7 +551,12 @@ class GuiGenController {
 
                     return
 
+                    }else if(params.autoSaveHref){
+                        
+                        redirect(url:params.autoSaveHref)
+
                     }else{
+
 
                    // Redirige a show para mostrar el registro ingresado.
                   
