@@ -9,9 +9,18 @@
    <script type="text/javascript">
     
       var codigos;
-      
-     
 
+    $(document).ready(function(){
+      $('input').change(function(){
+
+     //en el caso del input de la busqueda no se considera que se modifique
+     //los valores del diagnostico, es por eso que el valor se coloca en false
+     //a pesar de que en el layout se ha colocado previamente en true
+     modificado = false;
+
+      });
+    });
+    
     $('#form_diagnosticos').ajaxForm({
         // dataType identifies the expected content type of the server response
         dataType:  'json',
@@ -24,7 +33,9 @@
 
       function select( id )
       {
-        alert('select id:'+id);
+        //'modificado' es una variable global definida en el layout 'ehr'
+        modificado = true;
+        //alert('select id:'+id);
       
         var code = null;
         
@@ -53,6 +64,10 @@
       
       function unselect( id )
       {
+         //'modificado' es una variable global definida en el layout 'ehr'
+
+         modificado = true;
+         
          $('#selected_'+id).remove();
       }
       
@@ -181,7 +196,7 @@
       
       <g:form class="ehrform" controller="ajaxApi" action="saveDiagnostico">
         
-        <input type="hidden" name="mode" value="${mode}" />
+        <input id="mode" type="hidden" name="mode" value="${mode}" />
         
         <h3><g:message code="section.DIAGNOSTICO-diagnosticos.label.selectedDiagnoses" /></h3>
         <div id="seleccionados">
