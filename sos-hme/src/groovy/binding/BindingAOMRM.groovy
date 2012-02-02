@@ -473,13 +473,13 @@ class BindingAOMRM {
         String nombreClase = co.getClass().getSimpleName()
         String bindMethod = 'bind' + nombreClase
 
-        /*
+        
         println "==== bindCObject"
         println "   = bindMethod: " + bindMethod
         println "   = typeName: " + co.rmTypeName
         println "   = co: " + co
         println "======================================================="
-        */
+        
         /*
         def archivo = new File('.\\log.txt')
         XStream xstream = new XStream()
@@ -2542,6 +2542,17 @@ if (rmObj)
 
         if (pathValor.size()==0) // Si no hay path ni valores
         {
+          /*  //println "---- NO HAY VALORES "
+            // Meto un objeto vacio para que valide el GORM y muestre errores en la web
+            rmObj = rmFactory.createDV_DATE( "","","", arquetipo, cco.nodeID, tempId)
+            rmObj.errors.rejectValue('value', Errors.ERROR_EMPTY) // errorCode
+            result << rmObj
+
+            // Marco que hubo error para que el controller mande a edit
+            //this.hasErrors = true
+
+            //println "---- RESULT: " + result
+            */
             return result
         }
             String year
@@ -2583,7 +2594,7 @@ if (rmObj)
 
             String valor = pathValor.find{it.key.endsWith("value")}?.value
             println "Valor "+ valor
-
+            if(valor!= ""){ //Si la cadena viene vacia
             def date = Date.parse("dd-MM-yyyy",valor)
 
             SimpleDateFormat sdf
@@ -2600,6 +2611,14 @@ if (rmObj)
             println "Resultado fecha : " + year+"-"+month+"-"+day
 
             result << rmFactory.createDV_DATE(year, month, day, arquetipo, cco.nodeID, tempId)
+            }else{
+                //Edit by Armando Prieto
+                //Paso valor vacio
+                //Dejando que GORM valide
+                //Devuelve NULL porque no vino ningun valor valido
+                result = rmFactory.createDV_DATE( "","","", arquetipo, cco.nodeID, tempId)
+               
+            }
             return result // puede ser vacia
         }
 
@@ -2618,8 +2637,21 @@ if (rmObj)
 
         def result = []
 
-        if (pathValor.size()==0) // Si no hay path ni valores
+         if (pathValor.size()==0) // Si no hay path ni valores
         {
+//            println "XXXXXXXXXXXXXXXXXXXXXXXXX"
+//
+//            //println "---- NO HAY VALORES "
+//            // Meto un objeto vacio para que valide el GORM y muestre errores en la web
+//            rmObj = rmFactory.createDV_DATE_TIME( "","","","","","", arquetipo, cco.nodeID, tempId)
+//            rmObj.errors.rejectValue('value', Errors.ERROR_EMPTY) // errorCode
+//            result << rmObj
+//
+//            // Marco que hubo error para que el controller mande a edit
+//            //this.hasErrors = true
+//
+//            //println "---- RESULT: " + result
+
             return result
         }
             String year = ""
@@ -2675,7 +2707,7 @@ if (rmObj)
 
             String valor = pathValor.find{it.key.endsWith("value")}?.value
             println "Valor "+ valor
-
+            if(valor!= ""){ //Si la cadena viene vacia
             def date = Date.parse("dd-MM-yyyy hh:mm aa",valor)
 
             SimpleDateFormat sdf
@@ -2702,6 +2734,11 @@ if (rmObj)
             println "Resultado fecha : " + year+"-"+month+"-"+day+" "+hour+":"+minute+":"+seg
 
             result << rmFactory.createDV_DATE_TIME(year, month, day, hour, minute, seg, arquetipo, cco.nodeID, tempId)
+            }else{
+                //Devuelve NULL porque no vino ningun valor valido
+                result << rmFactory.createDV_DATE_TIME("","", "", "", "", "", arquetipo, cco.nodeID, tempId)
+
+            }
             return result // puede ser vacia
         }
 

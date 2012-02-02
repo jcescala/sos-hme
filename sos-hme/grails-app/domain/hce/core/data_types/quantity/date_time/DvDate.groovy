@@ -9,12 +9,22 @@ class DvDate extends DvTemporal {
 
     static constraints = {
         // TODO
+        value (nullable: false,
+               blank: false)
     }
     
     Date toDate()
     {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = (Date)formatter.parse( this.value );    
+        def date
+        try{
+        date = (Date)formatter.parse( this.value );
+        }catch(Exception e){
+        date = null
+            
+        }
+        date
+
     }
 
   /*  String toDate12(){

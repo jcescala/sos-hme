@@ -107,7 +107,7 @@ ${cPrimitiveObject.item.list}
 
 <%--  <g:datePicker name="${archetype.archetypeId.value +_refPath+ cPrimitiveObject.path()}" value="${new Date()}" precision="minute" />--%>
  
-
+  
  <p> <input name="${archetype.archetypeId.value +_refPath+ cPrimitiveObject.path()}" type="text" class="DateTimeSos"> </p>
 
 </g:if>

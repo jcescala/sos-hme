@@ -18,7 +18,7 @@ in: dataValue (DvDateTime)
     
     <%-- Me fijo si tiene error para saber que valor mostrar, siempre sera el valor ingresado --%>
     <g:set var="selectedValue" value="${dataValue.errors.getFieldError('value').rejectedValue}" />
-
+   
   </g:hasErrors>
   
   <g:set var="aomNode" value="${archetype.node(pathFromOwner)}" />
@@ -27,10 +27,12 @@ in: dataValue (DvDateTime)
                 value="${dataValue.toDate()}"
                 precision="minute" />
 --%>
+   
   <p> <input name="${archetype.archetypeId.value +refPath+ aomNode.path()}" value="${g.format(date: dataValue.toDate())}" type="text" class="DateTimeSos"> </p>
 
 
 </g:if>
 <g:else>
+  
   ${dataValue.value}
 </g:else>

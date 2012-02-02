@@ -38,7 +38,14 @@ $.datepicker.setDefaults($.datepicker.regional['${session.'org.springframework.w
                                      minDate: new Date(2007, 9, 15),
 
                                      showButtonPanel: true,
-                                     showOn: 'both'
+                                     showOn: 'button'
+
+});
+$("#datepicker").attr("readonly",true);
+
+$("#datepicker").click(function(){
+  
+  $(this).val('');
 
 });
       });

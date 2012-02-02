@@ -9,6 +9,8 @@ class DvDateTime extends DvTemporal {
 
     static constraints = {
         // TODO
+          value (nullable: false,
+               blank: false)
     }
 
    
@@ -18,10 +20,13 @@ class DvDateTime extends DvTemporal {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // Convertir la fecha en formato 12 horas AM/PM //
-
-
-        Date date = (Date)formatter.parse( this.value );
-
+        def date
+        try{
+        date = (Date)formatter.parse( this.value );
+        }catch(Exception e){
+        date = null
+        }
+        date
         
    //this.value
         }

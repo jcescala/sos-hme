@@ -895,6 +895,13 @@ class FactoryObjectRM {
 
     def createDV_DATE(String year, String month, String day, Archetype arquetipo, String archNodeId, String tempId){
 
+        if(year == "" && month == "" && day ==""){
+           //Retorna un DvDate null, esperando que GORM valide
+            def date = new DvDate(value: null)
+            date.validate()
+            return date
+        }
+
         //println "ENTRO DV_DATE"
         String fechaISO8601 = crearFechaISO8601(year, month, day, "", "", "")
         //println "---->" + fechaISO8601
@@ -921,6 +928,14 @@ class FactoryObjectRM {
 
     // DV_DATE_TIME
     def createDV_DATE_TIME(String year, String month, String day, String hour, String minute, String seg, Archetype arquetipo, String archNodeId, String tempId){
+
+        if(year == "" && month == "" && day =="" && hour =="" && minute == "" && seg == ""){
+           //Retorna un DvDate null, esperando que GORM valide
+            def date = new DvDateTime(value: null)
+            date.validate()
+            return date
+        }
+
 
         //println "ENTRO DV_DATE_TIME"
         String fechaISO8601 = crearFechaISO8601(year, month, day, hour, minute, seg)

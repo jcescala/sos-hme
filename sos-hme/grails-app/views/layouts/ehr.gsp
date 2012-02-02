@@ -188,20 +188,22 @@
          
          
                                      changeYear: true,
-                                     altField: '#actualDate',
+                                     //altField: '#actualDate',
                                      buttonText: 'Calendario',
-                                     showOn: 'both',
                                      buttonImage: '/sos/images/datepicker.gif',
                                      maxDate: new Date(),
                                      minDate: new Date(2007, 9, 15),
                                      constrainInput: true,
                                      showButtonPanel: true,
-                                     showOn: 'both',
+                                     showOn: 'button'
                                      
 
 
         });
         $(".DateSos").attr("readonly",true);
+        $(".DateSos").click(function(){
+            $(this).val('');
+        });
 
         $('.DateTimeSos').datetimepicker({dateFormat: 'dd-mm-yy',
           
@@ -213,11 +215,13 @@
                                      maxDate: new Date(),
                                      minDate: new Date(2007, 9, 15),
                                      showButtonPanel: true,
-                                     showOn: 'both'
+                                     showOn: 'button'
 
         });
         $(".DateTimeSos").attr("readonly",true);
-
+        $(".DateTimeSos").click(function(){
+            $(this).val('');
+        });
 
 
      $('.clone').click(function(){

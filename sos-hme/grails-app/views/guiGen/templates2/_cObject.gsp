@@ -34,6 +34,7 @@ if (refPath) _refPath = refPath
                         params: params]" />
   </g:if>
   <g:if test="${cObject instanceof CPrimitiveObject}">
+  
       <g:render template="../guiGen/templates2/cPrimitiveObject"
                 model="[cPrimitiveObject: cObject,
                         archetype: archetype,
