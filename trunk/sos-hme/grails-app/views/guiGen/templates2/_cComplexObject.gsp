@@ -24,6 +24,7 @@ if (refPath) _refPath = refPath
 <g:if test="${ ! ['ACTIVITY','HISTORY','EVENT','ITEM_TREE','ITEM_TABLE','ITEM_LIST','ITEM_SINGLE'].contains( cComplexObject.rmTypeName )}">
   <%-- Si es ELEMENT, quiero el tipo de su value para poder ponerlo en el class de la div, y asi poder ajustar la vista con CSS --%>
   <g:if test="${cComplexObject.rmTypeName == 'ELEMENT'}">
+    
     <g:set var="elementValueRmType" value="ELEMENT_${cComplexObject.attributes[0].children[0].rmTypeName}" />
   </g:if>
   <div class="${cComplexObject.rmTypeName} ${elementValueRmType}"><%-- FIXME: no quiero mostrar esto para campos simples, solo para sections, clusters y elements --%>
@@ -111,7 +112,8 @@ if ( errors && errors.hasErrorsForPath(archetype.archetypeId.value, cComplexObje
       <%-- Verifico que no sea null porque puede serlo. --%>
       <g:if test="${cComplexObject.attributes}">
           <%-- ${cComplexObject.attributes.size()} --%>
-          <g:render template="../guiGen/templates2/cAttribute"
+                
+        <g:render template="../guiGen/templates2/cAttribute"
                     var="cAttribute"
                     collection="${cComplexObject.attributes}"
                     model="[archetype: archetype,
@@ -137,6 +139,7 @@ if ( errors && errors.hasErrorsForPath(archetype.archetypeId.value, cComplexObje
           <%-- Si datetime se muestra desde CComplexObject, no tiene restricciones sobre la forma de la fecha o las fechas posibles. --%>
         <%--  <g:datePicker name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${new Date()}" precision="minute" />
         --%>
+
          <p> <input name="${archetype.archetypeId.value +_refPath+ cComplexObject.path()}" value="${g.formatDate(date: new Date(), format: g.message(code: 'default.date.format1'))}" type="text" class="DateSos"> </p>
 
         </g:if>
