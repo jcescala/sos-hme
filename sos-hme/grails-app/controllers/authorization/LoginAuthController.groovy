@@ -21,21 +21,26 @@ class LoginAuthController {
     }
 
     def save = {
-
-
-        params.pass =  params.pass.encodeAsPassword()
-        def loginAuthInstance = new LoginAuth(params)
-		
-
+		def loginAuthInstance = new LoginAuth(params)
+		if(params.pass && params.user){
+			
+			params.pass =  params.pass.encodeAsPassword()
+			loginAuthInstance = new LoginAuth(params)
+			
+			
 			 
             if (loginAuthInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.created.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
+                flash.message = "${message(code: 'default.created.message')}"
                 redirect(action: "show", id: loginAuthInstance.id)
             }
             else {
                 render(view: "create", model: [loginAuthInstance: loginAuthInstance])
             }
-
+		}else{
+			
+			flash.message = "${message(code: 'default.null.message', args: [message(code: 'loginAuth.user.label'), message(code: 'default.loginAuth.label')])}"
+			render(view: "create", model: [loginAuthInstance: loginAuthInstance])
+		}
 
     }
 
