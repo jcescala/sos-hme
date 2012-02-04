@@ -19,17 +19,14 @@
                     <thead>
                         <tr>
                         
-                            <!--<g:sortableColumn property="id" title="${message(code: 'loginAuth.id.label', default: 'Id')}" />
-                        -->
-                            <!--<g:sortableColumn property="purpose" title="${message(code: 'loginAuth.purpose.label', default: 'Purpose')}" />-->
 
                             <g:sortableColumn property="user" title="${message(code: 'loginAuth.user.label', default: 'User')}" />
 
                             
+							<g:sortableColumn property="person" title="${message(code: 'loginAuth.person.label', default: 'Persona')}" />
+							
                         
-                            <th><g:message code="loginAuth.person.label" default="Person" /></th>
-                        
-                            <th><g:message code="loginAuth.person.detail" default="Detalle" /></th>
+                            <th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>
                         
                         </tr>
                     </thead>

@@ -24,20 +24,20 @@
                     <table>
                         <tbody>
                         
-                            <!--<tr class="prop" >
+                       <%-- <tr class="prop" >
                                 <td valign="top" class="name">
                                     <label for="purpose"><g:message code="loginAuth.purpose.label" default="Purpose" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'purpose', 'errors')}">
                                     <g:textField name="purpose" value="${loginAuthInstance?.purpose}" />
-                                </td>
-                            </tr>-->
+                                </td> <g:message code="default.loginAuth.label" args="[entityName]" />
+                            </tr> --%>
                         
 
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="user"><g:message code="loginAuth.user.label" default="User" /></label>
+                                    <label for="user"><g:message code="loginAuth.user.label"/>:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'user', 'errors')}">
                                     <g:textField name="user" value="${loginAuthInstance?.user}" />
@@ -46,7 +46,7 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="pass"><g:message code="loginAuth.pass.label" default="Pass" /></label>
+                                    <label for="pass"><g:message code="loginAuth.pass.label"/>:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'pass', 'errors')}">
                                     <g:textField name="pass" value="${loginAuthInstance?.pass}" />
@@ -55,7 +55,7 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="person"><g:message code="loginAuth.person.label" default="Person" /></label>
+                                    <label for="person"><g:message code="loginAuth.person.label"/>:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'person', 'errors')}">
                                     <g:select name="person.id" from="${demographic.party.Person.list()}" optionKey="id" value="${loginAuthInstance?.person?.id}"  />
