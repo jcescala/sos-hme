@@ -37,14 +37,14 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="user"><g:message code="loginAuth.user.label" default="Nombre de usuario" /></label>
+                                  <label for="user"><g:message code="loginAuth.user.label" default="Nombre de usuario" />:</label>
                                 </td>
                                 <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "user")}</td>
                             </tr>
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="pass"><g:message code="loginAuth.pass.label" default="Nueva Clave" /></label>
+                                  <label for="pass"><g:message code="loginAuth.pass.label" default="Nueva Clave" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'pass', 'errors')}">
                                     <g:textField name="pass" value="" />
@@ -54,7 +54,7 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="pass"><g:message code="loginAuth.pass2.label" default="Confirmar Clave" /></label>
+                                  <label for="pass"><g:message code="loginAuth.pass2.label" default="Confirmar Clave" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'pass2', 'errors')}">
                                     <g:textField name="pass2" value="" />
@@ -63,7 +63,7 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="person"><g:message code="loginAuth.person.label" default="Person" /></label>
+                                  <label for="person"><g:message code="loginAuth.person.label" default="Person" />:</label>
                                 </td>
                                 <td valign="top" class="value"><g:link controller="person" action="show" id="${loginAuthInstance?.person?.id}">${loginAuthInstance?.person?.identities?.toString()}</g:link></td>
                             </tr>

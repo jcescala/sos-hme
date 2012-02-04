@@ -33,7 +33,7 @@
                         </tr>--%>
 
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="loginAuth.user.label" default="User" /></td>
+                            <td valign="top" class="name"><g:message code="loginAuth.user.label" default="User" />:</td>
 
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "user")}</td>
 
@@ -47,7 +47,7 @@
                         </tr>
                     --%>
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="loginAuth.person.label" default="Person" /></td>
+                            <td valign="top" class="name"><g:message code="loginAuth.person.label" default="Person" />:</td>
                             
                             <td valign="top" class="value"><g:link controller="person" action="show" id="${loginAuthInstance?.person?.id}">${loginAuthInstance?.person?.identities?.toString()}</g:link></td>
                             
