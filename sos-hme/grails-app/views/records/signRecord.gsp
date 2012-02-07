@@ -60,6 +60,7 @@
     </style>
   </head>
   <body>
+    <div id="nivel2">
     <h1><g:message code="trauma.sign.title" /></h1>
 
     <g:if test="${flash.error}">
@@ -102,5 +103,6 @@
       --%>
       
     </g:form>
+    </div>
   </body>
 </html>

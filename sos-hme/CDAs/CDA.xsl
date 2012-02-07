@@ -49,6 +49,7 @@
                     <xsl:value-of select="$title"/>
                 </title>
                 <link rel="stylesheet" href="/sos/css/cda.css" type="text/css" media="screen" />
+                <link rel="stylesheet" href="/sos/css/cda.css" type="text/css" media="print" />
                 
             </head>
             <body>

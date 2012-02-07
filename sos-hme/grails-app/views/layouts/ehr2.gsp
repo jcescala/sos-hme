@@ -145,7 +145,7 @@
                   </g:link>
                 </li>
                 
-                <li ${((controllerName=='records'&&['show'].contains(actionName)) ? 'class="active"' : '')}>
+                <li ${((controllerName=='records'&&['show'].contains(actionName)) ? 'class="selected"' : '')}>
                   <g:link controller="records" action="show" id="${episodeId}">
                     <g:message code="trauma.menu.show" />
                   </g:link>
@@ -153,7 +153,7 @@
                 <br />
                 <g:canFillClinicalRecord>
                 
-                  <li ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? 'class="active"' : '')}>
+                  <li ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? 'class="selected"' : '')}>
                     <g:link controller="records" action="registroClinico" id="${episodeId}">
                       <g:message code="trauma.menu.registroClinico" />
                     </g:link>
@@ -167,7 +167,7 @@
                   <g:if test="${( ['guiGen','records','ajaxApi'].contains(controllerName) && ['generarShow','generarTemplate','show','saveDiagnostico','showRecord'].contains(actionName) )}">
                     
                     <g:each in="${sections}" var="section">
-                      <li ${(( template?.id?.startsWith(section) ) ? 'class="active"' : '')}>
+                      <li ${(( template?.id?.startsWith(section) ) ? 'class="selected"' : '')}>
                         <%-- allSubsections: ${allSubsections}<br/> --%>
                         <%-- se fija si el registro ya fue hecho --%>
                         <%
@@ -193,7 +193,7 @@
                     </g:each>
                   </g:if>
                   
-                  <li ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? 'class="active"' : '')}>
+                  <li ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? 'class="selected"' : '')}>
                     <g:link controller="records" action="signRecord" id="${episodeId}">
                       <g:message code="registro.menu.close" />
                       <g:isSignedRecord episodeId="${episodeId}">

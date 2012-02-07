@@ -79,25 +79,17 @@ class TraumaTagLib {
         //-----------------------------------------------------------------------
         //-----------------------------------------------------------------------
 
-        out << '<div id="resumen_episodio">'
-        
-        out <<   '<div>'
-        out <<     '<h2>' + message(code:'trauma.label.resumenEpisodio') + '</h2>'
-        out <<   '</div>'
-        
-        out <<   '<div style="width:90%; float: left;">' // comienzo-fin-observaciones-responsable
-        out <<     '<div style="padding: 4px;">'
-        out <<       '<span>' +  message(code:'trauma.list.label.startTime') +' / '+ message(code:'trauma.list.label.endTime') +': </span>'
-        out <<       '<span>' + g.formatDate( date: composition.context.startTime?.toDate(), formatName: 'default.date.format.text' ) + ' / '
-        out <<                  g.formatDate( date: composition.context.endTime?.toDate(),formatName: 'default.date.format.text' ) + '</span>'
-        out <<     '</div>'
+       out << "<table width='100%' border='0' cellspacing='0' cellpadding='0'>"
+       out << "<tr>"
+       out << "<td width='15%' valign='top'><h2>"+message(code:'trauma.label.resumenEpisodio')+"</h2></td>"
+       out << "<td width='30%' valign='top'> <span class='negritas'>"+message(code:'trauma.list.label.startTime')+": </span>"+g.formatDate( date: composition.context.startTime?.toDate(), formatName: 'default.date.format.text' )+" <br />"
+       out << "<span class='negritas'>"+message(code:'trauma.list.label.endTime') +": </span>"+g.formatDate( date: composition.context.endTime?.toDate(),formatName: 'default.date.format.text' )+"</td>"
+       out << "<td valign='top'><p>"+message(code:'trauma.list.label.observations')+":</p>"
+       out << "<p class='info'>"+composition.context.otherContext.item.value.value+"</p></td>"
+       
+       out  << "</tr>"
+       out  << "<tr>"
 
-        //out << '</div>' // /comienzo-fin
-        
-        //out << '<div>' // observaciones-responsable
-        out <<     '<div style="padding: 4px;">'
-        out <<       '<span>'+ message(code:'trauma.list.label.observations') + '</span>: ' + composition.context.otherContext.item.value.value
-        out <<     '</div>'
         
         // RESPONSABLE
         // Si han firmado, mostrar el responsable de la atencion.
@@ -124,37 +116,20 @@ class TraumaTagLib {
             // TODO: mostrar un identificador
             def nombres = responsable.identities.find{ it.purpose == 'PersonNameUser' }
             
-            out << '<div style="padding: 4px;">'
-            out << message(code:'trauma.list.label.composer') + ': ' +
+            out << "<td width='15%' valign='top'>"
+            out << "<h2>"+ message(code:'trauma.list.label.composer')+"</h2></td><td>Dr. " +
             ((nombres.primerNombre) ? (nombres.primerNombre + ' ') : '') +
             ((nombres.segundoNombre) ? (nombres.segundoNombre + ' ') : '') +
             ((nombres.primerApellido) ? (nombres.primerApellido + ' ') : '') +
             ((nombres.segundoApellido) ? (nombres.segundoApellido) : '')
                 
-            out << '</div>'
+            out << '</td>'
         }
         // /RESPONSABLE
-        
+        out  << "</tr>"
         out <<   '</div>' // /comienzo-fin-observaciones-responsable
         
-        /*
-        // Separacion entre (Comienxo-Final o Triage) y RTS-RTSp
-        out <<   '<div style="float: left; border-style: hidden; border-color: teal; border-width: 2px">'
-        out <<     '&nbsp;&nbsp;&nbsp;'
-        out <<   '</div>'
-        // RTS y RTSp 
-        out <<   '<div style="float:left;background-color:#AAAAFF;">'
-        out <<     '<div style="border-style:solid;border-color:#000;border-width:1px;text-align: left; padding: 4px; padding-left: 10px; padding-right: 10px;">'
-        out <<       resultRTS 
-        out <<     '</div>'
-        out <<     '<div style="border-style:solid;border-color:#000;border-width:1px; border-top:0px; text-align: left; padding: 4px; padding-left: 10px; padding-right: 10px;">'
-        out <<       resultRTSp
-        out <<     '</div>'
-        out <<   '</div>'
-        out <<   '<div style="clear:both;"></div>'
-        out << '</div>'
-        out << '<div>&nbsp;</div>'
-         */
+       
 
         
         // Para mostrar el color del triage si es que ya fue registrado.
@@ -169,6 +144,9 @@ class TraumaTagLib {
         }
         
         out << '</div>' // resumen_episodio
+
+       
+       out << "</table>"
     }
     
     
