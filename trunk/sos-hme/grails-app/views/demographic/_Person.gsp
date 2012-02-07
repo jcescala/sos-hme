@@ -2,28 +2,36 @@
 
 <%-- in: person:Person --%>
 
-<g:render template="../demographic/UIDBasedID" collection="${person.ids}" var="id" />
 
 <%
 def nombres = person.identities.find{ it.purpose == 'PersonNamePatient' }
 %>
 
-${nombres.primerNombre}
+<p>${nombres.primerNombre}
 ${nombres.segundoNombre}
 ${nombres.primerApellido}
 ${nombres.segundoApellido}
-( ${person.sexo} )
 
+  ( ${person.sexo} )
+</p>
 <%--
                 ${person.fechaNacimiento.getClass()}
               --%>
+
+
+<p><g:render template="../demographic/UIDBasedID" collection="${person.ids}" var="id" />
+
+
+
 
               <%
               if (person.fechaNacimiento)
               {
                 def myFormatter = new SimpleDateFormat( "yyyy-MM-dd" )
-                print myFormatter.format(person.fechaNacimiento)
+                print "Nac "+ myFormatter.format(person.fechaNacimiento)
                 
                 //print " ( " + DateDifference.numberOfYears(paciente.fechaNacimiento, new Date()) + " )"
               }
               %>
+
+</p>

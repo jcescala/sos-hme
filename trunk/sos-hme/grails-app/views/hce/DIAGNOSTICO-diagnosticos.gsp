@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta name="layout" content="ehr" />
-    
+    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
    <script type="text/javascript">
     
       var codigos;
@@ -160,7 +160,8 @@
     </style>
    </head>
   <body>
-    <h1>Diagnosticos</h1>
+     <div id="nivel3">
+    <h2>${message(code:'section.DIAGNOSTICO-diagnosticos.title')}</h2>
   
     <%--
     <g:if test="${rmNode}">
@@ -244,6 +245,8 @@
         </div>
 
       </g:form>
+    </div>
+
     </div>
   </body>
 </html>

@@ -1,7 +1,7 @@
 <%@ page import="archetype_repository.ArchetypeManager" %>
 
     <div>
-      <table cellpadding="0" cellspacing="3">
+      <table cellpadding="0" cellspacing="3" style="width: 100%;">
         <tr>
           <td>
             <g:each in="${composition.content}" var="content">

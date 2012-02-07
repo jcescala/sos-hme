@@ -36,7 +36,8 @@
     </style>
   </head>
   <body>
-    
+
+    <div id="nivel2">
     <h1><g:message code="trauma.show.title" /></h1>
     <g:if test="${flash.message}">
       <div class="message"><g:message code="${flash.message}" /></div>
@@ -94,7 +95,7 @@
       <g:link controller="guiGen" action="showRecord"><g:message code="trauma.list.action.showRecord" /></g:link>
 
     </div>
-   
+    </div>
   </body>
  
 </html>

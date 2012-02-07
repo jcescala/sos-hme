@@ -1,22 +1,11 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
 <%@ page import="hce.core.common.directory.Folder" %>
-
-<%--<?xml version="1.0" encoding="ISO-8859-1?>--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <g:set var="startmsec" value="${System.currentTimeMillis()}"/>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-
-    <%-- No quiero paginas cacheadas --%>
-    <%--
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
-    <META HTTP-EQUIV="Expires" CONTENT="-1" />
-    <!-- META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" /-->
-    <META HTTP-EQUIV="Cache-Control" content="no-cache, must-revalidate" />
-    --%>
-    <%-- en FF no funca --%>
     <META Http-Equiv="Cache-Control" Content="no-cache">
     <META Http-Equiv="Pragma" Content="no-cache">
     <META Http-Equiv="Expires" Content="0"> 
@@ -25,68 +14,20 @@
       // Para evitar el boton de volver del navegador.
       window.history.go(1);
     </g:javascript>
-    
-    
-    <g:javascript>
-      Event.observe(window, 'load', function () {
- 
-        //alert( $$('a.clone') );
-      
-        $$('a.clone').each( function(item) {
-        
-          // item es cada link con class=clone
-          item.observe('click', function(event) {
-            
-            //alert('clic');
-            
-            //alert( item.parentNode ); // parentNode es de DOM
-            //alert( $(item.parentNode).previous() ); // parentNode es de DOM
-            
-            nodeToClone = $(item.parentNode).previous();
-            
-            // Extiendo DOM para .previous de prototype
-            /*
-            nodeToClone.setStyle({
-              //backgroundColor: '#900',
-              border: '3px solid #ffff00'
-            });
-            */
-            
-            // Object.clone tira un Object y necesito un Element para hacer insert
-            //newNode = Object.clone(nodeToClone); //nodeToClone.clone();
-            newNode = nodeToClone.cloneNode(true); // cloneNode tira un Element y me deja hacer insert
-            
-            //alert(newNode);
-            
-            nodeToClone.insert({
-              after: newNode
-            });
-            
-            /*
-            item.insert({
-              before: newNode
-            });
-            */
-          });
-        });
-      });
-    </g:javascript>
-    --%>
+   --%>
     <title><g:layoutTitle/> | <g:message code="hce.nombre" /> | v${ApplicationHolder.application.metadata['app.version']}</title>
-    <%--
-    <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'ehr.css')}" />
-    --%>
-    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'ehr_contenido_grande.css')}" />
-   
 
 
-        <r:require module="jquery-ui"/>
+    <%--<link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'ehr_contenido_grande.css')}" />--%>
+   <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'estilo.css')}" />
+
+  <r:require module="jquery-ui"/>
   <g:javascript library="jquery" />
-  <jqui:resources themeCss="/sos/css/jquery/jquery-ui-1.8.16.custom.css"/>
+  <jqui:resources themeCss="${createLinkTo(dir:'css/jquery' ,file:'jquery-ui-1.8.16.custom.css')}"/>
+  <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery.form.js')}"></script>
+  <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery-ui-i18n.min.js')}"></script>
+  <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery-ui-timepicker-addon.js')}"> </script>
 
-  <script type="text/javascript" src="/sos/js/jquery/jquery.form.js"></script>
-  <script type="text/javascript" src="/sos/js/jquery/jquery-ui-i18n.min.js"></script>
-  <script type="text/javascript" src="/sos/js/jquery/jquery-ui-timepicker-addon.js"> </script>
   <script type="text/javascript">
     // 'modificado' establece si los valores de la seccion han sido modificados
     var modificado = false;
@@ -98,8 +39,13 @@
     }
     function guardadoAutomatico(seccion, generarShow, itemId){
       if(!modificado){
+        if(generarShow == false){
         $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
         return;
+        }else{
+          $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
+          return;
+        }
       }
       if(deseaGuardar()){
       //SI generarShow es true, significa que el registro ya está guardado previamente
@@ -255,82 +201,82 @@
 
  <g:layoutHead />
 
-
-
   </head>
-  <body>
-    <div id="user_bar">
-      <b><g:message code="hce.nombre" /></b> v${ApplicationHolder.application.metadata['app.version']} |
-      <g:datosUsuario userId="${userId}" />
-      <span class="user_actions">
-        
-        <%-- FECHA ACTUAL --%>
-        <span class="currentDate">
-          <g:formatDate date="${new Date()}" formatName="default.date.format.text" />
-        </span>
-        
-        <ul class="userBar">
-          <g:langSelector>
-            <li ${(session.locale.getLanguage()==it)?'class="active"':''}>
-              <%-- no dejo cambiar el idioma si la accion es save 
-                   http://code.google.com/p/open-ehr-sa/issues/detail?id=65
-              --%>
-              <g:if test="${actionName=='save'}">
-                 <a href="#" class="contextoEhr"><g:message code="common.lang.${it}" /></a>
-              </g:if>
-              <g:else>
-                <a href="?sessionLang=${it}&templateId=${params.templateId}" class="contextoEhr"><g:message code="common.lang.${it}" /></a>
-              </g:else>
-            </li>
-          </g:langSelector>
-        </ul>
 
-        <ul class="userBar">
-          <li ${(['domain'].contains(controllerName))?"class='active'":''}>
-            <g:link controller="domain" action="list"><g:message code="domain.action.list" /></g:link>
-          </li>
-          <li>
-           <g:set var="folder" value="${Folder.findByPath(session.traumaContext.domainPath)}" />
-           (${folder.name.value})
-          </li>
-          <li ${(['records'].contains(controllerName))?"class='active'":''}>
-            <g:link controller="records" action="list"><g:message code="records.action.list" /></g:link>
-          </li>
-          <li ${(controllerName=='demographic')?"class='active'":''}>
-            <g:link controller="demographic" action="admisionPaciente"><g:message code="demographic.action.admisionPaciente" /></g:link>
-          </li>
-        </ul>
-        
-        <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
-        
-      </span>
-    </div>
-  
-    <div id="body">
-    
-      <%-- El registro clinico ya tiene un flash para mostrar mensajes, saco este para que no muestre doble.
-      <g:if test="${flash.message}">
-        <div id="message" class="error">
-          <g:message code="${flash.message}" args="${flash.args}" />
+<body>
+  <div id="cabecera">
+	<div id="cabColI">
+    	<div id="logo">
+        	<h1><img src="${createLinkTo(dir:'images' ,file:'SOS.gif')}" alt="SOS" width="97" height="53" align="texttop" />Historias Médicas</h1>
         </div>
-      </g:if>
-      --%>
-      
-      <table cellpadding="0" cellspacing="0">
-        <tr>
-          <td id="body_table" rowspan="2">
-            <g:resumenEpisodio episodeId="${episodeId}" />
-
+        <div id="breadcrumbs">
+        	<g:link controller="domain" action="list"><g:message code="domain.action.list" /></g:link>
+                <g:set var="folder" value="${Folder.findByPath(session.traumaContext.domainPath)}" />
+                ${folder.name.value}
            
-            <g:layoutBody />
-          </td>
-          <td>
-            <div id="infoPaciente">
+        </div>
+    </div>
+    <div id="cabColD">
+   	  <div id="infoSec"><g:formatDate date="${new Date()}" formatName="default.date.format.text" /> &nbsp; | &nbsp; Cambiar idioma
+          <g:langSelector>
+            <g:if test="${(session.locale.getLanguage()!=it)}">
+
+            <a href="?sessionLang=${it}&templateId=${params.templateId}" class="contextoEhr"><img src="${createLinkTo(dir:'images' ,file:'ico_'+it+'.jpg')}" alt="${message(code:'common.lang.'+it)}" width="25" height="34" hspace="2" border="0" align="absmiddle" /></a>
+            </g:if>
+          </g:langSelector>
+
+          </div>
+        <div id="infoLogin"> 
+        <g:datosUsuario userId="${userId}" /> &nbsp; | &nbsp;
+
+        <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
+        </div>
+
+    </div>
+</div>
+
+   
+
+  <div id="menu1">
+  <ul>
+    <li>
+      <a href="#" class="selected"><g:message code="records.registroActual"/></a>
+    </li>
+    <li>
+       <g:link controller="records" action="list" ><g:message code="records.action.list" /></g:link>
+    </li>
+    <li>
+      <g:link controller="demographic" action="admisionPaciente"><g:message code="demographic.action.admisionPaciente" /></g:link>
+    </li>
+   
+    <li><a href="#"><g:message code="reportes.Reportes"/></a></li>
+  </ul>
+</div>
+<div id="nivel1">
+  <div id="resumenPaciente">
+    <g:if test="${patient}">
+
+      <img src="${createLinkTo(dir:'images' ,file:'thmb_paciente.jpg')}" width="52" height="52" alt="NombrePaciente" />
+      <h2><g:message code="trauma.title.informacionPaciente" /></h2>
+      <g:render template="../demographic/Person" model="[person:patient]" />
+      <div class="verMas"><a href="#" class="contextoEhr"><g:message code="records.show.completarDatos" /></a></div>
+
+    </g:if>
+    <g:else>
+      <g:message code="trauma.layout.pacienteNoIdentificado.label" />:<br/>
+      <g:link controller="demographic" action="admisionPaciente" class="contextoEhr">
+      <g:message code="trauma.layout.identificarPaciente.action" />
+      </g:link>
+    </g:else>
+
+  </div>
+
+ <%-- <div id="infoPaciente">
               <h2><g:message code="trauma.title.informacionPaciente" /></h2>
-              <%-- A patient lo manda como modelo guiGenController.generarTemplate --%>
+             
               <g:if test="${patient}">
                 <g:render template="../demographic/Person" model="[person:patient]" />
-                
+
                 <g:canEditPatient patient="${patient}">
                   <g:link controller="demographic" action="edit" id="${patient.id}" class="contextoEhr">Completar datos</g:link>
                 </g:canEditPatient>
@@ -341,48 +287,68 @@
                   <g:message code="trauma.layout.identificarPaciente.action" />
                 </g:link>
               </g:else>
-            </div>
-            <div id="menu">
-              
+ </div>--%>
+
+  <div id="resumenEpisodio">
+    
+    <g:resumenEpisodio episodeId="${episodeId}" />
+    <p></p>
+
+  </div>
+ <%-- <div id="menu2">
+    <ul>
+      <li><a href="#">Episodio Actual</a></li>
+      <li><a href="#" class="selected">Contenido</a></li>
+      <li><a href="#">Nivel 3</a></li>
+    </ul>
+  </div>
+ --%>
+
+   <div id="menu3">
+
               <ul>
                 <br />
                 <li>
-                  <g:link controller="records" action="list" class="contextoEhr">
+                  <g:link controller="records" action="list" >
                     <g:message code="trauma.menu.list" />
                   </g:link>
                 </li>
                 <br />
-                <li ${((controllerName=='records'&&['show'].contains(actionName)) ? "class='active'" : '')}>
-                  <g:link controller="records" action="show" id="${episodeId}" class="contextoEhr">
+                <li>
+                  <a href="${createLink(controller: 'records', action: 'show',id:episodeId)}" ${((controllerName=='records'&&['show'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
                     <g:message code="trauma.menu.show" />
-                  </g:link>
-                </li>
-                
-                <g:canFillClinicalRecord>
-                
-                  <li ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? "class='active'" : '')}>
-                    <g:link controller="records" action="registroClinico" id="${episodeId}" class="contextoEhr">
-                      <g:message code="trauma.menu.registroClinico" />
-                    </g:link>
-                  </li>
+                  </a>
                   
+                </li>
+
+                <g:canFillClinicalRecord>
+
+                  <li >
+
+                    <a href="${createLink(controller: 'records', action: 'registroClinico',id:episodeId)}" ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
+                     <g:message code="trauma.menu.registroClinico" />
+                  </a>
+
+                   
+                  </li>
+
                   <%--
                   TODO: desde lo estudios img hasta el registro clinico no puede ser
                         visto por un administrativo.
                   --%>
-                  
-                  <g:if test="${( ['guiGen','records','ajaxApi'].contains(controllerName) && ['generarShow','generarTemplate','show','saveDiagnostico','showRecord'].contains(actionName) )}">
+
+                  <g:if test="${( ['guiGen','records','ajaxApi'].contains(controllerName) && ['generarShow','generarTemplate','show','saveDiagnostico'].contains(actionName) )}">
                     <br />
-                   
+
                     <g:each in="${sections}" var="section">
 
-                      <li ${(( template?.id?.startsWith(section) ) ? "class='active'" : '')}>
+                      <li>
 
                        <g:if test="${template?.id?.startsWith(section)}">
                        <%--Valor de la seccion actual--%>
                        <g:javascript> secc = '${section}';</g:javascript>
                        </g:if>
-                      
+
                         <%-- allSubsections: ${allSubsections}<br/> --%>
                         <%-- se fija si el registro ya fue hecho --%>
                         <%
@@ -400,12 +366,12 @@
                               <g:message code="${'section.'+section}" /> (+) <%-- + es que se hizo algun registro en la seccion --%>
                            <%-- </g:link>
                             --%>
-                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});" class="contextoEhr"><g:message code='${"section."+section}' /> (+)</a>
+                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});" ${(( template?.id?.startsWith(section) ) ? "class='selected contextoEhr'" : "class='contextoEhr'")} ><g:message code='${"section."+section}' /> (+)</a>
                           </g:if>
                           <g:else>
                             <%-- SIN GUARDAR, GENERAR RECORDS INPUTS (registrao clinico2) --%>
 
-                         <a href="#" onClick="guardadoAutomatico('${section}',false,false);" class="contextoEhr"><g:message code='${"section."+section}' /></a>
+                         <a href="#" onClick="guardadoAutomatico('${section}',false,false);" ${(( template?.id?.startsWith(section) ) ? "class='selected contextoEhr'" : "class='contextoEhr'")}><g:message code='${"section."+section}' /></a>
                            <%--<g:link controller="records" action="registroClinico2" params="[section:section]">
                               <g:message code="${'section.'+section}" />
                             </g:link>
@@ -418,23 +384,39 @@
                     </g:each>
                   </g:if>
                   <br />
-                  <li ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='active'" : '')}>
-                    <g:link controller="records" action="signRecord" id="${episodeId}" class="contextoEhr">
-                      <g:message code="registro.menu.close" />
-                      <g:isSignedRecord episodeId="${episodeId}">
-                        (+)
-                      </g:isSignedRecord>
-                    </g:link>
-                  </li>
 
+                  <% def firmado = false %>
+                  <g:isSignedRecord episodeId="${episodeId}">
+                  <% firmado = true %>
+                  </g:isSignedRecord>
+                  <g:if test="${firmado == false}">
+                   <li>
+                   <a href="${createLink(controller: 'records', action: 'signRecord',id:episodeId)}"  ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='selected contextoEhr'" : 'contextoEhr')}>
+                      <g:message code="registro.menu.close" />
+                   </a>
+                  </li>
+                  </g:if>
+                  <g:else>
+                    <li >
+                     <a href="${createLink(controller: 'records', action: 'reopenRecord',id:episodeId)}"  ${((controllerName=='records'&&['reopenRecord'].contains(actionName)) ? "class='selected'" : '')}>
+                      <g:message code="registro.menu.open" />
+                   </a>
+                    </li>
+
+                  </g:else>
                   
+
+
                 </g:canFillClinicalRecord>
               </ul>
             </div>
-            
-          </td>
-        </tr>
-      </table>
-    </div>
-  </body>
+           
+  
+           
+      <g:layoutBody />
+      
+  
+</div>
+</body>
+
 </html>

@@ -60,6 +60,7 @@
     </style>
   </head>
   <body>
+     <div id="nivel2">
     <h1><g:message code="trauma.reopenRecord.title" /></h1>
 
     <g:if test="${flash.error}">
@@ -86,5 +87,6 @@
       <input type="submit" name="doit" value="${message(code:'trauma.reopen.action.reopen')}" />
 
     </g:form>
+     </div>
   </body>
 </html>
