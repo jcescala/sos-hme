@@ -48,6 +48,8 @@
         }
       }
       if(deseaGuardar()){
+      
+      
       //SI generarShow es true, significa que el registro ya está guardado previamente
       //<input id="mode" type="hidden" name="mode" value="show" />
       if ($(".ehrform").length > 0){
@@ -97,7 +99,7 @@
          
          //si mode no existe, estamos fuera de contexto de alguna seccion
          //si mode es diferente a show es porque se está editando
-         if(($('#mode').length > 0) && ($('#mode').val() !='show')){
+         if(($('#mode').length >= 0) && ($('#mode').val() !='show')){
          
          //capturar el valor del href, desde el controlador se realizará en direccioamiento
           var href = $(this).attr('href');
@@ -106,6 +108,7 @@
              if(!modificado){
               return;
               }
+              
               if(deseaGuardar()){
                 //detener el vinculo
                 event.preventDefault();
@@ -210,7 +213,7 @@
         	<h1><img src="${createLinkTo(dir:'images' ,file:'SOS.gif')}" alt="SOS" width="97" height="53" align="texttop" />Historias Médicas</h1>
         </div>
         <div id="breadcrumbs">
-        	<g:link controller="domain" action="list"><g:message code="domain.action.list" /></g:link>
+        	<g:link controller="domain" action="list" class="contextoEhr"><g:message code="domain.action.list" /></g:link>
                 <g:set var="folder" value="${Folder.findByPath(session.traumaContext.domainPath)}" />
                 ${folder.name.value}
            
@@ -229,7 +232,7 @@
         <div id="infoLogin"> 
         <g:datosUsuario userId="${userId}" /> &nbsp; | &nbsp;
 
-        <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
+        <g:link controller="authorization" action="logout" class="contextoEhr"><g:message code="authorization.action.logout" /></g:link>
         </div>
 
     </div>
@@ -240,16 +243,16 @@
   <div id="menu1">
   <ul>
     <li>
-      <a href="#" class="selected"><g:message code="records.registroActual"/></a>
+      <a href="#" class="selected contextoEhr"><g:message code="records.registroActual"/></a>
     </li>
     <li>
-       <g:link controller="records" action="list" ><g:message code="records.action.list" /></g:link>
+       <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
     </li>
     <li>
-      <g:link controller="demographic" action="admisionPaciente"><g:message code="demographic.action.admisionPaciente" /></g:link>
+      <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
     </li>
    
-    <li><a href="#"><g:message code="reportes.Reportes"/></a></li>
+    <li><a href="#" class="contextoEhr"><g:message code="reportes.Reportes"/></a></li>
   </ul>
 </div>
 <div id="nivel1">
@@ -309,7 +312,7 @@
               <ul>
                 <br />
                 <li>
-                  <g:link controller="records" action="list" >
+                  <g:link controller="records" action="list" class="contextoEhr" >
                     <g:message code="trauma.menu.list" />
                   </g:link>
                 </li>
@@ -358,6 +361,7 @@
                                                           // que espera no null y no vacio el templateId.
                         %>
                         <%-- subsection: ${subsection}<br/> --%>
+                        
                         <g:hasContentItemForTemplate episodeId="${episodeId}" templateId="${section+'-'+subsection}">
                           <g:if test="${it.hasItem}">
                            <%-- GUARDADO PREVIAMENTE, GENERAR SHOW --%>
@@ -391,7 +395,7 @@
                   </g:isSignedRecord>
                   <g:if test="${firmado == false}">
                    <li>
-                   <a href="${createLink(controller: 'records', action: 'signRecord',id:episodeId)}"  ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='selected contextoEhr'" : 'contextoEhr')}>
+                   <a href="${createLink(controller: 'records', action: 'signRecord',id:episodeId)}"  ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
                       <g:message code="registro.menu.close" />
                    </a>
                   </li>

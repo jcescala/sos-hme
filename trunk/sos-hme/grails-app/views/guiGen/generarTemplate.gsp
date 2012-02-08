@@ -22,10 +22,10 @@
             <li ${((template.id==subsection)?"class='selected'":'')}>
 	          <g:hasContentItemForTemplate episodeId="${episodeId}" templateId="${subsection}">
 	            <g:if test="${it.hasItem}">
-	              <g:link controller="guiGen" action="generarShow" id="${it.itemId}"><g:message code="${'section.'+subsection}" /> (*)</g:link>
+	              <g:link controller="guiGen" action="generarShow" id="${it.itemId}" class="contextoEhr"><g:message code="${'section.'+subsection}" /> (*)</g:link>
 	            </g:if>
 	            <g:else>
-		          <g:link controller="guiGen" action="generarTemplate" params="[templateId:subsection]">
+		          <g:link controller="guiGen" action="generarTemplate" params="[templateId:subsection]" class="contextoEhr">
 		            <g:message code="${'section.'+subsection}" />
 		          </g:link>
 		    </g:else>
