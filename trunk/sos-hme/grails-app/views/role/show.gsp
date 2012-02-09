@@ -31,14 +31,19 @@
                             <td valign="top" class="value"><g:link controller="person" action="show" id="${roleInstance?.performer?.id}">${roleInstance?.performer?.identities?.toString()}</g:link></td>
 
                         </tr>
-                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="role.timeValidityFrom.label" default="Time Validity From" /></td>
+                            
+                            <td valign="top" class="value"><g:formatDate date="${roleInstance?.timeValidityFrom}" /></td>
+                            
+                        </tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.timeValidityTo.label" default="Time Validity To" /></td>
                             
                             <td valign="top" class="value"><g:formatDate date="${roleInstance?.timeValidityTo}" /></td>
                             
                         </tr>
-                    <!--
+                    <%--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.capabilities.label" default="Capabilities" /></td>
                             
@@ -90,9 +95,9 @@
                             </td>
                             
                         </tr>
-                    -->
+                    --%>
 
-                    <!--
+                    <%--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.relationships.label" default="Relationships" /></td>
                             
@@ -105,13 +110,8 @@
                             </td>
                             
                         </tr>
-                    -->
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="role.timeValidityFrom.label" default="Time Validity From" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${roleInstance?.timeValidityFrom}" /></td>
-                            
-                        </tr>
+                    --%>
+
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.type.label" default="Type" /></td>

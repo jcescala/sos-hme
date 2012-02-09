@@ -27,10 +27,26 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-
+							
+							<tr class="prop">
+								<td valign="top" class="name">
+									<label for="identities">
+										<g:message code="person.copy.label" default="Desde pacientes"/>:
+									</label>
+									
+								</td>
+								<td valign="top" class="value ${hasErrors(bean: personInstance, field: 'identities', 'errors')}">
+        <%--<g:select name="identities" from="${demographic.identity.PersonNamePatient.list()}" multiple="No" optionKey="id" size="5" value="${personInstance?.identities*.id}" /><br>--%>
+        <g:link controller="person" action="find">
+							${message(code: 'person.copy.label', args: [message(code: 'role.label', default: 'PersonName')])}
+		
+		</g:link>
+									
+								</td>
+							</tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="identities"><g:message code="person.identities.label" default="Identities" /></label>
+                                  <label for="identities"><g:message code="person.identities.label" default="Identidad" /></label>:
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personInstance, field: 'identities', 'errors')}">
                                     <g:select name="identities" from="${demographic.identity.PersonNameUser.list()}" multiple="No" optionKey="id" size="5" value="${personInstance?.identities*.id}" /><br>
@@ -43,7 +59,7 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="fechaNacimiento"><g:message code="person.fechaNacimiento.label" default="Fecha Nacimiento" /></label>
+                                    <label for="fechaNacimiento"><g:message code="person.fechaNacimiento.label" default="Fecha de nacimiento" /></label>:
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personInstance, field: 'fechaNacimiento', 'errors')}">
                                     <g:datePicker name="fechaNacimiento" precision="day" value="${personInstance?.fechaNacimiento}" default="none" noSelection="['': '']" />
@@ -52,7 +68,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="sexo"><g:message code="person.sexo.label" default="Sexo" /></label>
+                                    <label for="sexo"><g:message code="person.sexo.label" default="Sexo" /></label>:
                                 </td>
                                <!-- <td valign="top" class="value ${hasErrors(bean: personInstance, field: 'sexo', 'errors')}">
                                     <g:textField name="sexo" value="${personInstance?.sexo}" />
@@ -64,7 +80,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="identificador"><g:message code="persona.identificador" /></label>
+                                    <label for="identificador"><g:message code="person.id.label" /></label>:
                                 </td>
                                 <td valign="top" class="name">
 									  <g:textField name="extension" value="${params.identificador}" />

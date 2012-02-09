@@ -18,57 +18,57 @@
                 <table>
                     <tbody>
                     
-                        <tr class="prop">
+                    <%--    <tr class="prop">
                             <td valign="top" class="name"><g:message code="personNameUser.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "id")}</td>
                             
-                        </tr>
+                        </tr>--%>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.primerNombre.label" default="Primer Nombre" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.primerNombre.label" default="Primer Nombre" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "primerNombre")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.segundoNombre.label" default="Segundo Nombre" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.segundoNombre.label" default="Segundo Nombre" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "segundoNombre")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.primerApellido.label" default="Primer Apellido" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.primerApellido.label" default="Primer Apellido" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "primerApellido")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.segundoApellido.label" default="Segundo Apellido" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.segundoApellido.label" default="Segundo Apellido" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "segundoApellido")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.telfhabitacion.label" default="Telfhabitacion" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.telfhabitacion.label" default="Telfhabitacion" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "telfhabitacion")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.telfcelular.label" default="Telfcelular" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.telfcelular.label" default="Telfcelular" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "telfcelular")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="personNameUser.email.label" default="Email" /></td>
+                            <td valign="top" class="name"><g:message code="personNameUser.email.label" default="Email" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personNameUserInstance, field: "email")}</td>
                             

@@ -17,15 +17,15 @@
             <div class="dialog">
                 <table>
                     <tbody>
-                    <!--
+                    <%--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="person.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personInstance, field: "id")}</td>
                             
-                        </tr>-->
+                        </tr>--%>
                         <tr  class="prop">
-                            <td valign="top" class="name"><g:message code="person.identities.label" default="Identities" /></td>
+                            <td valign="top" class="name"><g:message code="person.identities.label" default="Identities" />:</td>
 
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
@@ -38,14 +38,14 @@
 
                         </tr>
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="person.fechaNacimiento.label" default="Fecha Nacimiento" /></td>
+                            <td valign="top" class="name"><g:message code="person.fechaNacimiento.label" default="Fecha Nacimiento" />:</td>
                             
                             <td valign="top" class="value"><g:formatDate date="${personInstance?.fechaNacimiento}" /></td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="person.sexo.label" default="Sexo" /></td>
+                            <td valign="top" class="name"><g:message code="person.sexo.label" default="Sexo" />:</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personInstance, field: "sexo")}</td>
                             
@@ -56,7 +56,7 @@
 
                     
 
-                    <!--
+                    <%--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="person.relationships.label" default="Relationships" /></td>
                             
@@ -68,10 +68,10 @@
                                 </ul>
                             </td>
                             
-                        </tr>-->
+                        </tr>--%>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="person.roles.label" default="Roles" /></td>
+                            <td valign="top" class="name"><g:message code="person.roles.label" default="Roles" />:</td>
                             
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
@@ -85,7 +85,7 @@
 						
 						
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="person.ids.label" default="identificaciones" /></td>
+                            <td valign="top" class="name"><g:message code="persona.ids.label" default="Identificador (Numero/Tipo)" />:</td>
 														
                             <td valign="top" style="text-align: left;" class="value">
                                 <g:render template="UIDBasedID" collection="${personInstance.ids}" var="id" />
@@ -96,13 +96,13 @@
 						
 						</tr>
 						
-                    <!--
+                    <%--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="person.type.label" default="Type" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personInstance, field: "type")}</td>
                             
-                        </tr>-->
+                        </tr>--%>
                     
                     </tbody>
                 </table>

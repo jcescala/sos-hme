@@ -19,17 +19,17 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'person.id.label', default: 'Id')}" />
+                            <%--<g:sortableColumn property="id" title="${message(code: 'person.id.label', default: 'Id')}" />--%>
 
-                            <g:sortableColumn property="identidad" title="${message(code: 'person.id.label', default: 'Identidad')}" />
+                            <g:sortableColumn property="identities" title="${message(code: 'person.identitie.label', default: 'Identidad')}" />
                             
                             <g:sortableColumn property="fechaNacimiento" title="${message(code: 'person.fechaNacimiento.label', default: 'Fecha Nacimiento')}" />
                         
                             <g:sortableColumn property="sexo" title="${message(code: 'person.sexo.label', default: 'Sexo')}" />
 
-                            <g:sortableColumn property="Role" title="${message(code: 'person.type.label', default: 'Role')}" />
+                            <g:sortableColumn property="Role" title="${message(code: 'person.type.label', default: 'Rol')}" />
 
-                            
+                            <th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>
                         
                         </tr>
                     </thead>
@@ -37,7 +37,7 @@
                     <g:each in="${personInstanceList}" status="i" var="personInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "id")}</g:link></td>
+                            <%--<td><g:link action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "id")}</g:link></td>--%>
 
                             <td>${personInstance.identities}</td>
 
@@ -56,6 +56,12 @@
 
                               <td>${demographic.role.Role.get(personInstance.roles.id [0]).type}</td>
                             </g:if>
+							<g:else>
+									<td></td>
+							</g:else>
+							
+							<td><g:link action="show" id="${personInstance.id}">${message(code: 'loginAuth.person.detail', default: 'Detalles')}</g:link></td>
+							
 
                         </tr>
                     </g:each>

@@ -30,31 +30,41 @@
                                 <td valign="top" class="name">
                                     <label for="performer"><g:message code="role.performer.label" default="Performer" /></label>
                                 </td>
-                                <!--<g:if test="${personid == null}">-->
+                                <%--<g:if test="${personid == null}">--%>
 
-                                   <!-- <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
+                                   <%-- <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
                                         <g:select name="performer.id" from="${demographic.identity.PersonNameUser.list()}" optionKey="id" value="${roleInstance?.performer?.id}"  />
-                                    </td>-->
+                                    </td>--%>
 
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
                                     <g:select name="performer.id" from="${demographic.party.Person.list()}" optionKey="id" value="${roleInstance?.performer?.id}"  />
 
                                 </td>
                                     
-                                <!--</g:if>
+                                <%--</g:if>
                                 <g:else>
                                   <g:hiddenField name="performer.id" value="${personid}" />
-                                </g:else>-->
+                                </g:else>--%>
                             </tr>
+							
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="timeValidityTo"><g:message code="role.timeValidityTo.label" default="Time Validity To" /></label>
+                                  <label for="timeValidityFrom"><g:message code="role.timeValidityFrom.label" default="Time Validity From" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'timeValidityFrom', 'errors')}">
+                                    <g:datePicker name="timeValidityFrom" precision="day" value="${roleInstance?.timeValidityFrom}"  />
+                                </td>
+                            </tr>							
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="timeValidityTo"><g:message code="role.timeValidityTo.label" default="Time Validity To" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'timeValidityTo', 'errors')}">
                                     <g:datePicker name="timeValidityTo" precision="day" value="${roleInstance?.timeValidityTo}" default="none" noSelection="['': '']" />
                                 </td>
                             </tr>
-                        <!--
+                        <%--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="capabilities"><g:message code="role.capabilities.label" default="Capabilities" /></label>
@@ -90,10 +100,10 @@
                                     <g:select name="ids" from="${hce.core.support.identification.UIDBasedID.list()}" multiple="yes" optionKey="id" size="5" value="${roleInstance?.ids*.id}" />
                                 </td>
                             </tr>
-                            -->
+                            --%>
 
                         
-                       <!--     <tr class="prop">
+                       <%--     <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="relationships"><g:message code="role.relationships.label" default="Relationships" /></label>
                                 </td>
@@ -107,20 +117,13 @@
 <g:link controller="partyRelationship" action="create" params="['role.id': roleInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'partyRelationship.label', default: 'PartyRelationship')])}</g:link>
 
                                 </td>
-                            </tr>-->
+                            </tr>--%>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="timeValidityFrom"><g:message code="role.timeValidityFrom.label" default="Time Validity From" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'timeValidityFrom', 'errors')}">
-                                    <g:datePicker name="timeValidityFrom" precision="day" value="${roleInstance?.timeValidityFrom}"  />
-                                </td>
-                            </tr>
+
                         
                         <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="type"><g:message code="role.type.label" default="Type" /></label>
+                                    <label for="type"><g:message code="role.type.label" default="Type" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
                                     <g:select name="type" from="${demographic.role.Role.getRoleCodes()}" multiple="No" size="4" value="type" />
