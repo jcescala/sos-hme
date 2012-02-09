@@ -27,6 +27,7 @@
   <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery.form.js')}"></script>
   <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery-ui-i18n.min.js')}"></script>
   <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery-ui-timepicker-addon.js')}"> </script>
+  <script type="text/javascript" src="${createLinkTo(dir:'js' ,file:'efectos.js')}"> </script>
 
   <script type="text/javascript">
     // 'modificado' establece si los valores de la seccion han sido modificados

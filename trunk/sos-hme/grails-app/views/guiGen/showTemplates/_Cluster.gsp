@@ -36,8 +36,9 @@ modo = show? (si el modo no es edit es show)
   --%>
   
   <g:if test="${mode && mode=='edit'}">
-    <span class="label">
-      ${rmNode.name.value}
+    <span class="label labelCluster">
+      ${rmNode.name.value} 
+   
     </span>
     <span class="content">
       
@@ -151,7 +152,7 @@ modo = show? (si el modo no es edit es show)
 
 
   <g:else>
-       <span class="label">
+       <span class="label labelCluster">
       ${rmNode.name.value}
     </span>
     <span class="content">
