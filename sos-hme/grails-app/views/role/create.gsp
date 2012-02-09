@@ -44,24 +44,21 @@
                                 </g:else>
                             </tr>
 
-                            
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="timeValidityTo"><g:message code="role.timeValidityTo.label" default="Time Validity To" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'timeValidityTo', 'errors')}">
-                                    <g:datePicker name="timeValidityTo" precision="day" value="${roleInstance?.timeValidityTo}" default="none" noSelection="['': '']" />
-                                </td>
-                            </tr>
-                        
-
-
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="timeValidityFrom"><g:message code="role.timeValidityFrom.label" default="Time Validity From" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'timeValidityFrom', 'errors')}">
                                     <g:datePicker name="timeValidityFrom" precision="day" value="${roleInstance?.timeValidityFrom}"  />
+                                </td>
+                            </tr>
+							
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="timeValidityTo"><g:message code="role.timeValidityTo.label" default="Time Validity To" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'timeValidityTo', 'errors')}">
+                                    <g:datePicker name="timeValidityTo" precision="day" value="${roleInstance?.timeValidityTo}" default="none" noSelection="['': '']" />
                                 </td>
                             </tr>
                         
@@ -72,9 +69,9 @@
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
                                     <g:select name="type" from="${demographic.role.Role.getRoleCodes()}" multiple="No" size="4" value="type" />
                                 </td>
-                                <!--<td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
+                                <%--<td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
                                     <g:textField name="type" value="${roleInstance?.type}" />
-                                </td>-->
+                                </td>--%>
                             </tr>
 
 

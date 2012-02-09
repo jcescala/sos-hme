@@ -4,11 +4,22 @@ import converters.DateConverter
 import tablasMaestras.TipoIdentificador
 import demographic.role.Role
 import util.RandomGenerator
+import demographic.identity.*
 
 class PersonController {
 
+
+
+	//private List getSubsections( String section )
+
+
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	
+	
+	
+	
     def index = {
 	
 	
@@ -17,12 +28,24 @@ class PersonController {
 
     def list = {
 		//def tiposIds = TipoIdentificador.list()
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        return [personInstanceList: Person.list(params), personInstanceTotal: Person.count()]
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def pl = Person.createCriteria()
+		def resultado = pl.list(params){
+			
+			like("class","%demographic.party.Person%")
+			identities{
+					like("purpose","%PersonNameUser%")
+			
+			}
+			
+		} 
+
+        
+        return [personInstanceList: resultado, personInstanceTotal: resultado.totalCount]
 		
 		
     }
-
+	
     def create = {
 	
 		def tiposIds = TipoIdentificador.list()
@@ -31,6 +54,87 @@ class PersonController {
         return [personInstance: personInstance, tiposIds: tiposIds]
     }
 
+	def find = {
+		def tiposIds = TipoIdentificador.list()
+        
+		def pl = Person.createCriteria()
+		def personPatients = pl.list(params){
+			identities{
+					like("purpose","%PersonNamePatient%")
+					
+					
+			}
+			
+		} 
+		
+		
+		//personInstance.properties = params
+        return [personPatients: personPatients, tiposIds: tiposIds]
+	}
+	def copyperson = {
+		def tiposIds = TipoIdentificador.list()
+        def personInstance = new Person()
+		def personInstance2 = new Person()
+		def personPatientInstance = new PersonNameUser()
+		
+        //personInstance.properties = params
+        println("id de la persona: "+params.personid)
+		
+		
+		
+		
+		
+		personInstance = Person.get(params.personid)
+		
+		
+		
+		//def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
+        
+		
+		personInstance2.setFechaNacimiento( personInstance.getFechaNacimiento() )
+		personInstance2.setSexo(personInstance.getSexo())
+		
+		
+		def ids = personInstance.ids
+		
+		
+		
+		def id
+		for(i in ids){
+			id = UIDBasedID.findByValue(i.value)
+			println("identificador: "+id+"\n")
+			personInstance2.addToIds( id )
+		}
+		
+		def identidad = PersonNamePatient.findById(personInstance.identities?.id[0])
+		
+		def identidad2 = new PersonNameUser()
+		
+		identidad2.setPrimerNombre(identidad.getPrimerNombre())
+		identidad2.setSegundoNombre(identidad.getSegundoNombre())
+		identidad2.setPrimerApellido(identidad.getPrimerApellido())
+		identidad2.setSegundoApellido(identidad.getSegundoApellido())
+		
+		
+		
+		personInstance2.addToIdentities(identidad2)
+		
+		
+		//return [personInstance: personInstance, tiposIds: tiposIds]
+		
+		
+		
+		
+		if (personInstance2.save(flush: true)) {
+				flash.message = "${message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"
+				redirect(action: "show", id: personInstance2.id)
+		}
+		else {
+				render(view: "create", model: [personInstance: personInstance2])
+		}
+		//redirect(action: "list", params: params)
+	}
+	
     def save = {
 	
 	
@@ -74,10 +178,13 @@ class PersonController {
                 }
                 else
                 {
+					println "identificador obligatorio!!"
                     // Vuelve a la pagina
                     flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
                     def tiposIds = TipoIdentificador.list()
-                    return [tiposIds: tiposIds]
+                    //return [tiposIds: tiposIds]
+					render(view: "create", model: [tiposIds: tiposIds])
+					return
                 }
 			}
             
@@ -253,6 +360,19 @@ class PersonController {
 
 				}
 			}
+			
+		/*	
+			esta parte es para validar que el arreglo devuelto sea de un solo elemento y no de mas
+			de esta forma no se agreguen varias identidades a un person.
+		
+			println("IDENTIDADES:" +params.identities+"tamanio"+[params.identities].size() +" \n\n\n")
+	
+			if(params.identities.size()>1){
+				params.identities = params.identities[0]
+			}else{
+				//params.identities = params.identities
+			}
+			println("IDENTIDAD:" +params.identities+"\n\n\n")*/
 			personInstance.properties = params
             if (!personInstance.hasErrors() && personInstance.save(flush: true)) {
 
@@ -281,7 +401,7 @@ class PersonController {
 	
 	
     def delete = {
-
+		println("identidades:::"+params.identities)
         def personInstance = Person.get(params.id)
 
 

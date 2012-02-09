@@ -21,13 +21,13 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'role.id.label', default: 'Id')}" />
 
-                            <g:sortableColumn property="type" title="${message(code: 'role.type.label', default: 'Type')}" />
+                            <g:sortableColumn property="type" title="${message(code: 'role.type.label', default: 'Tipo')}" />
 
-                            <th><g:message code="role.performer.label" default="Performer" /></th>
+                            <th><g:message code="role.performer.label" default="Persona" /></th>
 
                             
 
-                            <g:sortableColumn property="timeValidityFrom" title="${message(code: 'role.timeValidityFrom.label', default: 'Time Validity From')}" />
+                            <g:sortableColumn property="timeValidityFrom" title="${message(code: 'role.timeValidityFrom.label', default: 'Valido Desde')}" />
                         
                             <g:sortableColumn property="timeValidityTo" title="${message(code: 'role.timeValidityTo.label', default: 'Time Validity To')}" />
                         

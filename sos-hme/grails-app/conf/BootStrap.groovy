@@ -135,15 +135,13 @@ class BootStrap {
         
         // ----------------------------------------------------------------------------
         
-println " - Creacion de pacientes de prueba"
-		//def ci = new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1", nombre:"Cédula de Identidad", nombreCorto:"CI")
+       
+        println " - Creacion de pacientes de prueba"
         
-		def paciente = new Person()
+        def paciente = new Person()
         //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.2.1', value:'1234567') )
         //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'6677') )
-        def id1 = new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567')
-		
-		paciente.addToIds( id1 )
+        paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567') )
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::6677') )
         paciente.addToIdentities( new PersonNameUser(primerNombre:'Pedro', primerApellido:'Perez') )
         paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
