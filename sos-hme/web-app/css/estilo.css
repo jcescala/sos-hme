@@ -346,3 +346,13 @@ a {
 	padding:0;}
 #resumenEpisodio .info {
 	font-size:12px;}
+	
+/*----AGREGADOS----*/
+
+.openCluster:hover{
+cursor: pointer;
+
+
+}	
+	
+	

@@ -40,7 +40,18 @@ if (refPath) _refPath = refPath
          Puedo hacer Term Bindings a terminilogias externas, usando path based bindins (adl.pdf pag 100).
       </g:if>
       <g:else>
-         <span class="label">
+
+          <%-- Solo para los CLUSTER, by Armando--%>
+
+          <g:if test="${cComplexObject.rmTypeName == 'CLUSTER'}">
+                <span class="label labelCluster">
+
+          </g:if>
+          <g:else>
+            <span class="label">
+          </g:else>
+
+         
            ${archetypeTerm.text}: <%-- ${archetypeTerm.items.text}: FIXME: items es una coleccion de muchos? --%>
          </span>
       </g:else>

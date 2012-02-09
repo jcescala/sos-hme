@@ -39,6 +39,7 @@ textarea {
     .CLUSTER {
       margin-bottom: 3px;
       font-weight: bold;
+	  
     }    
 	
 	.CLUSTER .CLUSTER .CLUSTER {
@@ -52,7 +53,9 @@ textarea {
       padding: 3px;
       font-size: 13px;
       margin: 0px;
+	  
     }
+	
 	
 	.CLUSTER .label {  /* Primer Nivel */
 		color:#052441;
@@ -298,3 +301,11 @@ textarea {
 	font-weight:bold;
 
 	}
+	
+	/*-------Añadido ------ */
+	
+	.CLUSTER .labelCluster {
+      border-bottom:1px solid #c1c1c1;
+	  
+    }
+	
