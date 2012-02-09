@@ -142,7 +142,7 @@
                                      buttonText: 'Calendario',
                                      buttonImage: '/sos/images/datepicker.gif',
                                      maxDate: new Date(),
-                                     minDate: new Date(2007, 9, 15),
+                                     minDate: new Date(1900, 9, 15),
                                      constrainInput: true,
                                      showButtonPanel: true,
                                      showOn: 'button'
@@ -163,7 +163,7 @@
                                      buttonText: 'Calendario',
                                      buttonImage: '/sos/images/datepicker.gif',
                                      maxDate: new Date(),
-                                     minDate: new Date(2007, 9, 15),
+                                     minDate: new Date(1900, 9, 15),
                                      showButtonPanel: true,
                                      showOn: 'button'
 
