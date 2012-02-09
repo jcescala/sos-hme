@@ -7,12 +7,10 @@
 
 
  $(document).ready(function(){
-$('.CLUSTER .CLUSTER').find('.content').hide();
-/*$(".CLUSTER .CLUSTER").click(function(){
 
-$(this).find('.content').toggle('slow');
+ //Se cierran los CLUSTER de segundo nivel, se deja el primer nivel abierto
+ $('.CLUSTER .CLUSTER').find('.content').hide();
 
-});*/
 $(".openCluster").live('click', function() {
 	var clus = $(this); 
 
@@ -34,12 +32,12 @@ $(".openCluster").live('click', function() {
 });
 
 
-var u=0;
+
 
 $('.CLUSTER').each(function (){
  var len = $(this).parents(".CLUSTER").length;
  
- var nivel = 1; //CAMBIAR ESTA VARIABLE EN CASO DE QUERER MAS O MENOS NIVELES DE EFECTOS SOBRE LOS CLUSTERS
+ var nivel = 1; //CAMBIAR ESTE VALOR EN CASO DE QUERER MAS O MENOS NIVELES DE EFECTOS SOBRE LOS CLUSTERS
  
 	 if(len <= nivel){ //Indica el nivel de profundidad del CLUSTER empezando desde cero
 	 
@@ -54,6 +52,7 @@ $('.CLUSTER').each(function (){
 	 
 		}
 		if(len == 0){ 
+			//Por defecto el nivel 0 ya está abierto
 			$(this).children('.label').append("<img class='openCluster' src='/sos/images/close.png' style='float: right; width: 15px; height: auto;'/>");
 	 
 		}
