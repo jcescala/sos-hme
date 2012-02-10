@@ -114,14 +114,14 @@
 
     <div id="imp">
 
-      <h4>Opciones de IMP</h4>
+      <h4><g:message code="demographic.show.opcionesImp" /></h4>
       <ul>
 
         <g:if test="${!agregadoImp}">
-          <li><g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="create">Agregar Paciente a IMP</g:link></li>
+          <li><g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="create"><g:message code="service.imp.agregarPaciente" /></g:link></li>
         </g:if>
         <g:else>
-          <li><g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="create">Eliminar Paciente de IMP</g:link></li>
+          <li><g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="create"><g:message code="service.imp.eliminarPaciente" /></g:link></li>
 
 
 
@@ -132,11 +132,11 @@
                               params="[id: person_id, offset: '0']"
                               update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
                               onLoading="cargando('#resultadoCandidatos')"
-                              class="create">Agregar Relacion Paciente</g:remoteLink></li>
+                              class="create"><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink></li>
           </g:if>
           <g:else>
 
-            <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create">Eliminar Relacion Paciente</g:link></li>
+            <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create"><g:message code="demographic.show.eliminarRelacionPaciente" /></g:link></li>
           </g:else>
 
         </g:else>
@@ -155,14 +155,14 @@
 
     </g:if>
     <g:else>
-    <p>No hay conexion con IMP</p>
+    <p><g:message code="service.imp.conexionImp.false" /></p>
     </g:else>
 
 
 
 <%-- REGISTROS INTERNOS --%>
     <div id="registroInterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
-      <h3>Registros Internos</h3> <hr/>
+      <h3><g:message code="service.imp.registrosInternos" /></h3> <hr/>
       <g:formRemote name="busquedaInterna"
                     url="[controller:'service',action:'busquedaInterna', params: [id: person_id,marca: 'fil']]"
                     update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
@@ -194,7 +194,7 @@
       <g:remoteLink name="busquedaAllInterna"
                     url="[controller:'service',action:'busquedaAllInterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
                     update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
-                    onLoading="cargando('#resultadoInterno')">Todos los registros
+                    onLoading="cargando('#resultadoInterno')"><g:message code="service.imp.todosRegistros" />
 
       </g:remoteLink>
 
@@ -213,7 +213,7 @@
 
 
     <div id="registroExterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
-      <h3>Registros Externos</h3> <hr/>
+      <h3><g:message code="service.imp.registrosExternos" /></h3> <hr/>
       <div id="busquedaExterna">
         <g:formRemote name="busquedaExterna"
                       url="[controller:'service',action:'busquedaExterna',params: [id: person_id, offset:0, marca: 'fil']]"
@@ -243,7 +243,7 @@
         <g:remoteLink name="busquedaAllExterna"
                       url="[controller:'service',action:'busquedaAllExterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
                       update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
-                      onLoading="cargando('#resultadoExterno')">Todos los CDAs
+                      onLoading="cargando('#resultadoExterno')"><g:message code="service.imp.todosCdas" />
 
         </g:remoteLink>
 
@@ -262,14 +262,14 @@
 <%-- ORGANIZACIONES RELACIONADAS--%>
 
     <div id="listadoOrganizaciones" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
-      <h3>Listado de Organizaciones</h3> <hr/>
+      <h3><g:message code="service.imp.listadoOrganizaciones" /></h3> <hr/>
 
 
       <g:remoteLink controller="service"
                     action="listarOrganizaciones"
                     id="${person_id}"
                     update="[success:'resultadoOrganizaciones',failure:'errorResultadoOrganizaciones']"
-                    on404="alert('not found');">Ver Organizaciones</g:remoteLink>
+                    on404="alert('not found');"><g:message code="service.imp.verOrganizaciones" /></g:remoteLink>
       <div id="resultadoOrganizaciones">
       </div>
       <div id="errorResultadoOrganizaciones">
