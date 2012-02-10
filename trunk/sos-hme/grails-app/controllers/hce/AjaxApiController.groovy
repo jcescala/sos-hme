@@ -252,6 +252,14 @@ class AjaxApiController {
             {
                 comp.removeFromContent(item)
                 item.delete(flush:true) // FIXME: delete no es en cascada si no se pone belongsTo en las clases hijas.
+
+
+            //Agregado por Armando
+            //FIXME: Puede ocurrir que se intente borrar un diagnóstico anterior mediante un edit
+            //pero no se puede hacer save() porque va a tener errores
+            
+
+
             }
             else // Si no es save de edit, esta tratando de salvar de nuevo algo que ya habia salvado.
             {

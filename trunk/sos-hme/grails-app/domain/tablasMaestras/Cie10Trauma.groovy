@@ -16,6 +16,10 @@ class Cie10Trauma {
     
     static constraints = {
         codigo(nullable:true)
+        //nombre(maxSize :1024*1024*10)
+    }
+    static mapping = {
+        //nombre type: 'text'
     }
     
     //static transients = ['codigos', 'grupos', 'subgrupos']

@@ -5,6 +5,7 @@
 <html>
   <head>
     <meta name="layout" content="ehr" />
+    
     <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
    <script type="text/javascript">
     
@@ -40,26 +41,33 @@
         var code = null;
         
         // codigos es global
-        $.each(codigos, function(c) {
+       /* $.each(codigos, function(c) {
           if (this.id == id) code = this;
-        });
-        
-        if (code)
+        });*/
+
+       var code = $('#cie_'+id);
+      /* alert(code.find('td').eq(0).html());
+       alert(code.find('td').eq(1).html());
+       alert(code.find('td').eq(2).html());
+       */
+       if (code)
         {
           //alert(code.id + ' ' + code.nombre);
           
           // TODO: esto deberia ser un form con campos hidden con los
           //       ids de los codigos seleccionados para diagnosticos.
           //
-          $('#seleccionados').append('<div id="selected_'+code.id+'">' +
-                                          '<input type="hidden" name="codes" value="'+ code.id +'" />'+
-                                          '('+ ((code.codigo) ? code.codigo : code.subgrupo) + ') ' + code.nombre + // si no es un codigo, para que no muestre null
-                                          ' <a href="javascript:unselect(\'' + code.id + '\');">[borrar]</a> ' +
+          $('#seleccionados').append('<div id="selected_'+id+'">' +
+                                          '<input type="hidden" name="codes" value="'+ id +'" />'+
+                                          '('+ ((code.find('td').eq(0).html()) ? code.find('td').eq(0).html() : code.find('td').eq(1).html()) + ' ) ' + code.find('td').eq(2).html() + // si no es un codigo, para que no muestre null
+                                          ' <a href="javascript:unselect(\'' + id + '\');">[borrar]</a> ' +
                                           '</div>');
         }
-        else
+        else{
           alert('code es null');
-      }
+        }
+
+    }
       
       
       function unselect( id )
@@ -177,18 +185,36 @@
   
     <%-- update="[success:'message',failure:'error']" --%>
     <%-- onSuccess="_after(codigos)" --%>
+
+    <g:formRemote name="cie10"
+                    url="[controller:'cie10',action:'index']"
+                    update="[success: 'resultadoCie', failure: 'errorResultadoInterno']">
+        <br/>
+         <input type="text" name="text" />
+        <input id="buscarDiagnostico" type="submit" value="Buscar" />
+        <g:message code="hce.diagnostico.ejemplo" />
+
+       <%-- <g:submitButton name="doit" value="${message(code:'buscar.filtro')}" />--%>
+
+
+      </g:formRemote>
+    <div id="resultadoCie">
+
+      
+    </div>
+
     <div class="ehrform1">
-      <g:form url="[controller:'ajaxApi', action:'findCIE10']"
+     <%-- <g:form url="[controller:'ajaxApi', action:'findCIE10']"
                     name="form_diagnosticos"
                     id="form_diagnosticos">
                     
         <input type="text" name="text" />
         <input id="buscarDiagnostico" type="submit" value="Buscar" />
-        
-        p.e: 'traumatismo cuello', 'quemadura cabeza', 'esguince tobillo', ...
-        
+        <g:message code="hce.diagnostico.ejemplo" />
       </g:form >
-      
+      --%>
+
+
       <div id="message"></div>
       <div id="error"></div>
       
