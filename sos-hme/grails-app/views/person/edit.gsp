@@ -78,13 +78,10 @@
                                 <td valign="top" class="name">
                                     <label for="identificador"><g:message code="persona.ids.label" />:</label>
                                 </td>
-								<td valign="top" style="text-align: left;" class="value">
-									<ul>
-									<g:each in="${personInstance.ids}" var="r2">
-										<li>${r2?.value.split('::')[0]} : <g:link controller="role" action="show" id="${r2.id}">${r2?.value.split('::')[1]}</g:link></li>
-									</g:each>
-									</ul>
-								</td>
+                            <td valign="top" style="text-align: left;" class="value">
+                                <g:render template="UIDBasedID" collection="${personInstance.ids}" var="id" />
+                                </ul>
+                            </td>
 							</tr>
 							
                             <tr class="prop">
@@ -99,7 +96,7 @@
 
                             </tr>
 							
-                         <!--   <tr class="prop">
+                         <%--   <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="relationships"><g:message code="person.relationships.label" default="Relationships" /></label>
                                 </td>
@@ -113,7 +110,7 @@
 <g:link controller="partyRelationship" action="create" params="['person.id': personInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'partyRelationship.label', default: 'PartyRelationship')])}</g:link>
 
                                 </td>
-                            </tr>-->
+                            </tr>--%>
                        
                             <tr class="prop">
                                 <td valign="top" class="name">
