@@ -103,7 +103,22 @@ class DemographicService {
     {
         //this.queryCount++
         //println queryCount
-        return  demographicAccess.findPersonById(id)
+			
+			
+			//este query es necesario para filtrar la busqueda de personas por  un id asociado
+			//y por el tipo de identidad (patient) que esta tenga.
+			def existPerson = Person.withCriteria{
+				ids{
+					eq("value", id.value)
+				}
+				identities{
+					eq("purpose", "PersonNamePatient")
+				}
+			
+			}
+        //return  demographicAccess.findPersonById(id)
+		
+		return existPerson
     }
     
     public List<Person> findByPersonData( PersonName n, Date bithdate, String sex )
@@ -127,11 +142,64 @@ class DemographicService {
     {
         return demographicAccess.findByPersonDataAndRole(n, bithdate, sex, role)
     }
-    
+	
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Busca en la BD los valores de nombres de usuario identificados por el id
+	 *y los trae para la creacion de un paciente a partir de estos datos.
+     * */  
+    public List<Person> findPatientById(UIDBasedID id){
+		def candidatosPacientes = Person.withCriteria{
+
+				ids{
+					eq("value", id.value)
+				}
+				identities{
+
+					eq("purpose", "PersonNamePatient")
+				}
+			
+			}
+		return candidatosPacientes
+	
+	}
+	
+    public List<Person> findUserById(UIDBasedID id){
+		def candidatosUsuarios = Person.withCriteria{
+
+				ids{
+					eq("value", id.value)
+				}
+				identities{
+
+					eq("purpose", "PersonNameUser")
+				}
+			
+			}
+		return candidatosUsuarios
+	
+	}
     public List<Person> findByPersonDataAndIdAndRole( PersonName n, Date bithdate, String sex, UIDBasedID id, String roleType )
     {
         return demographicAccess.findByPersonDataAndIdAndRole(n, bithdate, sex, id, roleType)
-    }
+				
+				/*println "id: "+id
+				def candidatosPacientes = Person.withCriteria{
+
+					ids{
+						eq("value", id.value)
+					}
+					identities{
+
+						eq("purpose", "PersonNamePatient")
+					}
+				
+				}
+				println "candidatos: "+candidatosPacientes
+				
+		return candidatosPacientes*/
+	}
     
     public List<Person> findByPersonDataAndIdsAndRole( PersonName n, Date bithdate, String sex, List<UIDBasedID> ids, Role role )
     {

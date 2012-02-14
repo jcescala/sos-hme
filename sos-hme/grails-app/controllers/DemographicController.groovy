@@ -20,7 +20,7 @@ import converters.DateConverter
 
 // TEST
 import demographic.PixPdqDemographicAccess
-
+import org.springframework.context.MessageSource
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 
 // Para manejar eventos
@@ -136,7 +136,7 @@ class DemographicController{
             //pn = new PersonName()
             
             //new 
-            pn = new PersonName()
+            pn = new PersonNamePatient()
             bindData(pn, params, 'personName')
             //println "Person Name: " + pn
         }
@@ -670,8 +670,19 @@ class DemographicController{
                     // FIXME: verificar que no hay otro paciente con el mismo id
                     println "===================================================="
                     println "Busco por id para ver si existe: " + id.value
-                    def existId = UIDBasedID.findByValue(id.value)
-                    if (existId)
+                    
+			def existPerson = Person.withCriteria{
+				ids{
+					eq("value", id.value)
+				}
+				identities{
+					eq("purpose", "PersonNamePatient")
+				}
+			
+			}
+					
+					//def existId = UIDBasedID.findByValue(id.value)
+                    if (existPerson)
                     {
                         println "Ya existe!"
                         flash.message = "Ya existe la persona con id: " + id.value + ", verifique el id ingresado o vuelva a buscar la persona"
@@ -805,7 +816,171 @@ class DemographicController{
         // muestra pagina de edit
         return [patient:patient, pn:pn, tiposIds:tiposIds]
     }
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Busca en la BD los valores de nombres de usuario identificados por el id
+	 *y los trae para la creacion de un paciente a partir de estos datos.
+     * */      
+	 
+	 def messageSource
     
+	
+	def ajaxGetNombres = {	
+		def m0 = messageSource.getMessage( 'persona.identificador', null, null)		
+	
+		def m1 = messageSource.getMessage( 'persona.primerApellido', null, null)
+		
+		def m2 = messageSource.getMessage( 'persona.segundoApellido', null, null)
+		
+		def m3 = messageSource.getMessage( 'persona.primerNombre', null, null)
+		
+		def m4 = messageSource.getMessage( 'persona.segundoNombre', null, null)	
+	
+		def m5 = messageSource.getMessage( 'persona.fechaNacimiento', null, null)
+		
+		def m6 = messageSource.getMessage( 'persona.sexo', null, null)
+		
+		def m7 = messageSource.getMessage( 'persona.foto', null, null)
+		
+		def codmsj = "1"
+		println "estoy en la funcion ajaxGetNombres!!! id: "+ params.id
+		
+		def array
+		def a = true
+
+			array = params.id.split	("-")
+			
+			def id = null
+			
+			
+			def candidatosUsuarios
+			def existPatient
+			try{
+				id = new UIDBasedID(value:array[0]+'::'+array[1])
+				
+				candidatosUsuarios = demographicService.findUserById(id)
+				existPatient = demographicService.findPatientById(id)
+				
+				/*
+				candidatosUsuarios = Person.withCriteria{
+					ids{
+						eq("value", id.value)
+					}
+					identities{
+						eq("purpose", "PersonNameUser")
+					}
+				
+				}
+				existPatient = Person.withCriteria{
+					ids{
+						eq("value", id.value)
+					}
+					identities{
+						eq("purpose", "PersonNamePatient")
+					}
+				
+				}*/
+				
+				if(existPatient){
+						
+						codmsj="2"
+						render "<label for='primerApellido'>"+m1+"</label>"+
+							"<input type='text' name='primerApellido' value=''>"+
+
+								"<label for='segundoApellido'>"+m2+"</label>"+
+							"<input type='text' name='segundoApellido' value=''>"+
+
+								"<label for='primerNombre'>"+m3+"</label>"+
+							"<input type='text' name='primerNombre' value=''>"+
+
+								"<label for='segundoNombre'>"+m4+"</label>"+
+							"<input type='text' name='segundoNombre' value=''>"
+							
+							
+							
+				}else{
+					if(candidatosUsuarios){
+						
+
+						
+
+						codmsj="1"
+						def asd = [uno:"",dos:"",tres:"",cuatro:""]
+						println "candidatos: "+candidatosUsuarios.identities.primerNombre
+						if(candidatosUsuarios.identities[0].primerApellido[0]!=null)
+							asd.put("uno", candidatosUsuarios.identities[0].primerApellido[0])
+						
+						if(candidatosUsuarios.identities[0].segundoApellido[0]!= null)
+							asd.put("dos", candidatosUsuarios.identities[0].segundoApellido[0])
+						
+						if(candidatosUsuarios.identities[0].primerNombre[0]!=null)
+							asd.put("tres", candidatosUsuarios.identities[0].primerNombre[0])
+
+						if(candidatosUsuarios.identities[0].segundoNombre[0]!=null)
+							asd.put("cuatro", candidatosUsuarios.identities[0].segundoNombre[0])
+							
+						render "<label for='primerApellido'>"+m1+"</label>"+
+							"<input type='text' name='primerApellido' value="+asd.get("uno")+">"+
+
+								"<label for='segundoApellido'>"+m2+"</label>"+
+							"<input type='text' name='segundoApellido' value="+asd.get("dos")+">"+
+
+								"<label for='primerNombre'>"+m3+"</label>"+
+							"<input type='text' name='primerNombre' value="+asd.get("tres")+">"+
+
+								"<label for='segundoNombre'>"+m4+"</label>"+
+							"<input type='text' name='segundoNombre' value="+asd.get("cuatro")+">"
+							
+					}else{
+							
+						
+					
+						render "<label for='primerApellido'>"+m1+"</label>"+
+							"<input type='text' name='primerApellido' value=''>"+
+
+								"<label for='segundoApellido'>"+m2+"</label>"+
+							"<input type='text' name='segundoApellido' value=''>"+
+
+								"<label for='primerNombre'>"+m3+"</label>"+
+							"<input type='text' name='primerNombre' value=''>"+
+
+								"<label for='segundoNombre'>"+m4+"</label>"+
+							"<input type='text' name='segundoNombre' value=''>"
+							
+							
+					}
+
+
+
+
+			
+
+					
+
+				}
+				
+				
+				
+			}catch(ArrayIndexOutOfBoundsException e){
+				println "estoy en el catch"
+				render "<label for='primerApellido'>"+m1+"</label>"+
+					"<input type='text' name='primerApellido' value=''>"+
+
+						"<label for='segundoApellido'>"+m2+"</label>"+
+					"<input type='text' name='segundoApellido' value=''>"+
+
+						"<label for='primerNombre'>"+m3+"</label>"+
+					"<input type='text' name='primerNombre' value=''>"+
+
+						"<label for='segundoNombre'>"+m4+"</label>"+
+					"<input type='text' name='segundoNombre' value=''>"
+					
+			}
+
+
+	}
+	
     /*
      *@author Juan Carlos Escalante
      *
