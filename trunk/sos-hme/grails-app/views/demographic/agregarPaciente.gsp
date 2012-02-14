@@ -16,7 +16,25 @@
       }
     </style>
     <g:javascript>
-          
+		function updateNombresValidate(){
+				var a = "nada"
+				var b = $("#primerApellido2").value();
+				alert("holaaaa "+ b);
+				
+				
+				//updateNombres(a,b)
+
+		}
+	
+	
+         function updateNombres( root, extension){
+            ${remoteFunction( 
+              controller:'demographic', 
+              action:'ajaxGetNombres', 
+              update:'nombres', 
+              params:'\'id=\' + root +\'-\' +extension')} 
+			  
+		}
          function updateSubCats( category ){
               var selectpais = document.getElementById("paisnace");
               if (selectpais.options[selectpais.selectedIndex].value == 1){
@@ -85,30 +103,38 @@
     <g:form action="agregarPaciente" name="nuevopaciente" enctype="multipart/form-data">
       <fieldset>
         <legend>Identificaci&oacute;n</legend>
-          <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
-		  <g:textField name="primerApellido" value="${params.primerApellido}"/>
-                  
-          <label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
-          <g:textField name="segundoApellido" value="${params.segundoApellido}" />
-		  
-          <label for="primerNombre"><g:message code="persona.primerNombre" /></label>
-          <g:textField name="primerNombre" value="${params.primerNombre}" />
-        
-          <label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
-          <g:textField name="segundoNombre" value="${params.segundoNombre}" />
-		  
-          <label for="identificador"><g:message code="persona.identificador" /></label>
+                    <label for="identificador"><g:message code="persona.identificador" /></label>
           <g:textField name="extension" value="${params.identificador}" />
-          <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
-		  
-          <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-          <g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
-        
-          <label for="sexo"><g:message code="persona.sexo" /></label>
-            <g:select name="sexo" class="selectci" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
           
-          <label for="foto"><g:message code="persona.foto" /></label>
-           <input type="file" name="foto" id="foto" style="width: 300px;"/>
+		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/>
+		  
+
+		  <div id="nombres">
+			<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
+			<g:textField name="primerApellido" value="${params.primerApellido}"/>
+				  
+			<label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
+			<g:textField name="segundoApellido" value="${params.segundoApellido}" />
+
+			<label for="primerNombre"><g:message code="persona.primerNombre" /></label>
+			<g:textField name="primerNombre" value="${params.primerNombre}" />
+
+			<label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
+			<g:textField name="segundoNombre" value="${params.segundoNombre}" />
+
+	  
+		  </div>
+			<label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
+			<g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
+
+			<label for="sexo"><g:message code="persona.sexo" /></label>
+			<g:select name="sexo" class="selectsex" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+
+	  
+			<label for="foto"><g:message code="persona.foto" /></label>
+			<!--label for="foto">Foto del Paciente</label-->
+			<input type="file" name="foto" id="foto"/> 	
+ 
       </fieldset>
 	  
       <fieldset>
