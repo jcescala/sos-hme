@@ -17,6 +17,20 @@ import demographic.role.Role
 // Configuracion de consulta local o remota
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 
+import java.util.*;
+
+//creacion de archivos xml
+import groovy.xml.MarkupBuilder
+import org.custommonkey.xmlunit.*
+import java.lang.Object.*
+import groovy.xml.XmlUtil
+import groovy.util.XmlSlurper
+import javax.xml.parsers.*
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NamedNodeMap;
+
+
 /**
  * @author Pablo Pazos Gutierrez (pablo.swp@gmail.com)
  *
@@ -24,7 +38,7 @@ import org.codehaus.groovy.grails.commons.ApplicationHolder
 class DemographicService {
 
     DemographicAccess demographicAccess
-    
+    def grailsApplication
     //int queryCount = 0
     
     // FIXME: ojo, capaz necesita instanciarse distinto por GRAILS, los servicesson singletons...
@@ -128,7 +142,7 @@ class DemographicService {
      *@author Juan Carlos Escalante
      *regresa el nombre en los lugares recursivos a partir del id del ultimo hijo 
      *dicho id esta identificado con el nombre Lugar y Direccion de la clase PersonNamePatient*/
-    /*
+    
     public String findFullAddress(Integer lugar){
         def parroquia = null
         def municipio = null
@@ -136,7 +150,207 @@ class DemographicService {
         def pais = null
         def fullAddress = null
         
-        return demographicAccess.fullAddress
+        if(lugar){
+            def sitio=Lugar.get(lugar)
+            //println(sitio.tipolugar)
+            if(sitio.tipolugar=="Municipio"){
+                municipio =  sitio.nombre
+                estado = Lugar.get(sitio.padre.id)
+                fullAddress = "municipio "+ municipio + ", estado "+estado.nombre
+            }
+            if(sitio.tipolugar=="Parroquia"){
+                parroquia = sitio.nombre
+                municipio = Lugar.get(sitio.padre.id)
+                estado = Lugar.get(municipio.padre.id)
+                fullAddress = "parroquia "+ parroquia + ", municipio "+ municipio.nombre + ", estado "+estado.nombre
+            }
+        }
+        return fullAddress
     }
-    */
+    
+    public String getOcupacion(Integer ocupacion){
+        def ocupa = Ocupacion.get(ocupacion)
+        return ocupa.nombre
+    }
+    
+    
+    public boolean createXML (String tipo){
+        Date hoy = new Date()
+        def xml = new groovy.xml.StreamingMarkupBuilder().bind(){
+            mkp.xmlDeclaration()
+            pacientes(){
+                fechareporte(hoy.format("dd/MM/yyyy"))
+                //nombre()
+                //apellido()
+            }
+            
+        }
+        def output = XmlUtil.serialize(xml)
+        
+        def stringWriter = new StringWriter()
+        def node = new XmlParser().parseText(output.toString());
+        new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
+        
+        def writer = new File(ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+tipo+".xml"))
+        //writer.write(output)
+        writer.write(stringWriter.toString())
+        
+        return true
+        
+    }
+    public boolean crearXmlEpi10(String docxml, String fecha, String cedula, String nombre, String direccion, String ocupacion, String edad, String sexo, String[] diagnosticos){
+        def ruta = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml")
+        
+        // bloque java
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse(ruta);
+        
+        Node pacientes = doc.getFirstChild();
+        //NamedNodeMap pacientesAttributes = pacientes.getAttributes();
+        Node paciente = doc.createElement("paciente");
+        pacientes.appendChild(paciente);
+        
+        Node fechaxml = doc.createElement("fecha")
+        fechaxml.setTextContent(fecha)
+        paciente.appendChild(fechaxml)
+        
+        Node cedulaxml = doc.createElement("cedula")
+        cedulaxml.setTextContent(cedula)
+        paciente.appendChild(cedulaxml)
+        
+        
+        Node nombrexml = doc.createElement("nombre")
+        nombrexml.setTextContent(nombre)
+        paciente.appendChild(nombrexml)
+        
+        Node direccionxml = doc.createElement("direccion")
+        direccionxml.setTextContent(direccion)
+        paciente.appendChild(direccionxml)
+        
+        Node ocupacionxml = doc.createElement("ocupacion")
+        ocupacionxml.setTextContent(ocupacion)
+        paciente.appendChild(ocupacionxml)
+        
+        Node edadxml = doc.createElement("edad")
+        edadxml.setTextContent(edad)
+        paciente.appendChild(edadxml)
+        
+        Node sexoxml = doc.createElement("sexo")
+        sexoxml.setTextContent(sexo)
+        paciente.appendChild(sexoxml)
+        
+        Node diagnosticosxml = doc.createElement("diagnosticos")
+        paciente.appendChild(diagnosticosxml)
+        
+        def i=diagnosticos.size()
+        def j=0
+        while(j<=i-1){
+            Node diagnosticoxml = doc.createElement("diagnostico")
+            diagnosticoxml.setTextContent(diagnosticos[j])
+            diagnosticosxml.appendChild(diagnosticoxml)
+            j++
+        }
+        
+        def output = XmlUtil.serialize(pacientes)
+        /*
+        def stringWriter = new StringWriter()
+        def node = new XmlParser().parseText(output.toString());
+        new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
+        */
+        def writer = new File(ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml"))
+        //writer.write(stringWriter.toString())
+        writer.write(output)
+        
+        return true
+    }
+    
+    
+    public boolean crearXmlEPI10Gen(String docxml, String cedula, String nombre, String fechanacimiento, String direccion, String sexo, String edad, String[] diagnosticos){
+        def ruta = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml")
+        
+        Date hoy = new Date()
+        println("hoy:->"+hoy.format("dd/MM/yyyy"))
+        
+        
+        // bloque java
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse(ruta);
+        
+        Node pacientes = doc.getFirstChild();
+        Node paciente = doc.createElement("paciente");
+        pacientes.appendChild(paciente);
+        
+        Node cedulaxml = doc.createElement("cedula");
+        cedulaxml.setTextContent(cedula)
+        paciente.appendChild(cedulaxml)
+        
+        Node nombrexml = doc.createElement("nombre");
+        nombrexml.setTextContent(nombre)
+        paciente.appendChild(nombrexml)
+        
+        Node fechanacexml = doc.createElement("fechanacimiento");
+        fechanacexml.setTextContent(fechanacimiento)
+        paciente.appendChild(fechanacexml)
+        
+        Node direccionxml = doc.createElement("direccion");
+        direccionxml.setTextContent(direccion)
+        paciente.appendChild(direccionxml)
+        
+        Node sexoxml = doc.createElement("sexo");
+        sexoxml.setTextContent(sexo)
+        paciente.appendChild(sexoxml)
+        
+        Node edadxml = doc.createElement("edad");
+        edadxml.setTextContent(edad)
+        paciente.appendChild(edadxml)
+        
+        Node diagnosticosxml = doc.createElement("diagnosticos")
+        paciente.appendChild(diagnosticosxml)
+        
+        def i=diagnosticos.size()
+        def j=0
+        while(j<=i-1){
+            Node diagnosticoxml = doc.createElement("diagnostico")
+            diagnosticoxml.setTextContent(diagnosticos[j])
+            diagnosticosxml.appendChild(diagnosticoxml)
+            j++
+        }
+        
+        def output = XmlUtil.serialize(pacientes)
+        def writer = new File(ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml"))
+        writer.write(output)
+        return true
+    }
+    
+    
+    
+    public List getSections(String ruta){
+        def sections = []
+        this.getDomainTemplates(ruta).keySet().each {
+
+            sections << it
+        }
+        
+        return sections
+    }
+    
+    public Map getDomainTemplates(String path){
+        // Nuevo: para devolver los templates del dominio seleccionado
+        //def domain = session.traumaContext.domainPath
+        def domain = path
+        def domainTemplates = grailsApplication.config.templates2."$domain"
+        
+        return domainTemplates
+    }
+    
+    public List getSubsections( String section, String ruta ){
+        def subsections = []
+        
+        this.getDomainTemplates(ruta)."$section".each { subsection ->
+           subsections << section + "-" + subsection
+        }
+        return subsections
+    }
 }

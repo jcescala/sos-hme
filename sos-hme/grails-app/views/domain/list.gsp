@@ -14,7 +14,7 @@
       <div id="listadominios" class="listadominios">
         ${message(code:'domain.list.label.listadoDominios')}
       </div>
-      <div id="logoucvhor" class="logoucvhor"></div>
+      
       <g:if test="${flash.message}">
         <div class="message"><g:message code="${flash.message}"/></div>
       </g:if>

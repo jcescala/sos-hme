@@ -59,7 +59,7 @@ templates2 {
       INTERROGATORIO=['interrogatorio',
                      'motivo_de_consulta']
       MOTIVO = ['motivo_de_consulta']
-      EVALUACION=['exploracion_funcional']
+      EXPLORACION=['exploracion_funcional','antecedentes_o_anamnesis']
       OBSERVATION=['enfermedad_actual']
       EXAMEN_FISICO=['examen_fisico']
       DIAGNOSTICO=['diagnosticos'] //PRESENTA PROBLEMAS
@@ -236,7 +236,7 @@ log4j = {
 //Indice Maestro de Pacientes
 
 //UCV CAIBCO
-imp.organizacion.id = "62ad6b53-484c-496c-b08f-5ebb8c387d3c"
+imp.organizacion.id = "460dcf36-ea8a-45e6-9e01-f7cd09a6ac3b"
 
 //LOCAL
 //imp.organizacion.id ="766e8035-3c8e-4209-9934-3c05059f5cab"

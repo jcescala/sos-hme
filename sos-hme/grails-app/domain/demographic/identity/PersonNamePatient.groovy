@@ -31,7 +31,8 @@ class PersonNamePatient extends PersonName{
     String contactoemergencia
 
       static constraints = {
-        foto(nullable:true, maxSize: 204800 /* 200Kb */)
+        /*
+        foto(nullable:true, maxSize: 204800 
         tipofoto(nullable:true)  
         primerNombre (blank:false, matches: "[a-zA-Z]+")
         segundoNombre (blank:false, matches: "[a-zA-Z]+")
@@ -66,6 +67,7 @@ class PersonNamePatient extends PersonName{
         nombremadre (nullable:true, matches: "[a-zA-Z]+")
         otradireccion (nullable:true)
         contactoemergencia (blank:false)
+        */
     }
     
     static mapping = {

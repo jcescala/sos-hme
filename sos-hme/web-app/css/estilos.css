@@ -195,6 +195,11 @@ label.valid {
 ul li{
 list-style:none;
 }
+.pacientereporte{
+	margin-left:0%;	position:relative;
+	text-align:left; width:800px;
+}
+}
  ul.langBar {
          list-style: none;
          display: inline;
@@ -234,3 +239,36 @@ list-style:none;
          border-bottom: 1px solid #ffffff;
          background-color: #ffffff;
        }
+
+.reportcentral{ width:95%; margin-left:1%;}
+.titulorepo, .rangofechasrepo, .accionrepo{position:relative; float:left; text-align:center;}
+.titulorepo, .accionrepo{width:30%}
+.rangofechasrepo{width:40%}
+.opcionesrepo{margin-top:2%; font-weight:bold; height:4%;}
+.listarepo{border-top:solid thin;}
+.reportlist{margin-bottom:4%; border-bottom: solid thin;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
