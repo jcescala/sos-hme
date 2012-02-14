@@ -27,7 +27,7 @@
           <g:link controller="demographic" action="admisionPaciente" class="find"><g:message code="demographic.admision_paciente.buscar_paciente" /></g:link>
         </li>
         <li>
-          <g:link controller="demographic" action="reportIndex" class="find"><g:message code="reportes.link.title" /></g:link>
+          <g:link controller="reportes" action="index" class="find"><g:message code="reportes.link.title" /></g:link>
         </li>
       </ul>
     </div>  

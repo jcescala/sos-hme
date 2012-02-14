@@ -27,6 +27,7 @@ import org.codehaus.groovy.grails.commons.ApplicationHolder
 import events.*
 
 import util.RandomGenerator
+import hce.core.common.archetyped.Locatable
 
 /*Demograficos paciente*/
 import demographic.identity.*
@@ -44,6 +45,10 @@ import hce.core.common.generic.*
 import java.io.*
 import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
 
+
+/*reportes*/
+import templates.TemplateManager
+import tablasMaestras.Cie10Trauma
 class DemographicController{
 
     def hceService
@@ -818,7 +823,8 @@ class DemographicController{
         }
         else{
             def list = Lugar.findByNombreLike("Venezuela")
-            render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
+            render {"<input type='hidden' id='generarestados' value=0 />"}
+            render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>"}
         }
     }
     
@@ -846,126 +852,92 @@ class DemographicController{
      *@author Juan Carlos Escalante
      *
      *suite de reportes estadísticos sobre episodios clínicos*/
-    def reportIndexOld = {
-        //def ids = new UIDBasedID
-        def list =  UIDBasedID.list()
-        def patient = []
-        //def patient = new PersonNamePatient()
-        
-        def loop = null
-        def i=0;
-        while (list[i]!=null){
-            loop = list[i]
-            def patients = demographicService.findPersonById( loop )
-            if(patients.size()==1){
-                
-                //Recopilando las informacion necesaria para la invocacion del metodo de busqueda por rol
-                //def nombres = patients[0].identities.find{ it.purpose == 'PersonName' }
-                
-                //def pn = null
-               
-                /*
-                if(nombres.primerNombre || nombres.segundoNombre ||
-                nombres.primerApellido || nombres.segundoApellido){
-                println "entra"
-                if(nombres.primerNombre){
-                println "entra if"
-                params.'personName.primerNombre'=nombres.primerNombre
-                println "parametros"+params
-                          
-                }
-                pn = new PersonName()
-                bindData(pn, params, 'personName')
-                      
-                }
-               
-                println "nombres:-->"+pn
-                 */
-                
-                /*
-                def pn = null
-                if (params.'personName.primerNombre'  || params.'personName.segundoNombre'||
-                params.'personName.primerApellido' || params.'personName.segundoApellido')
-                {
-                pn = new PersonName()
-                bindData(pn, params, 'personName')
-                println "Person Name ->" + pn
-                }
-                 */
-                /*
-                def bd=null
-                if(patients[0].fechaNacimiento){
-                DateFormat myFormatter
-                myFormatter = new SimpleDateFormat("yyyy-MM-dd")
-                bd = (Date) myFormatter.parse(patients[0].fechaNacimiento.toString())
-                println "Fecha de nacimiento ->" + bd
-                }else{
-                println "no entra"
-                }
-                 */
-                
-                //println "ids loop: "+loop
-                println "****************"
-                
-                //busqueda solamente con el id del Person y que su rol sea PACIENTE
-               
-                if(demographicService.findByPersonDataAndIdAndRole(
-                        null,
-                        null,
-                        null,
-                        loop,
-                        Role.PACIENTE )){
-                    println "======================================="
-                    println "   ID: "+ loop
-                    println "======================================="
-                    patient << patients[0]
-                }
-            }
-            i++
-        }
-        
-        patient = PersonNamePatient.list()
-        println(patient)
-        
-        //return [patient: patient]
-    }
-    
+    // fuera de uso. comportamiento migrado a ReportesController
+    /*
     def reportIndex = {
         def compos = []
         def paciente = []
+        def sexo = []
+        def fullDireccion = []
+        def ocupacion = []
+        def edad = []
         Folder domain = Folder.findByPath( session.traumaContext.domainPath )
         
         compos = Composition.withCriteria{
             eq('rmParentId',domain.id)
-            maxResults(15)
-            if (params.offset)
-            firstResult( Integer.parseInt(params.offset) )
-            order("id", "desc")
         }
-        println(compos)
         
+   
+       
+        println("episodio clinico")
+        println(session.traumaContext?.episodioId)
         
+        println("numero de composiciones")
+        println(compos.size())
         
         def composition = null
         def j = 0
         while (compos[j]!=null){
             composition = compos[j]
-            //println(composition.id)
-            
             session.traumaContext.episodioId = composition.id
             def composi = Composition.get(composition.id)
-            def patient = hceService.getPatientFromComposition(composi)
-            def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
-            if(datos!=null){
-                print("datos-->")
-                println(datos.lugar)
+            // BUSCANDO EL DIAGNOSTICO DESDE LA COMPOSITION
+            println("al diagnostico")
+            println(composi.content[0].name.value) // me indica que es un diganostico de trauma
+            println(composi.content[0])
+            
+            def iter = composi.content.iterator()
+            def item = iter.next()
+            //DIAGNOSTICO-diagnosticos nombre del template
+            def elemento = hceService.getCompositionContentItemForTemplate(composi, "DIAGNOSTICO-diagnosticos")
+
+            if(elemento!=null){
+                def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
+                def rmNodeData =  rmNode.data
+                def rmNodeDataEvents = rmNodeData.events
+                def rmNodeDataEventsData = rmNodeDataEvents.data
+                def rmNodeDataEventsDataItems = rmNodeDataEventsData.items
                 
-                paciente << patient
+                def element = rmNodeDataEvents[0].data.items
+                println("element[0]: ->"+element[0])
+                
+                def codigo = Cie10Trauma.findByCodigo(element[0].value.definingCode.codeString)
+                println("codigo.id: ->"+codigo.nombre)
+            }
+            /////////////////////////////////////
+            def patient = hceService.getPatientFromComposition(composi)
+            if(patient){
+                def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
+                if(datos!=null){
+                    def direccion = demographicService.findFullAddress((int)datos.direccion.id)
+                    fullDireccion << "Ciudad "+ datos.ciudad + ", Urb/Sector " + datos.urbasector + ", Av/Calle " + datos.avenidacalle + ", Casa/Res " + datos.casaedif + ", "+direccion
+                    sexo << patient.sexo
+                    paciente << patient
+                    ocupacion << demographicService.getOcupacion((int)datos.ocupacion.id)
+
+                    if(patient.fechaNacimiento){
+                        def myFormatter = new SimpleDateFormat("yyyy")
+                        //println(myFormatter.format(patient.fechaNacimiento))
+                        def hoy = new Date()
+                        //println(Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento)))
+                        edad << Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento))
+                    }
+                }
+                
             }
             j++
         }
-        return [patient: paciente]
+        
+        def output = demographicService.xmlEPI10(ocupacion as String[], fullDireccion as String[])
+        return [patient: paciente,
+                dircompleta : fullDireccion,
+                ocupacion : ocupacion,
+                sexo : sexo,
+                edad : edad]
+        
     }
+    */
+    
     
     def fotopaciente = {
        def paciente = Person.get(params.persona)
@@ -980,4 +952,5 @@ class DemographicController{
        out.write(datos.foto)
        out.close()
     }
+    
 }

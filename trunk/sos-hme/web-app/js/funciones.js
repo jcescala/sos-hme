@@ -26,7 +26,7 @@ $j(document).ready(function(){
                 lettersonly:true
             },
             "segundoApellido":{
-                required:true,
+                //required:true,
                 minlength:2,
                 lettersonly:true
             },
@@ -36,7 +36,7 @@ $j(document).ready(function(){
                 lettersonly:true
             },
             "segundoNombre":{
-                required:true,
+                //required:true,
                 minlength:2,
                 lettersonly:true
             },
@@ -50,15 +50,15 @@ $j(document).ready(function(){
                 selectNone:true
             },
             "lugar.id":{
-                selectNone:true
-            },
+                //selectNone:true
+            },    
             "ciudadnacimiento":{
-                required:true,
+                //required:true,
                 minlength: 4,
                 lettersonly:true
             },
             "ocupacion.id":{
-                selectNone:true
+                //selectNone:true
             },
             "direccion.id":{
                 selectNone:true
@@ -78,14 +78,14 @@ $j(document).ready(function(){
             },
             "casaedif":{
                required:true,
-               minlength:4
+               minlength:1
             },
             "ptoreferenica":{
-               required:true,
+               //required:true,
                minlength:10
             },
             "telfhabitacion":{
-               required: true,
+               //required: true,
                minlength: 7,
 	       maxlength: 11,
 	       number: true
@@ -96,12 +96,12 @@ $j(document).ready(function(){
 	       number: true
             },
             "nombremadre":{
-               required:true,
+               //required:true,
                minlength:10,
                lettersonly:true 
             },
             "nombrepadre":{
-               required:true,
+               //required:true,
                minlength:10,
                lettersonly:true 
             },

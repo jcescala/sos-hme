@@ -5,11 +5,11 @@
     <title><g:message code="demographic.agregar_paciente.title" /></title>
     <g:javascript library="prototype" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-	<g:javascript src='formToWizard.js' />
-        <g:javascript src='funciones.js' />
-        <g:javascript src='jquery.validate.js' />
-        
-        <link rel="stylesheet" href="${resource(dir:'css',file:'wizard.css')}" />
+    <g:javascript src='formToWizard.js' />
+    <g:javascript src='funciones.js' />
+    <g:javascript src='jquery.validate.js' />
+    <link rel="stylesheet" href="${resource(dir:'css',file:'wizard.css')}" />
+    
     <style>
       label {
         display: block;
@@ -18,11 +18,24 @@
     <g:javascript>
           
          function updateSubCats( category ){
-            ${remoteFunction( 
+              var selectpais = document.getElementById("paisnace");
+              if (selectpais.options[selectpais.selectedIndex].value == 1){
+              document.getElementById("entnace").style.visibility = "visible";
+              document.getElementById("munnace").style.visibility = "visible";
+              document.getElementById("ciunace").style.visibility = "visible";
+              
+              ${remoteFunction( 
               controller:'demographic', 
               action:'ajaxGetEstados', 
               update:'entidadnace', 
               params:'\'id=\' + category')} 
+              
+              }else{
+                document.getElementById("entnace").style.visibility = "hidden";
+                document.getElementById("munnace").style.visibility = "hidden";
+                document.getElementById("ciunace").style.visibility = "hidden";
+              }
+              
           }
           
           function updateMunicipios(estado){
@@ -33,6 +46,8 @@
                 params:'\'id=\' + estado')}
           }
           function updateMunicipiosReside(estado){
+            var selectparroquia = document.getElementById("parroresid");
+            selectparroquia.selectedIndex = -1;
             ${remoteFunction( 
                 controller:'demographic', 
                 action:'ajaxGetMunicipios', 
@@ -90,11 +105,10 @@
           <g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
         
           <label for="sexo"><g:message code="persona.sexo" /></label>
-            <g:select name="sexo" class="selectsex" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+            <g:select name="sexo" class="selectci" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
           
-            <label for="foto"><g:message code="persona.foto" /></label>
-            <!--label for="foto">Foto del Paciente</label-->
-            <input type="file" name="foto" id="foto"/>  
+          <label for="foto"><g:message code="persona.foto" /></label>
+           <input type="file" name="foto" id="foto" style="width: 300px;"/>
       </fieldset>
 	  
       <fieldset>
@@ -102,62 +116,47 @@
           <label for="etnia"><g:message code="persona.etnia" /></label>
           <g:select name="etnia.id" class="selectci" value="${params.etnia}" from="${etniasIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione Etnia']"/>
           
-		  <label for="nacionalidad"><g:message code="persona.nacionalidad" /></label>
+          <label for="nacionalidad"><g:message code="persona.nacionalidad" /></label>
           <g:select name="nacionalidad.id" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" />
 		  
           <label for="paisnacimiento"><g:message code="persona.paisnace"/></label>
 		  <g:select name="paisnace" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione País']" onchange="updateSubCats(this.value)" />
-		  
+          
+          <div id="entnace" style="visibility: hidden;">
           <label for="entidadnacimiento"><g:message code="persona.entidadnace"/></label>
-		  <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['-1':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
-		  
+          	  <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['-1':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
+          </div> 
+          
+          <div id="munnace" style="visibility: hidden;">         
           <label for="municipionacimiento">
             <g:message code="persona.municipionace"/></br>
             <g:select name="lugar.id" id="municnace" class="selectci" value="${params.lugarnacimiento}" disabled="false" noSelection="['-1':'Seleccione Municipio']"/>
           </label>
-		  
+          </div>
+          
+          <div id="ciunace" style="visibility: hidden;">        
           <label for="ciudadnacimiento"><g:message code="persona.ciudadnace"/></label>
-		  <g:textField name="ciudadnacimiento" value="${params.ciudadnacimiento}" />
-                  </br>
+            <g:textField name="ciudadnacimiento" value="${params.ciudadnacimiento}" />
+          </div>  
+          
+          </br>
+                  
       </fieldset>
       
       
       <fieldset>
         <legend>Datos Personales</legend>
           <label for="situacionconyugal"><g:message code="persona.situacionConyugal"/></label>
-          <table style="margin-left:10px; font-size: 13px;">
-            <g:each var="conyugal" in="${conyugalIds}">
-              <g:if test="${conyugal.id == 1}">
-                <tr>
-                  <td>${conyugal.nombre}</td><td> <g:radio name="situacionconyugal" value="${conyugal.id}" checked="true"/></td>
-                </tr>
-              </g:if>
-              <g:else>
-                <tr>
-                  <td>${conyugal.nombre}</td><td> <g:radio name="situacionconyugal" value="${conyugal.id}"/></td>
-                </tr>
-              </g:else>
-            </g:each>
-          </table>
+          <g:select name="situacionconyugal" class="selectci" from="${conyugalIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione']"/>
+          
           <label for="analfabeta"><g:message code="persona.analfabeta"/> &nbsp;&nbsp;</label>
-            Si <g:radio name="analfabeta" value="1" optionValue="Si"/>
-            No <g:radio name="analfabeta" value="0" checked="true"/>
-			
+          <g:select name="analfabeta" class="selectci" noSelection="['-1':'Seleccione']" from="['No', 'Si']" value="${params.analfabeta}" />
+            
+            
           <label for="niveleducativo"><g:message code="persona.niveleducativo"/></label>
-          <table style="margin-left:10px; font-size: 13px;">
-              <g:each var="niveledu" in="${nivelEducIds}">
-              <g:if test="${niveledu.id == 1}">
-                <tr>
-                  <td>${niveledu.nombre}</td><td> <g:radio name="niveleducativo" value="${niveledu.id}" checked="true"/></td>
-                </tr>
-              </g:if>
-              <g:else>
-                <tr>
-                  <td>${niveledu.nombre}</td> <td><g:radio name="niveleducativo" value="${niveledu.id}" /></td>
-                </tr>
-              </g:else>
-            </g:each>
-          </table>		
+          <g:select name="niveleducativo" class="selectci" from="${nivelEducIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione']"/>
+          
+          
           <label for="anosaprobados"><g:message code="persona.anosaprobados"/></label>
 		  <g:textField name="anosaprobados" value="${params.anosaprobados}" />
 		  
@@ -171,7 +170,7 @@
 		  <g:select name="entidresid" class="selectci" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" />
 		  
           <label for="municipioresidencia"><g:message code="persona.municipioreside"/></label>
-		  <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'- Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
+		  <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
 		  
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>
 		  <g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['-1':'Seleccione Parroquia']"/>

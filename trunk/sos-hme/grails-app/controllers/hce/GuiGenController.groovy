@@ -600,7 +600,7 @@ println ""
         
         // ContentItem
         def rmNode = Locatable.get(params.id)
-
+        println("rmNode: "+rmNode)
 //println "TemplateID : "+ rmNode.archetypeDetails.templateId
 
 
@@ -633,6 +633,7 @@ println ""
         }
         */
         def sections = this.getSections()
+        
         def subsections = this.getSubsections(rmNode.archetypeDetails.templateId.split("-")[0]) // this.getSubsections('EVALUACION_PRIMARIA')
         
         /* Prueba de generar el HTML de una entrada y guardarlo en una variable.
@@ -667,6 +668,9 @@ println ""
             
             EventManager.getInstance().handle("post_gui_gen", params)
             
+            
+            
+            
             render( view: pathToView, // create y edit son la misma pagina, pero podrian ser distintas
                     model: [
                     rmNode: rmNode,
@@ -693,6 +697,10 @@ println ""
             //       no tengo la instancia de bindindAOMRM que usé para bindear.
             //       Lo que se podría hacer es guardarla en la base, referenciando 
             //       como raíz al locatable que obtengo acá, así se cómo obtenerlo.
+           
+            
+            println("template.getArchetypesByZone: ->"+template.getArchetypesByZone('content'))
+            
             return [
               rmNode:    rmNode,
               template:  template,

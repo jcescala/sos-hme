@@ -8,7 +8,7 @@
     <title><g:message code="reportes.suite.title" /></title>
   </head>
   <body class="bodydomainlist">
-    <div id="logoucvhor" class="logoucvhor"></div>
+    
     <div id="listadominios" class="listadominios">
         <g:message code="reportes.suite.title" />
     </div>
@@ -30,19 +30,34 @@
     </div>
     <div id="contentid">
       <g:if test="${patient}">
-        <g:each var="paciente" in="${patient}">
-          
-            <!--g:render template="../demographic/Person" model="[person:paciente]" /-->
-            
-                  ${paciente.identities.primerNombre[0]}
-                  ${paciente.identities.segundoNombre[0]}
-                  ${paciente.identities.primerApellido[0]}
-                  ${paciente.identities.segundoApellido[0]}
-                  ${paciente.ids.value[0].extension}
-          
-          <br />
-          <br />
-        </g:each>
+        <%def i=0%>
+        <div class="pacientereporte">
+        <table style="margin-left: 0px">
+          <tr>
+            <td>cedula</td>
+            <td>nombre completo</td>
+            <td>direccion residencia</td>
+            <td>ocupacion</td>
+            <td>sexo</td>
+            <td>edad</td>
+          </tr>
+            <g:each var="paciente" in="${patient}">
+              <tr>
+                <td>${paciente.ids.value[0].extension}</td>
+                <td>
+                 ${paciente.identities.primerNombre[0]}
+                 ${paciente.identities.segundoNombre[0]}
+                 ${paciente.identities.primerApellido[0]}
+                 ${paciente.identities.segundoApellido[0]}
+                </td>
+                <td>${dircompleta[i]}</td>
+                <td>${ocupacion[i]}</td>
+                <td>${sexo[i]}</td>
+                <td>${edad[i]}</td>
+              </tr>   
+          </g:each>
+        </table>
+        </div>
         <g:form controller="demographic" action="reportIndex" params="[id: person_id]">
           <br/>
           <label for="rangoFechas">
