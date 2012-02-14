@@ -106,8 +106,18 @@
                     <label for="identificador"><g:message code="persona.identificador" /></label>
           <g:textField name="extension" value="${params.identificador}" />
           
-		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/>
+		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/>
 		  
+
+          <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
+          <g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
+        
+          <label for="sexo"><g:message code="persona.sexo" /></label>
+            <g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+          
+          <label for="foto"><g:message code="persona.foto" /></label>
+           <input type="file" name="foto" id="foto" style="width: 300px;"/>
+
 
 		  <div id="nombres">
 			<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
@@ -135,28 +145,29 @@
 			<!--label for="foto">Foto del Paciente</label-->
 			<input type="file" name="foto" id="foto"/> 	
  
+
       </fieldset>
 	  
       <fieldset>
         <legend>Procedencia</legend>
           <label for="etnia"><g:message code="persona.etnia" /></label>
-          <g:select name="etnia.id" class="selectci" value="${params.etnia}" from="${etniasIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione Etnia']"/>
+          <g:select name="etnia.id" class="selectci" value="${params.etnia}" from="${etniasIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Etnia']"/>
           
           <label for="nacionalidad"><g:message code="persona.nacionalidad" /></label>
           <g:select name="nacionalidad.id" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" />
 		  
           <label for="paisnacimiento"><g:message code="persona.paisnace"/></label>
-		  <g:select name="paisnace" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione País']" onchange="updateSubCats(this.value)" />
+		  <g:select name="paisnace" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione País']" onchange="updateSubCats(this.value)" />
           
           <div id="entnace" style="visibility: hidden;">
           <label for="entidadnacimiento"><g:message code="persona.entidadnace"/></label>
-          	  <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['-1':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
+          	  <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
           </div> 
           
           <div id="munnace" style="visibility: hidden;">         
           <label for="municipionacimiento">
             <g:message code="persona.municipionace"/></br>
-            <g:select name="lugar.id" id="municnace" class="selectci" value="${params.lugarnacimiento}" disabled="false" noSelection="['-1':'Seleccione Municipio']"/>
+            <g:select name="lugar.id" id="municnace" class="selectci" value="${params.lugarnacimiento}" disabled="false" noSelection="['':'Seleccione Municipio']"/>
           </label>
           </div>
           
@@ -173,21 +184,21 @@
       <fieldset>
         <legend>Datos Personales</legend>
           <label for="situacionconyugal"><g:message code="persona.situacionConyugal"/></label>
-          <g:select name="situacionconyugal" class="selectci" from="${conyugalIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione']"/>
+          <g:select name="situacionconyugal" class="selectci" from="${conyugalIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione']"/>
           
           <label for="analfabeta"><g:message code="persona.analfabeta"/> &nbsp;&nbsp;</label>
-          <g:select name="analfabeta" class="selectci" noSelection="['-1':'Seleccione']" from="['No', 'Si']" value="${params.analfabeta}" />
+          <g:select name="analfabeta" class="selectci" noSelection="['':'Seleccione']" from="['No', 'Si']" value="${params.analfabeta}" />
             
             
           <label for="niveleducativo"><g:message code="persona.niveleducativo"/></label>
-          <g:select name="niveleducativo" class="selectci" from="${nivelEducIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione']"/>
+          <g:select name="niveleducativo" class="selectci" from="${nivelEducIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione']"/>
           
           
           <label for="anosaprobados"><g:message code="persona.anosaprobados"/></label>
 		  <g:textField name="anosaprobados" value="${params.anosaprobados}" />
 		  
           <label for="ocupacion"><g:message code="persona.ocupacion"/></label>
-		  <g:select name="ocupacion.id" id="ocupacion" class="selectci" from="${ocupacionIds}" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione Ocupación']" />  
+		  <g:select name="ocupacion.id" id="ocupacion" class="selectci" from="${ocupacionIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Ocupación']" />  
       </fieldset>
       
       <fieldset>
@@ -199,7 +210,7 @@
 		  <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
 		  
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>
-		  <g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['-1':'Seleccione Parroquia']"/>
+		  <g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['':'Seleccione Parroquia']"/>
 		  
           <label for="localidadreside"><g:message code="persona.localidadreside"/></label>
 		  <g:textField name="ciudad" value="${params.ciudad}" />
