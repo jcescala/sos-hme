@@ -30,13 +30,17 @@ public class ObjectFactory {
     private final static QName _AgregarPacienteResponse_QNAME = new QName("http://imp/", "agregarPacienteResponse");
     private final static QName _EliminarPacienteResponse_QNAME = new QName("http://imp/", "eliminarPacienteResponse");
     private final static QName _BuscarCandidatos_QNAME = new QName("http://imp/", "buscarCandidatos");
+    private final static QName _AgregarImagenPacienteResponse_QNAME = new QName("http://imp/", "agregarImagenPacienteResponse");
     private final static QName _AgregarRelacionPacienteResponse_QNAME = new QName("http://imp/", "agregarRelacionPacienteResponse");
-    private final static QName _ExistePacienteResponse_QNAME = new QName("http://imp/", "existePacienteResponse");
     private final static QName _AgregarRelacionPaciente_QNAME = new QName("http://imp/", "agregarRelacionPaciente");
+    private final static QName _ExistePacienteResponse_QNAME = new QName("http://imp/", "existePacienteResponse");
     private final static QName _BuscarCandidatosResponse_QNAME = new QName("http://imp/", "buscarCandidatosResponse");
     private final static QName _EliminarPaciente_QNAME = new QName("http://imp/", "eliminarPaciente");
+    private final static QName _ObtenerImagenPacienteResponse_QNAME = new QName("http://imp/", "obtenerImagenPacienteResponse");
+    private final static QName _AgregarImagenPaciente_QNAME = new QName("http://imp/", "agregarImagenPaciente");
     private final static QName _ExisteRelacionPacienteResponse_QNAME = new QName("http://imp/", "existeRelacionPacienteResponse");
     private final static QName _ExisteRelacionPaciente_QNAME = new QName("http://imp/", "existeRelacionPaciente");
+    private final static QName _ObtenerImagenPaciente_QNAME = new QName("http://imp/", "obtenerImagenPaciente");
     private final static QName _EliminarRelacionPacienteResponse_QNAME = new QName("http://imp/", "eliminarRelacionPacienteResponse");
 
     /**
@@ -52,6 +56,14 @@ public class ObjectFactory {
      */
     public AgregarRelacionPacienteResponse createAgregarRelacionPacienteResponse() {
         return new AgregarRelacionPacienteResponse();
+    }
+
+    /**
+     * Create an instance of {@link AgregarImagenPacienteResponse }
+     * 
+     */
+    public AgregarImagenPacienteResponse createAgregarImagenPacienteResponse() {
+        return new AgregarImagenPacienteResponse();
     }
 
     /**
@@ -119,6 +131,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AgregarRelacionPaciente }
+     * 
+     */
+    public AgregarRelacionPaciente createAgregarRelacionPaciente() {
+        return new AgregarRelacionPaciente();
+    }
+
+    /**
      * Create an instance of {@link ExistePacienteResponse }
      * 
      */
@@ -127,11 +147,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AgregarRelacionPaciente }
+     * Create an instance of {@link AgregarImagenPaciente }
      * 
      */
-    public AgregarRelacionPaciente createAgregarRelacionPaciente() {
-        return new AgregarRelacionPaciente();
+    public AgregarImagenPaciente createAgregarImagenPaciente() {
+        return new AgregarImagenPaciente();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerImagenPacienteResponse }
+     * 
+     */
+    public ObtenerImagenPacienteResponse createObtenerImagenPacienteResponse() {
+        return new ObtenerImagenPacienteResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerImagenPaciente }
+     * 
+     */
+    public ObtenerImagenPaciente createObtenerImagenPaciente() {
+        return new ObtenerImagenPaciente();
     }
 
     /**
@@ -229,6 +265,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AgregarImagenPacienteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "agregarImagenPacienteResponse")
+    public JAXBElement<AgregarImagenPacienteResponse> createAgregarImagenPacienteResponse(AgregarImagenPacienteResponse value) {
+        return new JAXBElement<AgregarImagenPacienteResponse>(_AgregarImagenPacienteResponse_QNAME, AgregarImagenPacienteResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AgregarRelacionPacienteResponse }{@code >}}
      * 
      */
@@ -238,21 +283,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ExistePacienteResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://imp/", name = "existePacienteResponse")
-    public JAXBElement<ExistePacienteResponse> createExistePacienteResponse(ExistePacienteResponse value) {
-        return new JAXBElement<ExistePacienteResponse>(_ExistePacienteResponse_QNAME, ExistePacienteResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AgregarRelacionPaciente }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://imp/", name = "agregarRelacionPaciente")
     public JAXBElement<AgregarRelacionPaciente> createAgregarRelacionPaciente(AgregarRelacionPaciente value) {
         return new JAXBElement<AgregarRelacionPaciente>(_AgregarRelacionPaciente_QNAME, AgregarRelacionPaciente.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ExistePacienteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "existePacienteResponse")
+    public JAXBElement<ExistePacienteResponse> createExistePacienteResponse(ExistePacienteResponse value) {
+        return new JAXBElement<ExistePacienteResponse>(_ExistePacienteResponse_QNAME, ExistePacienteResponse.class, null, value);
     }
 
     /**
@@ -274,6 +319,24 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerImagenPacienteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "obtenerImagenPacienteResponse")
+    public JAXBElement<ObtenerImagenPacienteResponse> createObtenerImagenPacienteResponse(ObtenerImagenPacienteResponse value) {
+        return new JAXBElement<ObtenerImagenPacienteResponse>(_ObtenerImagenPacienteResponse_QNAME, ObtenerImagenPacienteResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AgregarImagenPaciente }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "agregarImagenPaciente")
+    public JAXBElement<AgregarImagenPaciente> createAgregarImagenPaciente(AgregarImagenPaciente value) {
+        return new JAXBElement<AgregarImagenPaciente>(_AgregarImagenPaciente_QNAME, AgregarImagenPaciente.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ExisteRelacionPacienteResponse }{@code >}}
      * 
      */
@@ -289,6 +352,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://imp/", name = "existeRelacionPaciente")
     public JAXBElement<ExisteRelacionPaciente> createExisteRelacionPaciente(ExisteRelacionPaciente value) {
         return new JAXBElement<ExisteRelacionPaciente>(_ExisteRelacionPaciente_QNAME, ExisteRelacionPaciente.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerImagenPaciente }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://imp/", name = "obtenerImagenPaciente")
+    public JAXBElement<ObtenerImagenPaciente> createObtenerImagenPaciente(ObtenerImagenPaciente value) {
+        return new JAXBElement<ObtenerImagenPaciente>(_ObtenerImagenPaciente_QNAME, ObtenerImagenPaciente.class, null, value);
     }
 
     /**

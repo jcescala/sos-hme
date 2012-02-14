@@ -13,6 +13,7 @@
 
           <tr>
          <%--  <th>ID Paciente</th> --%>
+          <th>FOTO</th>
           <th><g:message code="hce.service.candidatos.idOrganizacion" /></th>
 
           <th><g:message code="hce.service.candidatos.identificadores" /></th>
@@ -30,6 +31,14 @@
           <g:each in="${result}" var="paciente">
 	        <tr>
                  <%-- <td>${paciente.idPaciente}</td>--%>
+                 <td>
+                 
+                 <a class="ficha iframe" href="http://127.0.0.1:8080/imp-cda/imagenPaciente/imagen?idPaciente=${paciente.idPaciente}&idOrg=${paciente.idCentro}">
+  
+                 <img src="http://127.0.0.1:8080/imp-cda/imagenPaciente/imagen?idPaciente=${paciente.idPaciente}&idOrg=${paciente.idCentro}" style="width: 30px; height: auto;"/>
+                
+                </a>
+                 </td>
                   <td>${paciente.nombreCentro}</td>
 
 

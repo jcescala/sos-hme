@@ -172,8 +172,8 @@ service.simple.url = ""
 service.complex.url = ""
 service.secure.url.cda = ""
 service.secure.url.imp = ""
-service.serverURL = "http://190.169.161.50:9090"
-//service.serverURL = "http://127.0.0.1:8080"
+//service.serverURL = "http://190.169.161.50:9090"
+service.serverURL = "http://127.0.0.1:8080"
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -236,10 +236,8 @@ log4j = {
 //Indice Maestro de Pacientes
 
 //UCV CAIBCO
-imp.organizacion.id = "460dcf36-ea8a-45e6-9e01-f7cd09a6ac3b"
-
-//LOCAL
-//imp.organizacion.id ="766e8035-3c8e-4209-9934-3c05059f5cab"
+//imp.organizacion.id = "62ad6b53-484c-496c-b08f-5ebb8c387d3c"//LOCAL
+imp.organizacion.id ="b02667bc-4266-4f0e-9c70-9c7b2af6ba64"
 
 cxf {
     installDir = "C:/apps/apache-cxf-2.4.4" //only used for wsdl2java script target

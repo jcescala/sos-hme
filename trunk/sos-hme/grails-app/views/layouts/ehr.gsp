@@ -143,6 +143,7 @@
                                      buttonImage: '/sos/images/datepicker.gif',
                                      maxDate: new Date(),
                                      minDate: new Date(1900, 9, 15),
+                                     yearRange: '1900:2100',
                                      constrainInput: true,
                                      showButtonPanel: true,
                                      showOn: 'button'
@@ -164,6 +165,7 @@
                                      buttonImage: '/sos/images/datepicker.gif',
                                      maxDate: new Date(),
                                      minDate: new Date(1900, 9, 15),
+                                     yearRange: '1900:2100',
                                      showButtonPanel: true,
                                      showOn: 'button'
 

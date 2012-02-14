@@ -20,7 +20,29 @@
 
   </g:javascript>
 
+  <script type="text/javascript" src="${createLinkTo(dir:'js/fancybox', file:'jquery.mousewheel-3.0.4.pack.js')}"></script>
+	<script type="text/javascript" src="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.js')}"></script>
+	<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.css')}" media="screen" />
+ 	
+	 <g:javascript>
+		$(document).ready(function() {
+                
+			/*
+			*   Examples - images
+			*/
+                         // alert('hola');
+                          $(".ficha").fancybox({
+                              ajax : {
+                              type	: "GET"
+		    
+                              },
+                        'transitionIn'	: 'elastic',
+			'transitionOut'	: 'elastic'
+                          });
 
+               });
+
+       </g:javascript>
   <title><g:message code="demographic.show.title" /></title>
   <style>
     table #list {
@@ -43,8 +65,9 @@
 </head>
 <body>
   <div class="bodydomainlist">
+    
 
-    <h2><g:message code="demographic.show.title" /></h2>
+<h2><g:message code="demographic.show.title" /></h2>
 
     <ul class="top_actions">
       <li>
@@ -78,13 +101,20 @@
 
 <%-- Preguntar primero si tiene foto--%>
 
+      <g:if test="${!name || !name.foto || !name.tipofoto}">
+
       <g:if test="${persona.sexo=='Masculino'}">
         <img src="${createLinkTo(dir:"images", file:"man.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
       </g:if>
       <g:else>
         <img src="${createLinkTo(dir:"images", file:"woman.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
       </g:else>
-
+      </g:if>
+      <g:else>
+      
+        <img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:person_id])}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
+      
+      </g:else>
       <h2>${name.toString()}</h2>
       <table id="list" class="listrecords">
         <tr>

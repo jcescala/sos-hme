@@ -21,6 +21,9 @@ import java.util.ArrayList
 
 import demographic.party.*
 
+
+
+
 class ServiceController {
     /*
     WebService webService
@@ -39,6 +42,26 @@ class ServiceController {
         customSecureServiceClientCda.serviceMethod()
 
         render("<h1>Bien</h1>")
+    }
+
+    def subirImagen = {
+        
+        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+        def f= new File('web-app/images/close.png')
+       // render f.name + " "+f.getBytes()
+
+        def result= customSecureServiceClientImp.agregarImagenPaciente(f.getBytes(),f.name,'17',"eb8e7ad6-6957-4884-81e6-eb78e5005f92")
+
+        if(result){
+
+        render "<p>Imagen subida</p>"
+        }else{
+
+        render "<p>ERROR</p>"
+        }
+        
+
     }
 
 
@@ -249,10 +272,25 @@ class ServiceController {
                 
             }
             if(result){
-               flash.message = "service.imp.agregarPaciente.true"
-                flash.clase = "ok"
+                //println personNamePatient.foto
+                //println personNamePatient.tipofoto
 
-                 
+              if(personNamePatient.foto && personNamePatient.tipofoto){
+                  def resultImagen= customSecureServiceClientImp.agregarImagenPaciente(personNamePatient.foto,
+                                                      personNamePatient.tipofoto,
+                                                      params.id,idOrganizacion)
+
+                   if(resultImagen){
+                   //Se agrega imagen
+                   }else{
+                   //No se pudo agregar imagen
+
+                   }
+                   
+
+              }
+              flash.message = "service.imp.agregarPaciente.true"
+              flash.clase = "ok"
             }else{
                     flash.clase = "error"
                     if(!conexionImp){
