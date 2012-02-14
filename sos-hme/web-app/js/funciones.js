@@ -106,10 +106,10 @@ $j(document).ready(function(){
                lettersonly:true 
             },
             "otradireccion":{
-               minlength:20
+               minlength:10
             },
             "contactoemergencia":{
-               minlength:20
+               minlength:10
             },
             "email":{
                email:true
@@ -202,10 +202,10 @@ $j(document).ready(function(){
                lettersonly:"Solo letras" 
             },
             "otradireccion":{
-               minlength: "M&iacute;nimo 20 caracteres"
+               minlength: "M&iacute;nimo 10 caracteres"
             },
             "contactoemergencia":{
-               minlength: "M&iacute;nimo 20 caracteres"
+               minlength: "M&iacute;nimo 10 caracteres"
             },
             "email":{
                email:"Formato de email inv&aacute;lido"

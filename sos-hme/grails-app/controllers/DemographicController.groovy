@@ -723,13 +723,17 @@ class DemographicController{
             
             person.addToIdentities(datos)
             
-            if (!person.save()) println person.errors
-            
-            
-            def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
-            if (!role.save()) println role.errors
-            
-            redirect(action:'seleccionarPaciente', id:person.id)
+            if(person.save()){
+                def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
+                if(role.save()){
+                    redirect(action:'seleccionarPaciente', id:person.id)
+                }
+                else{
+                    println role.errors
+                }
+            }else{
+                println person.errors
+            }
             return
         }
         
