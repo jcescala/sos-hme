@@ -30,6 +30,7 @@
   <script type="text/javascript" src="${createLinkTo(dir:'js' ,file:'efectos.js')}"> </script>
 
   <script type="text/javascript">
+   
     // 'modificado' establece si los valores de la seccion han sido modificados
     var modificado = false;
     // 'secc' establece seccion actual
@@ -134,6 +135,9 @@
     $.datepicker.setDefaults($.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
 
 
+
+
+
         $(".DateSos").datepicker({dateFormat: 'dd-mm-yy',
          
          
@@ -180,6 +184,48 @@
        //alert('clonando');
        var nodeToClone = $(this).parent().prev();
        var newNode = nodeToClone.clone();
+
+    //--------------------Clonando DatePickers---------------------------------------//
+       //Los datepicker dan problemas al ser clonados automaticamente
+       //por eso tengo que clonarlos paso a paso
+       newNode.find('.DateSos').each(function(i){
+        var p = $(this).parent();
+        p.find(".ui-datepicker-trigger").remove();
+            var path = $(this).attr('name');
+            $(this).after("<p> <input name='"+path+"' type='text' class='DateSos' /> </p>");
+            p.children().find(".DateSos").datepicker({dateFormat: 'dd-mm-yy',
+                                     changeYear: true,
+                                     //altField: '#actualDate',
+                                     buttonText: 'Calendario',
+                                     buttonImage: '/sos/images/datepicker.gif',
+                                     maxDate: new Date(),
+                                     minDate: new Date(1900, 9, 15),
+                                     yearRange: '1900:2100',
+                                     constrainInput: true,
+                                     showButtonPanel: true,
+                                     showOn: 'button'
+            });
+          $(this).remove();
+        });
+      newNode.find('.DateTimeSos').each(function(i){
+        var p = $(this).parent();
+        p.find(".ui-datepicker-trigger").remove();
+            var path = $(this).attr('name');
+            $(this).after("<p> <input name='"+path+"' type='text' class='DateTimeSos' /> </p>");
+            p.children().find(".DateTimeSos").datetimepicker({dateFormat: 'dd-mm-yy',
+                                     ampm: true,
+                                     changeYear: true,
+                                     buttonText: 'Calendario',
+                                     buttonImage: '/sos/images/datepicker.gif',
+                                     maxDate: new Date(),
+                                     minDate: new Date(1900, 9, 15),
+                                     yearRange: '1900:2100',
+                                     showButtonPanel: true,
+                                     showOn: 'button'
+          });
+          $(this).remove();
+        });
+        //--------------------Clonando DatePickers---------------------------------------//
 
        //Blanquear text areas
        newNode.find( 'textarea' ).each(function(i){

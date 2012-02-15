@@ -37,7 +37,7 @@ in: dataValue (DvDate)
   }
   %>
 
-   <p> <input name="${archetype.archetypeId.value +refPath+ aomNode.path()}" value="${valorDate}" type="text" class="DateSos"> </p>
+   <p> <input name="${archetype.archetypeId.value +refPath+ aomNode.path()}" value="${valorDate}" type="text" class="DateSos" /> </p>
 
 </g:if>
 <g:else>

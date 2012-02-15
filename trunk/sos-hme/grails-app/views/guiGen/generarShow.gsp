@@ -4,6 +4,11 @@
   <head>
     <meta name="layout" content="ehr" />
     <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
+
+  <g:if test="${mode == 'edit'}">
+    <%-- Script por template, by Armando--%>
+    <script type="text/javascript" src="${createLinkTo(dir:'js/template' ,file:template.id+'.js' ) }"></script>
+  </g:if>
   
   </head>
   <body>
@@ -38,6 +43,7 @@
       </div>
     </g:if>
    <div id="contenido">
+     
     <g:form action="save" class="ehrform" method="post" enctype="multipart/form-data">
     
       <input type="hidden" name="templateId" value="${template.id}" />
@@ -70,6 +76,7 @@
                 <!-- AOM -->
                 
                 <g:each in="${archRef.getReferencedConstraints()}" var="node">
+                  
                   <g:render template="../guiGen/templates2/cComplexObject"
                             model="[cComplexObject: node, params: params,
                                    archetype: archRef.getReferencedArchetype()]" />
