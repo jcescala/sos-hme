@@ -41,5 +41,7 @@ in: dataValue (DvDate)
 
 </g:if>
 <g:else>
-  ${dataValue.value}
+
+  <g:formatDate date="${dataValue.toDate()}" format="${g.message(code: 'default.date.format1')}" />
+  
 </g:else>
