@@ -42,9 +42,9 @@ checked="${cPrimitiveObject.item.hasAssumedValue() && !cPrimitiveObject.item.ass
 <%-- modelado como select --%>
   <select name="${archetype.archetypeId.value +_refPath+ cPrimitiveObject.path()}">
     
-    <%-- <option value=""></option> --%>
+    <option value=""></option> 
     
-    <%//Cambiar esto por CHEK BUTTONS%>
+   
 
     <option value="false" ${((cPrimitiveObject.item.hasAssumedValue() && !cPrimitiveObject.item.assumedValue || params[archetype.archetypeId.value +_refPath+ cPrimitiveObject.path()]=="false")?'selected="true"':'')}>
     <g:message code="label.boolean.false" />

@@ -5,6 +5,8 @@ in: dataValue (DvBoolean)
 <h1>DvBoolean</h1>
 --%>
 
+<div class="DV_BOOLEAN">
+
 <g:if test="${mode && mode=='edit'}">
 
   <%-- cPrimitiveObject --%>
@@ -56,3 +58,5 @@ Valor show bool es null?: ${dataValue.value==null}<br/>
     <g:message code="label.boolean.false" />
   </g:else>
 </g:else>
+
+</div>

@@ -28,7 +28,9 @@ modo = show? (si el modo no es edit es show)
 --%>
 
 
-<div class="CLUSTER">
+<div class="CLUSTER" id="${rmNode.archetypeNodeId}" >
+
+  
   <%--
   arhcID: ${rmNode.archetypeDetails.archetypeId},
   nodeID: ${rmNode.archetypeNodeId},

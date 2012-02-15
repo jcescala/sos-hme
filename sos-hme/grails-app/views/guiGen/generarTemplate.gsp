@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <html>
   <head>
+    
     <meta name="layout" content="ehr" />
-   
+    
     <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
+
+    <%-- Estilo propio por template, by Armando--%>
+    <link rel="stylesheet" href="${createLinkTo(dir:'css/template' ,file:template.id+'.css' ) }" />
+    <%-- Script por template, by Armando--%>
+    <script type="text/javascript" src="${createLinkTo(dir:'js/template' ,file:template.id+'.js' ) }"></script>
+   
 
   </head>
   <body>
@@ -42,6 +49,8 @@
           <input type="hidden" name="templateId" value="${template.id}" />
               <!-- TODO: sacar, es solo para test -->
           <%-- TemplateId: ${template.id}<br/> --%>
+
+
           <table class="contenido" cellpadding="0" cellspacing="3" style="width: 100%;">
             <tr >
               <td colspan="2" id="content" style="width: 100%;">

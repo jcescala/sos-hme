@@ -27,10 +27,15 @@ if (refPath) _refPath = refPath
     
     <g:set var="elementValueRmType" value="ELEMENT_${cComplexObject.attributes[0].children[0].rmTypeName}" />
   </g:if>
-  <div class="${cComplexObject.rmTypeName} ${elementValueRmType}"><%-- FIXME: no quiero mostrar esto para campos simples, solo para sections, clusters y elements --%>
+
+ 
+<%--Se agrega ID ${cComplexObject.nodeID} a cada elemento complejo correspondiente al ID del arquetipo, ej. at[00000], by Armando--%>
+
+  <div class="${cComplexObject.rmTypeName} ${elementValueRmType}" id="${cComplexObject.nodeID}"><%-- FIXME: no quiero mostrar esto para campos simples, solo para sections, clusters y elements --%>
+  
     <g:if test="${cComplexObject.nodeID}">
       <!-- Si es item structure no pone el titulo -->
-     
+    
       <g:set var="archetypeTerm" value="${archetype.ontology.termDefinition(session.locale.language, cComplexObject.nodeID)}" />
       <g:if test="${!archetypeTerm}">
          <%-- Si es un nodo hoja, siempre cae aca porque no tiene ID --%>
@@ -90,7 +95,7 @@ if (refPath) _refPath = refPath
     </g:else>
     
     <span class="content">
-   
+    
 </g:if>
 
 
@@ -107,6 +112,7 @@ if ( errors && errors.hasErrorsForPath(archetype.archetypeId.value, cComplexObje
       es el mismo codigo que abajo...
       --%>
       <g:if test="${cComplexObject.attributes}">
+ 
         <g:render template="../guiGen/templates2/cAttribute"
                   var="cAttribute"
                   collection="${cComplexObject.attributes}"
@@ -123,7 +129,7 @@ if ( errors && errors.hasErrorsForPath(archetype.archetypeId.value, cComplexObje
       <%-- Verifico que no sea null porque puede serlo. --%>
       <g:if test="${cComplexObject.attributes}">
           <%-- ${cComplexObject.attributes.size()} --%>
-                
+             
         <g:render template="../guiGen/templates2/cAttribute"
                     var="cAttribute"
                     collection="${cComplexObject.attributes}"
