@@ -103,21 +103,6 @@
     <g:form action="agregarPaciente" name="nuevopaciente" enctype="multipart/form-data">
       <fieldset>
         <legend>Identificaci&oacute;n</legend>
-                    <label for="identificador"><g:message code="persona.identificador" /></label>
-          <g:textField name="extension" value="${params.identificador}" />
-          
-		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/>
-		  
-
-          <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-          <g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
-        
-          <label for="sexo"><g:message code="persona.sexo" /></label>
-            <g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
-          
-          <label for="foto"><g:message code="persona.foto" /></label>
-           <input type="file" name="foto" id="foto" style="width: 300px;"/>
-
 
 		  <div id="nombres">
 			<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
@@ -131,14 +116,16 @@
 
 			<label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
 			<g:textField name="segundoNombre" value="${params.segundoNombre}" />
-
-	  
 		  </div>
+                        <label for="identificador"><g:message code="persona.identificador" /></label>
+                        <g:textField name="extension" value="${params.identificador}" />
+                        <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
+                  
 			<label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
 			<g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
 
 			<label for="sexo"><g:message code="persona.sexo" /></label>
-			<g:select name="sexo" class="selectsex" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+			<g:select name="sexo" class="selectci" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
 
 	  
 			<label for="foto"><g:message code="persona.foto" /></label>

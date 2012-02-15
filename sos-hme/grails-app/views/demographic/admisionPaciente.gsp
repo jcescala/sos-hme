@@ -8,6 +8,7 @@
         display: block;
       }
     </style>
+    
   </head>
   <body style="height: 1100px;">
     <h1><g:message code="demographic.admision_paciente.title" /></h1>
@@ -44,53 +45,28 @@
     <label for="primerNombre">
       <g:message code="persona.primerNombre" />
     </label>
-<%-- <g:textField name="primerNombre" value="${params.primerNombre}" /> --%>
     <g:textField name="personName.primerNombre" value="${params.('personName.primerNombre')}" />
 
     <label for="segundoNombre">
       <g:message code="persona.segundoNombre" />
     </label>
-<%-- <g:textField name="segundoNombre" value="${params.segundoNombre}" /> --%>
     <g:textField name="personName.segundoNombre" value="${params.('personName.segundoNombre')}" />
 
     <label for="primerApellido">
       <g:message code="persona.primerApellido" />
     </label>
-<%-- <g:textField name="primerApellido" value="${params.primerApellido}" /> --%>
     <g:textField name="personName.primerApellido" value="${params.('personName.primerApellido')}" />
 
     <label for="segundoApellido">
       <g:message code="persona.segundoApellido" />
     </label>
-<%-- <g:textField name="segundoApellido" value="${params.segundoApellido}" /> --%>
     <g:textField name="personName.segundoApellido" value="${params.('personName.segundoApellido')}" />
 
     <label for="fechaNacimiento">
       <g:message code="persona.fechaNacimiento" />
     </label>
-<%-- <g:textField name="fechaNacimiento" value="${params.fechaNacimiento}" /> --%>
-
-<%
-// Formateador para las fechas
-SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-
-Date bd = null
-
-// Si viene un string formateado
-if (params.fechaNacimiento) bd = format.parse(params.fechaNacimiento)
-%>
-<%-- <g:datePicker name="fechaNacimiento" value="${((params.fechaNacimiento) ? new Date(params.fechaNacimiento) : 'none')}" precision="day" noSelection="['':'']" /> --%>
     <g:datePicker name="fechaNacimiento" value="${((bd) ? bd : 'none')}" precision="day" noSelection="['':'']" />
-
-<%--<g:datePicker name="person.fechaNacimiento" value="${((params.('person.fechaNacimiento')) ? new Date(params.person.fechaNacimiento) : null)}" precision="day" />--%>
-<%--
-<g:checkBox name="useBirthDate" value="${false}" />
---%>
-
-<%--
-TODO> buscar por SEXO?
---%>
-
+    
     <br/>
     <br/>
     <g:submitButton name="doit" value="${message(code:'demographic.admision_paciente.buscar')}" />
