@@ -13,6 +13,9 @@ class Paciente implements Serializable{
     String segundoNombre
     String primerApellido
     String segundoApellido
+
+    byte[] imagen
+    String tipoImagen
     
     static hasMany = [cdas: Cda]
     static belongsTo = [indice: IndicePaciente, centro: Organizacion]
@@ -23,7 +26,9 @@ class Paciente implements Serializable{
     table 'paciente'
     version false
     id composite:['idPacienteOrg', 'centro']
-  //  id column: 'id_paciente'
+    //  id column: 'id_paciente'
+    imagen type: "binary" // or "blob"?
+    imagen column: "imagen", sqlType: "blob"
     }
 
     static constraints = {
@@ -35,13 +40,13 @@ class Paciente implements Serializable{
         segundoNombre(nullable:true)
         primerApellido(nullable:true)
         segundoApellido(nullable:true)
+        imagen(nullable:true, maxSize: 1048576 /* 1MB */)
+        tipoImagen(nullable:true)
      
     }
 
    
-
-
-    
+       
     static def existePaciente(String cedula){
 
         def p = Paciente.findByCedula(cedula)

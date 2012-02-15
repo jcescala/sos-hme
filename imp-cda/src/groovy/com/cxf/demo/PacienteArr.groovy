@@ -1,6 +1,3 @@
-
-
-
 /**
  *
  * @author Armando
@@ -22,6 +19,9 @@ class PacienteArr {
     String segundoNombre
     String primerApellido
     String segundoApellido
+    //String fechaNacimiento //dd-MM-yyyy
+    //String imagen
+    //String sexo
 
 	
 }
