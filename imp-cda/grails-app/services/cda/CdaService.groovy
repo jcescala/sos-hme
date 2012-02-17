@@ -8,6 +8,7 @@ import javax.jws.*
 //import org.springframework.web.context.request.RequestContextHolder
 
 import converters.*
+import javax.xml.datatype.XMLGregorianCalendar;
 import com.cxf.demo.CdaResponse
 import com.cxf.demo.CdaArr
 import com.cxf.demo.OrgArr
@@ -342,24 +343,24 @@ class CdaService {
      * @param organizacion identificador unico (UUID) de la organizacion consultante
      * @return List<CdaArr> una lista de documentos CDA´s, retorna null en caso de no encontrar coincidencias.
      */
-    ConjuntoCda buscarCDAByRango(def desde, def hasta, def offset, String idOrganizacion){
+    ConjuntoCda buscarCDAByRango(String desde, String hasta, int offset, String idOrganizacion){
 
         def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
 
         if(org){
             try{
                 //Formateando los datos a tipo java.lang.Date
-                desde= XMLGregorianCalendarConverter.asDate(desde)
-                hasta= XMLGregorianCalendarConverter.asDate(hasta)
+               // desde= XMLGregorianCalendarConverter.asDate(desde)
+               // hasta= XMLGregorianCalendarConverter.asDate(hasta)
 
 
                 def result = Cda.withCriteria{
-                    between('fechaCreacion',desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd"))
+                    between('fechaCreacion',desde,hasta)
                     order("fechaCreacion","desc")
                     maxResults(this.max)
                     firstResult(offset)
                 }
-                def count =  Cda.countByFechaCreacionBetween(desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd"))
+                def count =  Cda.countByFechaCreacionBetween(desde,hasta)
 
                 if(result){
 
@@ -409,7 +410,7 @@ class CdaService {
      * @param organizacion identificador unico (UUID) de la organizacion consultante
      * @return List<CdaArr> una lista de documentos CDA´s, retorna null en caso de no encontrar coincidencias
      */
-    ConjuntoCda buscarCDAByPaciente(String paciente, def offset, String idOrganizacion){
+    ConjuntoCda buscarCDAByPaciente(String paciente, int offset, String idOrganizacion){
 
         //FUTURO:
         //Verificar si la organizacion 'idOrganizacion' tiene permiso de lectura sobre ese CDA
@@ -489,7 +490,7 @@ class CdaService {
      * @param idorganizacion identificador unico (UUID) de la organizacion consultante
      * @return List<CdaArr> una lista de documentos CDA´s, retorna null en caso de no encontrar coincidencias.
      */
-    ConjuntoCda buscarCDAByPacienteAndRango(String paciente, def desde, def hasta, def offset, String idOrganizacion){
+    ConjuntoCda buscarCDAByPacienteAndRango(String paciente, String desde, String hasta, int offset, String idOrganizacion){
 
         //FUTURO:
         //Verificar si la organizacion 'idOrganizacion' tiene permiso de lectura sobre ese CDA
@@ -507,14 +508,16 @@ class CdaService {
                     def indice = IndicePaciente.findByUniqueIdentifier(pac.indice.uniqueIdentifier)
                 
                     //Formateando los datos a tipo java.lang.Date
-                    desde= XMLGregorianCalendarConverter.asDate(desde)
-                    hasta= XMLGregorianCalendarConverter.asDate(hasta)
+                    //desde= XMLGregorianCalendarConverter.asDate(desde)
+                    //hasta= XMLGregorianCalendarConverter.asDate(hasta)
+                    
+                    
                     def cd = []
                     def result
                     indice.pacientes.each{
                         def auxPac = Paciente.get(it)
                         result = Cda.withCriteria{
-                            between("fechaCreacion",desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd"))
+                            between("fechaCreacion",desde,hasta)
                         
                             eq("paciente", auxPac)
                             //                        maxResults(this.max)
@@ -579,7 +582,7 @@ class CdaService {
      * @param organizacion identificador unico (UUID) de la organizacion consultante
      * @return List<CdaArr> una lista de documentos CDA´s, retorna null en caso de no encontrar coincidencias.
      */
-    ConjuntoCda buscarCDAByPacienteAndOrganizacion(String paciente, Long numeroOrg, def offset, String idOrganizacion){
+    ConjuntoCda buscarCDAByPacienteAndOrganizacion(String paciente, Long numeroOrg, int offset, String idOrganizacion){
         
         def org= Organizacion.findByUniqueIdentifier(idOrganizacion)
         
