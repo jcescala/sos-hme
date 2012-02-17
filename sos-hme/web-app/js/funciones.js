@@ -9,14 +9,14 @@ $j(document).ready(function(){
     jQuery.validator.addMethod( 
 	  "selectNone", 
 	  function(value, element) { 
-	    if (element.value == -1) 
+	    if (element.value == "") 
 	    { 
 	      return false; 
 	    } 
 	    else return true; 
 	  }, 
 	  "Seleccione Opci&oacute;n" 
-	); 
+	);
     
     $j("#nuevopaciente").validate({
         rules:{
@@ -46,8 +46,14 @@ $j(document).ready(function(){
 		maxlength: 8,
 		number: true
             },
+            "fechaNacimiento":{
+                required: true
+            },
             "sexo":{
                 selectNone:true
+            },
+            "foto":{
+                
             },
             "lugar.id":{
                 //selectNone:true
@@ -57,7 +63,16 @@ $j(document).ready(function(){
                 minlength: 4,
                 lettersonly:true
             },
+            "anosaprobados":{
+                number: true
+            },
             "ocupacion.id":{
+                //selectNone:true
+            },
+            "entidresid":{
+                selectNone:true
+            },
+            "municresid":{
                 //selectNone:true
             },
             "direccion.id":{
@@ -145,6 +160,12 @@ $j(document).ready(function(){
             "sexo":{
                 selectNone:"Obligatorio"
             },
+            "foto":{
+                accept:"Formato de Imagen Inv&aacute;lido"
+            },
+            "fechaNacimiento":{
+                required: "Obligatorio"
+            },
             "lugar.id":{
                 selectNone:"Obligatorio"
             },
@@ -153,8 +174,17 @@ $j(document).ready(function(){
                 minlength: "M&iacute;nimo 4 caracteres",
                 lettersonly:"Solo letras"
             },
+            "anosaprobados":{
+                number: " Num&eacute;rico"
+            },
             "ocupacion.id":{
                 selectNone:"Obligatorio"
+            },
+            "entidresid":{
+                selectNone:"Obligatorio"
+            },
+            "municresid":{
+                //selectNone:"Obligatorio"
             },
             "direccion.id":{
                 selectNone:"Obligatorio"
