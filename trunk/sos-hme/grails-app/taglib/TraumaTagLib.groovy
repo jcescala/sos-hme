@@ -95,10 +95,13 @@ class TraumaTagLib {
         // Si han firmado, mostrar el responsable de la atencion.
         if (composition.composer)
         {
-            def persons = demographicService.findPersonById( composition.composer.externalRef.objectId )
-            def responsable
+            def persons = demographicService.findPersonUserById( composition.composer.externalRef.objectId )
+            
+			
+			def responsable
             if (persons.size() == 0)
             {
+				println "nadaa!!!"
                 // no hago nada, no se encuentra el responsable, aca hay un error de consistencia de datos en el sistema!
             }
             else if (persons.size() == 1)
@@ -112,7 +115,7 @@ class TraumaTagLib {
                 throw new Exception('Se encuentran: ' + persons.size() + ' personas a partir del ID: '+ composition.composer.externalRef.objectId )
             }
             
-            
+            println "responsable2: "+responsable
             // TODO: mostrar un identificador
             def nombres = responsable.identities.find{ it.purpose == 'PersonNameUser' }
             
