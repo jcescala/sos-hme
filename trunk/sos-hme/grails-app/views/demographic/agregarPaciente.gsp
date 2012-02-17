@@ -4,7 +4,13 @@
     <meta name="layout" content="basicregistro" />
     <title><g:message code="demographic.agregar_paciente.title" /></title>
     <g:javascript library="prototype" />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+    <r:require module="jquery-ui"/>
+    <g:javascript library="jquery" />
+    
+    <jqui:resources themeCss="../css/jquery/jquery-ui-1.8.16.custom.css"/>
+    <script type="text/javascript" src="../js/jquery/jquery-ui-i18n.min.js"></script>
+    <script type="text/javascript" src="../js/jquery/jquery-ui-timepicker-addon.js"> </script>
+    
     <g:javascript src='formToWizard.js' />
     <g:javascript src='funciones.js' />
     <g:javascript src='jquery.validate.js' />
@@ -15,26 +21,37 @@
         display: block;
       }
     </style>
-    <g:javascript>
-		function updateNombresValidate(){
-				var a = "nada"
-				var b = $("#primerApellido2").value();
-				alert("holaaaa "+ b);
-				
-				
-				//updateNombres(a,b)
+    <script>
+      jQuery(document).ready(function()
+      {
+          jQuery.datepicker.setDefaults(jQuery.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
 
-		}
-	
-	
-         function updateNombres( root, extension){
-            ${remoteFunction( 
-              controller:'demographic', 
-              action:'ajaxGetNombres', 
-              update:'nombres', 
-              params:'\'id=\' + root +\'-\' +extension')} 
-			  
-		}
+                   jQuery('#fechaNacimiento').datepicker({dateFormat: 'dd-mm-yy',
+                   changeYear: true,
+                    //altField: '#actualDate',
+                    buttonText: 'Calendario',
+                    buttonImage: '/sos/images/datepicker.gif',
+                    maxDate: new Date(),
+                    minDate: new Date(1900, 9, 15),
+                    yearRange: '1900:2100',
+                    constrainInput: true,
+                    showButtonPanel: true,
+                    showOn: 'button'
+
+
+          });
+          jQuery("#fechaNacimiento").attr("readonly",true);
+
+          jQuery("#fechaNacimiento").click(function(){
+
+            jQuery(this).val('');
+
+          });
+      });
+    </script>
+    
+    <g:javascript>
+          
          function updateSubCats( category ){
               var selectpais = document.getElementById("paisnace");
               if (selectpais.options[selectpais.selectedIndex].value == 1){
@@ -65,7 +82,7 @@
           }
           function updateMunicipiosReside(estado){
             var selectparroquia = document.getElementById("parroresid");
-            selectparroquia.selectedIndex = -1;
+            
             ${remoteFunction( 
                 controller:'demographic', 
                 action:'ajaxGetMunicipios', 
@@ -77,18 +94,28 @@
             ${remoteFunction( 
                 controller:'demographic', 
                 action:'ajaxGetMunicipios', 
-                update:'parroresid', 
+                update:'direccion.id', 
                 params:'\'id=\' + municipio')}
           }
       </g:javascript>
-	  <style type="text/css">
-        
-    </style>
-	<script type="text/javascript">
-	var $j = jQuery.noConflict();
-        $j(document).ready(function(){
-            $j("#nuevopaciente").formToWizard({ submitButton: 'doit' })
-        });
+	  
+    <script type="text/javascript">
+      var $j = jQuery.noConflict();
+      $j(document).ready(function(){
+          $j("#nuevopaciente").formToWizard({ submitButton: 'doit' })
+      });
+    </script>
+    
+    <script>
+      function checkValidstep0(){
+        //alert(jQuery("#primerApellido").val())
+        //if(jQuery("#primerApellido"))
+        if(jQuery("#nuevopaciente").validate().element("#primerApellido")==false){
+          jQuery("#nuevopaciente").focus();
+          return false;
+        }
+        //return true;
+      }
     </script>
   </head>
   
@@ -103,36 +130,31 @@
     <g:form action="agregarPaciente" name="nuevopaciente" enctype="multipart/form-data">
       <fieldset>
         <legend>Identificaci&oacute;n</legend>
-
-		  <div id="nombres">
-			<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
-			<g:textField name="primerApellido" value="${params.primerApellido}"/>
-				  
-			<label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
-			<g:textField name="segundoApellido" value="${params.segundoApellido}" />
-
-			<label for="primerNombre"><g:message code="persona.primerNombre" /></label>
-			<g:textField name="primerNombre" value="${params.primerNombre}" />
-
-			<label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
-			<g:textField name="segundoNombre" value="${params.segundoNombre}" />
-		  </div>
-                        <label for="identificador"><g:message code="persona.identificador" /></label>
-                        <g:textField name="extension" value="${params.identificador}" />
-                        <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
+          <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
+          <g:textField name="primerApellido" value="${params.primerApellido}"/>
                   
-			<label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-			<g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/>
-
-			<label for="sexo"><g:message code="persona.sexo" /></label>
-			<g:select name="sexo" class="selectci" noSelection="['-1':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
-
-	  
-			<label for="foto"><g:message code="persona.foto" /></label>
-			<!--label for="foto">Foto del Paciente</label-->
-			<input type="file" name="foto" id="foto"/> 	
- 
-
+          <label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
+          <g:textField name="segundoApellido" value="${params.segundoApellido}" />
+		  
+          <label for="primerNombre"><g:message code="persona.primerNombre" /></label>
+          <g:textField name="primerNombre" value="${params.primerNombre}" />
+        
+          <label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
+          <g:textField name="segundoNombre" value="${params.segundoNombre}" />
+		  
+          <label for="identificador"><g:message code="persona.identificador" /></label>
+          <g:textField name="extension" value="${params.identificador}" />
+          <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
+		  
+          <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
+          <%--g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/--%>
+          <input name="fechaNacimiento" type="text" id="fechaNacimiento" value="${params.fechaNacimiento}"/>  </br></br>
+          
+          <label for="sexo"><g:message code="persona.sexo" /></label>
+            <g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+          
+          <label for="foto"><g:message code="persona.foto" /></label>
+           <input type="file" name="foto" id="foto" style="width: 300px;"/>
       </fieldset>
 	  
       <fieldset>
@@ -197,7 +219,8 @@
 		  <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
 		  
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>
-		  <g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['':'Seleccione Parroquia']"/>
+		  <%--g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['':'Seleccione Parroquia']"/--%>
+                  <g:select name="direccion.id" class="selectci" disabled="false" noSelection="['':'Seleccione Parroquia']"/>
 		  
           <label for="localidadreside"><g:message code="persona.localidadreside"/></label>
 		  <g:textField name="ciudad" value="${params.ciudad}" />
@@ -224,33 +247,31 @@
         <fieldset>
               <legend>Contacto</legend>
               <label for="telfhab"><g:message code="persona.telfhabitacion"/></label>
-			  <g:textField name="telfhabitacion" value="${params.telfhabitacion}" />
+	      <g:textField name="telfhabitacion" value="${params.telfhabitacion}" />
 			  
               <label for="telfcel"><g:message code="persona.telfcelular"/></label>
-			  <g:textField name="telfcelular" value="${params.telfcelular}" />
+	      <g:textField name="telfcelular" value="${params.telfcelular}" />
 			  
-          <label for="email"><g:message code="persona.email"/></label>
-		  <g:textField name="email" value="${params.email}" />
+              <label for="email"><g:message code="persona.email"/></label>
+              <g:textField name="email" value="${params.email}" />
+              
+              <label for="nombremadre"><g:message code="persona.nombremadre"/></label>
+		  <g:textField name="nombremadre" value="${params.nombremadre}" />
+		  
+              <label for="nombrepadre"><g:message code="persona.nombrepadre"/></label>
+              <g:textField name="nombrepadre" value="${params.nombrepadre}" />
+		  
+              <label for="otradireccion"><g:message code="persona.otradireccion"/></label>
+              <g:textArea name="otradireccion" class="inputtextfield" value="${params.otradireccion}" rows="1" cols="20"/>
+		  
+              <label for="contactoemergencia"><g:message code="persona.contactoemergencia"/></label>
+              <g:textArea name="contactoemergencia" class="inputtextfield" value="${params.contactoemergencia}" rows="1" cols="20"/>
         </fieldset>
         
       
-      <fieldset>
-        <legend>Datos Familiariares</legend>
-          <label for="nombremadre"><g:message code="persona.nombremadre"/></label>
-		  <g:textField name="nombremadre" value="${params.nombremadre}" />
-		  
-          <label for="nombrepadre"><g:message code="persona.nombrepadre"/></label>
-		  <g:textField name="nombrepadre" value="${params.nombrepadre}" />
-		  
-          <label for="otradireccion"><g:message code="persona.otradireccion"/></label>
-		  <g:textArea name="otradireccion" class="inputtextfield" value="${params.otradireccion}" rows="1" cols="20"/>
-		  
-		  <label for="contactoemergencia"><g:message code="persona.contactoemergencia"/></label>
-		  <g:textArea name="contactoemergencia" class="inputtextfield" value="${params.contactoemergencia}" rows="1" cols="20"/>
-	  </fieldset>
         <p>
           <g:submitButton name="doit" value="${message(code:'demographic.agregar_paciente.agregar')}" />
-          <g:link action="admisionPaciente"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
+          <%--g:link action="admisionPaciente"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link--%>
         </p>    
       
     </g:form>

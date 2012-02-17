@@ -110,7 +110,6 @@ class DemographicController{
         //println "identificador->: "+params.identificador
         id = new UIDBasedID(value:params.root+'::'+params.identificador)
 
-        println "IdRequerido"+id
         // TODO: usar rango de fechas... si viene solo una se usa esa como bd.
         
         // Para la fecha no funciona el bindData, lo hago a mano
@@ -136,7 +135,7 @@ class DemographicController{
             //pn = new PersonName()
             
             //new 
-            pn = new PersonNamePatient()
+            pn = new PersonName()
             bindData(pn, params, 'personName')
             //println "Person Name: " + pn
         }
@@ -237,6 +236,7 @@ class DemographicController{
         // lo puse para hacer el OR entre cand 1 y cand 2
         //        def candidatos = candidatos1.plus( candidatos2 ) //.unique{ it.id }
         
+        println("numero cantidatos:->"+candidatos.size())
         render(view:'listaCandidatos', model:[candidatos:candidatos])
         
     } // findPatient
@@ -703,8 +703,8 @@ class DemographicController{
             
             def person = new Person( params ) // sexo, fechaNac (no mas)
             
-            def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
-            person.setFechaNacimiento( bd )
+            //def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
+            //person.setFechaNacimiento( bd )
 
             person.addToIds( id )
             
@@ -1003,7 +1003,7 @@ class DemographicController{
         else{
             def list = Lugar.findByNombreLike("Venezuela")
             render {"<input type='hidden' id='generarestados' value=0 />"}
-            render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>"}
+            //render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>"}
         }
     }
     
@@ -1024,7 +1024,7 @@ class DemographicController{
         }
         else{
             def list = Lugar.findByNombreLike("Venezuela")
-            render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
+            //render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
         }
     }
     /*

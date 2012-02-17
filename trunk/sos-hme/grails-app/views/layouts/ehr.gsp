@@ -134,13 +134,8 @@
 
     $.datepicker.setDefaults($.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
 
-
-
-
-
         $(".DateSos").datepicker({dateFormat: 'dd-mm-yy',
-         
-         
+        
                                      changeYear: true,
                                      //altField: '#actualDate',
                                      buttonText: 'Calendario',

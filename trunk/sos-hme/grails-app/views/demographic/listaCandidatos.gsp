@@ -64,6 +64,9 @@
       </li>
       <%-- Solo se puede agregar un nuevo paciente si el repositorio es local --%>
       <g:if test="${ApplicationHolder.application.config.hce.patient_administration.serviceType.local}">
+        
+        
+        <g:if test="${bd}">
         <li><g:link action="agregarPaciente" params="[primerNombre:params.personName.primerNombre,
                                                       segundoNombre:params.personName.segundoNombre,
                                                       primerApellido:params.personName.primerApellido,
@@ -71,6 +74,17 @@
                                                       identificador:params.identificador,
                                                       root:params.root,
                                                       fechaNacimiento:format.format(bd)]" class="create"><g:message code="demographic.lista_candidatos.action.agregarPaciente" /></g:link></li>
+        </g:if>
+        <g:else>
+          <li><g:link action="agregarPaciente" params="[primerNombre:params.personName.primerNombre,
+                                                      segundoNombre:params.personName.segundoNombre,
+                                                      primerApellido:params.personName.primerApellido,
+                                                      segundoApellido:params.personName.segundoApellido,
+                                                      identificador:params.identificador,
+                                                      root:params.root,
+                                                      fechaNacimiento:'']" class="create"><g:message code="demographic.lista_candidatos.action.agregarPaciente" /></g:link></li>
+        </g:else>
+        
       </g:if>
     </ul>
 
