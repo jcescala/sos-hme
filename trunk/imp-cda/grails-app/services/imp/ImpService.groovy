@@ -235,7 +235,7 @@ class ImpService {
      *@param paciente paciente a ser buscado por coincidencias en el IMP
      *@return lista de pacientes candidatos
      */
-    ConjuntoPaciente buscarCandidatos(PacienteArr paciente, def offset, String idOrganizacion){
+    ConjuntoPaciente buscarCandidatos(PacienteArr paciente, int offset, String idOrganizacion){
                
         def centro = Organizacion.findByUniqueIdentifier(idOrganizacion)
         //Plantear algoritmo de busqueda que coloque los resultados según su coincidencia
