@@ -97,7 +97,8 @@ class DemographicService {
     }
     
     /**
-     * Busca por extension, sin considerar root.
+     * Busca por extension, Pacientes. 
+	 * Cambiar nombre a: findPersonPatientById
      */
     public List<Person> findPersonById( UIDBasedID id )
     {
@@ -120,7 +121,25 @@ class DemographicService {
 		
 		return existPerson
     }
-    
+	
+    /**
+     * Busca por extension, Usuarios.
+     */
+    public List<Person> findPersonUserById( UIDBasedID id )
+    {
+
+			def existPerson = Person.withCriteria{
+				ids{
+					eq("value", id.value)
+				}
+				identities{
+					eq("purpose", "PersonNameUser")
+				}
+			
+			}
+		
+		return existPerson
+    }    
     public List<Person> findByPersonData( PersonName n, Date bithdate, String sex )
     {
         //this.queryCount++
@@ -183,18 +202,61 @@ class DemographicService {
     public List<Person> findByPersonDataAndIdAndRole( PersonName n, Date bithdate, String sex, UIDBasedID id, String roleType )
     {
         return demographicAccess.findByPersonDataAndIdAndRole(n, bithdate, sex, id, roleType)
+		/*
+				if(id==null){
+					id.value="1"
+				}
+
+				println "primer nombre: "+n.primerNombre
+				if(n.primerNombre == null){
+					n.primerNombre = "22"}
+				println "segundo nombre: "+n.segundoNombre
+				if(n.segundoNombre == null){
+					n.segundoNombre="22"}
+				println "primer Apellido: "+n.primerApellido
+				if(n.primerApellido == null){
+					n.primerApellido="22"}
+				println "segundo apellido: "+n.segundoApellido
+				if(n.segundoApellido == null){
+					n.segundoApellido="22"}
 				
-				/*println "id: "+id
+				println "id: "+id+" date: "+bithdate
+				println "sexo: "+sex 
 				def candidatosPacientes = Person.withCriteria{
+					//eq("sexo",sex)
+					and{
+						or{
+						
+							ids{
+								eq("value", id.value)
+							}
+							
+							//or{
+								identities{
+									eq("primerNombre", n.primerNombre)
+									
+								}
+								identities{
+									eq("segundoNombre", n.segundoNombre)
+									
+								}
+								identities{
+									eq("primerApellido", n.primerApellido)
+									
+								}
+								identities{
+									eq("segundoApellido", n.segundoApellido)
+									
+								}
+							//}
 
-					ids{
-						eq("value", id.value)
-					}
-					identities{
+						}
+						identities{
+							eq("purpose", "PersonNamePatient")
+						}
+						
 
-						eq("purpose", "PersonNamePatient")
 					}
-				
 				}
 				println "candidatos: "+candidatosPacientes
 				
