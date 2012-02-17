@@ -235,9 +235,11 @@ log4j = {
 
 //Indice Maestro de Pacientes
 
-//UCV CAIBCO
-//imp.organizacion.id = "62ad6b53-484c-496c-b08f-5ebb8c387d3c"//LOCAL
-imp.organizacion.id ="b02667bc-4266-4f0e-9c70-9c7b2af6ba64"
+//UCV CAIBCO 
+imp.organizacion.id = "b02667bc-4266-4f0e-9c70-9c7b2af6ba64"//LOCAL
+//imp.organizacion.id ="003fd514-5167-49af-bcee-9469eac2857f" //SOS2
+
+//imp.organizacion.id ="27097317-ed04-4251-b265-29f10ed83523" //SOS3
 
 cxf {
     installDir = "C:/apps/apache-cxf-2.4.4" //only used for wsdl2java script target

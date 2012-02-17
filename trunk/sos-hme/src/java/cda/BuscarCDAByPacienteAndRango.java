@@ -17,9 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="paciente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="desde" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
- *         &lt;element name="hasta" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
- *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="desde" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="hasta" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="idOrganizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -40,9 +40,9 @@ import javax.xml.bind.annotation.XmlType;
 public class BuscarCDAByPacienteAndRango {
 
     protected String paciente;
-    protected Object desde;
-    protected Object hasta;
-    protected Object offset;
+    protected String desde;
+    protected String hasta;
+    protected int offset;
     protected String idOrganizacion;
 
     /**
@@ -74,10 +74,10 @@ public class BuscarCDAByPacienteAndRango {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public Object getDesde() {
+    public String getDesde() {
         return desde;
     }
 
@@ -86,10 +86,10 @@ public class BuscarCDAByPacienteAndRango {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public void setDesde(Object value) {
+    public void setDesde(String value) {
         this.desde = value;
     }
 
@@ -98,10 +98,10 @@ public class BuscarCDAByPacienteAndRango {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public Object getHasta() {
+    public String getHasta() {
         return hasta;
     }
 
@@ -110,34 +110,26 @@ public class BuscarCDAByPacienteAndRango {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public void setHasta(Object value) {
+    public void setHasta(String value) {
         this.hasta = value;
     }
 
     /**
      * Gets the value of the offset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
      */
-    public Object getOffset() {
+    public int getOffset() {
         return offset;
     }
 
     /**
      * Sets the value of the offset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
      */
-    public void setOffset(Object value) {
+    public void setOffset(int value) {
         this.offset = value;
     }
 
