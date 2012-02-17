@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="paciente" type="{http://imp/}pacienteArr" minOccurs="0"/>
- *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}anyType" minOccurs="0"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="idOrganizacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 public class BuscarCandidatos {
 
     protected PacienteArr paciente;
-    protected Object offset;
+    protected int offset;
     protected String idOrganizacion;
 
     /**
@@ -66,24 +66,16 @@ public class BuscarCandidatos {
     /**
      * Gets the value of the offset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
      */
-    public Object getOffset() {
+    public int getOffset() {
         return offset;
     }
 
     /**
      * Sets the value of the offset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
      */
-    public void setOffset(Object value) {
+    public void setOffset(int value) {
         this.offset = value;
     }
 

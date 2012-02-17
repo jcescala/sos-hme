@@ -243,7 +243,7 @@ class ServiceController {
         
         if(personNamePatient){
             //   def paciente = Paciente.get(params.id)
-
+            
             //RECIBIR PARAMS DEL PACIENTE
 
             def p = new PacienteArr()
@@ -255,6 +255,7 @@ class ServiceController {
             p.setPrimerApellido(personNamePatient.getPrimerApellido())
             p.setSegundoApellido(personNamePatient.getSegundoApellido())
 
+            
 
 
             //ID 'token' asignado a la organizacion en el IMP
@@ -269,6 +270,7 @@ class ServiceController {
                 //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
                 conexionImp = false
                 result = null
+                
                 
             }
             if(result){
@@ -374,21 +376,23 @@ class ServiceController {
         objPaciente.setSegundoNombre(name.segundoNombre)
         objPaciente.setPrimerApellido(name.primerApellido)
         objPaciente.setSegundoApellido(name.segundoApellido)
-
+        
 
         def offset= params.offset.toInteger()
         
         String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        
         imp.ConjuntoPaciente result
         def conexionImp = true
-        try{
+        //try{
         result= customSecureServiceClientImp.buscarCandidatos(objPaciente,offset,idOrganizacion )
-        }catch(Exception e){
-             //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
-                conexionImp = false
-                result = null
-
-        }
+        //}catch(Exception e){
+//            e.printStackTrace()
+//             //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
+//                conexionImp = false
+//                result = null
+//
+//        }
         if(result){
 
             render(template: "candidatos", model: [conexionImp:conexionImp,idPacienteOrg: params.id, result: result.listPacienteArr, total: result.total])
@@ -414,8 +418,10 @@ class ServiceController {
         try{
         result= customSecureServiceClientImp.agregarRelacionPaciente(idCentroImp,idPacienteImp,idPacienteOrg,idOrganizacion)
         }catch(Exception e){
+            
+
              //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
-                conexionImp = false
+                
                 result = null
 
         }
@@ -513,8 +519,8 @@ class ServiceController {
         try{
         result = customSecureServiceClientCda.buscarCDAByPacienteAndRango(
             params.id,
-            XMLGregorianCalendarConverter.getXMLCalendar(d,"yyyy-MM-dd"),
-            XMLGregorianCalendarConverter.getXMLCalendar(h,"yyyy-MM-dd"),
+            d,
+            h,
             offset,
             idOrganizacion)
         }catch(Exception e){
@@ -541,7 +547,7 @@ class ServiceController {
         println "ID:::::"+params.id
         println "params.offsetoFFSET::::"+params.offset
 
-        def offset
+        int offset
 
         if(params.marca=='fil'){
 

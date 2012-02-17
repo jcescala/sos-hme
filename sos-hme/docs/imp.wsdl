@@ -46,16 +46,6 @@
 <xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
-<xs:element name="obtenerImagenPaciente" type="tns:obtenerImagenPaciente"/>
-<xs:complexType name="obtenerImagenPaciente">
-<xs:sequence/>
-</xs:complexType>
-<xs:element name="obtenerImagenPacienteResponse" type="tns:obtenerImagenPacienteResponse"/>
-<xs:complexType name="obtenerImagenPacienteResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
 <xs:element name="agregarPaciente" type="tns:agregarPaciente"/>
 <xs:complexType name="agregarPaciente">
 <xs:sequence>
@@ -101,7 +91,7 @@
 <xs:complexType name="buscarCandidatos">
 <xs:sequence>
 <xs:element minOccurs="0" name="paciente" type="tns:pacienteArr"/>
-<xs:element minOccurs="0" name="offset" type="xs:anyType"/>
+<xs:element name="offset" type="xs:int"/>
 <xs:element minOccurs="0" name="idOrganizacion" type="xs:string"/>
 </xs:sequence>
 </xs:complexType>
@@ -173,12 +163,12 @@
     <wsdl:part element="tns:agregarRelacionPacienteResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="agregarRelacionPaciente">
-    <wsdl:part element="tns:agregarRelacionPaciente" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="existePacienteResponse">
     <wsdl:part element="tns:existePacienteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="agregarRelacionPaciente">
+    <wsdl:part element="tns:agregarRelacionPaciente" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarCandidatosResponse">
@@ -187,10 +177,6 @@
   </wsdl:message>
   <wsdl:message name="eliminarPaciente">
     <wsdl:part element="tns:eliminarPaciente" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="obtenerImagenPacienteResponse">
-    <wsdl:part element="tns:obtenerImagenPacienteResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="agregarImagenPaciente">
@@ -203,10 +189,6 @@
   </wsdl:message>
   <wsdl:message name="existeRelacionPacienteResponse">
     <wsdl:part element="tns:existeRelacionPacienteResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="obtenerImagenPaciente">
-    <wsdl:part element="tns:obtenerImagenPaciente" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="eliminarRelacionPacienteResponse">
@@ -224,12 +206,6 @@
       <wsdl:input message="tns:eliminarRelacionPaciente" name="eliminarRelacionPaciente">
     </wsdl:input>
       <wsdl:output message="tns:eliminarRelacionPacienteResponse" name="eliminarRelacionPacienteResponse">
-    </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="obtenerImagenPaciente">
-      <wsdl:input message="tns:obtenerImagenPaciente" name="obtenerImagenPaciente">
-    </wsdl:input>
-      <wsdl:output message="tns:obtenerImagenPacienteResponse" name="obtenerImagenPacienteResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="agregarPaciente">
@@ -286,15 +262,6 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="eliminarRelacionPacienteResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="obtenerImagenPaciente">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="obtenerImagenPaciente">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="obtenerImagenPacienteResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
