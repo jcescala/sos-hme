@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta name="layout" content="ehr" />
-    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
+    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios_show.css')}" />
   </head>
   <body>
     <%--

@@ -68,11 +68,20 @@
     
 
 <h2><g:message code="demographic.show.title" /></h2>
-
+<g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
+    <div style="color:red;">
+      <g:message code="trauma.show.feedback.patientAlreadySelectedForThisEpisode" />
+    </div><br/>
+  </g:compositionHasPatient>
     <ul class="top_actions">
       <li>
       <g:link action="admisionPaciente" class="back"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
       </li>
+     <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
+      <li>
+      <g:link controller="records" action="show" id="${session.traumaContext.episodioId}" class="home"><g:message code="demographic.lista_candidatos.action.backToEpisode" /></g:link>
+      </li>
+      </g:compositionHasPatient>
       <li>
       <g:link controller="records" action="create" params="[root:root, extension:extension]" class="create"><g:message code="demographic.show.action.createEpisode" /></g:link>
       </li>

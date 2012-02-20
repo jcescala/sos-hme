@@ -826,6 +826,9 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
             }
         }
 
+
+
+
         // No se encuentra el episodio, puede ser que todavia no se haya creado,
         // pero si se haya identificado al paciente.
         //return null

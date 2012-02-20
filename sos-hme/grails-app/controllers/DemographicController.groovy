@@ -471,42 +471,18 @@ class DemographicController{
 
     }
 
+    def show ={
 
-    def seleccionarPaciente = {
-        
-        // FIXME: esta hecho en base al id en la base, que pasa cuando la
-        // seleccion se hace sobre un paciente en un IMP remoto y no esta en la base?
-        
-        // Guardo los resultados de consultar el IMP remoto en la base como cache.
-        def persona = Person.get(params.id)
-        
-        
-        // =====================================================================
-        // 1) Si no hay un episodio seleccionado, muestro la patalla de show del
-        // paciente que tiene un boton "crear episodio" para abrir un episodio
-        // para ese paciente, es la apertura desde admision.
-        
-        // =====================================================================
-        // 2) Si hay un episodio seleccionado, entonces admision o el medico esta
-        // seleccionando un paciente para ese episodio. Es un paciente existente
-        // o uno ingresado en el momento. Previo a asignar a esta persona al
-        // episodio se debe verificar que no se tenga ya una persona seleccionada
-        // (o simplemente pongo la que me digan y que ellos corrijan).
-        // Cada correccion debe tener un log de quien lo hizo.
-        // Vuelve a la pantalla principal del episodio seleccionado (show).
-
-        if (!session.traumaContext?.episodioId) // caso 1)
-        {
-            println "No hay epidosio seleccionado"
-
-            if (persona.ids.size() == 0) // Debe tener un id!
+        //Mostrar detalle de un paciente
+         def persona = Person.get(params.id)
+        if (persona.ids.size() == 0) // Debe tener un id!
             {
                 redirect( action : 'findPatient',
                     params : ['flash.message': 'El paciente seleccionado no tiene identificadores, debe tener por lo menos uno.'] )
                 return
             }
 
-            //Folder domain = Folder.findByPath( session.traumaContext.domainPath )
+        //Folder domain = Folder.findByPath( session.traumaContext.domainPath )
             String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
             def agreImp
             def relaImp
@@ -539,6 +515,38 @@ class DemographicController{
             render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp])
 
 
+
+    }
+    def seleccionarPaciente = {
+        
+        // FIXME: esta hecho en base al id en la base, que pasa cuando la
+        // seleccion se hace sobre un paciente en un IMP remoto y no esta en la base?
+        
+        // Guardo los resultados de consultar el IMP remoto en la base como cache.
+        def persona = Person.get(params.id)
+        
+        
+        // =====================================================================
+        // 1) Si no hay un episodio seleccionado, muestro la patalla de show del
+        // paciente que tiene un boton "crear episodio" para abrir un episodio
+        // para ese paciente, es la apertura desde admision.
+        
+        // =====================================================================
+        // 2) Si hay un episodio seleccionado, entonces admision o el medico esta
+        // seleccionando un paciente para ese episodio. Es un paciente existente
+        // o uno ingresado en el momento. Previo a asignar a esta persona al
+        // episodio se debe verificar que no se tenga ya una persona seleccionada
+        // (o simplemente pongo la que me digan y que ellos corrijan).
+        // Cada correccion debe tener un log de quien lo hizo.
+        // Vuelve a la pantalla principal del episodio seleccionado (show).
+
+        if (!session.traumaContext?.episodioId) // caso 1)
+        {
+            println "No hay epidosio seleccionado"
+
+            
+
+            redirect(action:'show', params: params)
 
 
 

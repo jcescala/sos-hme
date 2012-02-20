@@ -124,7 +124,7 @@ textarea {
 
     .ELEMENT .label {
       padding: 4px;
-      font-size: 12px;
+      font-size: 14px;
       margin-bottom: 0px;
 	  font-weight:normal;
     }
@@ -307,5 +307,13 @@ textarea {
 	.CLUSTER .labelCluster {
       border-bottom:1px solid #c1c1c1;
 	  
+    }
+	
+	 .CLUSTER  {
+			  padding-bottom:10px;
+}
+     .OBSERVATION .label, .EVALUATION .label, .INSTRUCTION .label, .ACTION .label {
+		clear:both;
+
     }
 	
