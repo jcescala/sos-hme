@@ -3,12 +3,16 @@
 <html>
   <head>
     <meta name="layout" content="ehr" />
-    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
+    
 
   <g:if test="${mode == 'edit'}">
+    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios.css')}" />
     <%-- Script por template, by Armando--%>
     <script type="text/javascript" src="${createLinkTo(dir:'js/template' ,file:template.id+'.js' ) }"></script>
   </g:if>
+  <g:else>
+    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'formularios_show.css')}" />
+  </g:else>
   
   </head>
   <body>

@@ -18,7 +18,7 @@
     <title><g:layoutTitle/> | <g:message code="hce.nombre" /> | v${ApplicationHolder.application.metadata['app.version']}</title>
 
 
-    <%--<link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'ehr_contenido_grande.css')}" />--%>
+   
    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'estilo.css')}" />
 
   <r:require module="jquery-ui"/>
@@ -302,9 +302,10 @@
 <div id="nivel1">
   <div id="resumenPaciente">
     <g:if test="${patient}">
-
-      <img src="${createLinkTo(dir:'images' ,file:'thmb_paciente.jpg')}" width="52" height="52" alt="NombrePaciente" />
+      <g:link controller="demographic" action="show" id="${patient.id}"><img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:patient.id])}" style="width:52px; height: auto;"/>
+      
       <h2><g:message code="trauma.title.informacionPaciente" /></h2>
+      </g:link>
       <g:render template="../demographic/Person" model="[person:patient]" />
       <div class="verMas"><a href="#" class="contextoEhr"><g:message code="records.show.completarDatos" /></a></div>
 

@@ -17,10 +17,7 @@
       <g:if test="${session.traumaContext.episodioId}">
         <li><g:link controller="records" action="show" id="${session.traumaContext.episodioId}" class="home"><g:message code="demographic.lista_candidatos.action.backToEpisode" /></g:link></li>
       </g:if>
-      <g:else>
-        <li><g:link controller="records" action="list" class="home"><g:message code="episodio.list.title" /></g:link></li>
-
-      </g:else>
+     
     </ul>
 
   <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">

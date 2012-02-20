@@ -26,7 +26,7 @@ $(".openCluster").live('click', function() {
 			}
 			
 			
-			$(this).parent('span').parent('.CLUSTER').find('.content').fadeToggle();
+			$(this).parent('span').parent('.CLUSTER').find('.content').fadeToggle().css( 'display' , 'block'  );
 			$(this).remove('img');
 
 });

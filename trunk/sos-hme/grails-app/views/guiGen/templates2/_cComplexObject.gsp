@@ -94,7 +94,7 @@ if (refPath) _refPath = refPath
       </g:each>
     </g:else>
     
-    <span class="content">
+    <span class="content"> 
     
 </g:if>
 
