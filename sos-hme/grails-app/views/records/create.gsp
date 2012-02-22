@@ -56,7 +56,11 @@ $("#datepicker").click(function(){
   <div class="bodydomainlist">
   <h1><g:message code="trauma.create.title" /></h1>
 
-
+<g:if test="${flash.message}">
+    <div style="color:red;">
+      <g:message code="${flash.message}" />
+    </div>
+  </g:if>
 
 <g:form action="create">
 

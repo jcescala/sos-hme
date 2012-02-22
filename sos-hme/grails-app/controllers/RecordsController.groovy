@@ -325,6 +325,14 @@ def create = {
     println "Create: " + params
     if (params.doit)
     {
+        if(!params.startDate){
+
+            flash.message = 'records.create.error.fecha'
+            return
+                
+        }
+
+
         //  def startDate = DateConverter.iso8601ExtendedDateTimeFromParams( params, 'startDate_' )
         def startDate = DateConverter.iso8601ExtendedDateTimeFromParamsSOS( params.startDate )
 

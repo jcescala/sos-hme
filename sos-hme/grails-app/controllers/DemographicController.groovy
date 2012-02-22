@@ -720,7 +720,7 @@ class DemographicController{
 
             def person = new Person() // sexo, fechaNac (no mas)
             
-            println("fechaNacimiento:->"+params.fechaNacimiento)
+            //println("fechaNacimiento:->"+params.fechaNacimiento)
             def dia = params.fechaNacimiento.split('-')[0]
             def mes = params.fechaNacimiento.split('-')[1]
             def anio = params.fechaNacimiento.split('-')[2]
@@ -744,30 +744,32 @@ class DemographicController{
             
             //foto del paciente
 
+            if(params.foto){
+
+                def x1 = params.x1 as Integer
+                def y1 = params.y1 as Integer
+                def x2 = params.x2 as Integer
+                def y2 = params.y2 as Integer
+                File tempPicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar + params.foto)
+                BufferedImage image = ImageIO.read(tempPicture)
+                BufferedImage croppedImage = image.getSubimage(x1, y1, x2 - x1, y2 - y1)
+                File profilePicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar +"prueba.jpg")
+                ImageIO.write(croppedImage, "jpg", profilePicture);
+                FileUtils.deleteQuietly(tempPicture)
 
 
-            def x1 = params.x1 as Integer
-            def y1 = params.y1 as Integer
-            def x2 = params.x2 as Integer
-            def y2 = params.y2 as Integer
-            File tempPicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar + params.foto)
-            BufferedImage image = ImageIO.read(tempPicture)
-            BufferedImage croppedImage = image.getSubimage(x1, y1, x2 - x1, y2 - y1)
-            File profilePicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar +"prueba.jpg")
-            ImageIO.write(croppedImage, "jpg", profilePicture);
-            FileUtils.deleteQuietly(tempPicture)
+                //def f = request.getFile('foto')
+                def okcontents = ['image/png' , 'image/jpeg' , 'image/gif']
+                if(okcontents.contains(new MimetypesFileTypeMap().getContentType(profilePicture).toString())){
+                    datos.foto = profilePicture.getBytes()
+                    datos.tipofoto = new MimetypesFileTypeMap().getContentType(profilePicture).toString()
+                }
 
 
-            //def f = request.getFile('foto')
-            def okcontents = ['image/png' , 'image/jpeg' , 'image/gif']
-            if(okcontents.contains(new MimetypesFileTypeMap().getContentType(profilePicture).toString())){
-                datos.foto = profilePicture.getBytes()
-                datos.tipofoto = new MimetypesFileTypeMap().getContentType(profilePicture).toString()
             }
-
-
             /*---------------------------------*/
             person.addToIdentities(datos)
+            
             
             if(person.save()){
                 def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
@@ -822,7 +824,7 @@ class DemographicController{
 
                 }
             }
-            render "error"
+            render ""
     }
 
 
