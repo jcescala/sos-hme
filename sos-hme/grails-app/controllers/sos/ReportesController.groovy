@@ -31,6 +31,12 @@ import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
 /*reportes*/
 import templates.TemplateManager
 import tablasMaestras.Cie10Trauma
+import java.util.HashMap
+import net.sf.jasperreports.engine.data.JRXmlDataSource
+import net.sf.jasperreports.engine.export.JRPdfExporter
+import net.sf.jasperreports.engine.*
+
+
     /*
      *@author Juan Carlos Escalante
      *
@@ -162,6 +168,8 @@ class ReportesController {
         def fin = params.hasta
         def j = 0 //loop
         def nombreDoc = "epi10general"
+        def etnia
+        def niveleducativo
         
         Folder domain = Folder.findByPath( session.traumaContext.domainPath )
         compos = hceService.getAllCompositionForDate(inicio, fin)
@@ -179,7 +187,10 @@ class ReportesController {
                         def direccion = demographicService.findFullAddress((int)datos.direccion.id)
                         fullDireccion = "Ciudad "+ datos.ciudad + ", Urb/Sector " + datos.urbasector + ", Av/Calle " + datos.avenidacalle + ", Casa/Res " + datos.casaedif + ", "+direccion
                         sexo = patient.sexo
+                        etnia = datos.etnia.id
+                        niveleducativo = datos.niveleducativo
                         paciente << patient
+                        
                         
                         if(patient.fechaNacimiento){
                             fechaNace = patient.fechaNacimiento
@@ -212,17 +223,56 @@ class ReportesController {
                                                                                   patient.fechaNacimiento.format("dd/MM/yyyy"), 
                                                                                   fullDireccion,
                                                                                   sexo,
+                                                                                  Long.toString(etnia),
+                                                                                  Integer.toString(niveleducativo),
                                                                                   Integer.toString(edad), 
                                                                                   codigos as String[]
-                                                                                  )   
+                                                                                  ) 
                         }
                     }
                 }
             j++    
             }
+                         def FileName = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.jasper"
+                         def outFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.pdf"
+                         def xmlFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/source/epi10general.xml"
+                         def record = "/pacientes/paciente"
+                         reportsOutput(FileName, outFile, xmlFile, record)
         }
         
         redirect(controller:'reportes', action:'index')
+    }
+    
+    public static void reportsOutput(String reportFileName, String outFileName, String xmlFileName, String recordPath){
+       JRXmlDataSource jrxmlds = new JRXmlDataSource(xmlFileName,recordPath)
+       HashMap hm = new HashMap()
+       
+       try
+          {
+              JasperPrint print = JasperFillManager.fillReport(
+                          reportFileName, 
+                          hm, 
+                          jrxmlds);
+              
+              JRExporter exporter = new JRPdfExporter();
+              
+              exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
+                      exporter.setParameter(JRExporterParameter.JASPER_PRINT,print);
+                      
+                      exporter.exportReport();
+                      System.out.println("Created file: " + outFileName);             
+          }
+          catch (JRException e){
+              e.printStackTrace();
+              System.exit(1);
+          }
+          catch (Exception e){
+              e.printStackTrace();
+              System.exit(1);
+          } 
+        
+        
+        
         
     }
     
