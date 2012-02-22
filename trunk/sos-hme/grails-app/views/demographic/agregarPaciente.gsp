@@ -8,8 +8,14 @@
     <g:javascript library="jquery" />
     
     <jqui:resources themeCss="../css/jquery/jquery-ui-1.8.16.custom.css"/>
+    <link rel="stylesheet" href="${resource(dir:'css',file:'jquery.Jcrop.css')}" />
+    <g:javascript src="../js/jquery/jquery.Jcrop.js" />
+    <g:javascript src="../js/jquery/jquery.Jcrop.min.js" />
+
     <script type="text/javascript" src="../js/jquery/jquery-ui-i18n.min.js"></script>
     <script type="text/javascript" src="../js/jquery/jquery-ui-timepicker-addon.js"> </script>
+     
+      <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery.form.js')}"></script>
     
     <g:javascript src='formToWizard.js' />
     <g:javascript src='funciones.js' />
@@ -48,6 +54,49 @@
 
           });
       });
+
+
+       jQuery(document).ready(function()
+      {
+        jQuery("#foto").attr("readonly",true);
+        jQuery("#foto").click(function (){
+
+          jQuery("#inputFotoPrevia").click();
+
+          
+        });
+       jQuery("#inputFotoPrevia").change(function(){
+ 
+       
+
+         jQuery("#fotoPrevia").ajaxForm({success: mostrarRespuesta}).submit();
+ 
+
+        });
+
+
+      });
+      function mostrarRespuesta(respuesta){
+       
+       
+        jQuery("#imgPrevia").html("<img id='crop' src='${createLink(controller: "demographic",action: "mostrarFotoPrevia")}/"+respuesta+"' />")
+        jQuery("#foto").val(respuesta);
+        jQuery("#crop").Jcrop({
+            aspectRatio: 1,
+            setSelect: [0, 0, 100, 100],
+            minSize: [30, 30],
+            onSelect: cambiarCoordenadas,
+            onChange: cambiarCoordenadas
+        });
+      }
+
+      function cambiarCoordenadas(c) {
+     jQuery('#x1').val(c.x);
+     jQuery('#y1').val(c.y);
+     jQuery('#x2').val(c.x2);
+     jQuery('#y2').val(c.y2);
+ }
+
     </script>
     
     <g:javascript>
@@ -104,9 +153,7 @@
       $j(document).ready(function(){
           $j("#nuevopaciente").formToWizard({ submitButton: 'doit' })
       });
-    </script>
-    
-    <script>
+   
       function checkValidstep0(){
         //alert(jQuery("#primerApellido").val())
         //if(jQuery("#primerApellido"))
@@ -127,8 +174,18 @@
         <g:message code="${flash.message}" />
       </div>
     </g:if>
+
+ 
     <g:form action="agregarPaciente" name="nuevopaciente" enctype="multipart/form-data">
-      <fieldset>
+
+       
+        <g:hiddenField name="x1" value="0" />
+        <g:hiddenField name="y1" value="0" />
+        <g:hiddenField name="x2" value="100" />
+        <g:hiddenField name="y2" value="100" />
+
+
+        <fieldset>
         <legend>Identificaci&oacute;n</legend>
           <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
           <g:textField name="primerApellido" value="${params.primerApellido}"/>
@@ -148,13 +205,22 @@
 		  
           <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
           <%--g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/--%>
-          <input name="fechaNacimiento" type="text" id="fechaNacimiento" value="${params.fechaNacimiento}"/>  </br></br>
+          <input name="fechaNacimiento" type="text" id="fechaNacimiento" value="${params.fechaNacimiento}"/>  <br /><br />
           
           <label for="sexo"><g:message code="persona.sexo" /></label>
             <g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
           
           <label for="foto"><g:message code="persona.foto" /></label>
-           <input type="file" name="foto" id="foto" style="width: 300px;"/>
+
+          <%-- <input type="file" name="foto" id="foto" style="width: 300px;"/> --%>
+           <input type="text" name="foto" id="foto" style="width: 300px;"/>
+           
+          <div id="imgPrevia">
+             
+
+           </div>
+
+
       </fieldset>
 	  
       <fieldset>
@@ -175,7 +241,7 @@
           
           <div id="munnace" style="visibility: hidden;">         
           <label for="municipionacimiento">
-            <g:message code="persona.municipionace"/></br>
+            <g:message code="persona.municipionace"/><br />
             <g:select name="lugar.id" id="municnace" class="selectci" value="${params.lugarnacimiento}" disabled="false" noSelection="['':'Seleccione Municipio']"/>
           </label>
           </div>
@@ -185,7 +251,7 @@
             <g:textField name="ciudadnacimiento" value="${params.ciudadnacimiento}" />
           </div>  
           
-          </br>
+          <br />
                   
       </fieldset>
       
@@ -276,6 +342,13 @@
       
     </g:form>
     </div>
+
+    <%-- Foto previa--%>
+    <g:form action="fotoPrevia" name="fotoPrevia"  enctype="multipart/form-data">
+     <input type="file" name="fotoPrevia" id="inputFotoPrevia" style="width: 300px; visibility: hidden;"/>
+    </g:form>
+
+  
 
   </body>
 </html>

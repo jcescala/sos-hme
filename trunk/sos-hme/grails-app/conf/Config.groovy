@@ -318,3 +318,5 @@ graphviz {
 //graphviz.dot.executable =
 
 grails.json.legacy.builder = false
+
+images.location = "web-app/images/previas"
