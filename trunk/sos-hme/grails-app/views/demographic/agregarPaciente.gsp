@@ -77,7 +77,8 @@
 
       });
       function mostrarRespuesta(respuesta){
-       
+
+       if(respuesta != ""){
        
         jQuery("#imgPrevia").html("<img id='crop' src='${createLink(controller: "demographic",action: "mostrarFotoPrevia")}/"+respuesta+"' />")
         jQuery("#foto").val(respuesta);
@@ -88,6 +89,7 @@
             onSelect: cambiarCoordenadas,
             onChange: cambiarCoordenadas
         });
+        }
       }
 
       function cambiarCoordenadas(c) {

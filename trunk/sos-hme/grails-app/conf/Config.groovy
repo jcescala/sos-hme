@@ -56,8 +56,7 @@ templates2 {
    
    
     '/domain.integral'  {
-      INTERROGATORIO=['interrogatorio',
-                     'motivo_de_consulta']
+      INTERROGATORIO=['interrogatorio']
       MOTIVO = ['motivo_de_consulta']
       EXPLORACION=['exploracion_funcional','antecedentes_o_anamnesis']
       OBSERVATION=['enfermedad_actual']

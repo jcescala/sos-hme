@@ -142,7 +142,7 @@
         <td>${name?.segundoNombre}</td>
         <td>${name?.primerApellido}</td>
         <td>${name?.segundoApellido}</td>
-        <td>${persona.fechaNacimiento}</td>
+        <td> <g:if test="${persona?.fechaNacimiento}"><g:formatDate date="${persona.fechaNacimiento}" format="${g.message(code: 'default.date.format1')}" /></g:if></td>
         <td>${persona.sexo}</td>
         </tr>
       </table>

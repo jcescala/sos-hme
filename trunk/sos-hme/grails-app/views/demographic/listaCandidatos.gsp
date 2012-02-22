@@ -57,7 +57,7 @@
         if (params.personName.segundoApellido) search_params['personName.segundoApellido'] = params.personName.segundoApellido
         
         
-        println("primerNombre"+params.personName.primerNombre)
+       // println("primerNombre"+params.personName.primerNombre)
         %>
 
         <g:link action="admisionPaciente" class="back" params="${search_params}"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
@@ -124,7 +124,7 @@
 	          <td>${name?.primerApellido}</td>
 	          <td>${name?.segundoApellido}</td>
 	          <%-- TODO: taglib --%>
-	          <td><g:if test="${persona?.fechaNacimiento}">${format.format(persona?.fechaNacimiento)}</g:if></td>
+	          <td><g:if test="${persona?.fechaNacimiento}"><g:formatDate date="${persona.fechaNacimiento}" format="${g.message(code: 'default.date.format1')}" /></g:if></td>
 	          <td>${persona.sexo}</td>
 	          <td>
 	            <!-- Si la persona esta en la base tiene id pero si no (p.e. consulta a imp reomoto),
