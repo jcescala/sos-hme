@@ -49,6 +49,14 @@ import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
 /*reportes*/
 import templates.TemplateManager
 import tablasMaestras.Cie10Trauma
+
+/*imagenes*/
+import javax.activation.MimetypesFileTypeMap
+import java.io.File
+import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
+import org.apache.commons.io.FileUtils
+
 class DemographicController{
 
     def hceService
@@ -709,6 +717,7 @@ class DemographicController{
                 }
             }
             
+
             def person = new Person() // sexo, fechaNac (no mas)
             
             println("fechaNacimiento:->"+params.fechaNacimiento)
@@ -722,6 +731,10 @@ class DemographicController{
             
             person.sexo = params.sexo
             
+
+
+
+
             person.addToIds( id )
             
             //def name = new PersonName(params)
@@ -730,13 +743,30 @@ class DemographicController{
             def datos = new PersonNamePatient(params)
             
             //foto del paciente
-            def f = request.getFile('foto')
+
+
+
+            def x1 = params.x1 as Integer
+            def y1 = params.y1 as Integer
+            def x2 = params.x2 as Integer
+            def y2 = params.y2 as Integer
+            File tempPicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar + params.foto)
+            BufferedImage image = ImageIO.read(tempPicture)
+            BufferedImage croppedImage = image.getSubimage(x1, y1, x2 - x1, y2 - y1)
+            File profilePicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar +"prueba.jpg")
+            ImageIO.write(croppedImage, "jpg", profilePicture);
+            FileUtils.deleteQuietly(tempPicture)
+
+
+            //def f = request.getFile('foto')
             def okcontents = ['image/png' , 'image/jpeg' , 'image/gif']
-            if(okcontents.contains(f.getContentType())){
-                datos.foto = f.getBytes()
-                datos.tipofoto = f.getContentType()
+            if(okcontents.contains(new MimetypesFileTypeMap().getContentType(profilePicture).toString())){
+                datos.foto = profilePicture.getBytes()
+                datos.tipofoto = new MimetypesFileTypeMap().getContentType(profilePicture).toString()
             }
-            
+
+
+            /*---------------------------------*/
             person.addToIdentities(datos)
             
             if(person.save()){
@@ -750,8 +780,10 @@ class DemographicController{
             }else{
                 println person.errors
             }
-            
-        }
+
+            redirect(action:'admisionPaciente')
+        
+       }
         
         // creacion de un nuevo paciente
         def tiposIds = TipoIdentificador.list()
@@ -771,6 +803,42 @@ class DemographicController{
             nivelEducIds : nivelEducIds,
             ocupacionIds : ocupacionIds,
             entidadesIds : entidadesIds]
+    }
+
+
+    def fotoPrevia = {
+       def foto
+       def tipoFoto
+            def okcontents = ['image/png' , 'image/jpeg' , 'image/gif']
+            def f = request.getFile('fotoPrevia')
+	    if(!f.empty) {
+                if(okcontents.contains(f.getContentType())){
+	      //flash.message = 'Your file has been uploaded'
+		  new File( grailsApplication.config.images.location.toString() ).mkdirs()
+		  f.transferTo( new File( grailsApplication.config.images.location.toString() + File.separatorChar + f.getOriginalFilename() ) )
+                
+                  render f.getOriginalFilename()
+                  return
+
+                }
+            }
+            render "error"
+    }
+
+
+    def mostrarFotoPrevia = {
+
+        if(params.id){
+            
+            def f = new File( grailsApplication.config.images.location.toString() + File.separatorChar + params.id )
+            if(f.exists()){
+               response.setContentType(new MimetypesFileTypeMap().getContentType(f).toString())
+               response.setContentLength(f.getBytes().size())
+               OutputStream out = response.getOutputStream()
+               out.write(f.getBytes())
+               out.close()
+            }
+        }
     }
     
     /**
