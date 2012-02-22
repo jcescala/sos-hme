@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi10consultageneral" language="groovy" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="924" leftMargin="42" rightMargin="42" topMargin="28" bottomMargin="28">
-	<property name="ireport.zoom" value="5.0"/>
-	<property name="ireport.x" value="1906"/>
-	<property name="ireport.y" value="1101"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1839"/>
+	<property name="ireport.y" value="625"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -88,6 +88,12 @@
 	</field>
 	<field name="edad" class="java.lang.String">
 		<fieldDescription><![CDATA[edad]]></fieldDescription>
+	</field>
+	<field name="etnia" class="java.lang.String">
+		<fieldDescription><![CDATA[etnia]]></fieldDescription>
+	</field>
+	<field name="niveleducativo" class="java.lang.String">
+		<fieldDescription><![CDATA[niveleducativo]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -979,6 +985,14 @@
 					</textElement>
 					<text><![CDATA[FACTORES DE RIESGO*  ]]></text>
 				</staticText>
+				<frame>
+					<reportElement x="432" y="0" width="13" height="30"/>
+					<box>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</frame>
 			</frame>
 			<staticText>
 				<reportElement x="407" y="204" width="13" height="24"/>
@@ -1167,7 +1181,7 @@ METABOLICO Y RENAL]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="445" y="-1" width="13" height="30">
-					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>1 && Integer.parseInt($F{edad})<=6]]></printWhenExpression>
+					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>=1 && Integer.parseInt($F{edad})<=6]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
@@ -1175,14 +1189,18 @@ METABOLICO Y RENAL]]></text>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="458" y="-1" width="13" height="30"/>
+				<reportElement x="458" y="-1" width="13" height="30">
+					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>=7 && Integer.parseInt($F{edad})<=9]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="471" y="-1" width="13" height="30"/>
+				<reportElement x="471" y="-1" width="13" height="30">
+					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>= 10 && Integer.parseInt($F{edad})<=19]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -1190,7 +1208,7 @@ METABOLICO Y RENAL]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="484" y="-1" width="13" height="30">
-					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>=20]]></printWhenExpression>
+					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>=20 && Integer.parseInt($F{edad})<=59]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
@@ -1198,20 +1216,14 @@ METABOLICO Y RENAL]]></text>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="497" y="-1" width="13" height="30"/>
+				<reportElement x="497" y="-1" width="13" height="30">
+					<printWhenExpression><![CDATA[Integer.parseInt($F{edad})>=60]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[X]]></text>
 			</staticText>
-			<frame>
-				<reportElement x="432" y="0" width="13" height="30"/>
-				<box>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-			</frame>
 			<frame>
 				<reportElement x="445" y="0" width="13" height="30"/>
 				<box>
@@ -1248,6 +1260,224 @@ METABOLICO Y RENAL]]></text>
 				<reportElement x="497" y="0" width="14" height="30"/>
 				<box>
 					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="432" y="0" width="13" height="30"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="511" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="524" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textField>
+					<reportElement x="0" y="0" width="14" height="29"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{niveleducativo}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="538" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textField>
+					<reportElement x="0" y="0" width="14" height="29"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etnia}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="552" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="566" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="579" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="593" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="607" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="620" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="634" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="647" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="661" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="675" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="688" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="702" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="716" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="730" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="744" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="758" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="772" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="786" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="800" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="814" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="828" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="841" y="0" width="14" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="855" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="868" y="0" width="13" height="30"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="881" y="0" width="25" height="30"/>
+				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>

@@ -34,4 +34,5 @@ class Person extends Actor {
         fechaNacimiento(nullable:true)
         sexo(nullable:true)
     }
+     
 }

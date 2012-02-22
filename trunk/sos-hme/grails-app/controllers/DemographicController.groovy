@@ -709,11 +709,19 @@ class DemographicController{
                 }
             }
             
-            def person = new Person( params ) // sexo, fechaNac (no mas)
+            def person = new Person() // sexo, fechaNac (no mas)
             
-            //def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
-            //person.setFechaNacimiento( bd )
-
+            println("fechaNacimiento:->"+params.fechaNacimiento)
+            def dia = params.fechaNacimiento.split('-')[0]
+            def mes = params.fechaNacimiento.split('-')[1]
+            def anio = params.fechaNacimiento.split('-')[2]
+            String fecha = anio+'-'+mes+'-'+dia
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd")
+            java.util.Date d =  sdf.parse(fecha.toString())
+            person.fechaNacimiento =  d
+            
+            person.sexo = params.sexo
+            
             person.addToIds( id )
             
             //def name = new PersonName(params)
@@ -742,7 +750,7 @@ class DemographicController{
             }else{
                 println person.errors
             }
-            return
+            
         }
         
         // creacion de un nuevo paciente
