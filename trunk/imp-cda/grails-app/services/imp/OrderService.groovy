@@ -61,6 +61,9 @@ class OrderService {
           
             if((origen.getCedula() == it.getCedula())||(origen.getPasaporte() == it.getPasaporte()) ){
                 puntos = puntos + 50.0 } //50%
+
+            if(origen.getFechaNacimiento() == it.getFechaNacimiento() ){puntos = puntos + 15.0 } //20.0%
+            if(origen.getSexo() == it.getSexo() ){puntos = puntos + 5.0 } //5.0%
             if(origen.getPrimerNombre() == it.getPrimerNombre() ){puntos = puntos + 7.5 } //7.5%
             if(origen.getSegundoNombre() == it.getSegundoNombre() ){puntos = puntos + 7.5 } //7.5%
             if(origen.getPrimerApellido() == it.getPrimerApellido() ){puntos = puntos + 7.5 } //7.5%
@@ -92,6 +95,8 @@ class OrderService {
             pacienteArr.setSegundoNombre(it.candidato.getSegundoNombre())
             pacienteArr.setPrimerApellido(it.candidato.getPrimerApellido())
             pacienteArr.setSegundoApellido(it.candidato.getSegundoApellido())
+            pacienteArr.setFechaNacimiento(it.candidato.getFechaNacimiento())
+            pacienteArr.setSexo(it.candidato.getSexo())
 
             listPacienteArr.add(pacienteArr)
             //println "Candidato "+i+": " + it.candidato

@@ -19,6 +19,8 @@ class PacienteArr {
     String segundoNombre
     String primerApellido
     String segundoApellido
+    String fechaNacimiento //yyyy-MM-dd
+    String sexo //M : masculino , F : femenino
 
 }
 
