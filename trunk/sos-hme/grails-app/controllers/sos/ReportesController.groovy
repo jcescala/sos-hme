@@ -26,6 +26,9 @@ import hce.core.common.generic.*
 
 import java.io.*
 import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+import javax.servlet.*
+import java.net.*
 
 
 /*reportes*/
@@ -35,6 +38,7 @@ import java.util.HashMap
 import net.sf.jasperreports.engine.data.JRXmlDataSource
 import net.sf.jasperreports.engine.export.JRPdfExporter
 import net.sf.jasperreports.engine.*
+
 
 
     /*
@@ -152,6 +156,8 @@ class ReportesController {
             j++
             }
         
+        }else{
+            redirect(controller:'reportes', action:'index')
         }
     }
     
@@ -170,7 +176,7 @@ class ReportesController {
         def nombreDoc = "epi10general"
         def etnia
         def niveleducativo
-        
+        def generado = false
         Folder domain = Folder.findByPath( session.traumaContext.domainPath )
         compos = hceService.getAllCompositionForDate(inicio, fin)
         def archivo = demographicService.createXML(nombreDoc)
@@ -233,49 +239,81 @@ class ReportesController {
                 }
             j++    
             }
-                         def FileName = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.jasper"
-                         def outFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.pdf"
-                         def xmlFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/source/epi10general.xml"
-                         def record = "/pacientes/paciente"
-                         reportsOutput(FileName, outFile, xmlFile, record)
+                         
+         //def FileName = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.jasper"
+         def FileName = []
+         FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultageneralNuevoFormato.jasper")
+         FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultaGeneralP2.jasper")
+         //def outFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.pdf"
+         def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi10consultageneral.pdf")
+         //def xmlFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/source/epi10general.xml"
+         def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi10general.xml")
+         def record = "/pacientes/paciente"
+         generado = reportsOutput(FileName as String[], outFile, xmlFile, record)
+         if(generado){
+            redirect(controller:'reportes', action:'index', params:[creado:true,tipo:outFile])
         }
         
-        redirect(controller:'reportes', action:'index')
+        }else{
+            redirect(controller:'reportes', action:'index', params:[creado:""])
+        }
+        
+        
+        
     }
     
-    public static void reportsOutput(String reportFileName, String outFileName, String xmlFileName, String recordPath){
+    public static boolean reportsOutput(String[] reportFileName, String outFileName, String xmlFileName, String recordPath){
        JRXmlDataSource jrxmlds = new JRXmlDataSource(xmlFileName,recordPath)
        HashMap hm = new HashMap()
-       
+       //List jpList = new ArrayList()
+       List<JasperPrint> jpList = new ArrayList<JasperPrint>();
        try
           {
-              JasperPrint print = JasperFillManager.fillReport(
-                          reportFileName, 
-                          hm, 
-                          jrxmlds);
+              def i =0
+              def j = reportFileName.size()
+              for(i=0;i<=j-1;i++){
+                  println("ciclo:->"+i)
+                  println("path:->"+reportFileName[i])
+                  //jpList.add(net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile(reportFileName[i]));
+                  //JasperReport i = JasperCompileManager.compileReport(reportFileName[i]);
+                  JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
+                  jpList.add(reporte)
+              }
               
-              JRExporter exporter = new JRPdfExporter();
+            
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
+            //exporter.setParameter(JRExporterParameter.JASPER_PRINT,print);
+            
+            exporter.setParameter(net.sf.jasperreports.engine.export.JRPdfExporterParameter.JASPER_PRINT_LIST, jpList);
+            
+            exporter.exportReport()
               
-              exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
-                      exporter.setParameter(JRExporterParameter.JASPER_PRINT,print);
-                      
-                      exporter.exportReport();
-                      System.out.println("Created file: " + outFileName);             
+            System.out.println("Created file: " + outFileName)
+            return true
           }
           catch (JRException e){
               e.printStackTrace();
               System.exit(1);
+              return false
           }
           catch (Exception e){
               e.printStackTrace();
               System.exit(1);
+              return false
           } 
-        
-        
-        
-        
     }
     
-    
+    def descargar={
+        String filename = params.archivo
+        File file = new File(filename);
+        response.setContentType(new javax.activation.MimetypesFileTypeMap().getContentType(file));
+        response.setContentLength((int)file.length());
+        response.setHeader("content-disposition", "attachment; filename=" + URLEncoder.encode(filename, "UTF-8"));
+        InputStream is = new FileInputStream(file);
+        org.springframework.util.FileCopyUtils.copy(is, response.getOutputStream());
+        return null;
+
+    }
     
 }

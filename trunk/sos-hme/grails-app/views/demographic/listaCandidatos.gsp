@@ -56,8 +56,6 @@
         if (params.personName.primerApellido) search_params['personName.primerApellido'] = params.personName.primerApellido
         if (params.personName.segundoApellido) search_params['personName.segundoApellido'] = params.personName.segundoApellido
         
-        
-       // println("primerNombre"+params.personName.primerNombre)
         %>
 
         <g:link action="admisionPaciente" class="back" params="${search_params}"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
