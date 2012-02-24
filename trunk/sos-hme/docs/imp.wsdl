@@ -12,6 +12,8 @@
 <xs:element minOccurs="0" name="segundoNombre" type="xs:string"/>
 <xs:element minOccurs="0" name="primerApellido" type="xs:string"/>
 <xs:element minOccurs="0" name="segundoApellido" type="xs:string"/>
+<xs:element minOccurs="0" name="fechaNacimiento" type="xs:string"/>
+<xs:element minOccurs="0" name="sexo" type="xs:string"/>
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="conjuntoPaciente">
@@ -322,7 +324,7 @@
   </wsdl:binding>
   <wsdl:service name="ImpService">
     <wsdl:port binding="tns:ImpServiceSoapBinding" name="ImpServicePort">
-      <soap:address location="http://127.0.0.1:8080/imp-cda/services/imp"/>
+      <soap:address location="http://localhost:8888/imp-cda/services/imp"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="segundoNombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="primerApellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="segundoApellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="fechaNacimiento" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="sexo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,7 +45,9 @@ import javax.xml.bind.annotation.XmlType;
     "primerNombre",
     "segundoNombre",
     "primerApellido",
-    "segundoApellido"
+    "segundoApellido",
+    "fechaNacimiento",
+    "sexo"
 })
 public class PacienteArr {
 
@@ -56,6 +60,8 @@ public class PacienteArr {
     protected String segundoNombre;
     protected String primerApellido;
     protected String segundoApellido;
+    protected String fechaNacimiento;
+    protected String sexo;
 
     /**
      * Gets the value of the idPaciente property.
@@ -263,6 +269,54 @@ public class PacienteArr {
      */
     public void setSegundoApellido(String value) {
         this.segundoApellido = value;
+    }
+
+    /**
+     * Gets the value of the fechaNacimiento property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    /**
+     * Sets the value of the fechaNacimiento property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFechaNacimiento(String value) {
+        this.fechaNacimiento = value;
+    }
+
+    /**
+     * Gets the value of the sexo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSexo() {
+        return sexo;
+    }
+
+    /**
+     * Sets the value of the sexo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSexo(String value) {
+        this.sexo = value;
     }
 
 }
