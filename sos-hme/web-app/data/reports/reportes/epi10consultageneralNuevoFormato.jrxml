@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi10consultageneral" language="groovy" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="924" leftMargin="42" rightMargin="42" topMargin="28" bottomMargin="28">
-	<property name="ireport.zoom" value="1.5"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi10consultageneral" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="44"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -95,6 +95,9 @@
 	<field name="niveleducativo" class="java.lang.String">
 		<fieldDescription><![CDATA[niveleducativo]]></fieldDescription>
 	</field>
+	<field name="diagnosticos" class="java.lang.String">
+		<fieldDescription><![CDATA[diagnosticos]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -104,7 +107,7 @@
 				<reportElement x="0" y="0" width="324" height="181"/>
 				<image>
 					<reportElement x="9" y="1" width="85" height="61"/>
-					<imageExpression><![CDATA["C:\\Users\\juan\\Desktop\\sosDeve\\sos-hme\\web-app\\data\\reports\\img\\mppslogo.jpg"]]></imageExpression>
+					<imageExpression><![CDATA["..\\img\\mppslogo.jpg"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="10" y="61" width="72" height="39"/>
@@ -311,10 +314,10 @@
 			</componentElement>
 			<image>
 				<reportElement x="103" y="1" width="245" height="190"/>
-				<imageExpression><![CDATA["C:\\Users\\juan\\Desktop\\sosDeve\\sos-hme\\web-app\\data\\reports\\img\\enfermedadesObligatorias.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["..\\img\\enfermedadesObligatorias.jpg"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="348" y="51" width="572" height="1"/>
+				<reportElement x="348" y="50" width="562" height="2"/>
 			</line>
 			<staticText>
 				<reportElement x="349" y="1" width="35" height="11"/>
@@ -338,7 +341,7 @@
 				<text><![CDATA[2. Establecimiento de Salud:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="748" y="1" width="172" height="11"/>
+				<reportElement x="748" y="1" width="162" height="11"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="349" y="18" width="135" height="11"/>
@@ -355,7 +358,7 @@
 				<text><![CDATA[4. Nombre Enfermera o Auxiliar:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="748" y="19" width="172" height="10"/>
+				<reportElement x="748" y="19" width="162" height="10"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="484" y="19" width="134" height="10"/>
@@ -428,7 +431,7 @@
 				<text><![CDATA[REGISTRO DIARIO DE USUARIOS POR MÉDICO GENERAL]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="407" y="85" width="513" height="143"/>
+				<reportElement x="407" y="85" width="503" height="143"/>
 				<frame>
 					<reportElement x="0" y="0" width="25" height="142"/>
 				</frame>

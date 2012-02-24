@@ -47,6 +47,12 @@
             </div>
             <div class="accionrepo">
               <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
+              <g:if test="${params.creado}">
+                <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
+              </g:if>
+              <g:else>
+                Reporte No Generado
+              </g:else>
             </div>
           </g:form>
         </div>
@@ -54,28 +60,5 @@
       </div>
     </div>
     
-    <%--table style="margin-left: 0%; margin-top: 2%; text-align: center">
-      <tr>
-          <td>Tipo Reportes</td>
-          <td style="width: 40%;">Rango de Fechas</td>
-          <td>Acci&oacute;n</td>
-        </tr>
-        <tr>
-            <td>EPI 10 - SIS 02 Emergencia 
-              <g:form action="epi10emergencia">
-            </td>
-            <td>
-              <label for="desde"><g:message code="buscar.desde" /></label>
-              <g:datePicker name="desde" id="desde" value="" precision="day" noSelection="['':'']" />
-
-              <label for="hasta"><g:message code="buscar.hasta" /></label>
-              <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
-            </td>
-            <td>
-                <g:link controller="reportes" action="epi10emergencia" params="[desde:desde]" class="find"><g:message code="reportes.generate"/></g:link>
-              </g:form>
-            </td>
-        </tr>
-    </table--%>
   </body>
 </html>
