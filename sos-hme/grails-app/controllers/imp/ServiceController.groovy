@@ -20,6 +20,7 @@ import converters.*
 import java.util.ArrayList
 
 import demographic.party.*
+import tablasMaestras.TipoIdentificador
 
 
 
@@ -248,12 +249,25 @@ class ServiceController {
 
             def p = new PacienteArr()
             p.setIdPaciente(params.id) //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
-            //  p.setCedula(paciente.getCedula())
-            //  p.setPasaporte(paciente.getPasaporte())
+
+            person.ids.each{
+                def codigo = TipoIdentificador.findByCodigo(it.root)
+                if(codigo.nombreCorto == "CI"){
+                        p.setCedula(it.extension)
+                }
+                if(codigo.nombreCorto == "Pasaporte"){
+                        p.setPasaporte(it.extension)
+                }
+            }
+            
+            
             p.setPrimerNombre(personNamePatient.getPrimerNombre())
             p.setSegundoNombre(personNamePatient.getSegundoNombre())
             p.setPrimerApellido(personNamePatient.getPrimerApellido())
             p.setSegundoApellido(personNamePatient.getSegundoApellido())
+            p.setSexo(person.getSexo())
+            p.setFechaNacimiento(person.getFechaNacimiento().format("yyyy-MM-dd").toString())
+
 
             
 
