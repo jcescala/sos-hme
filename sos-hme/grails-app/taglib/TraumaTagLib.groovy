@@ -28,7 +28,7 @@ class TraumaTagLib {
         if(persona){
         def name= persona.identities.find{ it.purpose == 'PersonNamePatient'}
        
-        out << "<a href='demographic/seleccionarPaciente/"+ persona.id +"'>"
+        out << "<a href='demographic/show/"+ persona.id +"'>"
         out << (name?.primerNombre?:"") + " "+ (name?.segundoNombre?:"") +" "+ (name?.primerApellido?:"") + " "+(name?.segundoApellido?:"")
         out << "</a>"
         }else{

@@ -316,7 +316,7 @@ class ServiceController {
                     }
             }
             
-            redirect(controller:'demographic', action: 'seleccionarPaciente', params: [id: params.id] )
+            redirect(controller:'demographic', action: 'show', params: [id: params.id] )
 
         }else{
 

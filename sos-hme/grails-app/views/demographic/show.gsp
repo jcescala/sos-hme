@@ -175,7 +175,7 @@
           </g:if>
           <g:else>
 
-            <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create"><g:message code="demographic.show.eliminarRelacionPaciente" /></g:link></li>
+            <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link></li>
           </g:else>
 
         </g:else>
