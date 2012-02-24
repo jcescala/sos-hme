@@ -13,6 +13,8 @@ class Paciente implements Serializable{
     String segundoNombre
     String primerApellido
     String segundoApellido
+    String fechaNacimiento
+    String sexo
 
     byte[] imagen
     String tipoImagen
@@ -40,6 +42,8 @@ class Paciente implements Serializable{
         segundoNombre(nullable:true)
         primerApellido(nullable:true)
         segundoApellido(nullable:true)
+        fechaNacimiento(nullable:true)
+        sexo(nullable:true)
         imagen(nullable:true, maxSize: 1048576 /* 1MB */)
         tipoImagen(nullable:true)
      

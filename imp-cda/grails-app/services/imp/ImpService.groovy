@@ -103,6 +103,8 @@ class ImpService {
         p.setSegundoNombre(paciente.getSegundoNombre())
         p.setPrimerApellido(paciente.getPrimerApellido())
         p.setSegundoApellido(paciente.getSegundoApellido())
+        p.setFechaNacimiento(paciente.getFechaNacimiento())
+        p.setSexo(paciente.getSexo())
 
 
         //PREGUNTAR SI SE DESEA CRUZAR O AGREGAR UNO NUEVO!!!
@@ -254,6 +256,7 @@ class ImpService {
                     eq('segundoNombre', paciente.getSegundoNombre())
                     eq('primerApellido', paciente.getPrimerApellido())
                     eq('segundoApellido', paciente.getSegundoApellido())
+                    eq('fechaNacimiento', paciente.getFechaNacimiento())
                 }
                 and{
                     // ne('idPacienteOrg',paciente.getIdPaciente())
@@ -269,6 +272,7 @@ class ImpService {
                     eq('segundoNombre', paciente.getSegundoNombre())
                     eq('primerApellido', paciente.getPrimerApellido())
                     eq('segundoApellido', paciente.getSegundoApellido())
+                    eq('fechaNacimiento', paciente.getFechaNacimiento())
                 }
                 and{
                     // ne('idPacienteOrg',paciente.getIdPaciente())
