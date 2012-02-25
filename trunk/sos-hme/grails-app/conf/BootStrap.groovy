@@ -91,13 +91,13 @@ class BootStrap {
         println " - START: Carga tablas maestras"
         
         // saco para acelerar la carga
-        
+        */
         println "   - CIE 10..."
         def codigos = Cie10Trauma.getCodigos()
         codigos.each { codigo ->
            if (!codigo.save()) println codigo.errors
         }
-        
+        /*
         
         println "   - OpenEHR Concepts..."
         def oehr_concepts = OpenEHRConcept.getConcepts()

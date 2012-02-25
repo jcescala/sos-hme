@@ -293,7 +293,7 @@ class Cie10Trauma {
                         codigo: ((partes[2] == "null") ? null : partes[2]),
                         nombre: partes[3])
         }
-        
+        /*
         def cie10_s_codes = new File("data/CIE10_S00_S99.psv")
         cie10_s_codes.eachLine { line ->
         
@@ -307,7 +307,9 @@ class Cie10Trauma {
                         codigo: ((partes[2] == "null") ? null : partes[2]),
                         nombre: partes[3])
         }
-
+        */
+        
+        
         return ret
     }
 

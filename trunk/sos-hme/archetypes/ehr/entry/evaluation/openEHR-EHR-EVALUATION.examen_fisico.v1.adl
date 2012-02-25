@@ -21,7 +21,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"63D93EBE321FB6E3B5FE952DE0BCD9DF">
+		["MD5-CAM-1.0.1"] = <"27B7486F96CDB716311CC1B4DD5E4371">
 	>
 
 definition
@@ -136,28 +136,65 @@ definition
 									}
 									CLUSTER[at0037] occurrences matches {0..1} matches {	-- Signos Vitales
 										items cardinality matches {0..*; unordered} matches {
-											ELEMENT[at0038] occurrences matches {0..1} matches {	-- Respiración
+											ELEMENT[at0081] occurrences matches {0..1} matches {	-- Respiraciones por Minuto
 												value matches {
-													C_DV_QUANTITY <
-													>
+													DV_COUNT matches {*}
 												}
 											}
-											ELEMENT[at0039] occurrences matches {0..1} matches {	-- Presión Arterial
-												value matches {
-													C_DV_QUANTITY <
-													>
+											CLUSTER[at0072] occurrences matches {0..1} matches {	-- Presión Arterial
+												items cardinality matches {0..*; unordered} matches {
+													ELEMENT[at0073] occurrences matches {0..1} matches {	-- Sistólica
+														value matches {
+															C_DV_QUANTITY <
+																property = <[openehr::125]>
+																list = <
+																	["1"] = <
+																		units = <"mm[Hg]">
+																	>
+																>
+															>
+														}
+													}
+													ELEMENT[at0074] occurrences matches {0..1} matches {	-- Diastólica
+														value matches {
+															C_DV_QUANTITY <
+																property = <[openehr::125]>
+																list = <
+																	["1"] = <
+																		units = <"mm[Hg]">
+																	>
+																>
+															>
+														}
+													}
 												}
 											}
-											ELEMENT[at0040] occurrences matches {0..1} matches {	-- Temperatura
-												value matches {
-													C_DV_QUANTITY <
-													>
+											CLUSTER[at0075] occurrences matches {0..1} matches {	-- Temperatura Corporal
+												items cardinality matches {0..*; unordered} matches {
+													ELEMENT[at0076] occurrences matches {0..1} matches {	-- Valor
+														value matches {
+															C_DV_QUANTITY <
+																property = <[openehr::127]>
+																list = <
+																	["1"] = <
+																		units = <"°C">
+																	>
+																>
+															>
+														}
+													}
+													ELEMENT[at0077] occurrences matches {0..1} matches {	-- Tipo de Medición
+														value matches {
+															1|[local::at0078], 	-- Bucal
+															2|[local::at0079], 	-- Rectal
+															3|[local::at0080]  	-- Axilar
+														}
+													}
 												}
 											}
-											ELEMENT[at0041] occurrences matches {0..1} matches {	-- Frecuencia Cardíaca
+											ELEMENT[at0082] occurrences matches {0..1} matches {	-- Frecuencia Cardíaca
 												value matches {
-													C_DV_QUANTITY <
-													>
+													DV_COUNT matches {*}
 												}
 											}
 										}
@@ -454,22 +491,6 @@ ontology
 					text = <"Signos Vitales">
 					description = <"*">
 				>
-				["at0038"] = <
-					text = <"Respiración">
-					description = <"*">
-				>
-				["at0039"] = <
-					text = <"Presión Arterial">
-					description = <"*">
-				>
-				["at0040"] = <
-					text = <"Temperatura">
-					description = <"*">
-				>
-				["at0041"] = <
-					text = <"Frecuencia Cardíaca">
-					description = <"*">
-				>
 				["at0042"] = <
 					text = <"Piel y Anexos">
 					description = <"*">
@@ -588,6 +609,50 @@ ontology
 				>
 				["at0071"] = <
 					text = <"Descripción">
+					description = <"*">
+				>
+				["at0072"] = <
+					text = <"Presión Arterial">
+					description = <"*">
+				>
+				["at0073"] = <
+					text = <"Sistólica">
+					description = <"*">
+				>
+				["at0074"] = <
+					text = <"Diastólica">
+					description = <"*">
+				>
+				["at0075"] = <
+					text = <"Temperatura Corporal">
+					description = <"*">
+				>
+				["at0076"] = <
+					text = <"Valor">
+					description = <"*">
+				>
+				["at0077"] = <
+					text = <"Tipo de Medición">
+					description = <"*">
+				>
+				["at0078"] = <
+					text = <"Bucal">
+					description = <"*">
+				>
+				["at0079"] = <
+					text = <"Rectal">
+					description = <"*">
+				>
+				["at0080"] = <
+					text = <"Axilar">
+					description = <"*">
+				>
+				["at0081"] = <
+					text = <"Respiraciones por Minuto">
+					description = <"*">
+				>
+				["at0082"] = <
+					text = <"Frecuencia Cardíaca">
 					description = <"*">
 				>
 			>
