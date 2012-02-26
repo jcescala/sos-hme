@@ -37,7 +37,7 @@
 <util:remotePaginate controller="cie10"
                            action="index"
                            params="[text: text]"
-                           total="30"
+                           total="${total}"
                            update="[success: 'resultadoCie', failure: 'errorResultadoCandidatos']"
                            max="10"
                            />

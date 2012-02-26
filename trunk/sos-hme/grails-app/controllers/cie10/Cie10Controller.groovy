@@ -28,17 +28,19 @@ class Cie10Controller {
 
         //println partes
 
-        def _codigos = Cie10Trauma.withCriteria {
+         def v = Cie10Trauma.createCriteria()
+
+        def _codigos = v.list(max: max, offset: offset){
+
             //like('nombre', '%'+ params.text +'%') // Ok si uso el texto completo
             and {
                 partes.each { parte ->
                     like('nombre', '%'+ parte +'%')
                 }
             }
-            maxResults max
-            firstResult offset
            // order 'nombre', 'desc'
         }
+        def total = _codigos.totalCount
 
        
 
@@ -48,7 +50,7 @@ class Cie10Controller {
               partes.each { parte ->
 
                 // El texto en la base esta en upper
-                _codigo.nombre = _codigo.nombre.replaceAll(parte.toUpperCase(), '<b class="highlight">'+parte.toUpperCase()+'</b>')
+                _codigo.nombre = _codigo.nombre.replaceAll(parte, '<b class="highlight">'+parte+'</b>')
               }
               //Hago dicard() para que no se realice un guardado automatico!!!
               _codigo.discard()
@@ -90,7 +92,7 @@ class Cie10Controller {
 
 
 
-    render(template: "/hce/cie10", model :[codigos: _codigos, text: params.text])
+    render(template: "/hce/cie10", model :[codigos: _codigos, text: params.text,total: total])
     
     }
 }
