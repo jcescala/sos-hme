@@ -663,6 +663,8 @@ def signRecord = {
         def auth = authorizationService.getLogin(params.user, params.pass)
         if (!auth)
         {
+			
+			log.info("Firma de registro invalida  {user: "+params.user+"}")
             flash.error = "trauma.sign.wrongSignature"
             return model
         }
@@ -678,6 +680,7 @@ def signRecord = {
         def roleKeys = roles.type
         if ( !roleKeys.contains(Role.MEDICO) )
         {
+			log.info("Firma de registro no autorizada  {user: "+params.user+"}")
             flash.error = "trauma.sign.wrongSigningRole"
             return model
         }
@@ -691,7 +694,8 @@ def signRecord = {
         if ( !hceService.closeComposition(composition, DateConverter.toIso8601ExtendedDateTimeFormat(new Date())) )
         {
             flash.error = "trauma.sign.closeInternalError"
-            return model
+            log.error("Error interno al tratar de cerrar episodio {compositionId: "+composition.id+"}")
+			return model
         }
            
         // TODO:
@@ -703,6 +707,7 @@ def signRecord = {
         // Firma el registro
         if (!hceService.setCompositionComposer(composition, id.root, id.extension))
         {
+			log.error("Error interno al tratar de firmar episodio {user: "+params.user+"}")
             flash.error = "trauma.sign.signInternalError"
             return model
         }
@@ -713,7 +718,8 @@ def signRecord = {
         version.save()
 
         flash.message = "trauma.sign.recordCorrectlySigned"
-
+		
+		log.info("Firma de episodio valida {user: "+person+"}")
 
         //AÑADIENDO CREACION AUTOMATICA DE CDA
 
@@ -772,6 +778,7 @@ def reopenRecord = {
             def auth = authorizationService.getLogin(params.user, params.pass)
             if (!auth)
             {
+				log.info("Reapertura de episodio invalida {user: "+params.user+"}")
                 // TODO: i18n
                 flash.error = "Firma erronea, verifique sus datos"
                 return [episodeId: session.traumaContext?.episodioId,
@@ -795,7 +802,10 @@ def reopenRecord = {
             def roleKeys = roles.type
             if ( !roleKeys.contains(Role.MEDICO) )
             {
-                flash.error = "Firma erronea, la persona firmante no es medico"
+				log.info("Reapertura de episodio no autorizada {user: "+params.user+"}")
+                
+				// TODO: i18n
+				flash.error = "Firma erronea, la persona firmante no es medico"
                 return [episodeId: session.traumaContext?.episodioId,
                     userId: session.traumaContext.userId,
                     composition: composition,
@@ -812,6 +822,7 @@ def reopenRecord = {
 
             if (!hceService.setVersionCommitter(version, id.root, id.extension))
             {
+				//log.error
                 // TODO: i18n
                 flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
                 return [episodeId: session.traumaContext?.episodioId,
@@ -826,7 +837,8 @@ def reopenRecord = {
 
 
             if(!hceService.setVersionPatient(version, composition)){
-
+				
+				//log.error
                 // TODO: i18n
                 flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
                 return [episodeId: session.traumaContext?.episodioId,
@@ -905,19 +917,27 @@ def reopenRecord = {
                 version.data = null
                 if (version.save())
                 {
-                    flash.message = "Reapertura firmada correctamente"
+					log.info("Reapertura firmada correctamente { user: "+params.user+"}")
+                    // TODO: i18n
+					flash.message = "Reapertura firmada correctamente"
                 }
                 else
                 {
                     composition.composer = composerAux
                     composition.content = contentAux
                     version.data = composition;
-                    flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+					log.error("problema creando version")
+					//log.error(version.error)
+                    // TODO: i18n
+					flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
                 }
             }
             else
             {
-                flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+				log.error("problema de creacion de nueva version")
+				//log.error(version.error)
+                // TODO: i18n
+				flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
             }
                 
             return [episodeId: session.traumaContext?.episodioId,
@@ -929,7 +949,8 @@ def reopenRecord = {
                 allSubsections: this.getDomainTemplates()
             ]
         }
-
+		//cuando ocurre esto?
+		println("reopen episodio estado interrogante!!!..")
         return [composition: composition,
             patient: patient,
             episodeId: session.traumaContext?.episodioId,
