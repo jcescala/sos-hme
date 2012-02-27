@@ -40,17 +40,21 @@ class DomainController {
    def selectDomain = {
       
       if (!hceService.domainHasTemplates(params.path))
-      {
-         flash.message = 'domain.selectDomain.flash'
-         redirect(action: "list")
-         return
+      {		
+			//informacion de transaccion para el log.info
+			log.info("Dominio incorrecto: {domainPath: "+ params.path+"}")
+			flash.message = 'domain.selectDomain.flash'
+			redirect(action: "list")
+			return
       }
       
       if (session.traumaContext)
       {
-          session.traumaContext.domainPath = params.path
+			session.traumaContext.domainPath = params.path
       }
       
-      redirect(controller: 'records', action: 'list')
+	  //informacion de transaccion para el log.info
+	  log.info("Dominio seleccionado correctamente: {domainPath: "+ params.path+"}")
+	  redirect(controller: 'records', action: 'list')
    }
 }
