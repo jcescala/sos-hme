@@ -14,6 +14,11 @@
     <div id="listadominios" class="listadominios">
         <g:message code="episodio.list.title" />
     </div>
+  <g:if test="${flash.message}">
+    <div style="color:red; align:right;">
+      <g:message code="${flash.message}" />
+    </div>
+  </g:if>
     
     <div id="menubar2" class="menubar2">
       <ul>
