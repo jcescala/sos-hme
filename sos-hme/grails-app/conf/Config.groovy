@@ -171,8 +171,8 @@ service.simple.url = ""
 service.complex.url = ""
 service.secure.url.cda = ""
 service.secure.url.imp = ""
-//service.serverURL = "http://190.169.161.50:9090"
-service.serverURL = "http://127.0.0.1:8080"
+service.serverURL = "http://190.169.161.50:9090"
+//service.serverURL = "http://127.0.0.1:8080"
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -213,6 +213,40 @@ log4j = {
 //      file name:'file', file:'hibernate.log'
 //   }
 
+
+
+
+	production {
+		appenders {
+			file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos/prod/logs/errorLog.log'
+			file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos/prod/logs/infoLog.log'
+		}
+	}
+	
+	test{
+		appenders {
+			file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos/test/logs/errorLog.log'
+			file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos/logs/test/infoLog.log'
+		}	
+	
+	}
+
+	development {
+		appenders {
+				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos2/dev/logs/errorLog.log'
+				//file name:'errorAppenderService', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLogService.log'
+				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos2/dev/logs/infoLog.log'
+				//rollingFile name: "StackTrace", maxFileSize: 1024, file: "/sos/dev/logs/myApp-stacktrace.log"
+		}
+	}
+	
+	root {
+			error 'errorAppender'
+	}
+	
+	info infoAppender: 'grails.app.controller'
+	
+/*	
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 	       'org.codehaus.groovy.grails.web.pages', //  GSP
 	       'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -227,7 +261,7 @@ log4j = {
     warn   'org.mortbay.log'
     
     //info   'org.hibernate'
-    //debug   file:'org.hibernate'
+    //debug   file:'org.hibernate'*/
 }
 
 
@@ -235,7 +269,9 @@ log4j = {
 //Indice Maestro de Pacientes
 
 //UCV CAIBCO 
-imp.organizacion.id = "db9ab121-f717-4f1f-818c-de88c40b26e4"//LOCAL
+
+imp.organizacion.id = "ee91ca49-3832-452c-91d1-29ef91174587"//LOCAL
+
 //imp.organizacion.id ="003fd514-5167-49af-bcee-9469eac2857f" //SOS2
 
 //imp.organizacion.id ="27097317-ed04-4251-b265-29f10ed83523" //SOS3
