@@ -367,7 +367,9 @@ def create = {
         if (!composition.save())
         {
             // FIXME: haldlear el error si ocurre!, darle un mensaje lindo al usuario, etc.
-            println "Error: " + composition.errors
+            
+			log.error(composition.errors)
+			println "Error: " + composition.errors
         }
             
         // ------------------------------------------------------------------
@@ -403,11 +405,14 @@ def create = {
         if (!version.save())
         {
             println "ERROR: " + version.errors
+			log.error(version.errors)
         }
             
         // Pablo: antes volvia al listado.
         // Queda mas agil que vaya derecho al show luego de crear, asi empieza a registrar.
-        redirect(action:'show', id:composition.id)
+        
+		log.info("Episodio registrado correctamente {compositionId: "+composition.id+"}")
+		redirect(action:'show', id:composition.id)
         return
     }
 }
@@ -426,11 +431,19 @@ def show = {
         return
     }
        
-    // Actualizacion de contexto, esta seleccionado un unico episodio
-    session.traumaContext.episodioId = Integer.parseInt(params.id)
        
+       def composition = Composition.get( params.id )
        
-    def composition = Composition.get( params.id )
+	   if(!composition){
+			
+			//agregar flash.message error.label.episodio.invalido="El episodio seleccionado es invalido"
+			//flash.message="Episodio invalido!!"
+			log.info("Episodio incorrecto {compositionId: " + params.id +"}")
+			redirect(action:'list')
+			return 
+	   }
+		
+		session.traumaContext.episodioId = Integer.parseInt(params.id) 
        
     // FIXME:
     // La primera vez que se muestra luego de seleccionar un paciente, esto da null.
@@ -443,9 +456,14 @@ def show = {
     // NECESARIO PARA EL MENU
     def sections = this.getSections()
     //def subsections = this.getSubsections(templateId.split("-")[0]) // this.getSubsections('EVALUACION_PRIMARIA')
-       
-
-    // patient puede ser null si todavia no se selecciono un paciente para el episodio,
+      
+	
+	//informacion de transaccion para el log.info
+	log.info("Episodio seleccionado correctamente { compositionId: " + composition.id + 
+	", patient: " + patient+"}")
+    
+	
+	// patient puede ser null si todavia no se selecciono un paciente para el episodio,
     // p.e. si la atencion es de urgencia, se atiente primero y luego se identifica al paciente.
     return [idComposition: params.id,
         composition: composition,

@@ -35,6 +35,12 @@ class AuthorizationController {
 					// Pone al usuario en session
 					session.traumaContext = new HCESession( userId: login.id )
 					
+					//informacion de transaccion para el log.info
+					log.info("Acceso valido a SOS Telemedicina Administracion"+
+					" de Usuarios: {userId:"+login.id+", user: "+login.user+", person: "+
+					login.person+ ", roles: "+roles.type+"}")
+					
+					
 					//se redirecciona a el area de administracion usuarios
 					redirect(controller:'loginAuth', action:'list')
 					return
@@ -48,6 +54,10 @@ class AuthorizationController {
 					// Pone al usuario en session
 					session.traumaContext = new HCESession( userId: login.id )
 					
+					//informacion de transaccion para el log.info
+					log.info("Acceso valido a SOS Telemedicina HME: {userId:"+login.id+", user: "+
+					login.user+", person: "+login.person+ ", roles: "+roles.type+"}")
+	
 					//se redirecciona a la vista de dominios medicos.
 					redirect(controller:'domain', action:'list')
 					return
@@ -67,6 +77,7 @@ class AuthorizationController {
             {
                 // FIXME: i18n
                 flash.message = "Login incorrrecto"
+                log.info("Acceso invalido a SOS Telemedicina {user: "+params.user+"}")
             }
         }
         return []
@@ -75,6 +86,7 @@ class AuthorizationController {
     def logout = {
         
         session.traumaContext = null
+        log.info("Session finalizada correctamente")
         redirect(action:'login')
     }
 }
