@@ -708,6 +708,8 @@ class DemographicController{
                     else
                     println "No existe!"
                 }
+                
+                
                 else
                 {
                     // Vuelve a la pagina
@@ -715,6 +717,7 @@ class DemographicController{
                     def tiposIds = TipoIdentificador.list()
                     return [tiposIds: tiposIds]
                 }
+                
             }
             
 

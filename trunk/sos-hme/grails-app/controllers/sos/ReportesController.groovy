@@ -169,9 +169,21 @@ class ReportesController {
         def edad
         def composition = null
         def fechaNace
+        def generarReporte = false
+        def inicio
+        def fin
         
-        def inicio = params.desde
-        def fin = params.hasta
+        if(params.desde && params.hasta){
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy")
+            java.util.Date d =  sdf.parse(params.desde.toString())
+            inicio =  d
+            java.util.Date h =  sdf.parse(params.hasta.toString())
+            fin =  h
+        }
+        println("inicio:->"+inicio)
+        println("fin:->"+fin)
+        
+        
         def j = 0 //loop
         def nombreDoc = "epi10general"
         def etnia
@@ -209,6 +221,7 @@ class ReportesController {
                         
                         def elemento = hceService.getCompositionContentItemForTemplate(composi, "DIAGNOSTICO-diagnosticos")
                         if(elemento != null){
+                            generarReporte = true
                             def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
                             def rmNodeData =  rmNode.data
                             def rmNodeDataEvents = rmNodeData.events
@@ -240,27 +253,158 @@ class ReportesController {
             j++    
             }
                          
-         //def FileName = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.jasper"
-         def FileName = []
-         FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultageneralNuevoFormato.jasper")
-         FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultaGeneralP2.jasper")
-         //def outFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.pdf"
-         def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi10consultageneral.pdf")
-         //def xmlFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/source/epi10general.xml"
-         def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi10general.xml")
-         def record = "/pacientes/paciente"
-         generado = reportsOutput(FileName as String[], outFile, xmlFile, record)
-         if(generado){
-            redirect(controller:'reportes', action:'index', params:[creado:true,tipo:outFile])
-        }
-        
-        }else{
-            redirect(controller:'reportes', action:'index', params:[creado:""])
-        }
+                 if(generarReporte==true){
+                     def FileName = []
+                     FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultageneralNuevoFormato.jasper")
+                     FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultaGeneralP2.jasper")
+                     //def outFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.pdf"
+                     def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi10consultageneral.pdf")
+                     //def xmlFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/source/epi10general.xml"
+                     def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi10general.xml")
+                     def record = "/pacientes/paciente"
+                     generado = reportsOutput(FileName as String[], outFile, xmlFile, record)
+                     if(generado){
+                        redirect(controller:'reportes', action:'index', params:[creado10general:true,tipo:outFile])
+                        }else{
+                            redirect(controller:'reportes', action:'index', params:[creado10general:""])
+                        }
+                     }  
+            }else{
+                redirect(controller:'reportes', action:'index', params:[creado10general:""])
+            }
         
         
         
     }
+    
+    def epi13morbilidad ={
+        def compos = []
+        def paciente = []
+        def sexo 
+        def fullDireccion
+        def edad
+        def composition = null
+        def fechaNace
+        def desde
+        def hasta
+        def generarReporte = false
+        
+        
+        if(params.desde && params.hasta){
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy")
+            java.util.Date d =  sdf.parse(params.desde.toString())
+            desde =  d
+            java.util.Date h =  sdf.parse(params.hasta.toString())
+            hasta =  h
+        }
+        
+        def j = 0 //loop
+        def nombreDoc = "epi13morbilidad"
+        def generado = false
+        Folder domain = Folder.findByPath( session.traumaContext.domainPath )
+        compos = hceService.getAllCompositionForDate(desde, hasta)
+        def archivo = demographicService.createXML(nombreDoc)
+        
+        if(compos != null){
+            while(compos[j]!=null){
+                composition = compos[j]
+                session.traumaContext.episodioId = composition.id
+                def composi = Composition.get(composition.id)
+                def patient = hceService.getPatientFromComposition(composi)
+                if(patient){
+                    def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
+                    if(datos != null){
+                        def direccion = demographicService.tokenDireccion((int)datos.direccion.id)
+                        StringTokenizer st = new StringTokenizer(direccion,"#",false)
+                        def parroquia = st.nextToken()
+                        def municipio = st.nextToken()
+                        def estado = st.nextToken()    
+                        fullDireccion = "Ciudad "+ datos.ciudad + ", Urb/Sector " + datos.urbasector + ", Av/Calle " + datos.avenidacalle + ", Casa/Res " + datos.casaedif
+                        sexo = patient.sexo
+                        //paciente << patient
+                        if(patient.fechaNacimiento){
+                            fechaNace = patient.fechaNacimiento
+                            def myFormatter = new SimpleDateFormat("yyyy")
+                            //println(myFormatter.format(patient.fechaNacimiento))
+                            def hoy = new Date()
+                            edad = Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento))
+                            def elemento = hceService.getCompositionContentItemForTemplate(composi, "DIAGNOSTICO-diagnosticos")
+                            
+                            println("fechaInicioComposi:->"+composi.context.startTime.value)
+                            
+                            if(elemento != null){
+                               def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
+                                def rmNodeData =  rmNode.data
+                                def rmNodeDataEvents = rmNodeData.events
+
+                                def element = rmNodeDataEvents[0].data.items
+                                def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
+                                def codigos = []
+                                while(element[k]!=null){
+                                    def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
+                                    //println("Dianostico "+(k+1)+" "+codigo.nombre)
+                                    println("codigo diagnostico:->"+codigo.subgrupo)
+                                    def notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                    println("notificable:->"+notificable)
+                                    
+                                    if(notificable==true){
+                                        generarReporte = true
+                                        codigos << codigo.nombre
+                                        paciente << patient
+                                        def agregarNodoXml =  demographicService.crearXmlEPI13Morbilidad(nombreDoc,
+                                                                                  patient.ids.value[0].extension,
+                                                                                  patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
+                                                                                  patient.fechaNacimiento.format("dd/MM/yyyy"), 
+                                                                                  fullDireccion,
+                                                                                  parroquia,
+                                                                                  municipio,
+                                                                                  estado,
+                                                                                  composi.context.startTime.value,
+                                                                                  sexo,
+                                                                                  codigos as String[],
+                                                                                  params.desde,
+                                                                                  params.hasta
+                                                                                  )
+                                    }
+                                k++
+                                }
+                            }
+                            
+                        }
+                }
+            
+                
+            }
+          j++      
+        }
+        
+        }
+        
+         if(generarReporte == true){
+            def FileName = []
+             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi13morbilidad.jasper")
+             def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi13morbilidad.pdf")
+             def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi13morbilidad.xml")
+             def record = "/pacientes/paciente"
+             generado = reportsOutput(FileName as String[], outFile, xmlFile, record)
+             if(generado){
+                redirect(controller:'reportes', action:'index', params:[creado13morbilidad:true,tipo:outFile])
+                }
+         }else{
+                redirect(controller:'reportes', action:'index', params:[creado13morbilidad:""])
+            }   
+         
+        
+        
+        
+        
+    }
+    
+    def epi12morbilidad ={
+        
+    }
+    
+    
     
     public static boolean reportsOutput(String[] reportFileName, String outFileName, String xmlFileName, String recordPath){
        JRXmlDataSource jrxmlds = new JRXmlDataSource(xmlFileName,recordPath)

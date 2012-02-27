@@ -242,6 +242,7 @@ list-style:none;
 
 .reportcentral{ width:95%; margin-left:1%;}
 .titulorepo, .rangofechasrepo, .accionrepo{position:relative; float:left; text-align:center;}
+.titulorepo{text-align:left;}
 .titulorepo, .accionrepo{width:30%}
 .rangofechasrepo{width:40%}
 .opcionesrepo{margin-top:2%; font-weight:bold; height:4%;}

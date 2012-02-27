@@ -1,32 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><pacientes>
+<pacientes>
   <fechareporte>
-    24/02/2012
+    26/02/2012
   </fechareporte>
-<paciente>
-<cedula>17979095</cedula>
-<nombre>Juan Carlos escalante</nombre>
-<fechanacimiento>15/09/1986</fechanacimiento>
-<direccion>Ciudad Los Teques, Urb/Sector centro, Av/Calle av la hoyada, Casa/Res res savil torre a, parroquia Los Teques, municipio Guaicaipuro, estado Miranda</direccion>
-<sexo>Masculino</sexo>
-<etnia>1</etnia>
-<niveleducativo>1</niveleducativo>
-<edad>26</edad>
-<diagnosticos>
-<diagnostico>TRAUMATISMOS SUPERFICIALES QUE AFECTAN LA CABEZA CON EL CUELLO</diagnostico>
-<diagnostico>TRAUMATISMOS SUPERFICIALES QUE AFECTAN MULTIPLES REGIONES DEL (DE LOS) MIEMBRO(S) SUPERIOR(ES) CON MIEMBRO(S) INFERIOR(ES)</diagnostico>
-</diagnosticos>
-</paciente>
-<paciente>
-<cedula>17979095</cedula>
-<nombre>Juan Carlos escalante</nombre>
-<fechanacimiento>15/09/1986</fechanacimiento>
-<direccion>Ciudad Los Teques, Urb/Sector centro, Av/Calle av la hoyada, Casa/Res res savil torre a, parroquia Los Teques, municipio Guaicaipuro, estado Miranda</direccion>
-<sexo>Masculino</sexo>
-<etnia>1</etnia>
-<niveleducativo>1</niveleducativo>
-<edad>26</edad>
-<diagnosticos>
-<diagnostico>TRAUMATISMOS POR APLASTAMIENTO MULTIPLE, NO ESPECIFICADOS</diagnostico>
-</diagnosticos>
-</paciente>
 </pacientes>
