@@ -41,7 +41,7 @@ $j(document).ready(function(){
                 lettersonly:true
             },
             "extension":{
-                required: true,
+                //required: true,
 		minlength: 6,
 		maxlength: 8,
 		number: true
@@ -152,7 +152,7 @@ $j(document).ready(function(){
                 lettersonly:"Solo letras"
             },
             "extension":{
-                required: "Obligatorio", 
+                //required: "Obligatorio", 
 		minlength: "M&iacute;nimo 6 d&iacute;gitos",
 		maxlength: "M&aacute;ximo 8 d&iacute;gitos",
                 number: " Num&eacute;rico"

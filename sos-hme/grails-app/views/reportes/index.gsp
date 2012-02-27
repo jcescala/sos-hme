@@ -7,7 +7,7 @@
 
 <html>
   <head>
-    <meta name="layout" content="basicregistro" />
+    <meta name="layout" content="basicrecord" />
     <title><g:message code="reportes.suite.title" /></title>
   </head>
   <body>
@@ -40,14 +40,16 @@
             <div class="titulorepo"><g:message code="reportes.epi10general" /></div>
             <div class="rangofechasrepo">
               <label for="desde"><g:message code="buscar.desde" /></label>
-              <g:datePicker name="desde" id="desde" value="" precision="day" noSelection="['':'']" />
-
+              <%--g:datePicker name="desde" id="desde" value="" precision="day" noSelection="['':'']" /--%>
+              <input name="desde" value="" type="text" class="DateSos" />
+              
               <label for="hasta"><g:message code="buscar.hasta" /></label>
-              <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
+              <%--g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" /--%>
+              <input name="hasta" value="" type="text" class="DateSos" /> 
             </div>
             <div class="accionrepo">
               <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
-              <g:if test="${params.creado}">
+              <g:if test="${params.creado10general}">
                 <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
               </g:if>
               <g:else>
@@ -56,6 +58,51 @@
             </div>
           </g:form>
         </div>
+        <div class="reportlist">
+          <g:form action="epi13morbilidad">
+            <div class="titulorepo"><g:message code="reportes.epi13morbilidad" /></div>
+            <div class="rangofechasrepo">
+              <label for="desde"><g:message code="buscar.desde" /></label>
+              <input name="desde" value="" type="text" class="DateSos" />
+
+              <label for="desde"><g:message code="buscar.hasta" /></label>
+              <input name="hasta" value="" type="text" class="DateSos" />
+            </div>
+            <div class="accionrepo">
+              <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
+              <g:if test="${params.creado13morbilidad}">
+                <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
+              </g:if>
+              <g:else>
+                Reporte No Generado
+              </g:else>
+            </div>
+            
+          </g:form>
+        </div>
+        
+        <div class="reportlist">
+          <g:form action="epi12morbilidad">
+          <div class="titulorepo"><g:message code="reportes.epi12morbilidad" /></div>
+          <div class="rangofechasrepo">
+              <label for="desde"><g:message code="buscar.desde" /></label>
+              <input name="desde" value="" type="text" class="DateSos" />
+
+              <label for="desde"><g:message code="buscar.hasta" /></label>
+              <input name="hasta" value="" type="text" class="DateSos" />
+            </div>
+          <div class="accionrepo">
+              <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
+              <g:if test="${params.creado12morbilidad}">
+                <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
+              </g:if>
+              <g:else>
+                Reporte No Generado
+              </g:else>
+          </div>
+          </g:form>
+        </div>
+        
         
       </div>
     </div>

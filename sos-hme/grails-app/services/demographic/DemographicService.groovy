@@ -298,6 +298,28 @@ class DemographicService {
         return fullAddress
     }
     
+    public String tokenDireccion(Integer lugar){
+        def parroquia = null
+        def municipio = null
+        def estado = null
+        def fullAddress = null
+        if(lugar){
+           def sitio=Lugar.get(lugar) 
+           if(sitio.tipolugar=="Municipio"){
+                municipio =  sitio.nombre
+                estado = Lugar.get(sitio.padre.id)
+                fullAddress = municipio + "#"+estado.nombre
+            }
+            if(sitio.tipolugar=="Parroquia"){
+                parroquia = sitio.nombre
+                municipio = Lugar.get(sitio.padre.id)
+                estado = Lugar.get(municipio.padre.id)
+                fullAddress = parroquia + "#"+ municipio.nombre + "#"+estado.nombre
+            }
+        }
+      return fullAddress  
+    }
+    
     public String getOcupacion(Integer ocupacion){
         def ocupa = Ocupacion.get(ocupacion)
         return ocupa.nombre
@@ -395,7 +417,6 @@ class DemographicService {
         return true
     }
     
-    
     public boolean crearXmlEPI10Gen(String docxml, String cedula, String nombre, String fechanacimiento, String direccion, String sexo,String etnia, String niveleducativo,String edad, String[] diagnosticos){
         def ruta = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml")
         
@@ -462,6 +483,109 @@ class DemographicService {
         return true
     }
     
+    public boolean crearXmlEPI13Morbilidad(String docxml, String cedula, String nombre, String fechaNacimiento, 
+                                           String direccion, String parroquia, String municipio, String estado,
+                                           String fechaRegistro, String sexo, String[] diagnosticos, String semanaInicio, String semanaFin)
+    {
+        def ruta = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml")
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse(ruta);
+        
+        
+        StringTokenizer st = new StringTokenizer(fechaRegistro,"-",false)
+        def anioRegistro = st.nextToken().toString()
+        def mesRegistro = st.nextToken().toString()
+        def diaRegistroBasic = st.nextToken().toString()
+        StringTokenizer stk = new StringTokenizer(diaRegistroBasic)
+        def diaRegistro = stk.nextToken()
+        String fechaRegistroFormato = diaRegistro+"/"+mesRegistro+"/"+anioRegistro
+        
+        Node pacientes = doc.getFirstChild();
+        Node paciente = doc.createElement("paciente");
+        pacientes.appendChild(paciente);
+        
+        Node fechaxml = doc.createElement("fecha");
+        fechaxml.setTextContent(fechaRegistroFormato)
+        paciente.appendChild(fechaxml)
+        
+        Node nombrexml = doc.createElement("nombre");
+        nombrexml.setTextContent(nombre)
+        paciente.appendChild(nombrexml)
+        
+        Node cedulaxml = doc.createElement("cedula");
+        cedulaxml.setTextContent(cedula)
+        paciente.appendChild(cedulaxml)
+        
+        def sexoSigla
+        if(sexo=="Masculino"){
+            sexoSigla="M"
+        }else{
+            sexoSigla="F"
+        }
+        Node sexoxml = doc.createElement("genero");
+        sexoxml.setTextContent(sexoSigla)
+        paciente.appendChild(sexoxml)
+        
+        Node fechaNacimientoxml = doc.createElement("fechanacimiento");
+        fechaNacimientoxml.setTextContent(fechaNacimiento)
+        paciente.appendChild(fechaNacimientoxml)
+        
+        Node direccionxml = doc.createElement("direccionresidencia");
+        direccionxml.setTextContent(direccion)
+        paciente.appendChild(direccionxml)
+        
+        Node estadoxml = doc.createElement("entidad");
+        estadoxml.setTextContent(estado)
+        paciente.appendChild(estadoxml)
+        
+        Node municipioxml = doc.createElement("municipio");
+        municipioxml.setTextContent(municipio)
+        paciente.appendChild(municipioxml)
+        
+        Node parroquiaxml = doc.createElement("parroquia");
+        parroquiaxml.setTextContent(parroquia)
+        paciente.appendChild(parroquiaxml)
+        
+        Node diagnosticosxml = doc.createElement("diagnosticos")
+        paciente.appendChild(diagnosticosxml)
+        
+        def i=diagnosticos.size()
+        def j=0
+        while(j<=i-1){
+            Node diagnosticoxml = doc.createElement("diagnostico")
+            diagnosticoxml.setTextContent(diagnosticos[j])
+            diagnosticosxml.appendChild(diagnosticoxml)
+            j++
+        }
+        
+        StringTokenizer stsi = new StringTokenizer(semanaInicio,"-",false)
+        def semanaInicioDia = stsi.nextToken()
+        def semanaInicioMes = stsi.nextToken()
+        
+        StringTokenizer stsf = new StringTokenizer(semanaFin,"-",false)
+        def semanaFinDia = stsf.nextToken()
+        def semanaFinMes = stsf.nextToken()
+        
+        String semanaRegistro = "Del "+semanaInicioDia+"/"+semanaInicioMes+" al "+semanaFinDia+"/"+semanaFinMes
+        Node semanaxml = doc.createElement("semana");
+        semanaxml.setTextContent(semanaRegistro)
+        paciente.appendChild(semanaxml)
+        
+        Node anioxml = doc.createElement("anioregistro");
+        anioxml.setTextContent(stsi.nextToken())
+        paciente.appendChild(anioxml)
+        
+        
+        def output = XmlUtil.serialize(pacientes)
+        def writer = new File(ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml"))
+        writer.write(output)
+        return true
+                                           
+    }
+        
+    
+    
     
     
     public List getSections(String ruta){
@@ -490,5 +614,34 @@ class DemographicService {
            subsections << section + "-" + subsection
         }
         return subsections
+    }
+    
+    public boolean verificaEnfermedadNotificable(String subgrupo, String codigo){
+        def contenido = false
+        def gruposNotificables = ["A00","A08","A09","B15","A15","A16","A17","A18","A17","A18","A19","J10","J11",
+                                  "A50","Z21","B20","B21","B22","B23","B24","A37","B26","A33","A34","A35","A36",
+                                  "B05","B06","A90","A91","A95","B50","B51","B52","B53","B54","B56","B57","A82",
+                                  "A27","A87","G00","B01","B16","B17","B19","J12","J13","J14","J15","J16","J17",
+                                  "J18","T60","A82","R50","Y40","Y41","Y42","Y43","Y44","Y45","Y46","Y47","Y48",
+                                  "Y49","Y50","Y51","Y52","Y53","Y54","Y55","Y56","Y57","Y58","Y59"]
+        
+        def codigosNotificables = ["A01.0","A92.2","A39.0","A39.9","B17.1","B18.2","G82.0"]
+        
+        if(codigo=="NULL"){
+            if(subgrupo in gruposNotificables){
+                contenido = true
+            }else{
+                contenido = false
+            }
+        }
+        else{
+            if(codigo in codigosNotificables || subgrupo in gruposNotificables){
+                contenido = true
+            }
+            else{
+                contenido = false
+            }
+        }
+        return contenido
     }
 }
