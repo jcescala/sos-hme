@@ -86,8 +86,8 @@ class BootStrap {
         //HORA DE CARACAS-VENEZUELA GMT-04:30
 */
         TimeZone.'default'= TimeZone.getTimeZone('GMT-04:30') //set the default time zone
-        
  /*
+ 
         println " - START: Carga tablas maestras"
         
         // saco para acelerar la carga
