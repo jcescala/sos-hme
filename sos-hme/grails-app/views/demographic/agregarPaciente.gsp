@@ -28,11 +28,15 @@
       }
     </style>
     <script>
+	
+
+	
+	
       jQuery(document).ready(function()
       {
           jQuery.datepicker.setDefaults(jQuery.datepicker.regional['${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}']);
 
-                   jQuery('#fechaNacimiento').datepicker({dateFormat: 'dd-mm-yy',
+                   jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',
                    changeYear: true,
                     //altField: '#actualDate',
                     buttonText: 'Calendario',
@@ -58,6 +62,9 @@
 
        jQuery(document).ready(function()
       {
+	  
+
+
         jQuery("#foto").attr("readonly",true);
         jQuery("#foto").click(function (){
 
@@ -102,7 +109,26 @@
     </script>
     
     <g:javascript>
-          
+        
+		function updateIdentidad( root, extension ){
+            ${remoteFunction( 
+              controller:'demographic', 
+              action:'ajaxGetPrimerApellido', 
+              update:'identidades', 
+              params:'\'id=\' + root +\'-\' +extension')}
+			
+		
+		}
+		function updateNombres( root, extension){
+			${remoteFunction( 
+			controller:'demographic', 
+			action:'ajaxGetNombres', 
+			update:'nombres', 
+			params:'\'id=\' + root +\'-\' +extension')}
+			
+
+		  
+		}
          function updateSubCats( category ){
               var selectpais = document.getElementById("paisnace");
               if (selectpais.options[selectpais.selectedIndex].value == 1){
@@ -165,6 +191,10 @@
         }
         //return true;
       }
+	  
+
+	  
+	  
     </script>
   </head>
   
@@ -189,38 +219,39 @@
 
         <fieldset>
         <legend>Identificaci&oacute;n</legend>
-          <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
-          <g:textField name="primerApellido" value="${params.primerApellido}"/>
-                  
-          <label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
-          <g:textField name="segundoApellido" value="${params.segundoApellido}" />
+
 		  
-          <label for="primerNombre"><g:message code="persona.primerNombre" /></label>
-          <g:textField name="primerNombre" value="${params.primerNombre}" />
-        
-          <label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
-          <g:textField name="segundoNombre" value="${params.segundoNombre}" />
 		  
           <label for="identificador"><g:message code="persona.identificador" /></label>
           <g:textField name="extension" value="${params.identificador}" />
-          <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
+		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/>
+			
+		   <div id="nombres">
+				<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
+				<g:textField name="primerApellido" value="${params.primerApellido}"/>
+			
+				<label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
+				<g:textField name="segundoApellido" value="${params.segundoApellido}" />
+			  
+				<label for="primerNombre"><g:message code="persona.primerNombre" /></label>
+				<g:textField name="primerNombre" value="${params.primerNombre}" />
+			
+				<label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
+				<g:textField name="segundoNombre" value="${params.segundoNombre}" />
+
+
 		  
-          <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-          <%--g:datePicker name="fechaNacimiento" value="none" precision="day" noSelection="['':'']"/--%>
-          <input name="fechaNacimiento" type="text" id="fechaNacimiento" value="${params.fechaNacimiento}"/>  <br /><br />
-          
-          <label for="sexo"><g:message code="persona.sexo" /></label>
-            <g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
-          
-          <label for="foto"><g:message code="persona.foto" /></label>
+				<label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
 
-          <%-- <input type="file" name="foto" id="foto" style="width: 300px;"/> --%>
-           <input type="text" name="foto" id="foto" style="width: 300px;"/>
-           
-          <div id="imgPrevia">
-             
+				<input name="fechaNacimiento" type="text" id="fechaNacimiento" class="Date" value="${params.fechaNacimiento}"/>  <br /><br />
 
-           </div>
+				<label for="sexo"><g:message code="persona.sexo" /></label>
+				<g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+
+				<label for="foto"><g:message code="persona.foto" /></label>
+				<input type="text" name="foto" id="foto" style="width: 300px;"/>
+          </div>
+          <div id="imgPrevia"></div>
 
 
       </fieldset>
@@ -253,7 +284,7 @@
             <g:textField name="ciudadnacimiento" value="${params.ciudadnacimiento}" />
           </div>  
           
-          <br />
+          <br/>
                   
       </fieldset>
       
