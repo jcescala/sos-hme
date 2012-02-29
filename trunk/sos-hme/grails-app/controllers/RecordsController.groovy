@@ -825,7 +825,11 @@ def reopenRecord = {
 				//log.error
                 // TODO: i18n
                 flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
-                return [episodeId: session.traumaContext?.episodioId,
+                
+				log.error("Error al tratar de crear object referencia para"+
+				" la nueva version en hce.hceService.setVersionCommitter")
+				
+				return [episodeId: session.traumaContext?.episodioId,
                     userId: session.traumaContext.userId,
                     composition: composition,
                     patient: patient,
@@ -841,6 +845,8 @@ def reopenRecord = {
 				//log.error
                 // TODO: i18n
                 flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+				log.error("Error intentando referenciar a paciente en"+
+				" la nueva version en hce.hceService.setVersionPatient")
                 return [episodeId: session.traumaContext?.episodioId,
                     userId: session.traumaContext.userId,
                     composition: composition,
@@ -926,7 +932,7 @@ def reopenRecord = {
                     composition.composer = composerAux
                     composition.content = contentAux
                     version.data = composition;
-					log.error("problema creando version")
+					log.error("Error creando nueva version en version.save()")
 					//log.error(version.error)
                     // TODO: i18n
 					flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
@@ -934,7 +940,7 @@ def reopenRecord = {
             }
             else
             {
-				log.error("problema de creacion de nueva version")
+				log.error("problema de creacion de nueva version en new_version.save()")
 				//log.error(version.error)
                 // TODO: i18n
 				flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
