@@ -8,8 +8,13 @@
 	 4. MENU 3 		|  Para las páginas que lo requieran
 	 5. MENU 4 		|  Para las páginas que lo requieran
 	 6. NIVEL 1		|  Para todas las páginas 
-	 7. NIVEL 3  	 |  Para las páginas que lo necesiten
-	 8. RESUMEN PACIENTE Y EPISODIO  |  para el Registro Clínico
+	 7. NIVEL 2		|  Para las páginas que lo necesitan - que no tienen menu 3
+	 8. NIVEL 3  	 |  Para las páginas que lo necesiten - que tienen menu 3
+	 9. RESUMEN PACIENTE Y EPISODIO  |  para el Registro Clínico
+	 10. DETALLE DEL PACIENTE  |  para el Detalle del paciente
+	 11.  BOTONES | para las páginas que lo requieran
+	 12.  TABLAS  | para las páginas que lo requieran
+	 13.  FILTROS | para las páginas que lo requieran
 
 -------------------------------------------------  */
 
@@ -24,6 +29,8 @@ a {
 	color:#0e2944}
 .negritas {
 	font-weight:bold;}
+.nota {
+	color:#a1a1a1;}
 	
 /*  -------------------------------------------
 
@@ -269,7 +276,7 @@ a {
 	
 /*  -------------------------------------------
 
-    6. NIVEL 1|  Para todas las páginas 
+    6. NIVEL 1	|  Para todas las páginas 
 
 -------------------------------------------------  */
 
@@ -280,15 +287,26 @@ a {
 	
 /*  -------------------------------------------
 
-     7. NIVEL 3   |  Para las páginas que lo necesiten
+    7. NIVEL 2	|  Para todas las páginas - para las paginas que no tengan menu 3
 
 -------------------------------------------------  */
+
 #nivel2 {
-	margin-left:200px;
+	background:#FFF;
 	padding:3px;
 	margin-top:2px;
 	min-height:300px;
 	}
+#nivel2 #contenido {
+	padding:20px 14px;
+	}
+	
+/*  -------------------------------------------
+
+     8. NIVEL 3   |  Para las páginas que lo necesiten y que tengan menu 3
+
+-------------------------------------------------  */
+
 #nivel3 {
 	margin-left:200px;
 	background:#FFF;
@@ -302,7 +320,7 @@ a {
 	
 /*  -------------------------------------------
 
-     8. RESUMEN PACIENTE Y EPISODIO  |  para registroClinico-Interrogatorio.html
+     9. RESUMEN PACIENTE Y EPISODIO  |  para registroClinico-Interrogatorio.html
 
 -------------------------------------------------  */
 #resumenPaciente {
@@ -346,13 +364,120 @@ a {
 	padding:0;}
 #resumenEpisodio .info {
 	font-size:12px;}
+
+/*  -------------------------------------------
+
+    10. DETALLE DEL PACIENTE  |  para el Detalle del paciente
+
+-------------------------------------------------  */
+#detallePaciente {
+	background:#f3f3f3;
+	border:solid 1px #dddddd;
+	font-size:14px;
+	color:#474747;
+	position:relative;
+	padding:8px;
+	min-height:125px;
+	margin-bottom:10px;
+	}
+#detallePaciente img {
+	float:left;
+	padding-right:24px;}
+#detallePaciente h1 {
+	color:#052441;
+	font-size:18px;
+	margin:0;
+	padding:0;
+	margin-bottom:10px;
+	}
+#detallePaciente p {
+	margin:0;
+	padding:0;
+	margin-bottom:5px;}
+#detallePaciente .etiqueta {
+	color:#b5b5b5;
+	font-weight:bold;
+	display:inline-block;
+	width:100px;
+	text-align:right;
+	padding-right:8px;}
+/*  -------------------------------------------
+
+    11. BOTONES  |  para las páginas que lo requieran
+
+-------------------------------------------------  */
+.boton1 {    /* Boton con fondo amarillo degradado  */
+	display:inline-block;
+	padding: 7px 15px;
+	background:#f5cb59 url(../images/bkg_boton1.gif) repeat-x;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4e2b3), to(#f5c645));
+    background-image: -webkit-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -moz-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -ms-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -o-linear-gradient(top, #f4e2b3, #f5c645);
+	color:#3f3f3f;
+	border:solid 1px #dddddd;
+	text-decoration:none;
+	margin: 5px;
+	}
+.boton1 img {
+	padding-right:5px;
+	border:none;}
+.boton1:hover {
+	background:#ebb420;}
 	
-/*----AGREGADOS----*/
+.boton2 {    /* Boton con fondo azul mate  */
+	display:inline-block;
+	padding:2px 12px;
+	background:#7c91a6;
+	color:#FFF;
+	text-decoration:none;
+	}
+.boton2:hover {
+	background:#4a6074;}
+
+	
+/*  -------------------------------------------
+
+    12. TABLAS |  para las páginas que lo requieran
+
+-------------------------------------------------  */
+.tabla1 {  /* Cabecera Gris, borde inferior gris, lineas horizontales impares */
+border-bottom:#c1c1c1 solid 1px;
+	}
+.tabla1 th {
+	background:#e6e6e6;
+	color:#3e556c;
+	text-align:left;
+	padding:8px;
+	}
+.tabla1 td {
+	margin:1px 0;
+	padding:8px;}
+.tabla1 tr:nth-child(odd) {
+	background:#f7f7f7;
+	}
+.tabla1 tr:hover {
+	background:#faf5cb;}
+
+
+/*  -------------------------------------------
+
+    13. FILTROS |  para las páginas que lo requieran
+
+-------------------------------------------------  */
+.filtros {
+	border-bottom:1px solid #c1c1c1;
+	padding:5px 0;
+	margin:10px 0 20px 0;
+	}
+	
+	
+	
+	/*----AGREGADOS----*/
 
 .openCluster:hover{
 cursor: pointer;
 
 
 }	
-	
-	

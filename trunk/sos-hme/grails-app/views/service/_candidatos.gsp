@@ -9,7 +9,7 @@
       <g:else>
 
         
-        <table >
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla1">
 
           <tr>
          <%--  <th>ID Paciente</th> --%>
@@ -18,12 +18,8 @@
 
           <th><g:message code="hce.service.candidatos.identificadores" /></th>
           
-          <th><g:message code="hce.service.candidatos.primerNombre" /></th>
-          <th><g:message code="hce.service.candidatos.segundoNombre" /></th>
-
-          <th><g:message code="hce.service.candidatos.primerApellido" /></th>
-          <th><g:message code="hce.service.candidatos.segundoApellido" /></th>
-
+          <th><g:message code="hce.service.candidatos.nombre" /></th>
+          
           <th><g:message code="hce.service.candidatos.acciones" /></th>
 
           </tr>
@@ -51,16 +47,14 @@
                     ${paciente.pasaporte}[Pasaporte] </td>
                     </g:if>
 
-                  <td>${paciente.primerNombre}</td>
-                  <td>${paciente.segundoNombre}</td>
-
-                  <td>${paciente.primerApellido}</td>
-                  <td>${paciente.segundoApellido}</td>
+                  <td>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</td>
+                  
 
 
 	        <td><g:link controller="service"
                             action="agregarRelacionPaciente"
-                            params="[idCentroImp: paciente.idCentro,idPacienteImp: paciente.idPaciente ,idPacienteOrg: idPacienteOrg]">Seleccionar</td>
+                            params="[idCentroImp: paciente.idCentro,idPacienteImp: paciente.idPaciente ,idPacienteOrg: idPacienteOrg]"
+                            class="boton2">Seleccionar</td>
                 </g:link>
                 </tr>
 	      </g:each>
