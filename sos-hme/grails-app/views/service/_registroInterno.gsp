@@ -9,7 +9,7 @@
 </g:if>
 <g:else>
 
-  <table id="list1">
+  <table id="list1" width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla1">
     <tr>
       <th><g:message code="trauma.list.label.id" /></th>
     <th><g:message code="trauma.list.label.startTime" /></th>
@@ -39,7 +39,7 @@ ${composition.context.otherContext.item.value.value}
       <g:message code="${g.stateForComposition(episodeId:composition.id).toString()}" />
       </td>
       <td>
-      <g:link controller="records" action="show" id="${composition.id}"><g:message code="trauma.list.action.show" /></g:link>
+      <g:link controller="records" action="show" id="${composition.id}" class="boton2"><g:message code="trauma.list.action.show" /></g:link>
       <br />
       <g:if test="${(g.stateForComposition(episodeId:composition.id) == Version.STATE_SIGNED)}">
         <g:set var="version" value="${Version.findByData(composition)}"/>

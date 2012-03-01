@@ -7,7 +7,7 @@
           <p><g:message code="service.imp.cdaCoincidentes.false" /></p>
         </g:elseif>
         <g:else>
-          <table >
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla1">
 
             <tr>
               <th><g:message code="hce.service.registroExterno.titulo" /></th>
@@ -23,8 +23,8 @@
                 <td>${cda.fechaCreacion}</td>
 
 
-                <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'cda']"><g:message code="hce.cda.verCda" /> </g:link></td>
-              <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'xml']"><g:message code="hce.cda.verXML" /> </g:link></td>
+                <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'cda']" class="boton2"><g:message code="hce.cda.verCda" /> </g:link></td>
+              <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'xml']" class="boton2"><g:message code="hce.cda.verXML" /> </g:link></td>
 
               </tr>
             </g:each>

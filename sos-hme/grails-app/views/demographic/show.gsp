@@ -1,7 +1,9 @@
-
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
+<%@ page import="hce.core.common.directory.Folder" %>
 <html>
   <head>
-    <meta name="layout" content="ehr-modal" />
+<%-- <meta name="layout" content="ehr-modal" /> --%>
   <g:javascript library="jquery" />
 
   <g:javascript>
@@ -21,304 +23,403 @@
   </g:javascript>
 
   <script type="text/javascript" src="${createLinkTo(dir:'js/fancybox', file:'jquery.mousewheel-3.0.4.pack.js')}"></script>
-	<script type="text/javascript" src="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.js')}"></script>
-	<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.css')}" media="screen" />
- 	
-	 <g:javascript>
+  <script type="text/javascript" src="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.js')}"></script>
+  <link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.css')}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'estilo.css')}"/>
+
+
+
+  <g:javascript>
 		$(document).ready(function() {
-                
+    $('.pestana').hide();
+
 			/*
 			*   Examples - images
 			*/
-                         // alert('hola');
-                          $(".ficha").fancybox({
-                              ajax : {
-                              type	: "GET"
-		    
-                              },
-                        'transitionIn'	: 'elastic',
+    // alert('hola');
+    $(".ficha").fancybox({
+    ajax : {
+    type	: "GET"
+
+    },
+    'transitionIn'	: 'elastic',
 			'transitionOut'	: 'elastic'
-                          });
+    });
 
-               });
 
-       </g:javascript>
+    $('.ping').click(function(){
+    $('.ping').removeClass('selected');
+    $(this).addClass('selected');
+    });
+
+    });
+
+    function cambio(pestana){
+
+
+    $('.pestana').hide();
+    $(pestana).show();
+
+    }
+
+  </g:javascript>
   <title><g:message code="demographic.show.title" /></title>
-  <style>
-    table #list {
-      background-color: #ffffdd;
-      width: 100%;
-      font-size: 12px;
-      border: 1px solid #000;
-    }
-    #list th {
-      background-color: #ccccdd;
-    }
-    #list td {
-      text-align: center;
-    }
-  </style>
 
 
 
 
 </head>
 <body>
-  <div class="bodydomainlist">
-    
 
-<h2><g:message code="demographic.show.title" /></h2>
-<g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
+<g:set var="person_id" value="${persona.id}" />
+<g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
+
+
+<div id="cabecera">
+  <div id="cabColI">
+    <div id="logo">
+      <h1><img src="${createLinkTo(dir:'images' ,file:'SOS.gif')}" alt="SOS" width="97" height="53" align="texttop" />Historias Médicas</h1>
+    </div>
+    <div id="breadcrumbs">
+      <g:link controller="domain" action="list" class="contextoEhr"><g:message code="domain.action.list" /></g:link>
+      <g:set var="folder" value="${Folder.findByPath(session.traumaContext.domainPath)}" />
+${folder.name.value}
+
+    </div>
+  </div>
+  <div id="cabColD">
+    <div id="infoSec"><g:formatDate date="${new Date()}" formatName="default.date.format.text" /> &nbsp; | &nbsp; Cambiar idioma
+      <g:langSelector>
+        <g:if test="${(session.locale.getLanguage()!=it)}">
+
+          <a href="?sessionLang=${it}&templateId=${params.templateId}" class="contextoEhr"><img src="${createLinkTo(dir:'images' ,file:'ico_'+it+'.jpg')}" alt="${message(code:'common.lang.'+it)}" width="25" height="34" hspace="2" border="0" align="absmiddle" /></a>
+        </g:if>
+      </g:langSelector>
+
+    </div>
+    <div id="infoLogin">
+      <g:datosUsuario userId="${userId}" /> &nbsp; | &nbsp;
+
+      <g:link controller="authorization" action="logout" class="contextoEhr"><g:message code="authorization.action.logout" /></g:link>
+    </div>
+
+  </div>
+</div>
+<div id="menu1">
+  <ul>
+    <li><a href="#" class="selected">Episodios</a></li>
+    <li><a href="#">Admisión</a></li>
+    <li><a href="#">Buscar Episodios            </a></li>
+    <li><a href="#">Buscar </a></li>
+    <li><a href="#">Pacientes            </a></li>
+    <li><a href="#">Nuevo Episodio</a></li>
+    <li><a href="#">Reportes</a></li>
+  </ul>
+</div>
+<div id="nivel1">
+  <div id="detallePaciente">
+
+<%-- Preguntar primero si tiene foto--%>
+
+    <g:if test="${!name || !name.foto || !name.tipofoto}">
+
+      <g:if test="${persona.sexo=='Masculino'}">
+
+        <p><img src="${createLinkTo(dir:"images", file:"man.png")}" width="122" height="124" alt="Nombre Paciente" /></p>
+      </g:if>
+      <g:else>
+
+        <p><img src="${createLinkTo(dir:"images", file:"woman.png")}" width="122" height="124" alt="Nombre Paciente" /></p>
+      </g:else>
+    </g:if>
+    <g:else>
+
+
+      <p><img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:person_id])}" width="122" height="124" alt="Nombre Paciente" /></p>
+    </g:else>
+
+
+    <h1><g:message code="demographic.show.title"/></h1>
+    <p><span class="etiqueta">Nombre:</span> ${name.toString()} </p>
+    <p><span class="etiqueta">Sexo:</span> ${persona.sexo}</p>
+    <p><span class="etiqueta">Ids:</span>  <g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></p>
+    <p><span class="etiqueta">Fecha Nac.:</span> <g:if test="${persona?.fechaNacimiento}"><g:formatDate date="${persona.fechaNacimiento}" format="${g.message(code: 'default.date.format1')}" /></g:if></p>
+
+  </div>
+
+  <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
     <div style="color:red;">
       <g:message code="trauma.show.feedback.patientAlreadySelectedForThisEpisode" />
     </div><br/>
   </g:compositionHasPatient>
+  <div id="menu2">
+
     <ul class="top_actions">
       <li>
       <g:link action="admisionPaciente" class="back"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
       </li>
-     <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
-      <li>
-      <g:link controller="records" action="show" id="${session.traumaContext.episodioId}" class="home"><g:message code="demographic.lista_candidatos.action.backToEpisode" /></g:link>
-      </li>
+      <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
+        <li>
+        <g:link controller="records" action="show" id="${session.traumaContext.episodioId}" class="home"><g:message code="demographic.lista_candidatos.action.backToEpisode" /></g:link>
+        </li>
       </g:compositionHasPatient>
       <li>
       <g:link controller="records" action="create" params="[root:root, extension:extension]" class="create"><g:message code="demographic.show.action.createEpisode" /></g:link>
       </li>
-      <!--
-       <li>
-       <g:link controller="service" action="agregarRalacionPaciente" params="[]" class="create">Agregar Relacion Paciente</g:link>
-       </li>
-       <li>
-       <g:link controller="service" action="agregarRalacionPaciente" params="[]" class="create">Eliminar Relacion Paciente</g:link>
-       </li>-->
 
-<%-- TODO: que otra accion sea seleccionar un episodio existente --%>
     </ul>
 
-
-    <g:set var="person_id" value="${persona.id}" />
-
+  </div>
 
 
 
 
-<%-- DATOS DEMOGRAFICOS--%>
-    <div id="demograficos">
-      <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
 
-
-<%-- Preguntar primero si tiene foto--%>
-
-      <g:if test="${!name || !name.foto || !name.tipofoto}">
-
-      <g:if test="${persona.sexo=='Masculino'}">
-        <img src="${createLinkTo(dir:"images", file:"man.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
-      </g:if>
-      <g:else>
-        <img src="${createLinkTo(dir:"images", file:"woman.png")}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
-      </g:else>
-      </g:if>
-      <g:else>
-      
-        <img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:person_id])}" style="width:120px; border-color: black;border-style: solid; float: left; margin:10px;"/>
-      
-      </g:else>
-      <h2>${name.toString()}</h2>
-      <table id="list" class="listrecords">
-        <tr>
-          <th><g:message code="persona.identificadores" /></th>
-        <th><g:message code="persona.primerNombre" /></th>
-        <th><g:message code="persona.segundoNombre" /></th>
-        <th><g:message code="persona.primerApellido" /></th>
-        <th><g:message code="persona.segundoApellido" /></th>
-        <th><g:message code="persona.fechaNacimiento" /></th>
-        <th><g:message code="persona.sexo" /></th>
-        </tr>
-        <tr>
-          <td><g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></td>
-
-        <td>${name?.primerNombre}</td>
-        <td>${name?.segundoNombre}</td>
-        <td>${name?.primerApellido}</td>
-        <td>${name?.segundoApellido}</td>
-        <td> <g:if test="${persona?.fechaNacimiento}"><g:formatDate date="${persona.fechaNacimiento}" format="${g.message(code: 'default.date.format1')}" /></g:if></td>
-        <td>${persona.sexo}</td>
-        </tr>
-      </table>
-    </div>
-<%-- DATOS OPCIONES DE IMP--%>
-
-    <g:if test="${conexionImp}">
-
-    <div id="imp">
-
-      <h4><g:message code="demographic.show.opcionesImp" /></h4>
+  <div id="nivel2">
+    <div id="menu4">
       <ul>
 
-        <g:if test="${!agregadoImp}">
-          <li><g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="create"><g:message code="service.imp.agregarPaciente" /></g:link></li>
-        </g:if>
-        <g:else>
-          <li><g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="create"><g:message code="service.imp.eliminarPaciente" /></g:link></li>
+        <li><a  class="selected ping" href="javascript:cambio('#pestanaRegistrosInternos')" ><g:message code="service.imp.registrosInternos" /></a></li>
+        <li><a  class="ping" href="javascript:cambio('#pestanaRegistrosExternos')"><g:message code="service.imp.registrosExternos" /></a></li>
+        <li><a class="ping" href="javascript:cambio('#pestanaOrganizaciones')"><g:message code="service.imp.listadoOrganizaciones" /></a></li>
+        <li><a class="ping" href="javascript:cambio('#pestanaOpcionesImp')" ><g:message code="demographic.show.opcionesImp" /></a></li>
+      </ul>
+    </div>
 
 
 
 
-          <g:if test="${!relacionadoImp}">
-            <li><g:remoteLink controller="service"
+
+
+    <div id="contenido">
+
+      <div id="pestanaOpcionesImp" class="pestana" >
+
+
+
+
+        <g:if test="${conexionImp}">
+<div class="filtros">
+<%-- DATOS OPCIONES DE IMP--%>
+
+          <div id="imp">
+
+
+
+
+            <g:if test="${!agregadoImp}">
+              <g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link>
+            </g:if>
+            <g:else>
+              <g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
+
+
+
+
+              <g:if test="${!relacionadoImp}">
+                <g:remoteLink controller="service"
                               action="buscarPaciente"
                               params="[id: person_id, offset: '0']"
                               update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
                               onLoading="cargando('#resultadoCandidatos')"
-                              class="create"><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink></li>
-          </g:if>
-          <g:else>
+                              class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
 
-            <li><g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="create"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link></li>
-          </g:else>
+              </g:if>
+              <g:else>
 
+                <g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
+              </g:else>
+
+            </g:else>
+
+
+          </div>
+
+
+
+
+
+
+</div>
+
+          <div id="resultadoCandidatos">
+
+
+          </div>
+          <div id="errorResultadoCandidatos">
+
+
+          </div>
+
+        </g:if>
+        <g:else>
+          <p><g:message code="service.imp.conexionImp.false" /></p>
         </g:else>
-      </ul>
-
-    </div>
-
-    <div id="resultadoCandidatos">
 
 
-    </div>
-    <div id="errorResultadoCandidatos">
+      </div>
 
+      <div id="pestanaRegistrosInternos" class="pestana" >
 
-    </div>
-
-    </g:if>
-    <g:else>
-    <p><g:message code="service.imp.conexionImp.false" /></p>
-    </g:else>
-
-
+        <div class="filtros">
 
 <%-- REGISTROS INTERNOS --%>
-    <div id="registroInterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
-      <h3><g:message code="service.imp.registrosInternos" /></h3> <hr/>
-      <g:formRemote name="busquedaInterna"
-                    url="[controller:'service',action:'busquedaInterna', params: [id: person_id,marca: 'fil']]"
-                    update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
-                    onLoading="cargando('#resultadoInterno')">
-        <br/>
-        <label for="rangoFechas">
-          <b> <g:message code="buscar.rango_fechas" /></b>
-        </label>
+          <div id="registroInterno">
+
+            <g:formRemote name="busquedaInterna"
+                          url="[controller:'service',action:'busquedaInterna', params: [id: person_id,marca: 'fil']]"
+                          update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
+                          onLoading="cargando('#resultadoInterno')">
+              <g:remoteLink name="busquedaAllInterna"
+                            url="[controller:'service',action:'busquedaAllInterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
+                            update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
+                            onLoading="cargando('#resultadoInterno')"
+                            class="boton1"><g:message code="service.imp.todosRegistros" />
+
+              </g:remoteLink>
+
+
+              <label for="rangoFechas">
+                <b> <g:message code="buscar.rango_fechas" /></b>
+              </label>
 
 
 
-        <label for="desde">
-          <g:message code="buscar.desde" />
-        </label>
-        <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
+              <label for="desde">
+                <g:message code="buscar.desde" />
+              </label>
+              <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
 
 
 
-        <label for="hasta">
-          <g:message code="buscar.hasta" />
-        </label>
-        <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
+              <label for="hasta">
+                <g:message code="buscar.hasta" />
+              </label>
+              <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
 
 
-        <g:submitButton name="doit" value="${message(code:'buscar.filtro')}" />
+              <g:submitButton name="doit" value="${message(code:'buscar.filtro')}" class="boton1" />
 
 
-      </g:formRemote>
-      <g:remoteLink name="busquedaAllInterna"
-                    url="[controller:'service',action:'busquedaAllInterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
-                    update="[success: 'resultadoInterno', failure: 'errorResultadoInterno']"
-                    onLoading="cargando('#resultadoInterno')"><g:message code="service.imp.todosRegistros" />
+            </g:formRemote>
+          </div>
 
-      </g:remoteLink>
+        </div>
 
-
+        <div id="resultadoInterno"></div>
+        <div id="errorResultadoInterno"></div>
 
 
-      <div id="resultadoInterno"></div>
-      <div id="errorResultadoInterno"></div>
+
+      </div>
+
+      <g:if test="${conexionImp && agregadoImp}">
 
 
-    </div>
 
 
-<g:if test="${conexionImp && agregadoImp}">
+        <div id="pestanaRegistrosExternos" class="pestana" >
+
 <%-- REGISTROS EXTERNOS --%>
+          <div class="filtros">
+            <div id="registroExterno">
+
+              <div id="busquedaExterna">
 
 
-    <div id="registroExterno" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
-      <h3><g:message code="service.imp.registrosExternos" /></h3> <hr/>
-      <div id="busquedaExterna">
-        <g:formRemote name="busquedaExterna"
-                      url="[controller:'service',action:'busquedaExterna',params: [id: person_id, offset:0, marca: 'fil']]"
-                      update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
-                      onLoading="cargando('#resultadoExterno')">
-          <br/>
-          <label for="rangoFechas">
-            <b> <g:message code="buscar.rango_fechas" /></b>
-          </label>
+                <g:formRemote name="busquedaExterna"
+                              url="[controller:'service',action:'busquedaExterna',params: [id: person_id, offset:0, marca: 'fil']]"
+                              update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
+                              onLoading="cargando('#resultadoExterno')">
 
+                  <g:remoteLink name="busquedaAllExterna"
+                                url="[controller:'service',action:'busquedaAllExterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
+                                update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
+                                onLoading="cargando('#resultadoExterno')"
+                                class="boton1"><g:message code="service.imp.todosCdas" /> </g:remoteLink>
 
-
-          <label for="desde">
-            <g:message code="buscar.desde" />
-          </label>
-          <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
-
-
-
-          <label for="hasta">
-            <g:message code="buscar.hasta" />
-          </label>
-          <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
-
-          <g:submitButton name="doit" type="submit" value="${message(code:'buscar.filtro')}" />
-        </g:formRemote>
-        <g:remoteLink name="busquedaAllExterna"
-                      url="[controller:'service',action:'busquedaAllExterna',params: [id: person_id, offset:'0', marca:'fil' ]]"
-                      update="[success: 'resultadoExterno', failure: 'errorResultadoExterno']"
-                      onLoading="cargando('#resultadoExterno')"><g:message code="service.imp.todosCdas" />
-
-        </g:remoteLink>
-
-      </div>
-      <div id="resultadoExterno" >
-
-
-      </div>
-
-      <div id="errorResultadoExterno"></div>
+                  <label for="rangoFechas">
+                    <b> <g:message code="buscar.rango_fechas" /></b>
+                  </label>
 
 
 
-    </div>
+                  <label for="desde">
+                    <g:message code="buscar.desde" />
+                  </label>
+                  <g:datePicker name="desde" value="" precision="day" noSelection="['':'']" />
+
+
+
+                  <label for="hasta">
+                    <g:message code="buscar.hasta" />
+                  </label>
+                  <g:datePicker name="hasta" value="" precision="day" noSelection="['':'']" />
+
+                  <g:submitButton name="doit" type="submit" value="${message(code:'buscar.filtro')}" class="boton1" />
+                </g:formRemote>
+
+
+
+
+              </div>
+
+
+
+
+            </div>
+
+
+
+          </div>
+
+          <div id="resultadoExterno" ></div>
+
+          <div id="errorResultadoExterno"></div>
+
+
+
+
+
+        </div>
+        <div id="pestanaOrganizaciones" class="pestana">
+
 
 <%-- ORGANIZACIONES RELACIONADAS--%>
+          <div class="filtros">
+            <div id="listadoOrganizaciones"  >
 
-    <div id="listadoOrganizaciones" style="border: 2px coral solid;margin-top: 10px;padding: 5px;">
-      <h3><g:message code="service.imp.listadoOrganizaciones" /></h3> <hr/>
 
 
-      <g:remoteLink controller="service"
-                    action="listarOrganizaciones"
-                    id="${person_id}"
-                    update="[success:'resultadoOrganizaciones',failure:'errorResultadoOrganizaciones']"
-                    on404="alert('not found');"><g:message code="service.imp.verOrganizaciones" /></g:remoteLink>
-      <div id="resultadoOrganizaciones">
-      </div>
-      <div id="errorResultadoOrganizaciones">
-      </div>
+              <g:remoteLink controller="service"
+                            action="listarOrganizaciones"
+                            id="${person_id}"
+                            update="[success:'resultadoOrganizaciones',failure:'errorResultadoOrganizaciones']"
+                            on404="alert('not found');"
+                            class="boton1"><g:message code="service.imp.verOrganizaciones" /></g:remoteLink>
+
+
+
+            </div>
+
+          </div>
+          <div id="resultadoOrganizaciones">
+          </div>
+          <div id="errorResultadoOrganizaciones">
+          </div>
+        </div>
+
+      </g:if>
 
 
     </div>
-</g:if>
-
   </div>
+  <p style="clear:both">&nbsp;</p>
+
+</div>
+
+
+
 
 </body>
 </html>

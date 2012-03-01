@@ -520,7 +520,7 @@ class DemographicController{
             def ids = persona.ids.toArray()
 
             println "ObjectID ": ids[0].root +"::"+ids[0].extension
-            render( view:'show', model: [ persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp])
+            render( view:'show', model: [ userId: session.traumaContext.userId,persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp])
 
 
 
