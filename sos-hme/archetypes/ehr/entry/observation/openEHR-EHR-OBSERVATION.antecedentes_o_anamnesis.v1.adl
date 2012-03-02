@@ -25,7 +25,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"2AA1F47493243347B3364B847E45CDA6">
+		["MD5-CAM-1.0.1"] = <"5516ECE73C412D0A8B02D883162C6512">
 	>
 
 definition
@@ -36,8 +36,8 @@ definition
 					EVENT[at0002] occurrences matches {0..1} matches {	-- Cualquier evento
 						data matches {
 							ITEM_TREE[at0003] matches {	-- Arbol
-								items cardinality matches {0..*; unordered} matches {
-									CLUSTER[at0004] occurrences matches {0..1} matches {	-- Anamnesis
+								items cardinality matches {1..*; unordered} matches {
+									CLUSTER[at0004] matches {	-- Anamnesis
 										items cardinality matches {0..*; unordered} matches {
 											CLUSTER[at0005] occurrences matches {0..1} matches {	-- Historia Familiar
 												items cardinality matches {0..*; unordered} matches {
@@ -554,7 +554,7 @@ ontology
 				>
 				["at0045"] = <
 					text = <"Profesión Universitaria, financistas, banqueros, comerciantes de alta productividdad, oficiales de la fuerzas armadas ">
-					description = <"">
+					description = <"*">
 				>
 				["at0046"] = <
 					text = <"Profesión Técnica Superior, medianos productores o comerciantes">

@@ -21,15 +21,15 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"EBE74C2141932379A26C582D7981C7DE">
+		["MD5-CAM-1.0.1"] = <"78E59938A7126AA97E557EF174BAEFDF">
 	>
 
 definition
 	EVALUATION[at0000] matches {	-- Exploracion Funcional
 		data matches {
 			ITEM_TREE[at0001] matches {	-- Arbol
-				items cardinality matches {0..*; unordered} matches {
-					CLUSTER[at0002] occurrences matches {0..1} matches {	-- Exploracion Funcional
+				items cardinality matches {1..*; unordered} matches {
+					CLUSTER[at0002] matches {	-- Exploracion Funcional
 						items cardinality matches {0..*; unordered} matches {
 							ELEMENT[at0003] occurrences matches {0..1} matches {	-- Piel y Anexos
 								value matches {

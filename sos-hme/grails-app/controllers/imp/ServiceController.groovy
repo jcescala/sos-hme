@@ -316,7 +316,7 @@ class ServiceController {
                     }
             }
             
-            redirect(controller:'demographic', action: 'show', params: [id: params.id] )
+            redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
 
         }else{
 
@@ -366,7 +366,7 @@ class ServiceController {
                     }
                 }
 
-                redirect(controller:'demographic', action: 'show', params: [id: params.id] )
+                redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
             }else{
 
                 render("<p>El paciente no existe</p>")
@@ -453,7 +453,7 @@ class ServiceController {
                     }
                 }
 
-                redirect(controller:'demographic', action: 'show', params: [id: params.idPacienteOrg] )
+                redirect(controller:'demographic', action: 'show', params: [id: params.idPacienteOrg, pestana: 'pestanaOpcionesImp'] )
 
 
     }
@@ -485,7 +485,7 @@ class ServiceController {
                     }
             }
 
-                redirect(controller:'demographic', action: 'show', params: [id: params.id] )
+                redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
 
 
     }

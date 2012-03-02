@@ -32,7 +32,20 @@
   <g:javascript>
 		$(document).ready(function() {
     $('.pestana').hide();
+
+    <%
+    if(params.pestana){
+    %>
+    $('#${params.pestana}').show();
+    $('#ficha${params.pestana}').addClass('selected');
+
+    <%
+    }else{
+    %>
     $('#pestanaRegistrosInternos').show();
+    <%
+    }
+    %>
     
 
 			/*
@@ -110,7 +123,7 @@ ${folder.name.value}
 <div id="menu1">
   <ul>
     <li>
-      <a href="#" class="selected contextoEhr">Paciente</a>
+      <a href="#" class="selected contextoEhr"><g:message code="demographic.show.paciente" /></a>
     </li>
     <li>
        <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
@@ -194,10 +207,10 @@ ${folder.name.value}
     <div id="menu4">
       <ul>
 
-        <li><a  class="selected ping" href="javascript:cambio('#pestanaRegistrosInternos')" ><g:message code="service.imp.registrosInternos" /></a></li>
-        <li><a  class="ping" href="javascript:cambio('#pestanaRegistrosExternos')"><g:message code="service.imp.registrosExternos" /></a></li>
-        <li><a class="ping" href="javascript:cambio('#pestanaOrganizaciones')"><g:message code="service.imp.listadoOrganizaciones" /></a></li>
-        <li><a class="ping" href="javascript:cambio('#pestanaOpcionesImp')" ><g:message code="demographic.show.opcionesImp" /></a></li>
+        <li><a  id="fichapestanaRegistrosInternos" class="ping" href="javascript:cambio('#pestanaRegistrosInternos')" ><g:message code="service.imp.registrosInternos" /></a></li>
+        <li><a id="fichapestanaRegistrosExternos" class="ping" href="javascript:cambio('#pestanaRegistrosExternos')"><g:message code="service.imp.registrosExternos" /></a></li>
+        <li><a id="fichapestanaOrganizaciones" class="ping" href="javascript:cambio('#pestanaOrganizaciones')"><g:message code="service.imp.listadoOrganizaciones" /></a></li>
+        <li><a id="fichapestanaOpcionesImp" class="ping" href="javascript:cambio('#pestanaOpcionesImp')" ><g:message code="demographic.show.opcionesImp" /></a></li>
       </ul>
     </div>
 

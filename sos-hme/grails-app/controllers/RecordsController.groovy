@@ -660,6 +660,14 @@ def signRecord = {
             flash.error = "trauma.sign.registryAlreadySigned"
             return model
         }
+
+        if (!composition.content){
+            flash.error = "trauma.sign.empty"
+            return model
+
+
+        }
+
         //en esta linea se verifica el usuario y password  para firmar una HME
         def auth = authorizationService.getLogin(params.user, params.pass)
         if (!auth)

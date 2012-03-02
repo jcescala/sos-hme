@@ -61,7 +61,7 @@
   </head>
   <body>
     <div id="nivel3">
-    <h1><g:message code="trauma.sign.title" /></h1>
+    <h2><g:message code="trauma.sign.title" /></h2>
 
     <g:if test="${flash.error}">
       <div class="error"><g:message code="${flash.error}" /></div>
@@ -93,7 +93,7 @@
       
       <g:isNotSignedRecord episodeId="${episodeId}">
         <br/>
-        <input type="submit" name="doit" value="${message(code:'trauma.sign.action.sign')}" />
+        <input type="submit" name="doit" value="${message(code:'trauma.sign.action.sign')}" class="boton1" />
       </g:isNotSignedRecord>
       
       <%-- TODO: recordar clave

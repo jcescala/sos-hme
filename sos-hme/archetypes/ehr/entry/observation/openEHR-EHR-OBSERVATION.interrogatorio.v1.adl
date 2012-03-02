@@ -24,7 +24,7 @@ description
 	other_contributors = <"Juan Escalante", "Angel Rodriguez">
 	other_details = <
 		["references"] = <"-SOS Telemedicina para Venezuela">
-		["MD5-CAM-1.0.1"] = <"09E3725FCF7CD2EB5CA8C2F2D6166ED2">
+		["MD5-CAM-1.0.1"] = <"A83065578A8FB3834DA6E2199A51E73D">
 	>
 
 definition
@@ -35,8 +35,8 @@ definition
 					EVENT[at0002] occurrences matches {0..1} matches {	-- Cualquier evento
 						data matches {
 							ITEM_TREE[at0003] matches {	-- Arbol
-								items cardinality matches {0..*; unordered} matches {
-									CLUSTER[at0004] occurrences matches {0..1} matches {	-- Hábitos
+								items cardinality matches {1..*; unordered} matches {
+									CLUSTER[at0004] matches {	-- Hábitos
 										items cardinality matches {0..*; unordered} matches {
 											CLUSTER[at0005] occurrences matches {0..1} matches {	-- Drogas
 												items cardinality matches {0..*; unordered} matches {

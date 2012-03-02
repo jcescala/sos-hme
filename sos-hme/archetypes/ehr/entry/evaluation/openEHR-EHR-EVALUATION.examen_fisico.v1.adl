@@ -21,15 +21,15 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"27B7486F96CDB716311CC1B4DD5E4371">
+		["MD5-CAM-1.0.1"] = <"539BE81EB2460175703AC4F07BFD6EE9">
 	>
 
 definition
 	EVALUATION[at0000] matches {	-- Examen Fisico
 		data matches {
 			ITEM_TREE[at0001] matches {	-- Arbol
-				items cardinality matches {0..*; unordered} matches {
-					CLUSTER[at0003] occurrences matches {0..1} matches {	-- Examen Fisico
+				items cardinality matches {1..*; unordered} matches {
+					CLUSTER[at0003] matches {	-- Examen Fisico
 						items cardinality matches {0..*; unordered} matches {
 							CLUSTER[at0005] occurrences matches {0..1} matches {	-- Condicion general del paciente
 								items cardinality matches {0..*; unordered} matches {
