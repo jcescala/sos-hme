@@ -182,15 +182,7 @@
           $j("#nuevopaciente").formToWizard({ submitButton: 'doit' })
       });
    
-      function checkValidstep0(){
-        //alert(jQuery("#primerApellido").val())
-        //if(jQuery("#primerApellido"))
-        if(jQuery("#nuevopaciente").validate().element("#primerApellido")==false){
-          jQuery("#nuevopaciente").focus();
-          return false;
-        }
-        //return true;
-      }
+      
 	  
 
 	  
@@ -224,8 +216,8 @@
 		  
           <label for="identificador"><g:message code="persona.identificador" /></label>
           <g:textField name="extension" value="${params.identificador}" />
-		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/>
-			
+		  <%--g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/--%>
+		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	
 		   <div id="nombres">
 				<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
 				<g:textField name="primerApellido" value="${params.primerApellido}"/>
