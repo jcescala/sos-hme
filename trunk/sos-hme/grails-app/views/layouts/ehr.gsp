@@ -302,7 +302,36 @@
 <div id="nivel1">
   <div id="resumenPaciente">
     <g:if test="${patient}">
-      <g:link controller="demographic" action="show" id="${patient.id}"><img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:patient.id])}" style="width:52px; height: auto;"/>
+      <g:link controller="demographic" action="show" id="${patient.id}">
+
+        <g:set var="name" value="${patient.identities.find{ it.purpose == 'PersonNamePatient'} }" />
+
+
+        <%-- Preguntar primero si tiene foto--%>
+
+    <g:if test="${!name || !name.foto || !name.tipofoto}">
+
+      <g:if test="${patient.sexo=='Masculino'}">
+
+        <img src="${createLinkTo(dir:"images", file:"man.png")}" style="width:52px; height: auto;" />
+      </g:if>
+      <g:else>
+
+        <img src="${createLinkTo(dir:"images", file:"woman.png")}" style="width:52px; height: auto;" />
+      </g:else>
+    </g:if>
+    <g:else>
+
+
+       <img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:patient.id])}" style="width:52px; height: auto;"/>
+    </g:else>
+
+
+
+
+
+
+       
       
       <h2><g:message code="trauma.title.informacionPaciente" /></h2>
       </g:link>

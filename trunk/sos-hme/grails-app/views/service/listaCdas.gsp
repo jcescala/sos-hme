@@ -16,7 +16,7 @@
 
     <ul class="top_actions">
       <li>
-      <g:link controller="demographic" action="seleccionarPaciente" params="[id: idPaciente ]" class="back">Atras</g:link>
+      <g:link controller="demographic" action="show" params="[id: idPaciente ]" class="back">Atras</g:link>
       </li>
       
     </ul>

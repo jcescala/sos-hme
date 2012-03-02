@@ -757,7 +757,7 @@ class ServiceController {
             //    max = compos.size()
             //}
             def set = offset + max - 1
-            if(set>compos.size()){
+            if(set>=compos.size()){
                 set = compos.size()-1
             }
 

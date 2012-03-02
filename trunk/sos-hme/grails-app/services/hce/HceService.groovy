@@ -735,7 +735,7 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
         def iter = composition.content.iterator()
         def item
 
-        println "Asi vienen los IDS de template "+templateId
+      
         while (iter.hasNext())
         {
             item = iter.next()
