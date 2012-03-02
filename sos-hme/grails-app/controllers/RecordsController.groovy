@@ -162,7 +162,7 @@ class RecordsController {
         // TODO: filtrar registros por paciente, si hay un paciente en session.traumaContext.patientId
        
         // deselecciona el episodio que este seleccionado
-        //session.traumaContext.episodioId = null
+        session.traumaContext.episodioId = null
          
          
         // Antes se devolvian todas las compositions, ahora se filtra por dominio.
@@ -465,14 +465,15 @@ def show = {
 	
 	// patient puede ser null si todavia no se selecciono un paciente para el episodio,
     // p.e. si la atencion es de urgencia, se atiente primero y luego se identifica al paciente.
-    return [idComposition: params.id,
+   /* return [idComposition: params.id,
         composition: composition,
         patient: patient,
         episodeId: session.traumaContext?.episodioId,
         userId: session.traumaContext.userId,
         sections: sections, // necesario para el menu
         allSubsections: this.getDomainTemplates()
-    ]
+    ]*/
+    redirect(controller:'guiGen',action:'showRecord')
 }
     
     
@@ -731,7 +732,7 @@ def signRecord = {
 
 
             
-        return model
+        redirect(action:'registroClinico',params: params)
     }
         
     return model
@@ -946,17 +947,17 @@ def reopenRecord = {
 				flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
             }
                 
-            return [episodeId: session.traumaContext?.episodioId,
+            /*return [episodeId: session.traumaContext?.episodioId,
                 userId: session.traumaContext.userId,
                 composition: composition,
                 patient: patient,
                 sections: sections,
                 subsections: subsections,
                 allSubsections: this.getDomainTemplates()
-            ]
+            ]*/
+             redirect(action:'registroClinico',params: params)
         }
-		//cuando ocurre esto?
-		println("reopen episodio estado interrogante!!!..")
+		
         return [composition: composition,
             patient: patient,
             episodeId: session.traumaContext?.episodioId,
@@ -965,6 +966,7 @@ def reopenRecord = {
             subsections: subsections, // necesario para el menu
             allSubsections: this.getDomainTemplates()
         ]
+         
     }
     else
     {

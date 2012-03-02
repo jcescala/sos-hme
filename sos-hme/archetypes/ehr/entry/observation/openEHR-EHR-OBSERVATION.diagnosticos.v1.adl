@@ -2,7 +2,7 @@ archetype (adl_version=1.4)
 	openEHR-EHR-OBSERVATION.diagnosticos.v1
 
 concept
-	[at0000]	-- Diagnosticos de trauma
+	[at0000]	-- Diagnosticos
 language
 	original_language = <[ISO_639-1::es]>
 description
@@ -14,8 +14,8 @@ description
 	details = <
 		["es"] = <
 			language = <[ISO_639-1::es]>
-			purpose = <"Diagnosticos de trauma codificados con CIE10">
-			use = <"Diagnosticos de trauma codificados con CIE10">
+			purpose = <"Diagnosticos codificados con CIE10">
+			use = <"Diagnosticos codificados con CIE10">
 			misuse = <"">
 		>
 	>
@@ -27,7 +27,7 @@ description
 	>
 
 definition
-	OBSERVATION[at0000] matches {	-- Diagnosticos de trauma
+	OBSERVATION[at0000] matches {	-- Diagnosticos
 		data matches {
 			HISTORY[at0001] matches {	-- Event Series
 				events cardinality matches {1..*; unordered} matches {
@@ -61,7 +61,7 @@ ontology
 		["es"] = <
 			items = <
 				["at0000"] = <
-					text = <"Diagnosticos de trauma">
+					text = <"Diagnosticos">
 					description = <"unknown">
 				>
 				["at0001"] = <

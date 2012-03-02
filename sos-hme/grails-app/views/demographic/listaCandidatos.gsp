@@ -139,9 +139,9 @@
 	            </g:else>
 	            --%>
 	            
-	            <%-- Guardando al paciente en la base local, aunque el IMP sea remoto --%>
-	            <g:link action="seleccionarPaciente" id="${persona.id}">
-	              <g:message code="demographic.lista_candidatos.action.seleccionarPaciente" />
+                  
+                    <g:link action="show" id="${persona.id}">
+	              <g:message code="demographic.show.title" />
 	            </g:link>
                    
 

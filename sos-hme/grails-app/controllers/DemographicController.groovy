@@ -245,7 +245,18 @@ class DemographicController{
         //        def candidatos = candidatos1.plus( candidatos2 ) //.unique{ it.id }
         
         println("numero cantidatos:->"+candidatos.size())
-        render(view:'listaCandidatos', model:[candidatos:candidatos])
+
+        //Verificar di ya hay un paciente seleccionado para el episodio actual
+        def pacienteSeleccionado
+        if(session.traumaContext.episodioId){
+            pacienteSeleccionado = true
+
+        }else{
+            pacienteSeleccionado = false
+        }
+
+
+        render(view:'listaCandidatos', model:[candidatos:candidatos,pacienteSeleccionado:pacienteSeleccionado])
         
     } // findPatient
     
