@@ -23,7 +23,7 @@ Este arquetipo puede registrar cualquiera de estos eventos">
 	other_contributors = <>
 	other_details = <
 		["references"] = <"-SOS Telemedicina, UCV">
-		["MD5-CAM-1.0.1"] = <"17854C13DDFE944720753B5E5278D4F0">
+		["MD5-CAM-1.0.1"] = <"DEA9FC26EC00F68B4586C2265F07CF9C">
 	>
 
 definition
@@ -37,48 +37,19 @@ definition
 								items cardinality matches {1..*; unordered} matches {
 									CLUSTER[at0023] occurrences matches {0..1} matches {	-- Próxima cita
 										items cardinality matches {3..*; unordered} matches {
-											ELEMENT[at0006] matches {	-- Día y hora
+											ELEMENT[at0006] occurrences matches {0..1} matches {	-- Día y hora
 												value matches {
 													DV_DATE matches {
 														value matches {yyyy-mm-dd}
 													}
 												}
 											}
-											ELEMENT[at0007] matches {	-- Lugar
+											ELEMENT[at0007] occurrences matches {0..1} matches {	-- Lugar
 												value matches {
 													DV_TEXT matches {*}
 												}
 											}
-											ELEMENT[at0008] matches {	-- Especialista
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-										}
-									}
-									CLUSTER[at0010] matches {	-- Responsable de seguimiento
-										items cardinality matches {5..*; unordered} matches {
-											ELEMENT[at0011] matches {	-- Nombre
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0012] matches {	-- Apellido
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0013] matches {	-- Cédula
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0014] matches {	-- Matrícula
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0015] matches {	-- Colegio de médicos
+											ELEMENT[at0008] occurrences matches {0..1} matches {	-- Especialista
 												value matches {
 													DV_TEXT matches {*}
 												}
@@ -89,90 +60,32 @@ definition
 							}
 							CLUSTER[at0005] occurrences matches {0..1} matches {	-- Alta
 								items cardinality matches {3..*; unordered} matches {
-									ELEMENT[at0022] matches {	-- Día y hora
+									ELEMENT[at0022] occurrences matches {0..1} matches {	-- Día y hora
 										value matches {
 											DV_DATE_TIME matches {
 												value matches {yyyy-mm-ddTHH:??:??}
 											}
 										}
 									}
-									ELEMENT[at0024] matches {	-- Nota de salida
+									ELEMENT[at0024] occurrences matches {0..1} matches {	-- Nota de salida
 										value matches {
 											DV_TEXT matches {*}
-										}
-									}
-									CLUSTER[at0016] matches {	-- Responsable de alta
-										items cardinality matches {5..*; unordered} matches {
-											ELEMENT[at0017] matches {	-- Nombre
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0018] matches {	-- Apellido
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0019] matches {	-- Cédula
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0020] matches {	-- Matrícula
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0021] matches {	-- Colegio de médicos
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
 										}
 									}
 								}
 							}
 							CLUSTER[at0003] occurrences matches {0..1} matches {	-- Traslado
 								items cardinality matches {3..*; unordered} matches {
-									ELEMENT[at0026] matches {	-- Día y hora
+									ELEMENT[at0026] occurrences matches {0..1} matches {	-- Día y hora
 										value matches {
 											DV_DATE_TIME matches {
 												value matches {yyyy-mm-ddTHH:??:??}
 											}
 										}
 									}
-									ELEMENT[at0025] matches {	-- Destino
+									ELEMENT[at0025] occurrences matches {0..1} matches {	-- Destino
 										value matches {
 											DV_TEXT matches {*}
-										}
-									}
-									CLUSTER[at0027] matches {	-- Responsable de traslado
-										items cardinality matches {5..*; unordered} matches {
-											ELEMENT[at0028] matches {	-- Nombre
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0029] matches {	-- Apellido
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0030] matches {	-- Cédula
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0031] matches {	-- Matrícula
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
-											ELEMENT[at0032] matches {	-- Colegio de médicos
-												value matches {
-													DV_TEXT matches {*}
-												}
-											}
 										}
 									}
 								}
@@ -224,54 +137,6 @@ ontology
 					text = <"Especialista">
 					description = <"*">
 				>
-				["at0010"] = <
-					text = <"Responsable de seguimiento">
-					description = <"*">
-				>
-				["at0011"] = <
-					text = <"Nombre">
-					description = <"*">
-				>
-				["at0012"] = <
-					text = <"Apellido">
-					description = <"*">
-				>
-				["at0013"] = <
-					text = <"Cédula">
-					description = <"*">
-				>
-				["at0014"] = <
-					text = <"Matrícula">
-					description = <"*">
-				>
-				["at0015"] = <
-					text = <"Colegio de médicos">
-					description = <"*">
-				>
-				["at0016"] = <
-					text = <"Responsable de alta">
-					description = <"*">
-				>
-				["at0017"] = <
-					text = <"Nombre">
-					description = <"*">
-				>
-				["at0018"] = <
-					text = <"Apellido">
-					description = <"*">
-				>
-				["at0019"] = <
-					text = <"Cédula">
-					description = <"*">
-				>
-				["at0020"] = <
-					text = <"Matrícula">
-					description = <"*">
-				>
-				["at0021"] = <
-					text = <"Colegio de médicos">
-					description = <"*">
-				>
 				["at0022"] = <
 					text = <"Día y hora">
 					description = <"*">
@@ -290,30 +155,6 @@ ontology
 				>
 				["at0026"] = <
 					text = <"Día y hora">
-					description = <"*">
-				>
-				["at0027"] = <
-					text = <"Responsable de traslado">
-					description = <"*">
-				>
-				["at0028"] = <
-					text = <"Nombre">
-					description = <"*">
-				>
-				["at0029"] = <
-					text = <"Apellido">
-					description = <"*">
-				>
-				["at0030"] = <
-					text = <"Cédula">
-					description = <"*">
-				>
-				["at0031"] = <
-					text = <"Matrícula">
-					description = <"*">
-				>
-				["at0032"] = <
-					text = <"Colegio de médicos">
 					description = <"*">
 				>
 			>

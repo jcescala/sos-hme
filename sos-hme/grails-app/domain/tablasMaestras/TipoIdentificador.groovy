@@ -22,11 +22,13 @@ class TipoIdentificador {
     {
         def ret = []
         
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1", nombre:"Cédula de Identidad", nombreCorto:"CI")
+        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1.1", nombre:"Cédula de Identidad V.-", nombreCorto:"CI V")
+        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.1.2", nombre:"Cédula de Identidad E.-", nombreCorto:"CI E")
+
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.858", nombre:"Pasaporte", nombreCorto:"Pasaporte")
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.3", nombre:"Libreta de Conducción Uruguaya", nombreCorto:"Libreta de Conducción")
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.4", nombre:"Documento Fronterizo Uruguay-Brasil", nombreCorto:"Documento Fronterizo Uruguay-Brasil")
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.666", nombre:"Id en CC local", nombreCorto:"Id en CC local")
+      //  ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.3", nombre:"Libreta de Conducción Uruguaya", nombreCorto:"Libreta de Conducción")
+      //  ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.2.4", nombre:"Documento Fronterizo Uruguay-Brasil", nombreCorto:"Documento Fronterizo Uruguay-Brasil")
+      //  ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.666", nombre:"Id en CC local", nombreCorto:"Id en CC local")
         // oids buscados en  http://www.hl7.org/oid/index.cfm
         /*
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.192", nombre:"Passport Numbers Namespace for CUBA", nombreCorto:"Pasaporte cubano")
@@ -39,7 +41,7 @@ class TipoIdentificador {
         ret << new TipoIdentificador(codigo:"2.16.840.1.113883.4.330.600", nombre:"Passport Numbers Namespace for PARAGUAY", nombreCorto:"Pasaporte paraguayo")
         */
         
-        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.1.1.1.3.1.5.1", nombre:"Número de paciente SOS Telemedicina", nombreCorto:"Número de paciente")
+        ret << new TipoIdentificador(codigo:"2.16.840.1.113883.2.14.1.1.1.3.1.5.1", nombre:"Número de paciente SOS Telemedicina", nombreCorto:"Número de paciente SOS")
         
         // Para ingresar pacientes que no se sabe su id
         ret << new TipoIdentificador(codigo:AUTOGENERADO, nombre:"Autogenerado por el sistema", nombreCorto:"Autogenerado")

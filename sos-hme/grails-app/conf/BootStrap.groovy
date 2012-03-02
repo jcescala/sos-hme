@@ -24,8 +24,16 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 
 
-
-
+//--Interceptores
+import javax.security.auth.callback.Callback
+import javax.security.auth.callback.CallbackHandler
+import javax.security.auth.callback.UnsupportedCallbackException
+/*import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor
+import org.apache.ws.security.WSConstants
+import org.apache.ws.security.WSPasswordCallback
+import org.apache.ws.security.handler.WSHandlerConstants
+*/
 
 class BootStrap {
 
@@ -34,8 +42,9 @@ class BootStrap {
     // Reference to Grails application. Lo inyecta.
     def grailsApplication
    
-
-    
+/*def customSecureServiceClientCdaFactory
+def customSecureServiceClientImpFactory
+  */
     def init = { servletContext ->
 
         println ""
@@ -330,8 +339,34 @@ class BootStrap {
 
  
 
+      /*  Map<String, Object> inProps = [:]
+        inProps.put(WSHandlerConstants.ACTION, org.apache.ws.security.handler.WSHandlerConstants.USERNAME_TOKEN+" "+org.apache.ws.security.handler.WSHandlerConstants.TIMESTAMP +" "+org.apache.ws.security.handler.WSHandlerConstants.SIGNATURE+ " "+org.apache.ws.security.handler.WSHandlerConstants.ENCRYPT )
+        inProps.put(WSHandlerConstants.PASSWORD_TYPE, org.apache.ws.security.WSConstants.PW_DIGEST);
+        inProps.put(WSHandlerConstants.PW_CALLBACK_REF, new CallbackHandler() {
+
+              //SE CREA UNA INSTANCIA DE LA CLASE CallbackHandler
+              //
+              //Se sobreescribe el método handle()
+
+            void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+
+                    WSPasswordCallback pc = (WSPasswordCallback) callbacks[0]
+              
+                    pc.setPassword("keystore")
 
 
+            }
+        })
+
+
+
+
+        inProps.put(WSHandlerConstants.SIG_PROP_FILE, "server.properties")
+        inProps.put(WSHandlerConstants.DEC_PROP_FILE, "server_key.properties")
+
+        customSecureServiceClientCdaFactory.getInInterceptors().add(new WSS4JInInterceptor(inProps))
+        */
+        
 
 
 

@@ -1,3 +1,5 @@
+<%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
+
 <g:if test="${!conexionImp}">
 <p><g:message code="service.imp.conexionImp.false" /></p>
 </g:if>
@@ -29,7 +31,7 @@
                  <%-- <td>${paciente.idPaciente}</td>--%>
                  <td>
                  
-                 <a class="ficha iframe" href="http://127.0.0.1:8080/imp-cda/imagenPaciente/imagen?idPaciente=${paciente.idPaciente}&idOrg=${paciente.idCentro}">
+                 <a class="ficha iframe" href="${ApplicationHolder.application.config.service.serverURL}/imp-cda/imagenPaciente/imagen?idPaciente=${paciente.idPaciente}&idOrg=${paciente.idCentro}">
   
                  <img src="http://127.0.0.1:8080/imp-cda/imagenPaciente/imagen?idPaciente=${paciente.idPaciente}&idOrg=${paciente.idCentro}" style="width: 30px; height: auto;"/>
                 

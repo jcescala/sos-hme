@@ -326,6 +326,7 @@ class ManagerCDA {
            .replace("&iexcl;","¡")
            .replace("&quot;","\"")
            .replace("&#039;","'")
+           .replace("&deg;","°")
            .replace("_DOS_PUNTOS_", ":") // component_nonxmlbody viene con los caracteres '<'' y '>' cambiados.
                                                                                                       // Como no puedo poner ":" en los nombres de las etiquetas, le
                                                                                                       // pongo _DOS_PUNTOS_ a las etiquetas cuando la defino y luego hago el replace

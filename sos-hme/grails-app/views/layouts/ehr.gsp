@@ -118,7 +118,7 @@
               //SI generarShow es true, significa que el registro ya está guardado previamente
               //<input id="mode" type="hidden" name="mode" value="show" />
                   if ($(".ehrform").length > 0){
-                  alert('guardando');
+                 // alert('guardando');
                   //pasar el valor del href al controlador
                   $(".ehrform").append("<input type='hidden' name='autoSaveHref' value='"+href+"' />");
                   $(".ehrform").submit();
