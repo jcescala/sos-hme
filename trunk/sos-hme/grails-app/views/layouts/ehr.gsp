@@ -1,5 +1,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.codehaus.groovy.grails.commons.ApplicationHolder" %>
+<%@ page import="hce.core.common.change_control.Version" %>
+<%@ page import="hce.core.composition.Composition" %>
 <%@ page import="hce.core.common.directory.Folder" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -372,15 +374,23 @@
     <p></p>
 
   </div>
- <%-- <div id="menu2">
-    <ul>
-      <li><a href="#">Episodio Actual</a></li>
-      <li><a href="#" class="selected">Contenido</a></li>
-      <li><a href="#">Nivel 3</a></li>
-    </ul>
-  </div>
- --%>
 
+<div id="menu2">
+
+
+
+    <ul class="top_actions">
+
+      <g:isSignedRecord episodeId="${episodeId}">
+      <g:set var="version" value="${Version.findByData(composition)}"/>
+      <li>
+                   <g:link controller="cda" action="ver" id="${version.nombreArchCDA}" params="[idComposition:episodeId]"><g:message code="hce.cda.verCda" /></g:link> <!-- TODO i18n -->
+      </li>
+      </g:isSignedRecord>
+
+    </ul>
+
+  </div>
    <div id="menu3">
 
               <ul>

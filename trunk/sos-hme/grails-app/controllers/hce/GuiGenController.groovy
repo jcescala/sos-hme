@@ -499,7 +499,7 @@ class GuiGenController {
                 
                 EventManager.getInstance().handle("post_save_error", [composition:comp])
 
-                flash.message = 'Hay errores en los datos, por favor verifíquelos'
+                flash.message = 'guiGen.save.error'
 
                 render(view: 'generarShow',
                        model: [ rmNode: rmobj, // si no pudo guardar no puedo hacer get a la base...

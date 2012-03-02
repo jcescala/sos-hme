@@ -179,11 +179,11 @@
           <g:submitButton name="doit" value="Guardar" />
         </g:if>
         <g:else>
-          <g:link action="generarShow" id="${rmNode.id}" params="[mode:'edit']"><g:message code="trauma.show.action.edit" /></g:link>
+          <g:link action="generarShow" id="${rmNode.id}" params="[mode:'edit']" class="boton1"><g:message code="trauma.show.action.edit" /></g:link>
         </g:else>
         |
         </g:isNotSignedRecord>
-        <g:link controller="records" action="registroClinico"><g:message code="trauma.show.action.back" /></g:link>
+        <g:link controller="records" action="registroClinico" class="boton1"><g:message code="trauma.show.action.back"  /></g:link>
       </div>
 
     </g:form>

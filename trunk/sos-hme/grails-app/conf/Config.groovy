@@ -171,8 +171,8 @@ service.simple.url = ""
 service.complex.url = ""
 service.secure.url.cda = ""
 service.secure.url.imp = ""
-service.serverURL = "http://190.169.161.50:9090"
-//service.serverURL = "http://127.0.0.1:8080"
+//service.serverURL = "http://190.169.161.50:9090"
+service.serverURL = "http://127.0.0.1:8080"
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -270,38 +270,18 @@ log4j = {
 
 //UCV CAIBCO 
 
-imp.organizacion.id = "ee91ca49-3832-452c-91d1-29ef91174587"//LOCAL
+imp.organizacion.id = "b02667bc-4266-4f0e-9c70-9c7b2af6ba64"
+//imp.organizacion.id ="4c9fdb58-eb0f-4430-b616-408a0c580793" //SOS2
 
-//imp.organizacion.id ="003fd514-5167-49af-bcee-9469eac2857f" //SOS2
 
-//imp.organizacion.id ="27097317-ed04-4251-b265-29f10ed83523" //SOS3
+
+
 
 cxf {
     installDir = "C:/apps/apache-cxf-2.4.4" //only used for wsdl2java script target
     client {
-       /* simpleServiceClient {
-            wsdl = "docs/imp.wsdl" //only used for wsdl2java script target
-            clientInterface = imp.ImpServicePortType //cxf.client.demo.simple.SimpleServicePortType
-            serviceEndpointAddress = "${service.simple.url}"
-            namespace = "imp"
-        }*/
+       
 
-        /*complexServiceClient {
-            wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
-            clientInterface = cxf.client.demo.complex.ComplexServicePortType
-            serviceEndpointAddress = "${service.complex.url}"
-            namespace = "cda"
-        }*/
-/*
-        insecureServiceClient {
-            wsdl = "docs/SecureService.wsdl" //only used for wsdl2java script target
-            namespace = "cxf.client.demo.secure"
-            clientInterface = cxf.client.demo.secure.SecureServicePortType
-            secured = false
-            serviceEndpointAddress = "${service.secure.url}"
-            namespace = "cxf.client.demo.secure"
-        }
-*/
         customSecureServiceClientCda {
             wsdl = "docs/cda.wsdl" //only used for wsdl2java script target
             namespace = "cda"
@@ -309,6 +289,8 @@ cxf {
             secured = true
             securityInterceptor = 'myCustomInterceptor'
             serviceEndpointAddress = "${service.secure.url.cda}"
+            inInterceptors = ['customLoggingInInterceptor', 'verboseLoggingInInterceptor'] //can use comma separated list or groovy list
+            enableDefaultLoggingInterceptors = false
             //namespace = "cxf.client.demo.secure"
         }
         customSecureServiceClientImp {
@@ -318,30 +300,14 @@ cxf {
             secured = true
             securityInterceptor = 'myCustomInterceptor'
             serviceEndpointAddress = "${service.secure.url.imp}"
+            inInterceptors = ['customLoggingInInterceptor', 'verboseLoggingInInterceptor'] //can use comma separated list or groovy list
+            enableDefaultLoggingInterceptors = false
+         //    inInterceptors = ['customLoggingInInterceptor'] //can use comma separated list or groovy list
+            
             //namespace = "cxf.client.demo.secure"
         }
         
 
-
-        /*secureServiceClient {
-            wsdl = "docs/secure.wsdl" //only used for wsdl2java script target
-            namespace = "cda"
-            clientInterface = cda.SecureServicePortType
-            secured = true
-            username = "ususer"
-            password = "secret"
-            serviceEndpointAddress = "${service.secure.url}"
-            //namespace = "cxf.client.demo.secure"
-        }*/
-/*
-        //Another real service to use against wsd2java script
-        stockQuoteClient {
-            wsdl = "http://www.webservicex.net/stockquote.asmx?WSDL"
-            clientInterface = net.webservicex.StockQuoteSoap
-            serviceEndpointAddress = "http://www.webservicex.net/stockquote.asmx"
-        }
-
-    */
     }
 }
 

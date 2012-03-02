@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="nivel3">
-    <h1><g:message code="trauma.title.registroClinico" /></h1>
+    <h2><g:message code="trauma.title.registroClinico" /></h2>
     <div class="ehrform">
       <%--
       ${sections}

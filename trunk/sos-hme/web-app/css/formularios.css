@@ -159,7 +159,7 @@ textarea {
     }
 
     /* Si pongo .ELEMENT_DvOrdinal .content se ve mal el triage */
-
+	.ELEMENT_DvOrdinal .content,
     .ELEMENT_DV_CODED_TEXT .content, 
 	.ELEMENT_DV_COUNT .content, 
 	.ELEMENT_DvQuantity .content, 
