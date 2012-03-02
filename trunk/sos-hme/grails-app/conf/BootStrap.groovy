@@ -291,17 +291,10 @@ class BootStrap {
     /*  
         println " - Datos Iniciales Tablas Demograficas"
         
-        
+       
         Sql sql = Sql.newInstance(CH.config.dataSource.url, CH.config.dataSource.username,
         CH.config.dataSource.password, CH.config.dataSource.driverClassName)
         
-        /*
-        String sqlFilePath = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/lugar.sql")
-        String sqlString = new File(sqlFilePath).eachLine {
-            sql.execute(it)
-        }
-        */
-     /*
         String sqlFilePath = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/lugarOptimo.sql")
         String sqlString = new File(sqlFilePath).eachLine {
             sql.execute(it)

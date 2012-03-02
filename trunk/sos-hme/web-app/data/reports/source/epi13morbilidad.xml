@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><pacientes>
+  <fechareporte>
+    26/02/2012
+  </fechareporte>
+<paciente>
+<fecha>23/02/2012</fecha>
+<nombre>nancy  urbina</nombre>
+<cedula>98345543</cedula>
+<genero>M</genero>
+<fechanacimiento>13/08/1924</fechanacimiento>
+<direccionresidencia>Ciudad sdjfsak, Urb/Sector ASDLKJFAHL, Av/Calle sdihfs, Casa/Res 12</direccionresidencia>
+<entidad>Bolívar</entidad>
+<municipio>Piar</municipio>
+<parroquia>Sección Capital Piar</parroquia>
+<diagnosticos>
+<diagnostico>Colera debido a vibrio cholerae o1, biotipo el tor</diagnostico>
+</diagnosticos>
+<semana>Del 22/02 al 24/02</semana>
+<anioregistro>2012</anioregistro>
+</paciente>
+</pacientes>
