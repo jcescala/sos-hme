@@ -723,7 +723,7 @@ def signRecord = {
 
         //AÑADIENDO CREACION AUTOMATICA DE CDA
 
-        if(CdaRecords.registrarCda(params.id)){
+        if(CdaRecords.registrarCda(params.id, this.getDomainTemplates())){
 
             //CDA CREADO AUTOMATICAMENTE
             println "CDA CREADO AUTOMATICAMENTE"
@@ -750,7 +750,7 @@ def reopenRecord = {
     }
 
     def version = Version.findByData( composition ) // Ojo. findByData retorna una coleccion. Como hay una sola version con esa composition retorna una instancia (porque al crear una nueva version, pongo null en el atributo data de la version)
-    if (version.lifecycleState == Version.STATE_SIGNED)
+    if (version.lifecycleState == Version.STATE_SIGNED  || version.lifecycleState==Version.STATE_COMPLETE)
     {
         // -----------------------------------------------------------------
         // FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
@@ -871,7 +871,7 @@ def reopenRecord = {
             {
                 def cdaMan = new ManagerCDA()
                 int idEpisodio = Integer.parseInt(params.id)
-                cdaMan.createFileCDA(idEpisodio)
+                cdaMan.createFileCDA(idEpisodio, this.getDomainTemplates())
             }
 
             // Creo una copia de la composition

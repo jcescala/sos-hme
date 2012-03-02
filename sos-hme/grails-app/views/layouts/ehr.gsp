@@ -355,37 +355,33 @@
    <div id="menu3">
 
               <ul>
-                <br />
+                
                 <li>
-                  <g:link controller="records" action="list" class="contextoEhr" >
-                    <g:message code="trauma.menu.list" />
-                  </g:link>
-                </li>
-                <br />
-                <li>
-                  <a href="${createLink(controller: 'records', action: 'show',id:episodeId)}" ${((controllerName=='records'&&['show'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
-                    <g:message code="trauma.menu.show" />
+
+                  
+                  <a href="${createLink(controller: 'guiGen', action: 'showRecord',id:episodeId)}" ${((controllerName=='guiGen'&&['showRecord'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
+                    <g:message code="trauma.menu.resumen" />
                   </a>
                   
                 </li>
 
                 <g:canFillClinicalRecord>
 
-                  <li >
+                  <%--<li >
 
                     <a href="${createLink(controller: 'records', action: 'registroClinico',id:episodeId)}" ${((controllerName=='records'&&['registroClinico'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
                      <g:message code="trauma.menu.registroClinico" />
                   </a>
 
                    
-                  </li>
+                  </li> --%>
 
                   <%--
                   TODO: desde lo estudios img hasta el registro clinico no puede ser
                         visto por un administrativo.
                   --%>
 
-                  <g:if test="${( ['guiGen','records','ajaxApi'].contains(controllerName) && ['generarShow','generarTemplate','show','saveDiagnostico'].contains(actionName) )}">
+                  <g:if test="${( ['guiGen','records','ajaxApi'].contains(controllerName) && ['generarShow','generarTemplate','show','saveDiagnostico','showRecord','save'].contains(actionName) )}">
                     <br />
 
                     <g:each in="${sections}" var="section">

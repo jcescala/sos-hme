@@ -16,13 +16,13 @@ class CdaRecords {
 
 
 
-    public static String registrarCda(def id){
+    public static String registrarCda(def id, def domainTemplates){
 
         def idEpisodio = id.toInteger()
         
         // Creo el archivo CDA
         def cdaMan = new ManagerCDA()
-        cdaMan.createFileCDA(idEpisodio)
+        cdaMan.createFileCDA(idEpisodio, domainTemplates)
 
         def composition = Composition.get(idEpisodio)
 

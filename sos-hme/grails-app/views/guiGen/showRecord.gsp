@@ -11,12 +11,15 @@
     <h1>Template: ${rmNode.archetypeDetails.templateId}</h1>
     --%>
     <div id="nivel3">
+
+
+      
     <div class="ehrform">
 
       <table class="contenido" cellpadding="0" cellspacing="3" style="width: 100%;">
         <tr>
          <td colspan="2" id="content" style="width: 100%;">
-            <g:each in="${composition.content}" var="content">
+            <g:each in="${content}" var="content">
               
               <%-- ${content.archetypeDetails.archetypeId} --%>
               

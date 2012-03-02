@@ -7,7 +7,7 @@
     </title>
   </head>
   <body>
-    <div id="nivel2">
+    <div id="nivel3">
     <h1><g:message code="trauma.title.registroClinico" /></h1>
     <div class="ehrform">
       <%--
