@@ -481,3 +481,32 @@ cursor: pointer;
 
 
 }	
+
+.message {
+        padding: 10px;
+        background-color: #ffff80;
+        border: 1px solid #666680;
+        margin-bottom: 5px;
+      }
+  .error {
+        /* TODO: meter icono de error ! */
+        border: 1px solid #f00;
+        background-color: #f99;
+       
+        margin-bottom: 3px;
+      }
+
+      .ok{
+        /* TODO: meter icono de ok ! */
+        border: 1px solid #f00;
+        background-color: #99FF99;
+       
+       
+      }
+      .aviso {
+        /* TODO: meter icono de aviso ! */
+        border: 1px solid #f00;
+        background-color: #FFFF99;
+       
+       
+      }

@@ -185,7 +185,7 @@ class RecordsController {
         def estado ="todos"
         def formatter = new SimpleDateFormat("yyyy-MM-dd")
         def desde = formatter.format(new Date(0))
-        def hasta = formatter.format(new Date())
+        def hasta = formatter.format(new Date() + 1)
 
         def format = new SimpleDateFormat("dd-MM-yyyy")
         if(params.desde){
@@ -199,7 +199,7 @@ class RecordsController {
         if(params.hasta){
 
          def date = (Date)format.parse(params.hasta)
-         hasta = formatter.format(date)
+         hasta = formatter.format(date + 1)
 
 
             

@@ -9,7 +9,7 @@
   <g:javascript>
 
     $(document).ready( function() {
-    $('#message').delay(1000).fadeOut();
+    $('.message').delay(3000).fadeOut();
     });
     function cargando(etiqueta){
 
@@ -154,10 +154,21 @@ ${folder.name.value}
   </div>
 
   <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
-    <div style="color:red;">
+    <div style="color:red;" class="message">
       <g:message code="trauma.show.feedback.patientAlreadySelectedForThisEpisode" />
     </div><br/>
   </g:compositionHasPatient>
+
+  <g:if test="${flash.message}">
+        <div id="message" class="message ${flash.clase}">
+          <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}" />
+        </div>
+  </g:if>
+
+
+
+
+
   <div id="menu2">
 
     <ul class="top_actions">
