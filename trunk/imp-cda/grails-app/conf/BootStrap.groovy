@@ -28,27 +28,13 @@ class BootStrap {
 //        rol.save()
 //        def usr = new User()
 //        usr.setUsername("user")
-//	usr.setPassword("pass")
+//        usr.setPassword("pass")
 //        usr.setEnabled(true)
 //        usr.save()
 //
 //        UserRole.create usr, rol
 
 
-
-        //UserRole.remove usr, rol
-
-
-/*        def org = new Organizacion()
-        org.setNombre("Hospital")
-
-
-
-        org.setLogin("myAlias")
-        org.setPassword("keystore")
-       
-       org.save()
-*/
         //CONFIGURACION PARA LEER HEADERS DE ENTRADA
       
 
@@ -134,7 +120,7 @@ class BootStrap {
 //        secureServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
 //        cdaServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
 //        impServiceFactory.getOutInterceptors().add(new WSS4JOutInterceptor(outProps))
-//
+
     }
 
     def destroy = {
