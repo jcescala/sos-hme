@@ -33,11 +33,11 @@ class ManagerCDA {
 
     //--------------------------------------------------------------------------
 
-    def createFileCDA(int idEpisodio){
+    def createFileCDA(int idEpisodio, def domainTemplates){
         def composition = Composition.get(idEpisodio)
         //def cdaMan = new ManagerCDA()
         //def xmlCDA = cdaMan.createCDA(composition) //(new_composition) //, session)
-        def xmlCDA = createCDA(composition) //(new_composition) //, session)
+        def xmlCDA = createCDA(composition, domainTemplates) //(new_composition) //, session)
         //println xmlCDA
         // Creo el directorio si no existe
         File directorio = new File(ApplicationHolder.application.config.hce.rutaDirCDAs)
@@ -70,7 +70,7 @@ class ManagerCDA {
     //--------------------------------------------------------------------------
 
     //public String createCDA( Composition comp ) //, Object session )
-    def createCDA( Composition comp )
+    def createCDA( Composition comp, def domainTemplates )
     {
         //XStream xstream = new XStream();
 
@@ -187,7 +187,7 @@ class ManagerCDA {
         
         // new
         //def template = TemplateManager.getInstance().getTemplate( comp.archetypeDetails.templateId )
-        def component_nonxmlbody = convertirObjetoXML(comp) //, template)
+        def component_nonxmlbody = convertirObjetoXML(comp, domainTemplates) //, template)
 
         // FIXME: donde dice xmlns_DOS_PUNTOS_xsi hay que poner 'xsi:' como string entre comillas.
         /*
@@ -336,7 +336,7 @@ class ManagerCDA {
 
     //--------------------------------------------------------------------------
     //Convierte la composition en texto HTML mediante uso de los templates
-    public String convertirObjetoXML(Object o) //, Object template)
+    public String convertirObjetoXML(Composition comp, def domainTemplates) //, Object template)
     {
         //XStream xstream = new XStream();
         //String xml = xstream.toXML(o);
@@ -345,10 +345,14 @@ class ManagerCDA {
         //def tagLib = applicationContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
         def tagLib = ctx.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
 
+      
+        def content = hceService.getCompositionInOrder(comp,domainTemplates)
+
         def xml = tagLib.render(template:'/guiGen/showRecord',encoding:"UTF-8", model:
         [
-        composition:    o,
-        episodeId: o.id, // necesario para el layout
+        content:    content,
+        composition: comp,
+        episodeId: comp.id, // necesario para el layout
         ]
         )
         return xml

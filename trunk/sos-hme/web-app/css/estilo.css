@@ -197,7 +197,7 @@ a {
 	margin:0;}
 #menu3 li {
 	padding:0;
-	margin:2px 0;
+	margin: 0px 0px 2px 0px;
 	background-color:#c1c1c1;
 	-moz-border-radius-topleft: 10px;
 	border-top-left-radius: 10px;
@@ -312,7 +312,7 @@ a {
 	background:#FFF;
 	padding:3px;
 	margin-top:2px;
-	min-height:300px;
+	min-height:500px;
 	}
 #nivel3 #contenido {
 	padding:14px;

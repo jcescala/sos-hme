@@ -734,6 +734,8 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
     {
         def iter = composition.content.iterator()
         def item
+
+        println "Asi vienen los IDS de template "+templateId
         while (iter.hasNext())
         {
             item = iter.next()
@@ -743,6 +745,58 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
             }
         }
         return null
+    }
+    /**
+     *Devuele una lista de ContenItem ordenada segun el orden de una lista de templates
+     *@autor Armando Prieto
+     *@param composition
+     *@param templateId
+     *@return
+     *
+     */
+    def List<ContentItem> getCompositionInOrder(Composition composition, def domainTemplates){
+
+
+        def templateIds = []
+
+         domainTemplates.each{ 
+
+            
+           
+
+            it.value.each{ val ->
+
+                templateIds << it.key + "-" + val
+
+            }
+           
+           
+         }
+
+
+
+        def iter = templateIds.iterator()
+        def item
+        def list = []
+        while (iter.hasNext())
+        {
+            item = iter.next()
+
+            composition.content.each{
+
+             if (it.archetypeDetails.templateId == item)
+                {
+                list.add(it)
+                }
+                
+            }
+
+            
+        }
+
+
+
+        return list
     }
 
 

@@ -14,6 +14,24 @@ import imp.CdaRecords
 
 class CdaController {
 
+    private Map getDomainTemplates()
+    {
+        //def routes = grailsApplication.config.domain.split('/') // [hce, trauma]
+        //def domainTemplates = grailsApplication.config.templates
+        //routes.each{
+        //    domainTemplates = domainTemplates[it]
+        //}
+
+        // =============================================================
+        // Nuevo: para devolver los templates del dominio seleccionado
+        def domain = session.traumaContext.domainPath
+        def domainTemplates = grailsApplication.config.templates2."$domain"
+
+        // =============================================================
+
+        return domainTemplates
+    }
+
     void imprimirObjetoXML(Object o){
         println "-----------------"
         XStream xstream = new XStream();
@@ -31,7 +49,7 @@ class CdaController {
         println "IdEpisodio: " + idEpisodio
 
         def cd = new CdaRecords()
-       def nombreArchCDA=  cd.registrarCda(idEpisodio)
+       def nombreArchCDA=  cd.registrarCda(idEpisodio, this.getDomainTemplates())
        redirect(controller: "service", action: "registrarCda", id: nombreArchCDA)
         // Creo el archivo CDA
 //        def cdaMan = new ManagerCDA()

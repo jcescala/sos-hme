@@ -60,7 +60,7 @@
     </style>
   </head>
   <body>
-     <div id="nivel2">
+     <div id="nivel3">
     <h1><g:message code="trauma.reopenRecord.title" /></h1>
 
     <g:if test="${flash.error}">

@@ -32,6 +32,8 @@
   <g:javascript>
 		$(document).ready(function() {
     $('.pestana').hide();
+    $('#pestanaRegistrosInternos').show();
+    
 
 			/*
 			*   Examples - images
@@ -107,13 +109,17 @@ ${folder.name.value}
 </div>
 <div id="menu1">
   <ul>
-    <li><a href="#" class="selected">Episodios</a></li>
-    <li><a href="#">Admisión</a></li>
-    <li><a href="#">Buscar Episodios            </a></li>
-    <li><a href="#">Buscar </a></li>
-    <li><a href="#">Pacientes            </a></li>
-    <li><a href="#">Nuevo Episodio</a></li>
-    <li><a href="#">Reportes</a></li>
+    <li>
+      <a href="#" class="selected contextoEhr">Paciente</a>
+    </li>
+    <li>
+       <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
+    </li>
+    <li>
+      <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
+    </li>
+
+    <li><a href="#" class="contextoEhr"><g:message code="reportes.Reportes"/></a></li>
   </ul>
 </div>
 <div id="nivel1">
@@ -155,9 +161,7 @@ ${folder.name.value}
   <div id="menu2">
 
     <ul class="top_actions">
-      <li>
-      <g:link action="admisionPaciente" class="back"><g:message code="demographic.lista_candidatos.action.admisionPaciente" /></g:link>
-      </li>
+    
       <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
         <li>
         <g:link controller="records" action="show" id="${session.traumaContext.episodioId}" class="home"><g:message code="demographic.lista_candidatos.action.backToEpisode" /></g:link>

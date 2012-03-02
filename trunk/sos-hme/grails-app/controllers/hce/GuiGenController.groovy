@@ -57,7 +57,8 @@ class GuiGenController {
         
         return domainTemplates
     }
-    
+
+
     /**
      * Devuelve todos los prefijos de identificadores de templates del domino actual.
      * @return
@@ -303,7 +304,7 @@ class GuiGenController {
         
         // Episodio seleccionado para el cual se está registrando
         Composition comp = Composition.get(session.traumaContext.episodioId)
-
+        def patient = hceService.getPatientFromComposition( comp )
         // TODO: verificar que el estado del registro es 'incomplete', de lo contrario no puedo editarlo.
 
 
@@ -503,11 +504,13 @@ class GuiGenController {
                 render(view: 'generarShow',
                        model: [ rmNode: rmobj, // si no pudo guardar no puedo hacer get a la base...
                             index: bindingAOMRM.getRMRootsIndex(),
+                            patient:patient,
                             template: template,
                             mode: 'edit',
                             errors: bindingAOMRM.getErrors(), // FIXME: esto creo que ya no se usa...
                             episodeId: session.traumaContext?.episodioId, // necesario para el layout
                             userId: session.traumaContext.userId,
+                            sections: sections,
                             subsections: subsections,
                             allSubsections: this.getDomainTemplates() 
                             //grailsApplication.config.hce.emergencia.sections.trauma // Mapa nombre seccion -> lista de subsecciones
@@ -727,7 +730,7 @@ println ""
             return
         }
         
-        def composition = Locatable.get(session.traumaContext?.episodioId)
+        def composition = Composition.get(session.traumaContext?.episodioId)
         if (!composition)
         {
             flash.message = 'trauma.list.error.noEpisodeSelected' // FIXME: el error es otro...
@@ -737,14 +740,18 @@ println ""
         
         // FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
         def patient = hceService.getPatientFromComposition( composition )
+         
+        def content = hceService.getCompositionInOrder(composition,this.getDomainTemplates())
 
-        
+
+
         // NECESARIO PARA EL MENU
+      
         def sections = this.getSections()
-        //def subsections = this.getSubsections(templateId.split("-")[0]) // this.getSubsections('EVALUACION_PRIMARIA')
-        
-        
+       
+
         return [composition: composition,
+                content: content,
                 userId: session.traumaContext.userId,
                 patient: patient,
                 episodeId: session.traumaContext?.episodioId,
