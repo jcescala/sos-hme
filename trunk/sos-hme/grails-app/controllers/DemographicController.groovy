@@ -877,7 +877,7 @@ class DemographicController{
         }
         
         def patient = Person.get( params.id )
-        def pn = patient.identities.find{ it.purpose == 'PersonName' }
+        def pn = patient.identities.find{ it.purpose == 'PersonNamePatient' }
         def tiposIds = TipoIdentificador.list()
 
         if (params.doit)
