@@ -110,24 +110,24 @@
     
     <g:javascript>
         
-		function updateIdentidad( root, extension ){
+		function updateIdentidad( var1, var2 ){
             ${remoteFunction( 
               controller:'demographic', 
               action:'ajaxGetPrimerApellido', 
               update:'identidades', 
-              params:'\'id=\' + root +\'-\' +extension')}
+              params:'\'id=\' + var1 +\'-\' +var2')}
 			
 		
 		}
-		function updateNombres( root, extension){
+		function updateNombres( root, extension, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, sexo, fin){
 			${remoteFunction( 
 			controller:'demographic', 
 			action:'ajaxGetNombres', 
 			update:'nombres', 
-			params:'\'id=\' + root +\'-\' +extension')}
-			
-
-		  
+			params:'\'id=\' + root +\'!\' +extension + \'!\' + primerApellido + \'!\' + segundoApellido + \'!\' + primerNombre + \'!\' + segundoNombre + \'!\' + fechaNacimiento + \'!\' + sexo + \'!\'+ fin' )}
+			//params:'\'rt=\' +root+\'&ext=\'+extension' )}
+			//params:'\'id=\' + root +\'-\' +extension + \'&pa=\' + primerApellido' )}
+			//params:'\'id=\' + root +\'-\' +extension + \'&pa=\' + primerApellido + \'&sa=\' + segundoApellido' )}
 		}
          function updateSubCats( category ){
               var selectpais = document.getElementById("paisnace");
@@ -198,7 +198,8 @@
         <g:message code="${flash.message}" />
       </div>
     </g:if>
-
+<div id="mensaje" style="color:red;">&nbsp;
+</div>
  
     <g:form action="agregarPaciente" name="nuevopaciente" enctype="multipart/form-data">
 
@@ -216,8 +217,8 @@
 		  
           <label for="identificador"><g:message code="persona.identificador" /></label>
           <g:textField name="extension" value="${params.identificador}" />
-		  <%--g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value)"/--%>
-		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	
+		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['*1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
+		  <%--<g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	--%>
 		   <div id="nombres">
 				<label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
 				<g:textField name="primerApellido" value="${params.primerApellido}"/>
