@@ -76,7 +76,7 @@ var $j = jQuery.noConflict();
         function checkValid(paso){
         //alert(jQuery("#primerApellido").val())
         //if(jQuery("#primerApellido"))
-        var idsStep0 = new Array("#primerApellido","#segundoApellido","#primerNombre","#segundoNombre","#extension","#fechaNacimiento","#sexo");
+        var idsStep0 = new Array("#primerApellido","#segundoApellido","#primerNombre","#segundoNombre","#extension","#fechaNacimiento","#sexo","#identificadorUnico");
         var idsStep1 = new Array("#ciudadnacimiento");
         var idsStep2 = new Array("#anosaprobados"); 
         var idsStep3 = new Array("#entidresid","#ciudad","#urbasector","#avenidacalle","#casaedif","#ptoreferenica"); 

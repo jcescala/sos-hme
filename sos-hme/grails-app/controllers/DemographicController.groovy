@@ -693,7 +693,14 @@ class DemographicController{
      * Agrega un nuevo paciente cuando el paciente a atender no esta en el sistema.
      */
     def agregarPaciente = {
-        
+        def tiposIds = TipoIdentificador.list()
+        def etniasIds = Etnia.list()
+        def profesionIds = Profesion.list()
+        def conyugalIds = Conyugal.list()
+        def nivelEducIds = Niveleducativo.list()
+        def ocupacionIds = Ocupacion.list()
+        def paisesIds = Lugar.findAllByTipolugarLike("Pais")
+        def entidadesIds = Lugar.findAllByTipolugarLike("Estado")
         //println params
         
         // FIXME: si viene el id, verificar que no hay otro paciente con ese id, si lo hay, no dejar dar de alta, decirle que ya existe.
@@ -758,8 +765,15 @@ class DemographicController{
                     {
                         println "Ya existe!"
                         flash.message = "Ya existe la persona con id: " + id.extension + ", verifique el id ingresado o vuelva a buscar la persona"
-                        def tiposIds = TipoIdentificador.list()
-                        return [tiposIds: tiposIds]
+                        //def tiposIds = TipoIdentificador.list()
+                        return [tiposIds: tiposIds,
+                                etniasIds : etniasIds,
+                                profesionIds : profesionIds,
+                                paisesIds : paisesIds,
+                                conyugalIds : conyugalIds,
+                                nivelEducIds : nivelEducIds,
+                                ocupacionIds : ocupacionIds,
+                                entidadesIds : entidadesIds]
                     }
                     else
                     println "No existe!"
@@ -770,8 +784,15 @@ class DemographicController{
                 {
                     // Vuelve a la pagina
                     flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
-                    def tiposIds = TipoIdentificador.list()
-                    return [tiposIds: tiposIds]
+                    //def tiposIds = TipoIdentificador.list()
+                    return [tiposIds: tiposIds,
+                                etniasIds : etniasIds,
+                                profesionIds : profesionIds,
+                                paisesIds : paisesIds,
+                                conyugalIds : conyugalIds,
+                                nivelEducIds : nivelEducIds,
+                                ocupacionIds : ocupacionIds,
+                                entidadesIds : entidadesIds]
                 }
                 
             }
@@ -858,14 +879,7 @@ class DemographicController{
        }
         
         // creacion de un nuevo paciente
-        def tiposIds = TipoIdentificador.list()
-        def etniasIds = Etnia.list()
-        def profesionIds = Profesion.list()
-        def conyugalIds = Conyugal.list()
-        def nivelEducIds = Niveleducativo.list()
-        def ocupacionIds = Ocupacion.list()
-        def paisesIds = Lugar.findAllByTipolugarLike("Pais")
-        def entidadesIds = Lugar.findAllByTipolugarLike("Estado")
+        
         
         return [tiposIds: tiposIds,
             etniasIds : etniasIds,
@@ -1072,7 +1086,9 @@ class DemographicController{
 				if(existPatient){
 						
 						codmsj="2"
-						render  "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+						render          "<input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>"+
+                                                                "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+                                                                
 								"<input type='text' name='primerApellido' id='primerApellido' value=''>"+
 
 								"<label for='segundoApellido'>"+m2+"</label>"+
@@ -1139,7 +1155,9 @@ class DemographicController{
 							selectFemenino = "selected"
 						}
 						codmsj="3"
-						render  "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+						render          "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+                                                                "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+                                                                
 								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"'>"+
 
 								"<label for='segundoApellido'>"+m2+"</label>"+
@@ -1176,8 +1194,9 @@ class DemographicController{
 							selectFemenino = "selected"
 						}
 						
-						render	"</select>"+"<label for='primerApellido'>"+m1+"</label>"+
-
+						render          "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+                                                                "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+                                                                    
 								"<input type='text' name='primerApellido' id='primerApellido' value="+primerApellido+">"+
 								"<label for='segundoApellido'>"+m2+"</label>"+
 								"<input type='text' name='segundoApellido' id='segundoApellido' value="+segundoApellido+">"+
@@ -1237,7 +1256,8 @@ class DemographicController{
 						"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 						"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
 						"jQuery('#mensaje').html('&nbsp;');"+
-						"});</script>"
+						"});</script>"+
+                                                "<input type='hidden' id='identificadorUnico' value='novalido'/>"
 			}
 	}
 	
@@ -1285,95 +1305,7 @@ class DemographicController{
             //render list.collect{ "<option value=-1>- Aplica Sólo a Venezuela</option>" }
         }
     }
-    /*
-     *@author Juan Carlos Escalante
-     *
-     *suite de reportes estadísticos sobre episodios clínicos*/
-    // fuera de uso. comportamiento migrado a ReportesController
-    /*
-    def reportIndex = {
-        def compos = []
-        def paciente = []
-        def sexo = []
-        def fullDireccion = []
-        def ocupacion = []
-        def edad = []
-        Folder domain = Folder.findByPath( session.traumaContext.domainPath )
-        
-        compos = Composition.withCriteria{
-            eq('rmParentId',domain.id)
-        }
-        
-   
-       
-        println("episodio clinico")
-        println(session.traumaContext?.episodioId)
-        
-        println("numero de composiciones")
-        println(compos.size())
-        
-        def composition = null
-        def j = 0
-        while (compos[j]!=null){
-            composition = compos[j]
-            session.traumaContext.episodioId = composition.id
-            def composi = Composition.get(composition.id)
-            // BUSCANDO EL DIAGNOSTICO DESDE LA COMPOSITION
-            println("al diagnostico")
-            println(composi.content[0].name.value) // me indica que es un diganostico de trauma
-            println(composi.content[0])
-            
-            def iter = composi.content.iterator()
-            def item = iter.next()
-            //DIAGNOSTICO-diagnosticos nombre del template
-            def elemento = hceService.getCompositionContentItemForTemplate(composi, "DIAGNOSTICO-diagnosticos")
-
-            if(elemento!=null){
-                def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
-                def rmNodeData =  rmNode.data
-                def rmNodeDataEvents = rmNodeData.events
-                def rmNodeDataEventsData = rmNodeDataEvents.data
-                def rmNodeDataEventsDataItems = rmNodeDataEventsData.items
-                
-                def element = rmNodeDataEvents[0].data.items
-                println("element[0]: ->"+element[0])
-                
-                def codigo = Cie10Trauma.findByCodigo(element[0].value.definingCode.codeString)
-                println("codigo.id: ->"+codigo.nombre)
-            }
-            /////////////////////////////////////
-            def patient = hceService.getPatientFromComposition(composi)
-            if(patient){
-                def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
-                if(datos!=null){
-                    def direccion = demographicService.findFullAddress((int)datos.direccion.id)
-                    fullDireccion << "Ciudad "+ datos.ciudad + ", Urb/Sector " + datos.urbasector + ", Av/Calle " + datos.avenidacalle + ", Casa/Res " + datos.casaedif + ", "+direccion
-                    sexo << patient.sexo
-                    paciente << patient
-                    ocupacion << demographicService.getOcupacion((int)datos.ocupacion.id)
-
-                    if(patient.fechaNacimiento){
-                        def myFormatter = new SimpleDateFormat("yyyy")
-                        //println(myFormatter.format(patient.fechaNacimiento))
-                        def hoy = new Date()
-                        //println(Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento)))
-                        edad << Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento))
-                    }
-                }
-                
-            }
-            j++
-        }
-        
-        def output = demographicService.xmlEPI10(ocupacion as String[], fullDireccion as String[])
-        return [patient: paciente,
-                dircompleta : fullDireccion,
-                ocupacion : ocupacion,
-                sexo : sexo,
-                edad : edad]
-        
-    }
-    */
+    
     
     
     def fotopaciente = {
