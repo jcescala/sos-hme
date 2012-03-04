@@ -252,6 +252,8 @@ class PersonController {
             redirect(action: "list")
         }
         else {
+	
+		
             return [personInstance: personInstance, tiposIds: tiposIds]
         }
 		

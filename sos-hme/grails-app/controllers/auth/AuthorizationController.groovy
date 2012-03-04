@@ -3,6 +3,7 @@ package auth;
 import auth.AuthorizationService
 import util.HCESession
 import demographic.role.*
+import authorization.LoginAuth
 
 class AuthorizationController {
     
@@ -37,10 +38,10 @@ class AuthorizationController {
 					
 					//informacion de transaccion para el log.info
 					log.info("Acceso valido a SOS Telemedicina Administracion"+
-					" de Usuarios: {userId:"+login.id+", user: "+login.user+", person: "+
-					login.person+ ", roles: "+roles.type+"}")
+					" de Usuarios: {userId:"+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
+					LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
 					
-					
+					//log.info("soy admin: "+ LoginAuth.get(session.traumaContext.userId).person.roles.type)
 					//se redirecciona a el area de administracion usuarios
 					redirect(controller:'loginAuth', action:'list')
 					return
@@ -55,8 +56,9 @@ class AuthorizationController {
 					session.traumaContext = new HCESession( userId: login.id )
 					
 					//informacion de transaccion para el log.info
-					log.info("Acceso valido a SOS Telemedicina HME: {userId:"+login.id+", user: "+
-					login.user+", person: "+login.person+ ", roles: "+roles.type+"}")
+					log.info("Acceso valido a SOS Telemedicina HME: {userId:"+session.traumaContext.userId+", user: "+
+					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
+					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
 	
 					//se redirecciona a la vista de dominios medicos.
 					redirect(controller:'domain', action:'list')
@@ -85,8 +87,11 @@ class AuthorizationController {
     
     def logout = {
         
-        session.traumaContext = null
-        log.info("Session finalizada correctamente")
+
+        log.info("Session finalizada correctamente {userId:"+session.traumaContext.userId+", user: "+
+					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
+					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
         redirect(action:'login')
+        session.traumaContext = null
     }
 }
