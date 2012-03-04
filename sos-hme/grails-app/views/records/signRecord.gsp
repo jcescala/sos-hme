@@ -26,30 +26,10 @@
         padding-right: 10px;
         width: 80px;
       }
-      .error {
-        /* TODO: meter icono de error ! */
-        border: 1px solid #f00;
-        background-color: #f99;
-        padding: 2px;
-        margin-bottom: 3px;
-      }
-      .error ul {
-        list-style:none;
-        margin:0;
-        padding:0;
-      }
-      .message {
-        /* TODO: meter icono de error ! */
-        border: 1px solid #0f0;
-        background-color: #9f9;
-        padding: 2px;
-        margin-bottom: 3px;
-      }
-      .message ul {
-        list-style:none;
-        margin:0;
-        padding:0;
-      }
+    
+     
+      
+     
       table #sign_table {
         width: 290px;
       }
@@ -64,13 +44,14 @@
     <h2><g:message code="trauma.sign.title" /></h2>
 
     <g:if test="${flash.error}">
-      <div class="error"><g:message code="${flash.error}" /></div>
+      <div class="error">
+        <ul><li><g:message code="${flash.error}" /></li></ul></div>
     </g:if>
     <g:if test="${flash.message}">
-      <div class="message"><g:message code="${flash.message}" /></div>
+        <div class="message"><ul><li><g:message code="${flash.message}" /></li></ul></div>
     </g:if>
     <g:if test="${!patient && !flash.error}">
-      <div class="message"><g:message code="trauma.sign.noPatientSelected" /></div>
+      <div class="message"><ul><li><g:message code="trauma.sign.noPatientSelected" /></li></ul></div>
     </g:if>
       
     <g:form url="[action:'signRecord', id:params.id]" method="post" id="form1" class="ehrform">
@@ -93,7 +74,9 @@
       
       <g:isNotSignedRecord episodeId="${episodeId}">
         <br/>
+       
         <input type="submit" name="doit" value="${message(code:'trauma.sign.action.sign')}" class="boton1" />
+       
       </g:isNotSignedRecord>
       
       <%-- TODO: recordar clave

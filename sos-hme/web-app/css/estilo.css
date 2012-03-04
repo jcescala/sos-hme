@@ -406,9 +406,11 @@ a {
     11. BOTONES  |  para las páginas que lo requieran
 
 -------------------------------------------------  */
+
+
 .boton1 {    /* Boton con fondo amarillo degradado  */
 	display:inline-block;
-	padding: 7px 15px;
+	padding: 5px 10px;
 	background:#f5cb59 url(../images/bkg_boton1.gif) repeat-x;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4e2b3), to(#f5c645));
     background-image: -webkit-linear-gradient(top, #f4e2b3, #f5c645);
@@ -419,6 +421,8 @@ a {
 	border:solid 1px #dddddd;
 	text-decoration:none;
 	margin: 5px;
+	font-weight: bold;
+	cursor: pointer;
 	}
 .boton1 img {
 	padding-right:5px;
@@ -483,17 +487,19 @@ cursor: pointer;
 }	
 
 .message {
-        padding: 10px;
+       
         background-color: #ffff80;
         border: 1px solid #666680;
-        margin-bottom: 5px;
+        
+		
       }
   .error {
+  
         /* TODO: meter icono de error ! */
         border: 1px solid #f00;
         background-color: #f99;
        
-        margin-bottom: 3px;
+        
       }
 
       .ok{
@@ -510,3 +516,9 @@ cursor: pointer;
        
        
       }
+	  
+	  
+	  .message ul li, .error ul li, .aviso ul li, .ok ul li  {
+	  list-style-type:none;
+	  
+	  }

@@ -382,7 +382,7 @@
     <ul class="top_actions">
 
       <g:isSignedRecord episodeId="${episodeId}">
-      <g:set var="version" value="${Version.findByData(composition)}"/>
+      <g:set var="version" value="${Version.findByData(Composition.get(episodeId))}"/>
       <li>
                    <g:link controller="cda" action="ver" id="${version.nombreArchCDA}" params="[idComposition:episodeId]"><g:message code="hce.cda.verCda" /></g:link> <!-- TODO i18n -->
       </li>
