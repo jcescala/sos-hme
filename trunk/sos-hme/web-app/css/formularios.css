@@ -299,8 +299,16 @@ textarea {
     text-decoration: none;
 	font-size:14px;
 	font-weight:bold;
+	cursor: pointer;
 
 	}
+	.bottom_actions input:hover{
+	
+	background: #EBB420;
+	
+	}
+	
+	
 	
 	/*-------Añadido ------ */
 	

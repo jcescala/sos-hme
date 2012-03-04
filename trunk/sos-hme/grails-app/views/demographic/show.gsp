@@ -39,14 +39,14 @@
     $('#${params.pestana}').show();
     $('#ficha${params.pestana}').addClass('selected');
 
-    <%
-    }else{
-    %>
+<%
+}else{
+%>
     $('#pestanaRegistrosInternos').show();
     <%
     }
     %>
-    
+
 
 			/*
 			*   Examples - images
@@ -126,10 +126,10 @@ ${folder.name.value}
       <a href="#" class="selected contextoEhr"><g:message code="demographic.show.paciente" /></a>
     </li>
     <li>
-       <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
+    <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
     </li>
     <li>
-      <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
+    <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
     </li>
 
     <li><a href="#" class="contextoEhr"><g:message code="reportes.Reportes"/></a></li>
@@ -173,9 +173,9 @@ ${folder.name.value}
   </g:compositionHasPatient>
 
   <g:if test="${flash.message}">
-        <div id="message" class="message ${flash.clase}">
-          <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}" />
-        </div>
+    <div id="message" class="message ${flash.clase}">
+      <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}" />
+    </div>
   </g:if>
 
 
@@ -185,7 +185,7 @@ ${folder.name.value}
   <div id="menu2">
 
     <ul class="top_actions">
-    
+
       <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
         <li>
         <g:link controller="records" action="show" id="${session.traumaContext.episodioId}" class="home"><g:message code="demographic.lista_candidatos.action.backToEpisode" /></g:link>
@@ -208,8 +208,11 @@ ${folder.name.value}
       <ul>
 
         <li><a  id="fichapestanaRegistrosInternos" class="ping" href="javascript:cambio('#pestanaRegistrosInternos')" ><g:message code="service.imp.registrosInternos" /></a></li>
+        
+         <g:if test="${conexionImp && agregadoImp}">
         <li><a id="fichapestanaRegistrosExternos" class="ping" href="javascript:cambio('#pestanaRegistrosExternos')"><g:message code="service.imp.registrosExternos" /></a></li>
         <li><a id="fichapestanaOrganizaciones" class="ping" href="javascript:cambio('#pestanaOrganizaciones')"><g:message code="service.imp.listadoOrganizaciones" /></a></li>
+        </g:if>
         <li><a id="fichapestanaOpcionesImp" class="ping" href="javascript:cambio('#pestanaOpcionesImp')" ><g:message code="demographic.show.opcionesImp" /></a></li>
       </ul>
     </div>
@@ -227,48 +230,48 @@ ${folder.name.value}
 
 
         <g:if test="${conexionImp}">
-<div class="filtros">
+          <div class="filtros">
 <%-- DATOS OPCIONES DE IMP--%>
 
-          <div id="imp">
+            <div id="imp">
 
 
 
 
-            <g:if test="${!agregadoImp}">
-              <g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link>
-            </g:if>
-            <g:else>
-              <g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
-
-
-
-
-              <g:if test="${!relacionadoImp}">
-                <g:remoteLink controller="service"
-                              action="buscarPaciente"
-                              params="[id: person_id, offset: '0']"
-                              update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
-                              onLoading="cargando('#resultadoCandidatos')"
-                              class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
-
+              <g:if test="${!agregadoImp}">
+                <g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link>
               </g:if>
               <g:else>
+                <g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
 
-                <g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
+
+
+
+                <g:if test="${!relacionadoImp}">
+                  <g:remoteLink controller="service"
+                                action="buscarPaciente"
+                                params="[id: person_id, offset: '0']"
+                                update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
+                                onLoading="cargando('#resultadoCandidatos')"
+                                class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
+
+                </g:if>
+                <g:else>
+
+                  <g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
+                </g:else>
+
               </g:else>
 
-            </g:else>
+
+            </div>
+
+
+
+
 
 
           </div>
-
-
-
-
-
-
-</div>
 
           <div id="resultadoCandidatos">
 

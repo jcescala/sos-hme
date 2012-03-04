@@ -21,7 +21,9 @@
     <div id="nivel3">
 
     <g:if test="${flash.message}">
-      <div class="message"><g:message code="${flash.message}" /></div>
+      <div class="aviso">
+      <ul><li>  <g:message code="${flash.message}" /></li></ul>
+      </div>
     </g:if>
 
     
