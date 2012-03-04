@@ -536,21 +536,22 @@ class ReportesController {
         }
         
         }
-        /*
+        
         if(generarReporte == true){
             def FileName = []
              FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi12morbilidad.jasper")
+             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi12MorbilidadP2.jasper")
              def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi12morbilidad.pdf")
-             def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi13morbilidad.xml")
-             def record = "/pacientes/paciente"
+             def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi12morbilidad.xml")
+             def record = "/pacientes"
              generado = reportsOutput(FileName as String[], outFile, xmlFile, record)
              if(generado){
-                redirect(controller:'reportes', action:'index', params:[creado13morbilidad:true,tipo:outFile])
+                redirect(controller:'reportes', action:'index', params:[creado12morbilidad:true,tipo:outFile])
                 }
          }else{
-                redirect(controller:'reportes', action:'index', params:[creado13morbilidad:""])
+                redirect(controller:'reportes', action:'index', params:[creado12morbilidad:""])
             }
-      */      
+            
     }
     
     
