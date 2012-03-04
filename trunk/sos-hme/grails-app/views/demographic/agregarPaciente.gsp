@@ -243,6 +243,7 @@
 
 				<label for="foto"><g:message code="persona.foto" /></label>
 				<input type="text" name="foto" id="foto" style="width: 300px;"/>
+                                
           </div>
           <div id="imgPrevia"></div>
 
@@ -305,8 +306,7 @@
       <fieldset>
         <legend>Direcci&oacute;n de Habitaci&oacute;n</legend>
           <label for="entidadresidencia"><g:message code="persona.entidadreside"/></label>
-		  <g:select name="entidresid" class="selectci" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" />
-		  
+                      <g:select name="entidresid" class="selectci" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" />
           <label for="municipioresidencia"><g:message code="persona.municipioreside"/></label>
 		  <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
 		  

@@ -17,7 +17,18 @@ $j(document).ready(function(){
 	  }, 
 	  "Seleccione Opci&oacute;n" 
 	);
-    
+    jQuery.validator.addMethod( 
+	  "identificadorValido", 
+	  function(value, element) { 
+	    if (element.value == "novalido") 
+	    { 
+	      return false; 
+	    } 
+	    else return true; 
+	  }, 
+	  "identificador no valido" 
+	);
+            
     $j("#nuevopaciente").validate({
         rules:{
             "primerApellido":{
@@ -46,6 +57,9 @@ $j(document).ready(function(){
 		maxlength: 8,
 		number: true
             },
+            "identificadorUnico":{
+               identificadorValido: true 
+            },
             "fechaNacimiento":{
                 required: true
             },
@@ -73,7 +87,7 @@ $j(document).ready(function(){
                 selectNone:true
             },
             "municresid":{
-                //selectNone:true
+                selectNone:true
             },
             "direccion.id":{
                 selectNone:true
