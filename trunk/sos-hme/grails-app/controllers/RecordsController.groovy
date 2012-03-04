@@ -3,11 +3,13 @@ import hce.core.composition.* // Composition y EventContext
 import hce.core.data_types.quantity.date_time.*
 import converters.DateConverter
 import demographic.role.Role
+import authorization.LoginAuth
 import hce.core.data_types.encapsulated.DvMultimedia
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 import cda.*
 import imp.*
 import util.*
+
 
 import hce.core.common.directory.Folder
 import hce.core.support.identification.ObjectID
@@ -438,7 +440,9 @@ def show = {
 			
 			//agregar flash.message error.label.episodio.invalido="El episodio seleccionado es invalido"
 			//flash.message="Episodio invalido!!"
-			log.info("Episodio incorrecto {compositionId: " + params.id +"}")
+			log.info("Episodio incorrecto {compositionId: " + params.id +", userId: "+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
+					LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+			
 			redirect(action:'list')
 			return 
 	   }
@@ -459,9 +463,17 @@ def show = {
       
 	
 	//informacion de transaccion para el log.info
-	log.info("Episodio seleccionado correctamente { compositionId: " + composition.id + 
-	", patient: " + patient+"}")
-    
+	if(!patient){
+	
+		log.info("Episodio seleccionado correctamente, sin paciente asociado { compositionId: " + composition.id + 
+		", userId:"+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
+						LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+    }else{
+		log.info("Episodio seleccionado correctamente { compositionId: " + composition.id + 
+		", patient.id: " + patient.id+", patient: "+patient+" userId:"+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
+		LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")	
+	
+	}
 	
 	// patient puede ser null si todavia no se selecciono un paciente para el episodio,
     // p.e. si la atencion es de urgencia, se atiente primero y luego se identifica al paciente.

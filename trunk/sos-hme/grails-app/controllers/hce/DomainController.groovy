@@ -2,7 +2,8 @@ package hce;
 
 import hce.core.common.directory.Folder
 import hce.HceService
-
+import authorization.LoginAuth
+import demographic.role.*
 
 class DomainController {
 
@@ -42,7 +43,9 @@ class DomainController {
       if (!hceService.domainHasTemplates(params.path))
       {		
 			//informacion de transaccion para el log.info
-			log.info("Dominio incorrecto: {domainPath: "+ params.path+"}")
+			log.info("Dominio incorrecto: {domainPath: "+ params.path+", userId: "+session.traumaContext.userId+", user: "+
+					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
+					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
 			flash.message = 'domain.selectDomain.flash'
 			redirect(action: "list")
 			return
@@ -54,7 +57,9 @@ class DomainController {
       }
       
 	  //informacion de transaccion para el log.info
-	  log.info("Dominio seleccionado correctamente: {domainPath: "+ params.path+"}")
+	  log.info("Dominio seleccionado correctamente!!!: {domainPath: "+ session.traumaContext.domainPath+", userId: "+session.traumaContext.userId+", user: "+
+					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
+					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
 	  redirect(controller: 'records', action: 'list')
    }
 }
