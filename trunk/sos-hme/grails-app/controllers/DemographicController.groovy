@@ -83,9 +83,9 @@ class DemographicController{
     /**
      * Busqueda de candidatos.
      */
-    def findPatient = {
-        
-        println "PARAMS: " + params + "\n"
+    def findPatient = {	// Por alguna razon no devuelve un objeto person con todos sus ids completos.
+
+		//println "PARAMS: " + params + "\n"
 
         //    def pixpdq = new PixPdqDemographicAccess()
         //pixpdq.findIdsById( new UIDBasedID(value:params.identificador) )
@@ -115,8 +115,7 @@ class DemographicController{
         
         def id = null
         if (params.identificador)
-        //println "identificador->: "+params.identificador
-        id = new UIDBasedID(value:params.root+'::'+params.identificador)
+			id = new UIDBasedID(value:params.root+'::'+params.identificador)
 
         // TODO: usar rango de fechas... si viene solo una se usa esa como bd.
         
@@ -140,9 +139,6 @@ class DemographicController{
         if (params.'personName.primerNombre'  || params.'personName.segundoNombre'||
             params.'personName.primerApellido' || params.'personName.segundoApellido')
         {
-            //pn = new PersonName()
-            
-            //new 
             pn = new PersonName()
             bindData(pn, params, 'personName')
             //println "Person Name: " + pn
@@ -159,33 +155,68 @@ class DemographicController{
         println "   PN: "+ pn
         println "   BD: "+ bd
         println "======================================="
-        
+
         //findByPersonDataAndIdAndRole( PersonName n, Date bithdate, String sex, UIDBasedID id, String roleType )
         //def candidatos = demographicService.findByPersonDataAndId(pn, bd, null, id)
-        
+
         def candidatos = []
+
+/*	
+		def perr = Person.get(21)
+		
+		println "perrrrrrrr: " +perr.ids
+*/
+
         try // La comunicacion puede tirar timeout
-        {
-            // busco en la base local
-            candidatos = demographicService.findByPersonDataAndIdAndRole(
-                pn,
-                bd,
-                null,
-                id,
-                Role.PACIENTE )
-    
-            // Si el IMP es remoto, salvo los resultados localmente como un cache para facilitar el pedido
+        {		
+			candidatos = demographicService.findByPersonDataAndIdAndRole(
+			pn,
+			bd,
+			null,
+			id,
+			Role.PACIENTE )
+
+/*			
+			def classPnp = "demographic.identity.PersonNamePatient"
+			def idCandidato
+			def candidatos2 = []
+			if(candidatos){
+					
+					for( c in candidatos){
+						for(idt in c.ids){
+							if(idt!=null){ 
+								idCandidato = Person.executeQuery("select p.id from Person as p left join p.ids ids left join p.identities idt where ids.value =? and idt.class = ?",idt.value, classPnp)						
+								println "idcandidato: "+ idCandidato[0]
+								candidatos2 << Person.get(idCandidato[0])
+								break
+							}
+								
+						}
+					}
+					
+				println "candidatos2 "+ candidatos2.ids
+			
+			
+			
+			}		
+*/
+
+	
+
+			// Si el IMP es remoto, salvo los resultados localmente como un cache para facilitar el pedido
             // y mostrado de los datos de los pacientes seleccionados.
             // TODO: vaciar el cache despues de cierto tiempo, y si el paciente de un episodio no esta en
             //       el repositorio local y el IMP es remoto, pedirlo de nuevo con PDQ y cachearlo.
             //       El borrado deberia hacerse con cuidado de no eliminar personal del hospital, el cual
             //       se guarda en la misma tabla que los pacientes y tiene logins asignados.
-            //       
+            //
+
+			//angel esto esta funcionando ????
             if (!ApplicationHolder.application.config.hce.patient_administration.serviceType.local)
             {
                 def candidatosCache = candidatos // Los que se trageron del IMP remoto
                 candidatos = [] // Los que se cargan del cache, incluyendo los que se trageron y se guardaron ahora en cache.
-                
+                println "estoy en cacheado!!!!!!!!!!!!!!!!!!"
                 candidatosCache.each{ per ->
                     
                     // Ver si esta en cache
@@ -254,8 +285,21 @@ class DemographicController{
         }else{
             pacienteSeleccionado = false
         }
+		println "candidatos: "+candidatos.ids
 
+		
+		
 
+		/*			println "idsssssssss: "+id2
+			//def asd = "demographic.identity.PersonNamePatient"
+			//idCandidatos = Person.executeQuery("select p.id from Person as p left join p.ids ids left join p.identities idt where ids.value =? and idt.class = ?",id2.value, asd)
+            
+			//println "idcandidatos: "+idCandidatos
+			candidatos2 = Person.get(16)
+			println "candidatos ids "+candidatos2.ids
+			*/
+		
+		
         render(view:'listaCandidatos', model:[candidatos:candidatos,pacienteSeleccionado:pacienteSeleccionado])
         
     } // findPatient
@@ -496,11 +540,11 @@ class DemographicController{
          def persona = Person.get(params.id)
         if (persona.ids.size() == 0) // Debe tener un id!
             {
+			
                 redirect( action : 'findPatient',
                     params : ['flash.message': 'El paciente seleccionado no tiene identificadores, debe tener por lo menos uno.'] )
                 return
             }
-
         //Folder domain = Folder.findByPath( session.traumaContext.domainPath )
             String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
             def agreImp
@@ -698,7 +742,7 @@ class DemographicController{
                     println "===================================================="
                     println "Busco por id para ver si existe: " + id.value
                     
-					def existPerson = Person.withCriteria{
+					def existPatient = Person.withCriteria{
 						ids{
 							eq("value", id.value)
 						}
@@ -710,7 +754,7 @@ class DemographicController{
 					}
 					
 					//def existId = UIDBasedID.findByValue(id.value)
-                    if (existPerson)
+                    if (existPatient)
                     {
                         println "Ya existe!"
                         flash.message = "Ya existe la persona con id: " + id.extension + ", verifique el id ingresado o vuelva a buscar la persona"
@@ -731,8 +775,8 @@ class DemographicController{
                 }
                 
             }
-            
 
+			
             def person = new Person() // sexo, fechaNac (no mas)
             
             //println("fechaNacimiento:->"+params.fechaNacimiento)
@@ -745,12 +789,23 @@ class DemographicController{
             person.fechaNacimiento =  d
             
             person.sexo = params.sexo
+			
+			def personId = Person.executeQuery("select p.id from Person as p left join p.ids as i where i.value =?",id.value)
+			if(personId){
+				def Personn = Person.get(personId[0])
+				
+				println "ids:   ->"+Personn
+				
+				def idTemp
+				for(i in Personn.ids){
+					idTemp = UIDBasedID.findByValue(i.value)
+					println("identificador: "+idTemp+"\n")
+					person.addToIds( idTemp )
+				}
             
-
-
-
-
-            person.addToIds( id )
+				println "ids:   ->"+person.ids
+			}else
+				person.addToIds( id )
             
             //def name = new PersonName(params)
             //person.addToIdentities( name )
@@ -797,7 +852,7 @@ class DemographicController{
             }else{
                 println person.errors
             }
-
+			
             redirect(action:'admisionPaciente')
         
        }
