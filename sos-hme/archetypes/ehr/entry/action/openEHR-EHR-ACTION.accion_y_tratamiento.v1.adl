@@ -2,7 +2,7 @@ archetype (adl_version=1.4)
 	openEHR-EHR-ACTION.accion_y_tratamiento.v1
 
 concept
-	[at0000]	-- tratamiento
+	[at0000]	-- Tratamiento
 language
 	original_language = <[ISO_639-1::es]>
 description
@@ -21,15 +21,15 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"C9202F57A9F1DBAECFEDB2092C4324BD">
+		["MD5-CAM-1.0.1"] = <"D2408591A11328340BA210A9A5D72549">
 	>
 
 definition
-	ACTION[at0000] matches {	-- tratamiento
+	ACTION[at0000] matches {	-- Tratamiento
 		description matches {
 			ITEM_TREE[at0001] matches {	-- Arbol
-				items cardinality matches {0..*; unordered} matches {
-					CLUSTER[at0002] occurrences matches {0..1} matches {	-- Tratamiento
+				items cardinality matches {1..*; unordered} matches {
+					CLUSTER[at0002] matches {	-- Tratamiento
 						items cardinality matches {0..*; unordered} matches {
 							ELEMENT[at0004] occurrences matches {0..1} matches {	-- Tratamientos y Acciones a Seguir
 								value matches {
@@ -48,7 +48,7 @@ ontology
 		["es"] = <
 			items = <
 				["at0000"] = <
-					text = <"tratamiento">
+					text = <"Tratamiento">
 					description = <"tratamiento y plan a seguir por parte del paciente">
 				>
 				["at0001"] = <
