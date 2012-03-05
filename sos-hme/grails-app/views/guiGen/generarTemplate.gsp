@@ -29,7 +29,7 @@
             <li ${((template.id==subsection)?"class='selected'":'')}>
 	          <g:hasContentItemForTemplate episodeId="${episodeId}" templateId="${subsection}">
 	            <g:if test="${it.hasItem}">
-	              <g:link controller="guiGen" action="generarShow" id="${it.itemId}" class="contextoEhr"><g:message code="${'section.'+subsection}" /> (*)</g:link>
+	              <g:link controller="guiGen" action="generarShow" id="${it.itemId}" class="contextoEhr"><g:message code="${'section.'+subsection}" /> <img src="${createLinkTo(dir:'images' ,file:'check-icon.png')}" style="width: 15px; height: auto;"/></g:link>
 	            </g:if>
 	            <g:else>
 		          <g:link controller="guiGen" action="generarTemplate" params="[templateId:subsection]" class="contextoEhr">
