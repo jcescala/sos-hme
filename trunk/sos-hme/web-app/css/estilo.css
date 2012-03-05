@@ -457,7 +457,8 @@ border-bottom:#c1c1c1 solid 1px;
 	}
 .tabla1 td {
 	margin:1px 0;
-	padding:8px;}
+	padding:8px;
+	valign:top;}
 .tabla1 tr:nth-child(odd) {
 	background:#f7f7f7;
 	}
