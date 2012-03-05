@@ -946,9 +946,30 @@ class DemographicController{
         }
         
         def patient = Person.get( params.id )
+        
         def pn = patient.identities.find{ it.purpose == 'PersonNamePatient' }
+        def entidadNace = null
+        def municipioNace = null
+        
+        if(pn.lugar!=null){
+            municipioName =  pn.lugar
+            entidadNace = Lugar.get(pn.padre.id)
+            println("entidadNace")
+        }
+        
+        def municipio =  Lugar.get(pn.direccion.padre.id)
+        def estado = Lugar.get(municipio.padre.id)
+        
         def tiposIds = TipoIdentificador.list()
-
+        def etniasIds = Etnia.list()
+        def profesionIds = Profesion.list()
+        def conyugalIds = Conyugal.list()
+        def nivelEducIds = Niveleducativo.list()
+        def ocupacionIds = Ocupacion.list()
+        def paisesIds = Lugar.findAllByTipolugarLike("Pais")
+        def entidadesIds = Lugar.findAllByTipolugarLike("Estado")
+        def municipios = Lugar.findAllByTipolugarLike("Municipio")
+        def parroquias = Lugar.findAllByTipolugarLike("Parroquia")
         if (params.doit)
         {
             patient.setProperties( params )
@@ -961,7 +982,7 @@ class DemographicController{
             pn.delete()
 
             // crea el nuevo
-            pn = new PersonName(params)
+            pn = new PersonNamePatient(params)
             patient.addToIdentities( pn )
 
 
@@ -988,7 +1009,21 @@ class DemographicController{
         }
         
         // muestra pagina de edit
-        return [patient:patient, pn:pn, tiposIds:tiposIds]
+        return [patient:patient, pn:pn, tiposIds:tiposIds, 
+                etniasIds : etniasIds,
+                profesionIds : profesionIds,
+                paisesIds : paisesIds,
+                conyugalIds : conyugalIds,
+                nivelEducIds : nivelEducIds,
+                ocupacionIds : ocupacionIds,
+                entidadesIds : entidadesIds,
+                municipios : municipios,
+                parroquias : parroquias,
+                municipio : municipio,
+                estado : estado,
+                municipioName : municipioName,
+                entidadNace : entidadNace]
+            
     }
 
 
@@ -1322,4 +1357,15 @@ class DemographicController{
        out.close()
     }
     
+    /*
+    def edit = {
+        def paciente = Person.get(params.id)
+        if(!paciente){
+           flash.message = "Ha ocurrido un error en edición de paciente, intente nuevamente"
+            redirect(action: "show", id:params.id)
+        }else{
+            
+        }
+    }
+    */
 }

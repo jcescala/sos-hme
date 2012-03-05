@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><pacientes>
   <fechareporte>
-    26/02/2012
+    04/03/2012
   </fechareporte>
 <paciente>
 <fecha>23/02/2012</fecha>
@@ -15,7 +15,23 @@
 <diagnosticos>
 <diagnostico>Colera debido a vibrio cholerae o1, biotipo el tor</diagnostico>
 </diagnosticos>
-<semana>Del 22/02 al 24/02</semana>
+<semana>Del 15/01 al 04/03</semana>
+<anioregistro>2012</anioregistro>
+</paciente>
+<paciente>
+<fecha>02/03/2012</fecha>
+<nombre>daniel  palencia</nombre>
+<cedula>65321547</cedula>
+<genero>M</genero>
+<fechanacimiento>17/11/1999</fechanacimiento>
+<direccionresidencia>Ciudad asdfasdf, Urb/Sector sadfas, Av/Calle sdfsdf, Casa/Res sdf</direccionresidencia>
+<entidad>Cojedes</entidad>
+<municipio>Pao de San Juan Bautista</municipio>
+<parroquia>El Pao</parroquia>
+<diagnosticos>
+<diagnostico>Tuberculosis del pulmon, confirmada histologicamente</diagnostico>
+</diagnosticos>
+<semana>Del 15/01 al 04/03</semana>
 <anioregistro>2012</anioregistro>
 </paciente>
 </pacientes>

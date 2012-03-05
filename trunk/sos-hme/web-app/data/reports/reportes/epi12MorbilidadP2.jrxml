@@ -19,7 +19,7 @@ Registro Semanal de Enfermedades de Notificación Obligatoria]]></text>
 			</staticText>
 			<image>
 				<reportElement x="1" y="1" width="230" height="43"/>
-				<imageExpression class="java.lang.String"><![CDATA["..\\img\\mppslogo2.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["web-app/data/reports/img/mppslogo2.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="1" y="50" width="230" height="44"/>

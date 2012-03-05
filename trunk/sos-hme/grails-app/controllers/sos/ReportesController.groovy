@@ -197,8 +197,8 @@ class ReportesController {
         
         def j = 0 //loop
         def nombreDoc = "epi10general"
-        def etnia
-        def niveleducativo
+        def etnia = ""
+        def niveleducativo =""
         def generado = false
         Folder domain = Folder.findByPath( session.traumaContext.domainPath )
         compos = hceService.getAllCompositionForDate(inicio, fin)
@@ -210,14 +210,20 @@ class ReportesController {
                 session.traumaContext.episodioId = composition.id
                 def composi = Composition.get(composition.id)
                 def patient = hceService.getPatientFromComposition(composi)
+                
                 if(patient){
                     def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
                     if(datos != null){
                         def direccion = demographicService.findFullAddress((int)datos.direccion.id)
                         fullDireccion = "Ciudad "+ datos.ciudad + ", Urb/Sector " + datos.urbasector + ", Av/Calle " + datos.avenidacalle + ", Casa/Res " + datos.casaedif + ", "+direccion
                         sexo = patient.sexo
-                        etnia = datos.etnia.id
-                        niveleducativo = datos.niveleducativo
+                        if(datos.etnia){
+                            etnia = datos.etnia.id
+                        }
+                        if(datos.niveleducativo){
+                            niveleducativo = datos.niveleducativo
+                        }
+                        
                         paciente << patient
                         
                         
@@ -266,8 +272,8 @@ class ReportesController {
                          
                  if(generarReporte==true){
                      def FileName = []
-                     FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultageneralNuevoFormato.jasper")
-                     FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultaGeneralP2.jasper")
+                     FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultageneralNuevoFormato.jrxml")
+                     FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi10consultaGeneralP2.jrxml")
                      //def outFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/reportes/epi10consultageneral.pdf"
                      def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi10consultageneral.pdf")
                      //def xmlFile = "C:/Users/juan/Desktop/sosDeve/sos-hme/web-app/data/reports/source/epi10general.xml"
@@ -393,7 +399,7 @@ class ReportesController {
         
          if(generarReporte == true){
             def FileName = []
-             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi13morbilidad.jasper")
+             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi13morbilidad.jrxml")
              def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi13morbilidad.pdf")
              def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi13morbilidad.xml")
              def record = "/pacientes/paciente"
@@ -495,6 +501,7 @@ class ReportesController {
                 def patient = hceService.getPatientFromComposition(composi)
                 if(patient){
                     def datos = patient.identities.find{it.purpose == 'PersonNamePatient'}
+                    //println("datos->"+datos)
                     if(datos != null){
                         sexo = patient.sexo
                         if(patient.fechaNacimiento){
@@ -512,8 +519,17 @@ class ReportesController {
                                 def element = rmNodeDataEvents[0].data.items
                                 def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
                                 while(element[k]!=null){
+                                    def notificable
+                                    println("definingCode:->"+element[k].value.definingCode.codeString)
                                     def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
-                                    def notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                    if(codigo!=null){
+                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                    }else{
+                                        codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
+                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                    }
+                                    
+                                    
                                     
                                     if(notificable==true){
                                         
@@ -539,8 +555,8 @@ class ReportesController {
         
         if(generarReporte == true){
             def FileName = []
-             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi12morbilidad.jasper")
-             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi12MorbilidadP2.jasper")
+             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi12Morbilidad.jrxml")
+             FileName << ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes/epi12MorbilidadP2.jrxml")
              def outFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/documentos/epi12morbilidad.pdf")
              def xmlFile = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/epi12morbilidad.xml")
              def record = "/pacientes"
@@ -562,6 +578,7 @@ class ReportesController {
        JRXmlDataSource jrxmlds = new JRXmlDataSource(xmlFileName,recordPath)
        HashMap hm = new HashMap()
        //List jpList = new ArrayList()
+       JasperReport jasperReport
        List<JasperPrint> jpList = new ArrayList<JasperPrint>();
        try
           {
@@ -570,21 +587,20 @@ class ReportesController {
               for(i=0;i<=j-1;i++){
                   println("ciclo:->"+i)
                   println("path:->"+reportFileName[i])
-                  //jpList.add(net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile(reportFileName[i]));
-                  //JasperReport i = JasperCompileManager.compileReport(reportFileName[i]);
-                  JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
+                  jasperReport = JasperCompileManager.compileReport(reportFileName[i])
+                  //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
+                  
+                  //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],hm,jrxmlds)
+                  JasperPrint reporte = JasperFillManager.fillReport(jasperReport,new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
+                  
                   jpList.add(reporte)
               }
-              
-            
+             
             JRExporter exporter = new JRPdfExporter();
             exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
-            //exporter.setParameter(JRExporterParameter.JASPER_PRINT,print);
-            
             exporter.setParameter(net.sf.jasperreports.engine.export.JRPdfExporterParameter.JASPER_PRINT_LIST, jpList);
-            
             exporter.exportReport()
-              
+            
             System.out.println("Created file: " + outFileName)
             return true
           }

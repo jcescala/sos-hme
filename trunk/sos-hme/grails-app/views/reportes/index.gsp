@@ -20,7 +20,7 @@
         <div class ="accionrepo"><g:message code="reporte.accion"/></div>
       </div>
       <div class="listarepo">
-        <div class="reportlist">
+        <%--div class="reportlist">
           <g:form action="epi10emergencia">
             <div class="titulorepo"><g:message code="reportes.epi10emer" /></div>
             <div class="rangofechasrepo">
@@ -34,7 +34,7 @@
               <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
             </div>
           </g:form>
-        </div>
+        </div--%>
         <div class="reportlist">
           <g:form action="epi10general">
             <div class="titulorepo"><g:message code="reportes.epi10general" /></div>

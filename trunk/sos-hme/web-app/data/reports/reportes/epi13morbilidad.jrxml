@@ -46,7 +46,7 @@
 		<band height="219">
 			<image>
 				<reportElement x="1" y="1" width="230" height="37"/>
-				<imageExpression><![CDATA["..\\img\\mppslogo2.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["web-app/data/reports/img/mppslogo2.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="2" y="38" width="159" height="20"/>

@@ -107,7 +107,7 @@
 				<reportElement x="0" y="0" width="324" height="181"/>
 				<image>
 					<reportElement x="9" y="1" width="85" height="61"/>
-					<imageExpression><![CDATA["..\\img\\mppslogo.jpg"]]></imageExpression>
+					<imageExpression><![CDATA["web-app/data/reports/img/mppslogo.jpg"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="10" y="61" width="72" height="39"/>
@@ -314,7 +314,7 @@
 			</componentElement>
 			<image>
 				<reportElement x="103" y="1" width="245" height="190"/>
-				<imageExpression><![CDATA["..\\img\\enfermedadesObligatorias.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["web-app/data/reports/img/enfermedadesObligatorias.jpg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="348" y="50" width="562" height="2"/>
