@@ -167,14 +167,20 @@ ${folder.name.value}
   </div>
 
   <g:compositionHasPatient episodeId="${session.traumaContext.episodioId}">
-    <div style="color:red;" class="message">
+    <div class="message aviso">
+      <ul><li>
       <g:message code="trauma.show.feedback.patientAlreadySelectedForThisEpisode" />
-    </div><br/>
+      </li></ul>
+    </div>
+      
+    <br/>
   </g:compositionHasPatient>
 
   <g:if test="${flash.message}">
     <div id="message" class="message ${flash.clase}">
+      <ul><li>
       <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}" />
+      </li></ul>
     </div>
   </g:if>
 
