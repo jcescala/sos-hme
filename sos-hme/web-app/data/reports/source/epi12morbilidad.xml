@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><pacientes>
   <fechareporte>
-    04/03/2012
+    05/03/2012
   </fechareporte>
 <A00_menosde1_H>0</A00_menosde1_H>
 <A00_menosde1_M>0</A00_menosde1_M>
@@ -128,7 +128,7 @@
 <A15-A19_7a9_M>0</A15-A19_7a9_M>
 <A15-A19_10a11_H>0</A15-A19_10a11_H>
 <A15-A19_10a11_M>0</A15-A19_10a11_M>
-<A15-A19_12a14_H>0</A15-A19_12a14_H>
+<A15-A19_12a14_H>1</A15-A19_12a14_H>
 <A15-A19_12a14_M>0</A15-A19_12a14_M>
 <A15-A19_15a19_H>0</A15-A19_15a19_H>
 <A15-A19_15a19_M>0</A15-A19_15a19_M>
@@ -1307,6 +1307,6 @@
 <A96.8_totalhombre>0</A96.8_totalhombre>
 <A96.8_totalmujer>0</A96.8_totalmujer>
 <A96.8_totalgeneral>0</A96.8_totalgeneral>
-<semana>Del 22/02 al 24/02</semana>
+<semana>Del 22/02 al 04/03</semana>
 <anioregistro>2012</anioregistro>
 </pacientes>

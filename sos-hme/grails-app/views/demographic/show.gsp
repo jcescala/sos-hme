@@ -200,6 +200,9 @@ ${folder.name.value}
       <li>
       <g:link controller="records" action="create" params="[root:root, extension:extension]" class="create"><g:message code="demographic.show.action.createEpisode" /></g:link>
       </li>
+      <li>
+        <g:link controller="demographic" action="edit" params="[id:person_id]" class="create"><g:message code="demographic.show.action.editPatient" /></g:link>
+      </li>
 
     </ul>
 

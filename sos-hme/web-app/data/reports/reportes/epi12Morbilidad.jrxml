@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi12Morbilidad" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="384"/>
+	<property name="ireport.x" value="1981"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<queryString language="xPath">
@@ -3285,7 +3285,9 @@
 	<variable name="totalhombreA06" class="java.lang.Integer"/>
 	<variable name="totalmujerA06" class="java.lang.Integer"/>
 	<variable name="totalGeneralA06" class="java.lang.Integer"/>
-	<variable name="totalhombreA01.1" class="java.lang.Integer"/>
+	<variable name="totalhombreA01.1" class="java.lang.Integer">
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
 	<variable name="totalmujerA01.1" class="java.lang.Integer"/>
 	<variable name="totalGeneralA01.1" class="java.lang.Integer"/>
 	<variable name="totalhombreB15" class="java.lang.Integer"/>
@@ -3903,7 +3905,7 @@
 			</staticText>
 			<image>
 				<reportElement x="1" y="1" width="230" height="43"/>
-				<imageExpression class="java.lang.String"><![CDATA["..\\img\\mppslogo2.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["web-app/data/reports/img/mppslogo2.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="1" y="45" width="230" height="44"/>

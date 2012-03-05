@@ -601,7 +601,7 @@ class DemographicService {
         Node pacientes = doc.getFirstChild()
         
         def nodoUpdate = nombreNodo(edad, sexo, codigo, subgrupo)
-        //println("nodoUpdate:->"+nodoUpdate)
+        println("nodoUpdate:->"+nodoUpdate)
         
         if(nodoUpdate!="vacio"){
             Node nodoCambio = doc.getElementsByTagName(nodoUpdate).item(0)
