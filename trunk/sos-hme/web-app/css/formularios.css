@@ -1,6 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
-
+table td {
+	vertical-align: top;}
 textarea {
   width: 98%;
    height: 48px;
@@ -324,4 +325,5 @@ textarea {
 		clear:both;
 
     }
+	
 	
