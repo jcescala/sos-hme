@@ -298,7 +298,9 @@
       <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
     </li>
    
-    <li><a href="#" class="contextoEhr"><g:message code="reportes.Reportes"/></a></li>
+    <li>
+       <g:link controller="reportes" class="contextoEhr"><g:message code="reportes.Reportes"/></g:link>
+    </li>
   </ul>
 </div>
 <div id="nivel1">
