@@ -1,5 +1,5 @@
 
-  <table cellpadding="3" cellspacing="1">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla1">
 
    <% def odd = 1 %>
 
@@ -20,9 +20,9 @@
           
             <td> ${codigo.subgrupo}</td>
             <td> ${((codigo.codigo) ? codigo.codigo : '')} </td> <%--// si no muestra 'null'--%>
-            <td class="name"> <%print codigo.nombre %></td>
+            <td > <%print codigo.nombre %></td>
             <td class="select_code">
-              <a href="javascript:select(${codigo.id});">[seleccionar]</a>
+              <a href="javascript:select(${codigo.id});">Seleccionar</a>
             </td>
 
             </tr>

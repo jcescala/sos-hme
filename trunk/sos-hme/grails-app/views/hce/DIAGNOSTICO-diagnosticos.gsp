@@ -171,12 +171,7 @@
      <div id="nivel3">
     <h2>${message(code:'section.DIAGNOSTICO-diagnosticos.title')}</h2>
   
-    <%--
-    <g:if test="${rmNode}">
-      ${rmNode.data.events[0].data.items}
-      <textarea style="width: 800px; height: 400px;">${new XStream().toXML(rmNode.data.events[0].data.errors)}</textarea>
-    </g:if>
-    --%>
+    
     <g:if test="${rmNode && rmNode.data.events[0].data.errors.hasErrors()}">
       <div class="error">
         <g:renderErrors bean="${rmNode.data.events[0].data}" as="list" />
