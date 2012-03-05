@@ -50,8 +50,10 @@ class Cie10Controller {
               partes.each { parte ->
 
                 // El texto en la base esta en upper
-                _codigo.nombre = _codigo.nombre.replaceAll(parte, '<b class="highlight">'+parte+'</b>')
-              }
+                _codigo.nombre = _codigo.nombre.toUpperCase()
+                _codigo.nombre = _codigo.nombre.replaceAll(parte.toUpperCase(), '<b class="highlight">'+parte.toUpperCase()+'</b>')
+
+            }
               //Hago dicard() para que no se realice un guardado automatico!!!
               _codigo.discard()
         }
