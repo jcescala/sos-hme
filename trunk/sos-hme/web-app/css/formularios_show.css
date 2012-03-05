@@ -330,7 +330,7 @@ textarea {
 	  font-weight:normal;
 	  color:#1e1e1e;
     }
-
+	 .ELEMENT .label,
 	 .CLUSTER .ELEMENT .label, 						 /* Primer Nivel Contenido */
 	 .CLUSTER .CLUSTER .ELEMENT .label,				/* Segundo Nivel Contenido */
 	 .CLUSTER .CLUSTER .CLUSTER .ELEMENT .label,  	/* Tercer Nivel Contenido */
@@ -355,3 +355,6 @@ textarea {
       border-bottom:1px solid #c1c1c1;
 	  
     }
+	
+	table td {
+	vertical-align: top;}
