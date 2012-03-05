@@ -8,6 +8,7 @@
               <g:set var="archetype" value="${ArchetypeManager.getInstance().getArchetype( content.archetypeDetails.archetypeId )}" />
               <g:render template="../guiGen/showTemplates/Locatable"
                         model="[rmNode: content, archetype: archetype ]" />
+               <hr />
             </g:each>
           </td>
         </tr>

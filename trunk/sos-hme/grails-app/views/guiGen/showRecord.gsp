@@ -37,7 +37,9 @@
 
                 <g:render template="../guiGen/showTemplates/Locatable"
                           model="[rmNode: content, archetype: archetype, template: template]" />
+                <hr />
                 </g:each>
+                
               </g:else>
           </td>
         </tr>
