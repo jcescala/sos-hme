@@ -31,6 +31,9 @@
   <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery-ui-timepicker-addon.js')}"> </script>
   <script type="text/javascript" src="${createLinkTo(dir:'js' ,file:'efectos.js')}"> </script>
 
+  <script src="${createLinkTo(dir:'js/jquery/jqueryalert' ,file:'jquery.alerts.js')}"  type="text/javascript"></script>
+  <link href="${createLinkTo(dir:'js/jquery/jqueryalert' ,file:'jquery.alerts.css')}" rel="stylesheet" type="text/css" media="screen" />
+
   <script type="text/javascript">
    
     // 'modificado' establece si los valores de la seccion han sido modificados
@@ -38,8 +41,13 @@
     // 'secc' establece seccion actual
     var secc = '${section}';
     function deseaGuardar(){
-      
-      return confirm("Desea guardar los cambios efectuados?");
+
+      //jAlert("hola","titulo");
+      //jConfirm('Desea guardar los cambios efectuados?',"tutulo");
+
+
+
+     //confirm("Desea guardar los cambios efectuados?");
     }
     function guardadoAutomatico(seccion, generarShow, itemId){
       if(!modificado){
@@ -51,42 +59,51 @@
           return;
         }
       }
-      if(deseaGuardar()){
-      
-      
-      //SI generarShow es true, significa que el registro ya está guardado previamente
-      //<input id="mode" type="hidden" name="mode" value="show" />
-      if ($(".ehrform").length > 0){
-        
-          if($('#mode').val() =='edit'){
-            
-          $(".ehrform").append("<input type='hidden' name='autoSave' value='"+seccion+"' />");
-          $(".ehrform").submit();
-          }else if($('#mode').val() =='show'){
 
-            if(generarShow==true){
-                $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
+      jConfirm('¿Desea guardar los cambios efectuados?',"Guardar",function(r){
+
+      if(r){
+
+
+            //SI generarShow es true, significa que el registro ya está guardado previamente
+            //<input id="mode" type="hidden" name="mode" value="show" />
+            if ($(".ehrform").length > 0){
+
+                if($('#mode').val() =='edit'){
+
+                $(".ehrform").append("<input type='hidden' name='autoSave' value='"+seccion+"' />");
+                $(".ehrform").submit();
+                }else if($('#mode').val() =='show'){
+
+                  if(generarShow==true){
+                      $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
+                  }else{
+                      $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+                  }
+
+                }else{
+                  //AQUI DEBERIA ENTRAR CUANDO SE GUARDA POR PRIMERA VEZ
+                  $(".ehrform").append("<input type='hidden' name='autoSave' value='"+seccion+"' />");
+                   $(".ehrform").submit();
+                }
+
+            }else if(generarShow==true){
+              $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
             }else{
-                $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+              $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
             }
+        }else{
 
-          }else{
-            //AQUI DEBERIA ENTRAR CUANDO SE GUARDA POR PRIMERA VEZ
-            $(".ehrform").append("<input type='hidden' name='autoSave' value='"+seccion+"' />");
-             $(".ehrform").submit();
-          }
+
+          $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
+
+        }
+
+
+
+
+      });
       
-      }else if(generarShow==true){
-        $(location).attr('href',"${createLink(controller:'guiGen', action:'generarShow')}"+"?id="+itemId);
-      }else{
-        $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
-      }
-  }else{
-
-
-    $(location).attr('href',"${createLink(controller:'records', action:'registroClinico2')}"+"?section="+seccion);
-
-  }
     }
 
 
@@ -452,7 +469,7 @@
                               <g:message code="${'section.'+section}" /> (+) <%-- + es que se hizo algun registro en la seccion --%>
                            <%-- </g:link>
                             --%>
-                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});" ${(( template?.id?.startsWith(section) ) ? "class='selected contextoEhr'" : "class='contextoEhr'")} ><g:message code='${"section."+section}' /> (+)</a>
+                         <a href="#" onClick="guardadoAutomatico('${section}',true,${it.itemId});" ${(( template?.id?.startsWith(section) ) ? "class='selected contextoEhr'" : "class='contextoEhr'")} ><g:message code='${"section."+section}' /> <img src="${createLinkTo(dir:'images' ,file:'check-icon.png')}" style="width: 15px; height: auto;"/></a>
                           </g:if>
                           <g:else>
                             <%-- SIN GUARDAR, GENERAR RECORDS INPUTS (registrao clinico2) --%>
