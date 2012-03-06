@@ -199,20 +199,22 @@
         <g:message code="persona.identificador" />
       </label>
       
-      <%--g:each in="${patient.ids}" var="pid">
+      <g:each in="${patient.ids}" var="pid">
       
         <g:set var="codigo" value="${TipoIdentificador.findByCodigo(pid.root)}" />
 
-        ${pid.extension} ${( (codigo) ? codigo.nombreCorto : pid.root )}<br/>
-      </g:each--%>
+        <g:textField name="extension" value="${pid.extension}"/>
+        <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" value="${pid.root}"/>
+        <br/>
+      </g:each>
       
       <%-- No dejo cambiar los identificadores porque deberia lanzar un proceso que verifique donde hay referencias a lso identificadores que se eliminador o cambiaron por correccion.
       <g:textField name="extension" value="${pid.extension}" />
       <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" />
       --%>
       
-      <g:textField name="extension" value="${patient.ids[0].extension}" readonly="readonly"/>
-      <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" value="${patient.ids[0].root}" disabled="true"/>
+      <%--g:textField name="extension" value="${patient.ids[0].extension}"/>
+      <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" value="${patient.ids[0].root}"/--%>
       <input type='hidden' id="identificadorUnico" value="valido" name="identificadorUnico"/>
         
       <label for="primerNombre">
@@ -236,7 +238,7 @@
       <g:textField name="segundoApellido" value="${pn.segundoApellido}" />
       
       <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-	<input name="fechaNacimiento" type="text" id="fechaNacimiento" class="Date" value="${patient.fechaNacimiento}"/>  <br /><br />
+	<input name="fechaNacimiento" type="text" id="fechaNacimiento" class="Date" value="${fechaNace}"/>  <br /><br />
       
       <label for="sexo"><g:message code="persona.sexo" /></label>
 	<g:select name="sexo" class="selectci" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${patient.sexo}" />

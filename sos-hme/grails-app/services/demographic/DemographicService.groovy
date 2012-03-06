@@ -426,6 +426,8 @@ class DemographicService {
     public boolean crearXmlEPI10Gen(String docxml, String cedula, String nombre, String fechanacimiento, String direccion, String sexo,String etnia, String niveleducativo,String edad, String[] diagnosticos){
         def ruta = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/source/"+docxml+".xml")
         
+        
+        
         Date hoy = new Date()
         println("hoy:->"+hoy.format("dd/MM/yyyy"))
         

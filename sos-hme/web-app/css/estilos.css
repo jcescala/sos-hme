@@ -195,6 +195,13 @@ label.valid {
 ul li{
 list-style:none;
 }
+.mensajereportefalla{
+	float:right; width:250px; color:#F00; margin-left:-25%;
+}
+.mensajereporteexito{
+	float:right; width:250px; color:#00F; margin-left:-25%;
+}
+
 .pacientereporte{
 	margin-left:0%;	position:relative;
 	text-align:left; width:800px;

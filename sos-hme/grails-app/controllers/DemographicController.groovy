@@ -710,20 +710,6 @@ class DemographicController{
         
         if (params.doit)
         {
-            /*
-             * Account.withTransaction { status ->
-            def source = Account.get(params.from)
-            def dest = Account.get(params.to)
-            def amount = params.amount.toInteger()
-            if(source.active)
-            {
-            source.balance -= amount
-            if(dest.active) { dest.amount += amount }
-            else { status.setRollbackOnly() }
-            }
-            }
-             */
-            
             // Veo si viene extension y root o si root es autogenerado
             def id = null
             if (params.root == TipoIdentificador.AUTOGENERADO)
@@ -934,7 +920,6 @@ class DemographicController{
     def edit = {
         
         println params
-        
         // Si no viene el id, vuelvo a un punto seguro.
         if (!params.id)
         {
@@ -947,14 +932,17 @@ class DemographicController{
         
         def patient = Person.get( params.id )
         
+        
         def pn = patient.identities.find{ it.purpose == 'PersonNamePatient' }
+        
         def entidadNace = null
         def municipioNace = null
+        def paisNace = null
         
         if(pn.lugar!=null){
-            municipioName =  pn.lugar
-            entidadNace = Lugar.get(pn.padre.id)
-            println("entidadNace")
+            municipioNace =  pn.lugar
+            entidadNace = Lugar.get(municipioNace.padre.id)
+            paisNace = Lugar.get(entidadNace.padre.id)
         }
         
         def municipio =  Lugar.get(pn.direccion.padre.id)
@@ -970,10 +958,28 @@ class DemographicController{
         def entidadesIds = Lugar.findAllByTipolugarLike("Estado")
         def municipios = Lugar.findAllByTipolugarLike("Municipio")
         def parroquias = Lugar.findAllByTipolugarLike("Parroquia")
+        
+        def fechaNace = patient.fechaNacimiento
+        SimpleDateFormat formatter = new SimpleDateFormat ("dd-MM-yyyy")
+        
+        
+        
         if (params.doit)
         {
-            patient.setProperties( params )
+            //patient.setProperties( params )
             //pn.setProperties( params )
+            patient.sexo = params.sexo
+            
+            println("extensionNuevo:->"+params.extension)
+            
+            def dia = params.fechaNacimiento.split('-')[0]
+            def mes = params.fechaNacimiento.split('-')[1]
+            def anio = params.fechaNacimiento.split('-')[2]
+            String fecha = anio+'-'+mes+'-'+dia
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd")
+            java.util.Date d =  sdf.parse(fecha.toString())
+            patient.fechaNacimiento =  d
+            
             
             println "PN:: " + pn
             
@@ -998,7 +1004,22 @@ class DemographicController{
             if (!patient.save(flush:true))
             {
                 println patient.errors
-                return [patient:patient, pn:pn, tiposIds:tiposIds]
+                return [patient:patient, pn:pn, tiposIds:tiposIds, 
+                        etniasIds : etniasIds,
+                        profesionIds : profesionIds,
+                        paisesIds : paisesIds,
+                        conyugalIds : conyugalIds,
+                        nivelEducIds : nivelEducIds,
+                        ocupacionIds : ocupacionIds,
+                        entidadesIds : entidadesIds,
+                        municipios : municipios,
+                        parroquias : parroquias,
+                        municipio : municipio,
+                        estado : estado,
+                        municipioNace : municipioNace,
+                        entidadNace : entidadNace,
+                        paisNace : paisNace,
+                        fechaNace : formatter.format(fechaNace)]
             }
             
             if (session.traumaContext.episodioId)
@@ -1021,8 +1042,10 @@ class DemographicController{
                 parroquias : parroquias,
                 municipio : municipio,
                 estado : estado,
-                municipioName : municipioName,
-                entidadNace : entidadNace]
+                municipioNace : municipioNace,
+                entidadNace : entidadNace,
+                paisNace : paisNace,
+                fechaNace : formatter.format(fechaNace)]
             
     }
 
@@ -1357,15 +1380,5 @@ class DemographicController{
        out.close()
     }
     
-    /*
-    def edit = {
-        def paciente = Person.get(params.id)
-        if(!paciente){
-           flash.message = "Ha ocurrido un error en edición de paciente, intente nuevamente"
-            redirect(action: "show", id:params.id)
-        }else{
-            
-        }
-    }
-    */
+  
 }

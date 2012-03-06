@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi13morbilidad" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="627"/>
-	<property name="ireport.y" value="357"/>
+	<property name="ireport.x" value="1453"/>
+	<property name="ireport.y" value="214"/>
 	<queryString language="xPath">
 		<![CDATA[/pacientes/paciente]]>
 	</queryString>
@@ -46,7 +46,7 @@
 		<band height="219">
 			<image>
 				<reportElement x="1" y="1" width="230" height="37"/>
-				<imageExpression><![CDATA["web-app/data/reports/img/mppslogo2.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["web-app/data/reports/img/mppslogo2.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="2" y="38" width="159" height="20"/>
@@ -300,7 +300,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="20" y="0" width="57" height="30"/>
@@ -311,7 +311,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="77" y="0" width="123" height="30"/>
@@ -322,7 +322,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="0" width="55" height="30"/>
@@ -333,7 +333,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="255" y="0" width="35" height="30"/>
@@ -344,7 +344,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{genero}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="290" y="0" width="57" height="30"/>
@@ -355,7 +355,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fechanacimiento}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fechanacimiento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="347" y="0" width="143" height="30"/>
@@ -366,7 +366,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{direccionresidencia}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{direccionresidencia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="490" y="0" width="46" height="30"/>
@@ -377,7 +377,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{entidad}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{entidad}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="536" y="0" width="46" height="30"/>
@@ -388,7 +388,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{municipio}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{municipio}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="582" y="0" width="46" height="30"/>
@@ -399,7 +399,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{parroquia}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{parroquia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="628" y="0" width="191" height="30"/>
@@ -407,10 +407,10 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+				<textElement verticalAlignment="Top">
+					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{diagnostico}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{diagnostico}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="819" y="0" width="91" height="30"/>
