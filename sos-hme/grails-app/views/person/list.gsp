@@ -44,10 +44,10 @@
                             <td><g:formatDate date="${personInstance.fechaNacimiento}" /></td>
                         
                             <td>${fieldValue(bean: personInstance, field: "sexo")}</td>
-                            <!--
+                            <%--
                              se debe indicar el id de el objeto person (personInstance) al metodo get
                             personInstance.identities.primerNombre
-                            -->
+                            --%>
                             
                             <!--angel: se verifica que el objeto person tenga un role de lo contrario
                                 muestra.

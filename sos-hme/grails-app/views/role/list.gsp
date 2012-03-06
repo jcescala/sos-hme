@@ -22,8 +22,8 @@
                             <g:sortableColumn property="id" title="${message(code: 'role.id.label', default: 'Id')}" />
 
                             <g:sortableColumn property="type" title="${message(code: 'role.type.label', default: 'Tipo')}" />
-
-                            <th><g:message code="role.performer.label" default="Persona" /></th>
+															
+                            <g:sortableColumn property="performer" title="${message(code: 'role.performer.label', default: 'Persona')}" />
 
                             
 
