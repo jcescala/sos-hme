@@ -33,14 +33,14 @@
                         </tr>--%>
 
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="loginAuth.user.label" default="User" />:</td>
+                            <td valign="top" class="name"><g:message code="loginAuth.user.label" default="Usuario" />:</td>
 
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "user")}</td>
 
                         </tr>
                         <%--
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="loginAuth.pass.label" default="Pass" /></td>
+                            <td valign="top" class="name"><g:message code="loginAuth.pass.label" default="Clave" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: loginAuthInstance, field: "pass")}</td>
                             

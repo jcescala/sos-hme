@@ -29,9 +29,12 @@
                         
                             <g:sortableColumn property="segundoApellido" title="${message(code: 'personNameUser.segundoApellido.label', default: 'Segundo Apellido')}" />
                         
-                            <g:sortableColumn property="telfhabitacion" title="${message(code: 'personNameUser.telfhabitacion.label', default: 'Telfhabitacion')}" />
-                        
-                        </tr>
+                            <g:sortableColumn property="telfhabitacion" title="${message(code: 'personNameUser.telfhabitacion.label', default: 'Telf habitacion')}" />
+
+                            <g:sortableColumn property="telfcelular" title="${message(code: 'personNameUser.telfcelular.label', default: 'Telf celular')}" />							
+                        							
+							<g:sortableColumn property="email" title="${message(code: 'personNameUser.email.label', default: 'Direccion email')}" />
+						</tr>
                     </thead>
                     <tbody>
                     <g:each in="${personNameUserInstanceList}" status="i" var="personNameUserInstance">
@@ -48,7 +51,10 @@
                             <td>${fieldValue(bean: personNameUserInstance, field: "segundoApellido")}</td>
                         
                             <td>${fieldValue(bean: personNameUserInstance, field: "telfhabitacion")}</td>
-                        
+							
+							<td>${fieldValue(bean: personNameUserInstance, field: "telfcelular")}</td>
+							
+							<td>${fieldValue(bean: personNameUserInstance, field: "email")}</td>
                         </tr>
                     </g:each>
                     </tbody>

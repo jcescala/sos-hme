@@ -34,7 +34,7 @@
                                 <g:if test="${personid == null}">
                                     <!--se le pide al usuario que le asigne uno-->
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
-                                    <g:select name="performer.id" from="${demographic.party.Person.list()}" optionKey="id" value="${roleInstance?.performer?.id}"  />
+                                    <g:select name="performer.id" from="${personUsers}" optionKey="id" value="${roleInstance?.performer?.id}"  />
 
                                 </td>
                                 </g:if>

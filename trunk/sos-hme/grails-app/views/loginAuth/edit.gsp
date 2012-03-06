@@ -7,6 +7,15 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'loginAuth.label', default: 'LoginAuth')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
+	<script type="text/javascript">
+		function replaceT(obj){
+		var newO=document.createElement('input');
+		newO.setAttribute('type','password');
+		newO.setAttribute('name',obj.getAttribute('name'));
+		newO.setAttribute('class','userlogin')
+		obj.parentNode.replaceChild(newO,obj);
+		newO.focus();}
+	</script>
     </head>
     <body>
         <div class="body">
@@ -47,7 +56,7 @@
                                   <label for="pass"><g:message code="loginAuth.pass.label" default="Nueva Clave" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'pass', 'errors')}">
-                                    <g:textField name="pass" value="" />
+                                    <g:textField name="pass" type="text" value="" onfocus="replaceT(this)"/>
                                 </td>
                             </tr>
 
@@ -57,7 +66,8 @@
                                   <label for="pass"><g:message code="loginAuth.pass2.label" default="Confirmar Clave" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: loginAuthInstance, field: 'pass2', 'errors')}">
-                                    <g:textField name="pass2" value="" />
+                                    
+									<g:textField name="pass2" type="text" value="" onfocus="replaceT(this)"/>
                                 </td>
                             </tr>
 
