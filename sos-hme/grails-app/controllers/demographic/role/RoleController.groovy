@@ -1,5 +1,5 @@
 package demographic.role
-
+import demographic.party.Person
 class RoleController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -32,9 +32,15 @@ class RoleController {
             //roleInstance.properties = params
             return [roleInstance: roleInstance, personid: params.person.id]
         }else{
+			def personUsers = Person.withCriteria{
+				identities{
+					eq("purpose", "PersonNameUser")
+				}
+			}
+			
             def roleInstance = new Role()
             roleInstance.properties = params
-            return [roleInstance: roleInstance]
+            return [roleInstance: roleInstance, personUsers: personUsers]
         }
 
 
