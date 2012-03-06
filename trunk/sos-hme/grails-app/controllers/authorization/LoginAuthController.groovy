@@ -1,8 +1,12 @@
 package authorization
 import java.util.regex.Matcher /*para uso de expresiones regulares*/
 import java.util.regex.Pattern
+import demographic.DemographicService
+import demographic.party.Person
 class LoginAuthController {
 
+	def demographicService
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -17,29 +21,50 @@ class LoginAuthController {
     def create = {
         def loginAuthInstance = new LoginAuth()
         loginAuthInstance.properties = params
-        return [loginAuthInstance: loginAuthInstance]
+		def personUsers = Person.withCriteria{
+				identities{
+					eq("purpose", "PersonNameUser")
+				}
+			}
+			
+        return [loginAuthInstance: loginAuthInstance, personUsers: personUsers]
     }
 
     def save = {
 		def loginAuthInstance = new LoginAuth(params)
-		if(params.pass && params.user){
+		def personUsers = Person.withCriteria{
+				identities{
+					eq("purpose", "PersonNameUser")
+				}
+			}
+		if(params.pass && params.user && params.pass2){
+		
+			if(params.pass.equals(params.pass2)){
 			
-			params.pass =  params.pass.encodeAsPassword()
-			loginAuthInstance = new LoginAuth(params)
 			
+				params.pass =  params.pass.encodeAsPassword()
+				loginAuthInstance = new LoginAuth(params)
+				
+				
+				 
+				if (loginAuthInstance.save(flush: true)) {
+					flash.message = "${message(code: 'default.created.message')}"
+					redirect(action: "show", id: loginAuthInstance.id)
+				}
+				else {
+					render(view: "create", model: [loginAuthInstance: loginAuthInstance, personUsers: personUsers])
+				}
+			}else{
+				//la clave debe coincidir 
+				flash.message = "${message(code: 'default.failur.key.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
+				//flash.message = "${message(code: 'default.repeated.key.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
+				render(view: "create", model: [loginAuthInstance: loginAuthInstance, personUsers: personUsers])
 			
-			 
-            if (loginAuthInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.created.message')}"
-                redirect(action: "show", id: loginAuthInstance.id)
-            }
-            else {
-                render(view: "create", model: [loginAuthInstance: loginAuthInstance])
-            }
+			}
 		}else{
 			
 			flash.message = "${message(code: 'default.null.message', args: [message(code: 'loginAuth.user.label'), message(code: 'default.loginAuth.label')])}"
-			render(view: "create", model: [loginAuthInstance: loginAuthInstance])
+			render(view: "create", model: [loginAuthInstance: loginAuthInstance, personUsers: personUsers])
 		}
 
     }
