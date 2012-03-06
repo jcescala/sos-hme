@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi10consultageneral" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="44"/>
+	<property name="ireport.x" value="705"/>
+	<property name="ireport.y" value="266"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -107,7 +107,7 @@
 				<reportElement x="0" y="0" width="324" height="181"/>
 				<image>
 					<reportElement x="9" y="1" width="85" height="61"/>
-					<imageExpression><![CDATA["web-app/data/reports/img/mppslogo.jpg"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["web-app/data/reports/img/mppslogo.jpg"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="10" y="61" width="72" height="39"/>
@@ -314,7 +314,7 @@
 			</componentElement>
 			<image>
 				<reportElement x="103" y="1" width="245" height="190"/>
-				<imageExpression><![CDATA["web-app/data/reports/img/enfermedadesObligatorias.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["web-app/data/reports/img/enfermedadesObligatorias.jpg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="348" y="50" width="562" height="2"/>
@@ -331,7 +331,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="632" y="1" width="116" height="11"/>
@@ -1092,7 +1092,7 @@ METABOLICO Y RENAL]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{cedula}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="62" y="0" width="125" height="30"/>
@@ -1103,7 +1103,7 @@ METABOLICO Y RENAL]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<textField>
@@ -1114,7 +1114,7 @@ METABOLICO Y RENAL]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="187" y="0" width="56" height="30"/>
@@ -1125,7 +1125,7 @@ METABOLICO Y RENAL]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fechanacimiento}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fechanacimiento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="243" y="0" width="164" height="30"/>
@@ -1136,7 +1136,7 @@ METABOLICO Y RENAL]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="407" y="0" width="13" height="30">
@@ -1149,7 +1149,7 @@ METABOLICO Y RENAL]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{edad}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="420" y="0" width="12" height="30">
@@ -1163,7 +1163,7 @@ METABOLICO Y RENAL]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{edad}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="432" y="-1" width="13" height="30">
@@ -1281,11 +1281,13 @@ METABOLICO Y RENAL]]></text>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="14" height="29"/>
+					<reportElement x="0" y="0" width="14" height="29">
+						<printWhenExpression><![CDATA[$F{niveleducativo}.compareTo( "0" )==1]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{niveleducativo}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{niveleducativo}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -1295,11 +1297,13 @@ METABOLICO Y RENAL]]></text>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="14" height="29"/>
+					<reportElement x="0" y="0" width="14" height="29">
+						<printWhenExpression><![CDATA[$F{etnia}.compareTo( "0" )==1]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{etnia}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{etnia}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>

@@ -216,7 +216,7 @@
 		  
 		  
           <label for="identificador"><g:message code="persona.identificador" /></label>
-                <g:textField name="extension" value="${params.identificador}" />
+                  <g:textField name="extension" value="${params.identificador}" />
 		  <g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['*1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
 		  <%--<g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	--%>
 		   <div id="nombres">

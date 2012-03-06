@@ -49,12 +49,19 @@
             </div>
             <div class="accionrepo">
               <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
-              <g:if test="${params.creado10general}">
+              <g:if test="${params.creado10general=='true'}">
                 <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
               </g:if>
+              <g:if test="${params.creado10general=='false'}">
+                <div class="mensajereportefalla">
+                  No Hay Registro en el Rango de Fechas Seleccionado
+                </div>
+              </g:if>
               <g:else>
-                Reporte No Generado
-              </g:else>
+                <div class="mensajereporteexito">
+                    Reporte No Generado
+                </div>
+              </g:else>  
             </div>
           </g:form>
         </div>
@@ -70,11 +77,19 @@
             </div>
             <div class="accionrepo">
               <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
-              <g:if test="${params.creado13morbilidad}">
+              <g:if test="${params.creado13morbilidad=='true'}">
                 <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
               </g:if>
+              <g:if test="${params.creado13morbilidad=='false'}">
+                <div class="mensajereportefalla">
+                  No Hay Registro en el Rango de Fechas Seleccionado
+                </div>
+                
+              </g:if>
               <g:else>
-                Reporte No Generado
+                <div class="mensajereporteexito">
+                  Reporte No Generado
+                </div>
               </g:else>
             </div>
             
@@ -97,7 +112,9 @@
                 <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
               </g:if>
               <g:else>
-                Reporte No Generado
+               <div class="mensajereporteexito">
+                  Reporte No Generado
+                </div>
               </g:else>
           </div>
           </g:form>

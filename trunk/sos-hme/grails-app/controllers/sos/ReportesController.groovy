@@ -63,6 +63,7 @@ class ReportesController {
     
     def index = { }
     
+    /*
     def epi10emergencia = {
         def compos = []
         def paciente = []
@@ -80,9 +81,6 @@ class ReportesController {
         def fin = params.hasta
         def j = 0 // variable unica para loop sobre las compositions
         def nombreDoc = "epi10emergencia"
-        
-       println("inicio:->"+inicio)
-       println("fin:->"+fin)
         
        Folder domain = Folder.findByPath( session.traumaContext.domainPath )
        compos = hceService.getAllCompositionForDate(inicio, fin)
@@ -117,8 +115,6 @@ class ReportesController {
                             //edad << Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento))
                             edad = Integer.parseInt(myFormatter.format(hoy)) - Integer.parseInt(myFormatter.format(patient.fechaNacimiento))
                         }
-                        
-                        println("nombre paciente:->"+patient.identities.primerNombre[0])
                         // diagnóstico asosiciado al patient en la composition
                         def elemento = hceService.getCompositionContentItemForTemplate(composi, "DIAGNOSTICO-diagnosticos")
                         if(elemento!=null){
@@ -171,7 +167,7 @@ class ReportesController {
             redirect(controller:'reportes', action:'index')
         }
     }
-    
+    */
     def epi10general = {
         def compos = []
         def paciente = []
@@ -197,14 +193,15 @@ class ReportesController {
         
         def j = 0 //loop
         def nombreDoc = "epi10general"
-        def etnia = ""
-        def niveleducativo =""
+        def etnia = 0
+        def niveleducativo = 0
         def generado = false
         Folder domain = Folder.findByPath( session.traumaContext.domainPath )
         compos = hceService.getAllCompositionForDate(inicio, fin)
         def archivo = demographicService.createXML(nombreDoc)
-        
+        println("compos:->"+compos)
         if(compos != null){
+            
             while(compos[j]!=null){
                 composition = compos[j]
                 session.traumaContext.episodioId = composition.id
@@ -237,33 +234,61 @@ class ReportesController {
                         }
                         
                         def elemento = hceService.getCompositionContentItemForTemplate(composi, "DIAGNOSTICO-diagnosticos")
+                        
                         if(elemento != null){
                             generarReporte = true
                             def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
                             def rmNodeData =  rmNode.data
+                            
+                            
                             def rmNodeDataEvents = rmNodeData.events
                             
                             def element = rmNodeDataEvents[0].data.items
                             def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
                             def codigos = []
+                            def codigo
                             while(element[k]!=null){
-                                def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
-                                //println("Nombre Diagnostico: ->"+codigo.nombre)
-                                println("Dianostico "+(k+1)+" "+codigo.nombre)
-                                codigos << codigo.nombre
+                               // println("element[k]"+element[k].name.value)
+                                
+                                if(element[k].name.value!="Descripción"){ // identifico si el nodo el arquetipo de diagnostico hace referencia al diagnostico codificado o a la impresion diagnostica (Ver Arquetipo EHR-OBSERVATION.diagnosticos)
+                                    codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
+                                    codigos << codigo.nombre
+                                }else{
+                                    codigo = element[k].value.value
+                                    codigos << codigo
+                                }
                             k++
                             }
-                        def agregarNodoXml =  demographicService.crearXmlEPI10Gen(nombreDoc,
-                                                                                  patient.ids.value[0].extension,
-                                                                                  patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
-                                                                                  patient.fechaNacimiento.format("dd/MM/yyyy"), 
-                                                                                  fullDireccion,
-                                                                                  sexo,
-                                                                                  Long.toString(etnia),
-                                                                                  Integer.toString(niveleducativo),
-                                                                                  Integer.toString(edad), 
-                                                                                  codigos as String[]
-                                                                                  ) 
+                            
+                            
+                            
+                            def agregarNodoXml =  demographicService.crearXmlEPI10Gen(nombreDoc,
+                                                                                      patient.ids.value[0].extension,
+                                                                                      patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
+                                                                                      patient.fechaNacimiento.format("dd/MM/yyyy"), 
+                                                                                      fullDireccion,
+                                                                                      sexo,
+                                                                                      Long.toString(etnia),
+                                                                                      Integer.toString(niveleducativo),
+                                                                                      Integer.toString(edad), 
+                                                                                      codigos as String[]
+                                                                                      ) 
+                        }else{
+                            generarReporte = true
+                            def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
+                            def codigos = []
+                            codigo << "Sin Diagnóstico"
+                            def agregarNodoXml =  demographicService.crearXmlEPI10Gen(nombreDoc,
+                                                                                      patient.ids.value[0].extension,
+                                                                                      patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
+                                                                                      patient.fechaNacimiento.format("dd/MM/yyyy"), 
+                                                                                      fullDireccion,
+                                                                                      sexo,
+                                                                                      Long.toString(etnia),
+                                                                                      Integer.toString(niveleducativo),
+                                                                                      Integer.toString(edad), 
+                                                                                      codigos as String[]
+                                                                                      )
                         }
                     }
                 }
@@ -283,15 +308,14 @@ class ReportesController {
                      if(generado){
                         redirect(controller:'reportes', action:'index', params:[creado10general:true,tipo:outFile])
                         }else{
-                            redirect(controller:'reportes', action:'index', params:[creado10general:""])
+                            redirect(controller:'reportes', action:'index', params:[creado10general:false])
                         }
+                     }else{
+                         redirect(controller:'reportes', action:'index', params:[creado10general:false])
                      }  
             }else{
-                redirect(controller:'reportes', action:'index', params:[creado10general:""])
+                redirect(controller:'reportes', action:'index', params:[creado10general:false])
             }
-        
-        
-        
     }
     
     def epi13morbilidad ={
@@ -350,7 +374,7 @@ class ReportesController {
                             println("fechaInicioComposi:->"+composi.context.startTime.value)
                             
                             if(elemento != null){
-                               def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
+                                def rmNode =  Locatable.findByName(elemento.name) //enlace al nodo de la composition en el modelo de referencia   
                                 def rmNodeData =  rmNode.data
                                 def rmNodeDataEvents = rmNodeData.events
 
@@ -358,39 +382,41 @@ class ReportesController {
                                 def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
                                 def codigos = []
                                 while(element[k]!=null){
-                                    def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
-                                    //println("Dianostico "+(k+1)+" "+codigo.nombre)
-                                    def notificable
-                                    if(codigo!=null){
-                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
-                                    }else{
-                                        codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
-                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
-                                    }
                                     
-                                    if(notificable==true){
-                                        generarReporte = true
-                                        codigos << codigo.nombre
-                                        paciente << patient
-                                        def agregarNodoXml =  demographicService.crearXmlEPI13Morbilidad(nombreDoc,
-                                                                                  patient.ids.value[0].extension,
-                                                                                  patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
-                                                                                  patient.fechaNacimiento.format("dd/MM/yyyy"), 
-                                                                                  fullDireccion,
-                                                                                  parroquia,
-                                                                                  municipio,
-                                                                                  estado,
-                                                                                  composi.context.startTime.value,
-                                                                                  sexo,
-                                                                                  codigos as String[],
-                                                                                  params.desde,
-                                                                                  params.hasta
-                                                                                  )
+                                    
+                                    if(element[k].name.value!="Descripción"){ // identifico si el nodo el arquetipo de diagnostico hace referencia al diagnostico codificado o a la impresion diagnostica (Ver Arquetipo EHR-OBSERVATION.diagnosticos)
+                                        def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
+                                    //println("Dianostico "+(k+1)+" "+codigo.nombre)
+                                        def notificable
+                                        if(codigo!=null){
+                                            notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                        }else{
+                                            codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
+                                            notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                        }
+                                        if(notificable==true){
+                                            generarReporte = true
+                                            codigos << codigo.nombre
+                                            paciente << patient
+                                            def agregarNodoXml =  demographicService.crearXmlEPI13Morbilidad(nombreDoc,
+                                                                                      patient.ids.value[0].extension,
+                                                                                      patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
+                                                                                      patient.fechaNacimiento.format("dd/MM/yyyy"), 
+                                                                                      fullDireccion,
+                                                                                      parroquia,
+                                                                                      municipio,
+                                                                                      estado,
+                                                                                      composi.context.startTime.value,
+                                                                                      sexo,
+                                                                                      codigos as String[],
+                                                                                      params.desde,
+                                                                                      params.hasta
+                                                                                      )
+                                        }
                                     }
                                 k++
                                 }
                             }
-                            
                         }
                 }
             
@@ -412,12 +438,8 @@ class ReportesController {
                 redirect(controller:'reportes', action:'index', params:[creado13morbilidad:true,tipo:outFile])
                 }
          }else{
-                redirect(controller:'reportes', action:'index', params:[creado13morbilidad:""])
+                redirect(controller:'reportes', action:'index', params:[creado13morbilidad:false])
             }   
-         
-        
-        
-        
         
     }
     
