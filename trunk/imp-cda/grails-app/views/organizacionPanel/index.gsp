@@ -13,22 +13,26 @@
        
         <title>Panel de Organnizacion</title>
     </head>
-  <body>
-    <h1>Datos de la organizacion</h1>
+  <body >
+    <g:link controller="logout" action="index" style="float:right;"><g:message code="default.session.sing.in"/></g:link>
+    <h1>Datos de la organizacion</h1><br />
+      
 
-    <p>Identificador UUID: ${organizacion.uniqueIdentifier}<p>
-    <p>Nombre: ${organizacion.nombre}<p>
-    <p>Usuario:  ${organizacion.user.username}</p>
-    <p> Número de documentos CDA´s compartidos:
+    <h3><p>Identificador UUID: ${organizacion.uniqueIdentifier}<p></h3><br />
+    <p>Nombre: ${organizacion.nombre}<p><br />
+    <p>Usuario:  ${organizacion.user.username}</p><br />
+
+    <%--<p> Número de documentos CDA´s compartidos:
 
         <p>Autora: ${cdas.autora}</p>
         <p>Custodia: ${cdas.custodia}</p>
         <p>Atentifica: ${cdas.autentifica}</p>
-    </p>
+    </p><br />--%>
 
   <div class="body">
-    <div class="list">
-                <table>
+    <div class="list" style="width:500px;">
+      <h1>Lista de organizaciones participantes</h1>
+                <table width="100%">
                     <thead>
                         <tr>
 
@@ -57,13 +61,15 @@
                 <g:paginate total="${organizacionInstanceTotal}" />
             </div>
 
+  <br />
+ <g:link controller="#" action="#">Descargar clave pública</g:link>
 </div>
-  <g:link controller="#" action="#">Descargar clave pública</g:link>
+ 
 
 
 
-    <br />
-            <g:link controller="logout" action="index"><g:message code="default.session.sing.in"/></g:link>
+   
+          
        
   </body>
 </html>
