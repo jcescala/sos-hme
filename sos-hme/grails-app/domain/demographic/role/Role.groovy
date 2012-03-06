@@ -23,7 +23,7 @@ class Role extends Party {
 
     static List getRoleCodes()
     {
-    	return [PACIENTE, MEDICO, ENFERMERIA, ADMINISTRATIVO, ADMIN]
+    	return [MEDICO, ENFERMERIA, ADMINISTRATIVO, ADMIN]
     }
     // Intervalo de validez del rol: en el modelo de OpenEHR es un Interval<DvDate>
     Date timeValidityFrom
