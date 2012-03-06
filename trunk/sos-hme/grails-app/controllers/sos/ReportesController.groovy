@@ -360,9 +360,13 @@ class ReportesController {
                                 while(element[k]!=null){
                                     def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
                                     //println("Dianostico "+(k+1)+" "+codigo.nombre)
-                                    println("codigo diagnostico:->"+codigo.subgrupo)
-                                    def notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
-                                    println("notificable:->"+notificable)
+                                    def notificable
+                                    if(codigo!=null){
+                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                    }else{
+                                        codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
+                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                    }
                                     
                                     if(notificable==true){
                                         generarReporte = true

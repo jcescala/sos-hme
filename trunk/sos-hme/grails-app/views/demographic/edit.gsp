@@ -199,12 +199,12 @@
         <g:message code="persona.identificador" />
       </label>
       
-      <g:each in="${patient.ids}" var="pid">
+      <%--g:each in="${patient.ids}" var="pid">
       
         <g:set var="codigo" value="${TipoIdentificador.findByCodigo(pid.root)}" />
 
         ${pid.extension} ${( (codigo) ? codigo.nombreCorto : pid.root )}<br/>
-      </g:each>
+      </g:each--%>
       
       <%-- No dejo cambiar los identificadores porque deberia lanzar un proceso que verifique donde hay referencias a lso identificadores que se eliminador o cambiaron por correccion.
       <g:textField name="extension" value="${pid.extension}" />
@@ -212,7 +212,7 @@
       --%>
       
       <g:textField name="extension" value="${patient.ids[0].extension}" readonly="readonly"/>
-      <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" />
+      <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" value="${patient.ids[0].root}" disabled="true"/>
       <input type='hidden' id="identificadorUnico" value="valido" name="identificadorUnico"/>
         
       <label for="primerNombre">
@@ -259,32 +259,58 @@
           
           <label for="nacionalidad"><g:message code="persona.nacionalidad" /></label>
             <g:select name="nacionalidad.id" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" />
-		  
-          <label for="paisnacimiento"><g:message code="persona.paisnace"/></label>
+          
+          <g:if test="${paisNace!=null}">
+            <label for="paisnacimiento"><g:message code="persona.paisnace"/></label>
+            <g:select name="paisnace" class="selectci" value="${paisNace.id}" from="${paisesIds}" optionKey="id" optionValue="nombre"  disabled="false" onchange="updateSubCats(this.value)"/>
+          </g:if>  
+          <g:else>
+            <label for="paisnacimiento"><g:message code="persona.paisnace"/></label>
             <g:select name="paisnace" class="selectci" from="${paisesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione País']" onchange="updateSubCats(this.value)" />
+          </g:else>  
+          
           
           <g:if test="${entidadNace!=null}">
               <div id="entnace" style="visibility: visible;">
               <label for="entidadnacimiento"><g:message code="persona.entidadnace"/></label>
                 <g:select name="entidadnace" class="selectci" value="${entidadNace.id}" from="${entidadesIds}" optionKey="id" optionValue="nombre"  disabled="false" onchange="updateMunicipios(this.value)"/>
               </div>
-          </g:if>  
-          <div id="entnace" style="visibility: hidden;">
-          <label for="entidadnacimiento"><g:message code="persona.entidadnace"/></label>
-          	  <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
-          </div> 
+          </g:if>
+          <g:else>  
+              <div id="entnace" style="visibility: hidden;">
+              <label for="entidadnacimiento"><g:message code="persona.entidadnace"/></label>
+                      <g:select name="entidadnace" class="selectci" disabled="false" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipios(this.value)"/>
+              </div> 
+          </g:else>
+            
           
-          <div id="munnace" style="visibility: hidden;">         
-          <label for="municipionacimiento">
-            <g:message code="persona.municipionace"/><br />
-            <g:select name="lugar.id" id="municnace" class="selectci" value="${pn.lugar}" disabled="false" noSelection="['':'Seleccione Municipio']"/>
-          </label>
-          </div>
+          <g:if test="${municipioNace!=null}">
+              <div id="munnace" style="visibility: visible;">         
+                <label for="municipionacimiento"><g:message code="persona.municipionace"/></label>
+                <g:select name="lugar.id" id="municnace" class="selectci" value="${municipioNace.id}" from="${municipios}" optionKey="id" optionValue="nombre" disabled="false"/>
+            </div>
+          </g:if>    
+            
+          <g:else>
+              <div id="munnace" style="visibility: hidden;">         
+                <label for="municipionacimiento"><g:message code="persona.municipionace"/></label>
+                  <g:select name="lugar.id" id="municnace" class="selectci" value="${pn.lugar}" disabled="false" noSelection="['':'Seleccione Municipio']"/>
+                </div>
+          </g:else> 
           
-          <div id="ciunace" style="visibility: hidden;">        
-          <label for="ciudadnacimiento"><g:message code="persona.ciudadnace"/></label>
-            <g:textField name="ciudadnacimiento" value="${pn.ciudadnacimiento}" />
-          </div>  
+          
+          <g:if test="${pn.ciudadnacimiento!=''}">
+            <div id="ciunace" style="visibility: visible;">        
+                <label for="ciudadnacimiento"><g:message code="persona.ciudadnace"/></label>
+                <g:textField name="ciudadnacimiento" value="${pn.ciudadnacimiento}" />
+            </div>
+          </g:if>
+          <g:else>
+            <div id="ciunace" style="visibility: hidden;">        
+                <label for="ciudadnacimiento"><g:message code="persona.ciudadnace"/></label>
+                  <g:textField name="ciudadnacimiento" value="${pn.ciudadnacimiento}" />
+              </div>
+          </g:else>
           
           <br/>  
         
@@ -292,22 +318,46 @@
         
         <fieldset>
         <legend>Datos Personales</legend>
-          <label for="situacionconyugal"><g:message code="persona.situacionConyugal"/></label>
+          <g:if test="${pn.situacionconyugal!=null}">
+             <label for="situacionconyugal"><g:message code="persona.situacionConyugal"/></label>
+             <g:select name="situacionconyugal" class="selectci" value="${pn.situacionconyugal}" from="${conyugalIds}" optionKey="id" optionValue="nombre"/>
+          </g:if>
+          <g:else>
+            <label for="situacionconyugal"><g:message code="persona.situacionConyugal"/></label>
           <g:select name="situacionconyugal" class="selectci" from="${conyugalIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione']"/>
+          </g:else>
           
-          <label for="analfabeta"><g:message code="persona.analfabeta"/> &nbsp;&nbsp;</label>
-          <g:select name="analfabeta" class="selectci" noSelection="['':'Seleccione']" from="['No', 'Si']" value="${pn.analfabeta}" />
-            
-            
-          <label for="niveleducativo"><g:message code="persona.niveleducativo"/></label>
-          <g:select name="niveleducativo" class="selectci" from="${nivelEducIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione']"/>
+          <g:if test="${pn.analfabeta!=null}">
+            <label for="analfabeta"><g:message code="persona.analfabeta"/> &nbsp;&nbsp;</label>
+            <g:select name="analfabeta" class="selectci" from="['No', 'Si']" value="${pn.analfabeta}" />
+          </g:if>
+          <g:else>
+            <label for="analfabeta"><g:message code="persona.analfabeta"/> &nbsp;&nbsp;</label>
+            <g:select name="analfabeta" class="selectci" noSelection="['':'Seleccione']" from="['No', 'Si']" value="${pn.analfabeta}" />
+          </g:else>
           
+            
+          <g:if test="${pn.niveleducativo!=null}">
+             <label for="niveleducativo"><g:message code="persona.niveleducativo"/></label>
+          <g:select name="niveleducativo" class="selectci" from="${nivelEducIds}" optionKey="id" optionValue="nombre" value="${pn.niveleducativo}"/>
+          </g:if>
+          <g:else>
+            <label for="niveleducativo"><g:message code="persona.niveleducativo"/></label>
+            <g:select name="niveleducativo" class="selectci" from="${nivelEducIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione']"/>
+          </g:else>
           
           <label for="anosaprobados"><g:message code="persona.anosaprobados"/></label>
 		  <g:textField name="anosaprobados" value="${pn.anosaprobados}" />
-		  
-          <label for="ocupacion"><g:message code="persona.ocupacion"/></label>
-		  <g:select name="ocupacion.id" id="ocupacion" class="selectci" from="${ocupacionIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Ocupación']" />  
+          
+          <g:if test="${pn.ocupacion!=null}">
+            <label for="ocupacion"><g:message code="persona.ocupacion"/></label>
+            <g:select name="ocupacion.id" id="ocupacion" class="selectci" from="${ocupacionIds}" optionKey="id" optionValue="nombre" value="${pn.ocupacion}" />  
+          </g:if>
+          <g:else>
+              <label for="ocupacion"><g:message code="persona.ocupacion"/></label>
+              <g:select name="ocupacion.id" id="ocupacion" class="selectci" from="${ocupacionIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Ocupación']" />  
+          </g:else>
+          
       </fieldset>
         
        <fieldset>

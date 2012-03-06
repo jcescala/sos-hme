@@ -21,7 +21,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"D2408591A11328340BA210A9A5D72549">
+		["MD5-CAM-1.0.1"] = <"E906F6CCBF90C71EBB607A57A280CBA7">
 	>
 
 definition
@@ -29,8 +29,15 @@ definition
 		description matches {
 			ITEM_TREE[at0001] matches {	-- Arbol
 				items cardinality matches {1..*; unordered} matches {
-					CLUSTER[at0002] matches {	-- Tratamiento
+					CLUSTER[at0002] occurrences matches {1..*} matches {	-- Tratamiento
 						items cardinality matches {0..*; unordered} matches {
+							ELEMENT[at0005] occurrences matches {0..1} matches {	-- Fecha
+								value matches {
+									DV_DATE_TIME matches {
+										value matches {yyyy-mm-ddTHH:??:??}
+									}
+								}
+							}
 							ELEMENT[at0004] occurrences matches {0..1} matches {	-- Tratamientos y Acciones a Seguir
 								value matches {
 									DV_TEXT matches {*}
@@ -61,6 +68,10 @@ ontology
 				>
 				["at0004"] = <
 					text = <"Tratamientos y Acciones a Seguir">
+					description = <"*">
+				>
+				["at0005"] = <
+					text = <"Fecha">
 					description = <"*">
 				>
 			>
