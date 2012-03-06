@@ -24,7 +24,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"Este arquetipo tiene fines investigativos pues forma parte de un trabajo de grado pero a la vez es parte de un proyecto de telemedicina.">
-		["MD5-CAM-1.0.1"] = <"8CCED192A0D6797869C04A12FB876A7E">
+		["MD5-CAM-1.0.1"] = <"AE665E9E6C0395968CE02FDFCDAB173E">
 	>
 
 definition
@@ -196,6 +196,15 @@ definition
 															}
 														}
 													}
+													CLUSTER[at0101] occurrences matches {0..1} matches {	-- Cabeza
+														items cardinality matches {0..*; unordered} matches {
+															ELEMENT[at0102] occurrences matches {0..1} matches {	-- Descripción
+																value matches {
+																	DV_TEXT matches {*}
+																}
+															}
+														}
+													}
 													CLUSTER[at0060] occurrences matches {0..1} matches {	-- Visión
 														items cardinality matches {0..*; unordered} matches {
 															ELEMENT[at0074] occurrences matches {0..1} matches {	-- Descripción
@@ -223,6 +232,24 @@ definition
 																name matches {
 																	DV_TEXT matches {*}
 																}
+																value matches {
+																	DV_TEXT matches {*}
+																}
+															}
+														}
+													}
+													CLUSTER[at0103] occurrences matches {0..1} matches {	-- Boca
+														items cardinality matches {0..*; unordered} matches {
+															ELEMENT[at0104] occurrences matches {0..1} matches {	-- Descripción
+																value matches {
+																	DV_TEXT matches {*}
+																}
+															}
+														}
+													}
+													CLUSTER[at0105] occurrences matches {0..1} matches {	-- Garganta
+														items cardinality matches {0..*; unordered} matches {
+															ELEMENT[at0106] occurrences matches {0..1} matches {	-- Descripción
 																value matches {
 																	DV_TEXT matches {*}
 																}
@@ -259,6 +286,15 @@ definition
 																name matches {
 																	DV_TEXT matches {*}
 																}
+																value matches {
+																	DV_TEXT matches {*}
+																}
+															}
+														}
+													}
+													CLUSTER[at0109] occurrences matches {0..1} matches {	-- Osteomuscular
+														items cardinality matches {0..*; unordered} matches {
+															ELEMENT[at0110] occurrences matches {0..1} matches {	-- Descripción
 																value matches {
 																	DV_TEXT matches {*}
 																}
@@ -304,6 +340,15 @@ definition
 													CLUSTER[at0069] occurrences matches {0..1} matches {	-- Genital
 														items cardinality matches {0..*; unordered} matches {
 															ELEMENT[at0083] occurrences matches {0..1} matches {	-- Descripción
+																value matches {
+																	DV_TEXT matches {*}
+																}
+															}
+														}
+													}
+													CLUSTER[at0107] occurrences matches {0..1} matches {	-- Ginecológicos
+														items cardinality matches {0..*; unordered} matches {
+															ELEMENT[at0108] occurrences matches {0..1} matches {	-- Descripción
 																value matches {
 																	DV_TEXT matches {*}
 																}
@@ -645,6 +690,46 @@ ontology
 				>
 				["at0100"] = <
 					text = <"Nivel alto">
+					description = <"*">
+				>
+				["at0101"] = <
+					text = <"Cabeza">
+					description = <"*">
+				>
+				["at0102"] = <
+					text = <"Descripción">
+					description = <"*">
+				>
+				["at0103"] = <
+					text = <"Boca">
+					description = <"*">
+				>
+				["at0104"] = <
+					text = <"Descripción">
+					description = <"*">
+				>
+				["at0105"] = <
+					text = <"Garganta">
+					description = <"*">
+				>
+				["at0106"] = <
+					text = <"Descripción">
+					description = <"*">
+				>
+				["at0107"] = <
+					text = <"Ginecológicos">
+					description = <"*">
+				>
+				["at0108"] = <
+					text = <"Descripción">
+					description = <"*">
+				>
+				["at0109"] = <
+					text = <"Osteomuscular">
+					description = <"*">
+				>
+				["at0110"] = <
+					text = <"Descripción">
 					description = <"*">
 				>
 			>

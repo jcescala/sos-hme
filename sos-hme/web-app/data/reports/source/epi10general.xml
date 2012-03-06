@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><pacientes>
   <fechareporte>
-    04/03/2012
+    05/03/2012
   </fechareporte>
 <paciente>
 <cedula>17979095</cedula>
@@ -26,7 +26,7 @@
 <niveleducativo>1</niveleducativo>
 <edad>26</edad>
 <diagnosticos>
-<diagnostico>Traumatismos por aplastamiento multiples, no especificados</diagnostico>
+<diagnostico>Hepatitis aguda tipo a, sin coma hepatico</diagnostico>
 </diagnosticos>
 </paciente>
 <paciente>
@@ -53,19 +53,6 @@
 <edad>88</edad>
 <diagnosticos>
 <diagnostico>Colera debido a vibrio cholerae o1, biotipo el tor</diagnostico>
-</diagnosticos>
-</paciente>
-<paciente>
-<cedula>65321547</cedula>
-<nombre>daniel  palencia</nombre>
-<fechanacimiento>17/11/1999</fechanacimiento>
-<direccion>Ciudad asdfasdf, Urb/Sector sadfas, Av/Calle sdfsdf, Casa/Res sdf, parroquia El Pao, municipio Pao de San Juan Bautista, estado Cojedes</direccion>
-<sexo>Masculino</sexo>
-<etnia>1</etnia>
-<niveleducativo>1</niveleducativo>
-<edad>13</edad>
-<diagnosticos>
-<diagnostico>Tuberculosis del pulmon, confirmada histologicamente</diagnostico>
 </diagnosticos>
 </paciente>
 </pacientes>
