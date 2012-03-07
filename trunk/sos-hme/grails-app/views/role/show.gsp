@@ -18,12 +18,12 @@
                 <table>
                     <tbody>
                     
-                        <tr class="prop">
+                    <%--    <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: roleInstance, field: "id")}</td>
                             
-                        </tr>
+                        </tr>--%>
 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.performer.label" default="Performer" /></td>

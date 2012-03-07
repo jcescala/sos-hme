@@ -30,10 +30,10 @@
                                     <label for="performer"><g:message code="role.performer.label" default="Performer" /></label>
                                 </td>
 
-                                <!-- si no tiene un id person asignado-->
+                                <%-- si no tiene un id person asignado--%>
                                 <g:if test="${personid == null}">
-                                    <!--se le pide al usuario que le asigne uno-->
-                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
+                                    <%--se le pide al usuario que le asigne uno--%>
+									<td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
                                     <g:select name="performer.id" from="${personUsers}" optionKey="id" value="${roleInstance?.performer?.id}"  />
 
                                 </td>
