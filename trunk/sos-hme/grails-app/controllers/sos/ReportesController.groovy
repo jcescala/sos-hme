@@ -546,25 +546,24 @@ class ReportesController {
                                 def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
                                 while(element[k]!=null){
                                     def notificable
-                                    println("definingCode:->"+element[k].value.definingCode.codeString)
-                                    def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
-                                    if(codigo!=null){
-                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
-                                    }else{
-                                        codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
-                                        notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
-                                    }
                                     
-                                    
-                                    
-                                    if(notificable==true){
-                                        
-                                        paciente << patient
-                                        def agregarNodoXml =  demographicService.crearXmlEPI12Morbilidad(nombreDoc, codigo.codigo, codigo.subgrupo, Integer.toString(edad), sexo)
-                                        if(agregarNodoXml==true){
-                                            generarReporte = true
+                                        if(element[k].name.value!="Descripción"){ // identifico si el nodo el arquetipo de diagnostico hace referencia al diagnostico codificado o a la impresion diagnostica (Ver Arquetipo EHR-OBSERVATION.diagnosticos)
+                                            def codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
+                                            if(codigo!=null){
+                                                notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                            }else{
+                                                codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
+                                                notificable = demographicService.verificaEnfermedadNotificable(codigo.subgrupo,codigo.codigo)
+                                            }
+                                            if(notificable==true){
+
+                                                paciente << patient
+                                                def agregarNodoXml =  demographicService.crearXmlEPI12Morbilidad(nombreDoc, codigo.codigo, codigo.subgrupo, Integer.toString(edad), sexo)
+                                                if(agregarNodoXml==true){
+                                                    generarReporte = true
+                                                }
+                                            }
                                         }
-                                    }
                                 k++
                                 }
                             }
@@ -591,7 +590,7 @@ class ReportesController {
                 redirect(controller:'reportes', action:'index', params:[creado12morbilidad:true,tipo:outFile])
                 }
          }else{
-                redirect(controller:'reportes', action:'index', params:[creado12morbilidad:""])
+                redirect(controller:'reportes', action:'index', params:[creado12morbilidad:false])
             }
             
     }
@@ -617,12 +616,12 @@ class ReportesController {
                   //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
                   
                   //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],hm,jrxmlds)
-                  JasperPrint reporte = JasperFillManager.fillReport(jasperReport,new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
+                  JasperPrint reporte = JasperFillManager.fillReport(jasperReport,hm,new JRXmlDataSource(xmlFileName,recordPath))
                   
                   jpList.add(reporte)
               }
              
-            JRExporter exporter = new JRPdfExporter();
+            JRPdfExporter exporter = new JRPdfExporter();
             exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
             exporter.setParameter(net.sf.jasperreports.engine.export.JRPdfExporterParameter.JASPER_PRINT_LIST, jpList);
             exporter.exportReport()

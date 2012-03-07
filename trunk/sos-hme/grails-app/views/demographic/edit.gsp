@@ -203,8 +203,8 @@
       
         <g:set var="codigo" value="${TipoIdentificador.findByCodigo(pid.root)}" />
 
-        <g:textField name="extension" value="${pid.extension}"/>
-        <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" value="${pid.root}"/>
+        <g:textField name="extension" value="${pid.extension}" readonly="readonly"/>
+        <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" class="selectci" value="${pid.root}" disabled="true"/>
         <br/>
       </g:each>
       

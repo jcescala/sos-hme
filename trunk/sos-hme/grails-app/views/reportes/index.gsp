@@ -57,11 +57,7 @@
                   No Hay Registro en el Rango de Fechas Seleccionado
                 </div>
               </g:if>
-              <g:else>
-                <div class="mensajereporteexito">
-                    Reporte No Generado
-                </div>
-              </g:else>  
+              
             </div>
           </g:form>
         </div>
@@ -86,11 +82,7 @@
                 </div>
                 
               </g:if>
-              <g:else>
-                <div class="mensajereporteexito">
-                  Reporte No Generado
-                </div>
-              </g:else>
+              
             </div>
             
           </g:form>
@@ -108,14 +100,15 @@
             </div>
           <div class="accionrepo">
               <g:submitButton name="generarreporte" value="${message(code:'reportes.generate')}"/>
-              <g:if test="${params.creado12morbilidad}">
+              <g:if test="${params.creado12morbilidad=='true'}">
                 <g:link action="descargar" params="[archivo:params.tipo]">Descargar</g:link>
               </g:if>
-              <g:else>
-               <div class="mensajereporteexito">
-                  Reporte No Generado
+              
+              <g:if test="${params.creado12morbilidad=='false'}">
+                <div class="mensajereportefalla">
+                  No Hay Registro en el Rango de Fechas Seleccionado
                 </div>
-              </g:else>
+              </g:if>
           </div>
           </g:form>
         </div>

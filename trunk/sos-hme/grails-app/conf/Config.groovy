@@ -172,8 +172,8 @@ service.simple.url = ""
 service.complex.url = ""
 service.secure.url.cda = ""
 service.secure.url.imp = ""
-//service.serverURL = "http://190.169.161.50:9090"
-service.serverURL = "http://127.0.0.1:8080"
+service.serverURL = "http://190.169.161.50:9090"
+//service.serverURL = "http://127.0.0.1:8080"
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
