@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi13morbilidad" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="1453"/>
-	<property name="ireport.y" value="214"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="66"/>
+	<property name="ireport.y" value="0"/>
 	<queryString language="xPath">
 		<![CDATA[/pacientes/paciente]]>
 	</queryString>
@@ -38,6 +38,9 @@
 	</field>
 	<field name="semana" class="java.lang.String">
 		<fieldDescription><![CDATA[semana]]></fieldDescription>
+	</field>
+	<field name="anioregistro" class="java.lang.String">
+		<fieldDescription><![CDATA[anioregistro]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -164,6 +167,20 @@
 				<rectangle>
 					<reportElement x="660" y="24" width="233" height="20"/>
 				</rectangle>
+				<textField>
+					<reportElement x="695" y="55" width="114" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{semana}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="846" y="55" width="47" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{anioregistro}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<staticText>
 				<reportElement x="0" y="187" width="20" height="31"/>
