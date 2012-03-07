@@ -181,6 +181,18 @@
     
   </head>
   <body>
+    <div id="menubar" class="menubar">
+        <ul>
+          <!--li><a href="../domain/list">Dominios</a></li-->
+          <li><g:link controller="domain" action="list">Dominios</g:link></li>
+          <li><g:link controller="records" action="index">Registros</g:link></li>
+          <li><g:link controller="demographic" action="admisionPaciente">Admisión</g:link></li>
+        <li><g:link controller="reportes" action="index" class="find"><g:message code="reportes.link.title" /></g:link></li>
+        </ul>
+      </div>
+    <div id="barrabasic" class="barrabasic"></div>
+    
+    
     <h1><g:message code="demographic.edit.title" /></h1>
     
     <g:if test="${flash.message}">
