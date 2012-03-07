@@ -19,7 +19,7 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'role.id.label', default: 'Id')}" />
+                            <%--<g:sortableColumn property="id" title="${message(code: 'role.id.label', default: 'Id')}" />--%>
 
                             <g:sortableColumn property="type" title="${message(code: 'role.type.label', default: 'Tipo')}" />
 															
@@ -30,14 +30,15 @@
                             <g:sortableColumn property="timeValidityFrom" title="${message(code: 'role.timeValidityFrom.label', default: 'Valido Desde')}" />
                         
                             <g:sortableColumn property="timeValidityTo" title="${message(code: 'role.timeValidityTo.label', default: 'Time Validity To')}" />
-                        
+							
+							<th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${roleInstanceList}" status="i" var="roleInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${roleInstance.id}">${fieldValue(bean: roleInstance, field: "id")}</g:link></td>
+                            <%--<td><g:link action="show" id="${roleInstance.id}">${fieldValue(bean: roleInstance, field: "id")}</g:link></td>--%>
 
                             <td>${fieldValue(bean: roleInstance, field: "type")}</td>
 
@@ -49,7 +50,7 @@
 
                             <td><g:formatDate date="${roleInstance.timeValidityTo}" /></td>
                         
-                            
+                            <td><g:link action="show" id="${roleInstance.id}">${message(code: 'loginAuth.person.detail', default: 'Detalles')}</g:link></td>
                         
                         </tr>
                     </g:each>

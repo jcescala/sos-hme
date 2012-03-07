@@ -19,7 +19,7 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'personNameUser.id.label', default: 'Id')}" />
+                            <%--<g:sortableColumn property="id" title="${message(code: 'personNameUser.id.label', default: 'Id')}" />--%>
                         
                             <g:sortableColumn property="primerNombre" title="${message(code: 'personNameUser.primerNombre.label', default: 'Primer Nombre')}" />
                         
@@ -34,13 +34,16 @@
                             <g:sortableColumn property="telfcelular" title="${message(code: 'personNameUser.telfcelular.label', default: 'Telf celular')}" />							
                         							
 							<g:sortableColumn property="email" title="${message(code: 'personNameUser.email.label', default: 'Direccion email')}" />
+							
+							
+							<th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>
 						</tr>
                     </thead>
                     <tbody>
                     <g:each in="${personNameUserInstanceList}" status="i" var="personNameUserInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${personNameUserInstance.id}">${fieldValue(bean: personNameUserInstance, field: "id")}</g:link></td>
+                            <%--<td><g:link action="show" id="${personNameUserInstance.id}">${fieldValue(bean: personNameUserInstance, field: "id")}</g:link></td>--%>
                         
                             <td>${fieldValue(bean: personNameUserInstance, field: "primerNombre")}</td>
                         
@@ -55,6 +58,8 @@
 							<td>${fieldValue(bean: personNameUserInstance, field: "telfcelular")}</td>
 							
 							<td>${fieldValue(bean: personNameUserInstance, field: "email")}</td>
+							
+							<td><g:link action="show" id="${personNameUserInstance.id}">${message(code: 'loginAuth.person.detail', default: 'Detalles')}</g:link></td>
                         </tr>
                     </g:each>
                     </tbody>
