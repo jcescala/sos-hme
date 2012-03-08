@@ -21,6 +21,8 @@
     <th><g:message code="hce.service.candidatos.identificadores" /></th>
 
     <th><g:message code="hce.service.candidatos.nombre" /></th>
+    
+    <th>Fecha Nacimiento</th>
 
     <th><g:message code="hce.service.candidatos.acciones" /></th>
 
@@ -48,6 +50,9 @@ ${paciente.pasaporte}[Pasaporte] </td>
 
         ${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}
         </td>
+        <td>
+          ${paciente.fechaNacimiento}
+        </td>  
 
 
 

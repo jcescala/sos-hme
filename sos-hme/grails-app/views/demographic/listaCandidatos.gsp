@@ -142,10 +142,12 @@
                   
                     <g:link action="show" id="${persona.id}">
 	              <g:message code="demographic.show.title" />
-	            </g:link> | 
-                    <g:link action="seleccionarPaciente" id="${persona.id}">  
+	            </g:link>  
+                    <g:compositionHasNotPatient episodeId="${session.traumaContext.episodioId}">
+                    | <g:link action="seleccionarPaciente" id="${persona.id}">  
 	              <g:message code="demographic.lista_candidatos.action.seleccionarPaciente" />
 	            </g:link>
+                    </g:compositionHasNotPatient>
                    
 
 
