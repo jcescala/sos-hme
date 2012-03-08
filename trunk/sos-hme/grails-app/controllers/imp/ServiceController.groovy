@@ -252,7 +252,7 @@ class ServiceController {
 
             person.ids.each{
                 def codigo = TipoIdentificador.findByCodigo(it.root)
-                if(codigo.nombreCorto == "CI"){
+                if((codigo.nombreCorto == "CI V")||(codigo.nombreCorto == "CI E")){
                         p.setCedula(it.extension)
                 }
                 if(codigo.nombreCorto == "Pasaporte"){

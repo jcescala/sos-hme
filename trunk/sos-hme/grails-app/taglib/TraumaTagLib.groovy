@@ -224,6 +224,17 @@ class TraumaTagLib {
             out << body()
         }
     }
+    def compositionHasNotPatient = { attrs, body ->
+        
+        def composition = Composition.get( attrs.episodeId )
+        if (!composition) return
+        
+        // FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
+        if ( !hceService.getPatientFromComposition( composition ) )
+        {
+            out << body()
+        }
+    }
     
     def isIncompleteRecord = { attrs, body ->
         
