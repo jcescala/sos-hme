@@ -64,10 +64,27 @@ class OrderService {
 
             if(origen.getFechaNacimiento() == it.getFechaNacimiento() ){puntos = puntos + 15.0 } //20.0%
             if(origen.getSexo() == it.getSexo() ){puntos = puntos + 5.0 } //5.0%
+            
+            
+            //Se espera por lo menos un nombre y un apellido
+            def A = 7.5
+            def B = 4.0
             if(origen.getPrimerNombre() == it.getPrimerNombre() ){puntos = puntos + 7.5 } //7.5%
-            if(origen.getSegundoNombre() == it.getSegundoNombre() ){puntos = puntos + 7.5 } //7.5%
+            if(origen.getSegundoNombre() == it.getSegundoNombre() ){
+                if(origen.getSegundoNombre()!=""){
+                puntos = puntos + A
+                }else{
+                puntos = puntos + B                    
+                }
+            }
             if(origen.getPrimerApellido() == it.getPrimerApellido() ){puntos = puntos + 7.5 } //7.5%
-            if(origen.getSegundoApellido() == it.getSegundoApellido() ){puntos = puntos +  7.5} //7.5%
+            if(origen.getSegundoApellido() == it.getSegundoApellido() ){
+                if(origen.getSegundoApellido()!=""){
+                puntos = puntos + A
+                }else{
+                puntos = puntos + B                    
+                }
+            }
 
             //OJO FALTA LA FECHA 20 %
             puntos = 100 - puntos //Complemento (1 - A) el mas cercano a cero, Mejor desempeño no es necesario voltear la lista
