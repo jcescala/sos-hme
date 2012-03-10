@@ -10,9 +10,9 @@ class PersonNameUser extends PersonName{
 
     static constraints = {
         primerNombre (blank:false, matches: "[a-zA-Z]+")
-        segundoNombre (blank:false, matches: "[a-zA-Z]+")
+        segundoNombre (nullable:true, matches: "[a-zA-Z]+")
         primerApellido (blank:false, matches: "[a-zA-Z]+")
-        segundoApellido (blank:false, matches: "[a-zA-Z]+")
+        segundoApellido (nullable:true, matches: "[a-zA-Z]+")
 
 
         telfhabitacion (nullable:true,matches:"[0-9]+")
