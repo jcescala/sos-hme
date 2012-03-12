@@ -247,30 +247,27 @@ ${folder.name.value}
 
 
 
-              <g:if test="${!agregadoImp}">
-                <g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link>
-              </g:if>
-              <g:else>
-                <g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
+				<g:if test="${!agregadoImp}">
+					<g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link>
+				</g:if>
+				<g:else>
+					<g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
 
+					<g:if test="${!relacionadoImp}">
+						<g:remoteLink controller="service"
+									action="buscarPaciente"
+									params="[id: person_id, offset: '0']"
+									update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
+									onLoading="cargando('#resultadoCandidatos')"
+									class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
 
+					</g:if>
+					<g:else>
 
+						<g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
+					</g:else>
 
-                <g:if test="${!relacionadoImp}">
-                  <g:remoteLink controller="service"
-                                action="buscarPaciente"
-                                params="[id: person_id, offset: '0']"
-                                update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
-                                onLoading="cargando('#resultadoCandidatos')"
-                                class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
-
-                </g:if>
-                <g:else>
-
-                  <g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
-                </g:else>
-
-              </g:else>
+				</g:else>
 
 
             </div>
