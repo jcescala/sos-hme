@@ -22,10 +22,28 @@ import java.util.ArrayList
 import demographic.party.*
 import tablasMaestras.TipoIdentificador
 
-
+import util.FormatLog
 
 
 class ServiceController {
+
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
+
+
     /*
     WebService webService
     def wsdl = ApplicationHolder.application.config.wsdl
@@ -288,6 +306,8 @@ class ServiceController {
                 
             }
             if(result){
+			
+				logged("Paciente agregado correctamente al IMP, patientId: "+params.id+" ", "info", session.traumaContext.userId)
                 //println personNamePatient.foto
                 //println personNamePatient.tipofoto
 
@@ -298,6 +318,7 @@ class ServiceController {
 
                    if(resultImagen){
                    //Se agrega imagen
+				   logged("Foto del paciente agregada correctamente al IMP , patientId: "+params.id+" ", "info", session.traumaContext.userId)
                    }else{
                    //No se pudo agregar imagen
 
@@ -349,7 +370,9 @@ class ServiceController {
 
                 if(result){
                     
-
+					logged("Paciente eliminado correctamente del IMP , patientId: "+params.id+" ", "info", session.traumaContext.userId)
+					
+					
                     //Cambiar el atributo inIMP de todos los CDA´s de el paciente eeliminado del IMP
                     hceService.changeVersionInIMP(params.id)
 
@@ -440,6 +463,7 @@ class ServiceController {
 
         }
          if(result){
+					logged("Relacion agregada correctamente para paciente, patientId: "+idPacienteOrg+" ", "info", session.traumaContext.userId)
                     flash.message = "service.imp.agregarRelacionPaciente.true"
                     flash.clase = "ok"
                    
@@ -475,7 +499,7 @@ class ServiceController {
           if(result){
                     flash.message = "service.imp.eliminarRelacionPaciente.true"
                     flash.clase = "ok"
-                   
+					logged("Relacion eliminada correctamente para paciente, patientId: "+params.id+" ", "info", session.traumaContext.userId)
                 }else{
                     flash.clase = "error"
                     if(!conexionImp){
@@ -483,7 +507,7 @@ class ServiceController {
                     }else{
                     flash.message = "service.imp.eliminarRelacionPaciente.false"
                     }
-            }
+				}
 
                 redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
 
