@@ -2,18 +2,41 @@ package auth;
 
 import auth.AuthorizationService
 import util.HCESession
+import util.FormatLog
 import demographic.role.*
 import authorization.LoginAuth
+import java.util.*
 
+/**
+ * @author Pablo Pazos Gutierrez (pablo.swp@gmail.com)
+ */
 class AuthorizationController {
     
+
+	
+	
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
+	
     def authorizationService
     
     def login = {
         
         if (params.doit)
         {
-		
 			//en esta linea se verifica el usuario y password  para acceder al la aplicacion.
             def login = authorizationService.getLogin(params.user, params.pass)
             if (login)
@@ -37,12 +60,8 @@ class AuthorizationController {
 					session.traumaContext = new HCESession( userId: login.id )
 					
 					//informacion de transaccion para el log.info
-					log.info("Acceso valido a SOS Telemedicina Administracion"+
-					" de Usuarios: {userId:"+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
-					LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+					logged("Acceso valido a SOS Telemedicina Administracion", "info", session.traumaContext.userId)
 					
-					//log.info("soy admin: "+ LoginAuth.get(session.traumaContext.userId).person.roles.type)
-					//se redirecciona a el area de administracion usuarios
 					redirect(controller:'loginAuth', action:'list')
 					return
 
@@ -56,16 +75,14 @@ class AuthorizationController {
 					session.traumaContext = new HCESession( userId: login.id )
 					
 					//informacion de transaccion para el log.info
-					log.info("Acceso valido a SOS Telemedicina HME: {userId:"+session.traumaContext.userId+", user: "+
-					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
-					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
-	
+					logged("Acceso valido a SOS Telemedicina HME:","info",session.traumaContext.userId)
+
 					//se redirecciona a la vista de dominios medicos.
 					redirect(controller:'domain', action:'list')
 					return
 
                     
-                }			
+                }		
 			
 
             
@@ -74,12 +91,13 @@ class AuthorizationController {
 			
 			
 			
-		}
+			}
             else
             {
+
                 // FIXME: i18n
                 flash.message = "Login incorrrecto"
-                log.info("Acceso invalido a SOS Telemedicina {user: "+params.user+"}")
+				logged("Acceso invalido a SOS Telemedicina user: "+params.user+" ","info", -1)
             }
         }
         return []
@@ -87,11 +105,9 @@ class AuthorizationController {
     
     def logout = {
         
-
-        log.info("Session finalizada correctamente {userId:"+session.traumaContext.userId+", user: "+
-					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
-					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
-        redirect(action:'login')
+		logged("Session finalizada correctamente", "info", session.traumaContext.userId)
+        
+		redirect(action:'login')
         session.traumaContext = null
     }
 }

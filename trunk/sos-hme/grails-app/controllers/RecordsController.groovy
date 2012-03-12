@@ -23,6 +23,22 @@ import java.text.*
  */
 class RecordsController {
 
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
+
     def demographicService
     def authorizationService
     def hceService
@@ -68,7 +84,7 @@ class RecordsController {
         
         return sections
     }
-    
+	
     /**
      * Obtiene las subsecciones de una seccion dada.
      *
@@ -305,10 +321,10 @@ class RecordsController {
             
 
         }
-    //session.traumaContext.episodioId = null
+		//session.traumaContext.episodioId = null
 
 
-    render(template: 'listado', model:[compositions: compos,
+		render(template: 'listado', model:[compositions: compos,
             userId: session.traumaContext.userId,
             domain: domain,
             total: total,
@@ -317,7 +333,7 @@ class RecordsController {
             hasta:params.hasta])
 
 
-}
+	}
     
     
 // Pantalla 3.2- Crear Episodio
@@ -369,8 +385,9 @@ def create = {
         if (!composition.save())
         {
             // FIXME: haldlear el error si ocurre!, darle un mensaje lindo al usuario, etc.
-            
-			log.error(composition.errors)
+			
+			//log.error(composition.errors)
+			logged(composition.errors,"error",session.traumaContext.userId)
 			println "Error: " + composition.errors
         }
             
@@ -407,13 +424,15 @@ def create = {
         if (!version.save())
         {
             println "ERROR: " + version.errors
-			log.error(version.errors)
+			logged(version.errors,"error",session.traumaContext.userId)
+			//log.error(version.errors)
         }
             
         // Pablo: antes volvia al listado.
         // Queda mas agil que vaya derecho al show luego de crear, asi empieza a registrar.
         
-		log.info("Episodio registrado correctamente {compositionId: "+composition.id+"}")
+		
+		logged("Episodio registrado correctamente, compositionId: "+composition.id+" ","info",session.traumaContext.userId)
 		redirect(action:'show', id:composition.id)
         return
     }
@@ -438,13 +457,16 @@ def show = {
        
 	   if(!composition){
 			
-			//agregar flash.message error.label.episodio.invalido="El episodio seleccionado es invalido"
-			//flash.message="Episodio invalido!!"
-			log.info("Episodio incorrecto {compositionId: " + params.id +", userId: "+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
-					LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+			//regar flash.message error.label.episodio.invalido="El episodio seleccionado es invalido"
+			
+			flash.message="Episodio invalido!!"
+			
+			logged("Episodio incorrecto {compositionId: " + params.id+" ","error", session.traumaContext.userId)
+//			log.error("Episodio incorrecto {compositionId: " + params.id +", userId: "+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
+//					LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
 			
 			redirect(action:'list')
-			return 
+			return
 	   }
 		
 		session.traumaContext.episodioId = Integer.parseInt(params.id) 
@@ -454,26 +476,10 @@ def show = {
     // Ver si es un tema de la carga lazy de las participations y si se resuelve con carga eager.
     // FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
     def patient = hceService.getPatientFromComposition( composition )
-
-    println "Patient from composition: " + patient
-
     // NECESARIO PARA EL MENU
     def sections = this.getSections()
     //def subsections = this.getSubsections(templateId.split("-")[0]) // this.getSubsections('EVALUACION_PRIMARIA')
-      
 	
-	//informacion de transaccion para el log.info
-	if(!patient){
-	
-		log.info("Episodio seleccionado correctamente, sin paciente asociado { compositionId: " + composition.id + 
-		", userId:"+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
-						LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
-    }else{
-		log.info("Episodio seleccionado correctamente { compositionId: " + composition.id + 
-		", patient.id: " + patient.id+", patient: "+patient+" userId:"+session.traumaContext.userId+", user: "+LoginAuth.get(session.traumaContext.userId).user+", person: "+
-		LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")	
-	
-	}
 	
 	// patient puede ser null si todavia no se selecciono un paciente para el episodio,
     // p.e. si la atencion es de urgencia, se atiente primero y luego se identifica al paciente.
@@ -485,7 +491,17 @@ def show = {
         sections: sections, // necesario para el menu
         allSubsections: this.getDomainTemplates()
     ]*/
-    redirect(controller:'guiGen',action:'showRecord')
+	
+	
+	if(patient)
+		println "Patient from composition: " + patient
+		
+		logged("Episodio seleccionado correctamente episodioId: "+session.traumaContext.episodioId+" ", "info", session.traumaContext.userId)
+		
+	
+
+    
+		redirect(controller:'guiGen',action:'showRecord')
 }
     
     
@@ -684,8 +700,8 @@ def signRecord = {
         def auth = authorizationService.getLogin(params.user, params.pass)
         if (!auth)
         {
-			
-			log.info("Firma de registro invalida  {user: "+params.user+"}")
+			logged("Firma de registro invalida user: "+params.user+" ","info", session.traumaContext.userId )
+			//log.info("Firma de registro invalida {user: "+params.user+"}")
             flash.error = "trauma.sign.wrongSignature"
             return model
         }
@@ -701,7 +717,8 @@ def signRecord = {
         def roleKeys = roles.type
         if ( !roleKeys.contains(Role.MEDICO) )
         {
-			log.info("Firma de registro no autorizada  {user: "+params.user+"}")
+			logged("Firma de registro no autorizada user: "+params.user+" ","info", session.traumaContext.userId)
+			//log.info("Firma de registro no autorizada  {user: "+params.user+"}")
             flash.error = "trauma.sign.wrongSigningRole"
             return model
         }
@@ -715,7 +732,8 @@ def signRecord = {
         if ( !hceService.closeComposition(composition, DateConverter.toIso8601ExtendedDateTimeFormat(new Date())) )
         {
             flash.error = "trauma.sign.closeInternalError"
-            log.error("Error interno al tratar de cerrar episodio {compositionId: "+composition.id+"}")
+            logged("Error interno al tratar de cerrar episodio compositionId: "+composition.id+" ","error",session.traumaContext.userId)
+			//log.error("Error interno al tratar de cerrar episodio {compositionId: "+composition.id+"}")
 			return model
         }
            
@@ -728,7 +746,8 @@ def signRecord = {
         // Firma el registro
         if (!hceService.setCompositionComposer(composition, id.root, id.extension))
         {
-			log.error("Error interno al tratar de firmar episodio {user: "+params.user+"}")
+			logged("Error interno al tratar de firmar episodio, user: "+params.user+" ","error",session.traumaContext.userId)
+			//log.error("Error interno al tratar de firmar episodio {user: "+params.user+"}")
             flash.error = "trauma.sign.signInternalError"
             return model
         }
@@ -739,8 +758,11 @@ def signRecord = {
         version.save()
 
         flash.message = "trauma.sign.recordCorrectlySigned"
-		
-		log.info("Firma de episodio valida {user: "+person+"}")
+		logged("Firma de episodio valida, user: "+params.user+" ", "info", session.traumaContext.userId )
+		//log.info("Firma de episodio valida {userId:"+session.traumaContext.userId+", user: "+
+		//LoginAuth.get(session.traumaContext.userId).user+", person: "+
+		//LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+
+		//LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
 
         //AÑADIENDO CREACION AUTOMATICA DE CDA
 
@@ -799,8 +821,12 @@ def reopenRecord = {
             def auth = authorizationService.getLogin(params.user, params.pass)
             if (!auth)
             {
-				log.info("Reapertura de episodio invalida {user: "+params.user+"}")
-                // TODO: i18n
+				
+                
+				logged("Reapertura de episodio invalida, user: "+params.user+" ", "info", session.traumaContext.userId)
+				//log.info("Reapertura de episodio invalida {user: "+params.user+"}")
+				
+				// TODO: i18n
                 flash.error = "Firma erronea, verifique sus datos"
                 return [episodeId: session.traumaContext?.episodioId,
                     userId: session.traumaContext.userId,
@@ -823,7 +849,8 @@ def reopenRecord = {
             def roleKeys = roles.type
             if ( !roleKeys.contains(Role.MEDICO) )
             {
-				log.info("Reapertura de episodio no autorizada {user: "+params.user+"}")
+				logged("Reapertura de episodio no autorizada, user: "+params.user+" ", "info", session.traumaContext.userId)
+				//log.info("Reapertura de episodio no autorizada {user: "+params.user+"}")
                 
 				// TODO: i18n
 				flash.error = "Firma erronea, la persona firmante no es medico"
@@ -847,8 +874,8 @@ def reopenRecord = {
                 // TODO: i18n
                 flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
                 
-				log.error("Error al tratar de crear object referencia para"+
-				" la nueva version en hce.hceService.setVersionCommitter")
+				logged("Error al tratar de crear object referencia para la nueva version en hce.hceService.setVersionCommitter ", "error", -1)
+
 				
 				return [episodeId: session.traumaContext?.episodioId,
                     userId: session.traumaContext.userId,
@@ -866,8 +893,8 @@ def reopenRecord = {
 				//log.error
                 // TODO: i18n
                 flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
-				log.error("Error intentando referenciar a paciente en"+
-				" la nueva version en hce.hceService.setVersionPatient")
+				
+				logged( "Error intentando referenciar a paciente en la nueva version en hce.hceService.setVersionPatient", "error", -1)
                 return [episodeId: session.traumaContext?.episodioId,
                     userId: session.traumaContext.userId,
                     composition: composition,
@@ -944,7 +971,8 @@ def reopenRecord = {
                 version.data = null
                 if (version.save())
                 {
-					log.info("Reapertura firmada correctamente { user: "+params.user+"}")
+					logged("Reapertura firmada correctamente, user: "+params.user+" ", "info", session.traumaContext.userId)
+					//log.info("Reapertura firmada correctamente { user: "+params.user+"}")
                     // TODO: i18n
 					flash.message = "Reapertura firmada correctamente"
                 }
@@ -953,7 +981,10 @@ def reopenRecord = {
                     composition.composer = composerAux
                     composition.content = contentAux
                     version.data = composition;
-					log.error("Error creando nueva version en version.save()")
+					
+					logged("Error creando nueva version en version.save()", "error", -1)
+					logged(version.error, "error", -1)
+					//log.error("Error creando nueva version en version.save()")
 					//log.error(version.error)
                     // TODO: i18n
 					flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
@@ -961,7 +992,9 @@ def reopenRecord = {
             }
             else
             {
-				log.error("problema de creacion de nueva version en new_version.save()")
+				logged("problema de creacion de nueva version en new_version.save()", "error", -1)
+				logged(version.error, "error", -1)
+				//log.error("problema de creacion de nueva version en new_version.save()")
 				//log.error(version.error)
                 // TODO: i18n
 				flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
