@@ -4,8 +4,30 @@ import hce.core.common.directory.Folder
 import hce.HceService
 import authorization.LoginAuth
 import demographic.role.*
+import util.FormatLog
 
+/**
+ * @author Pablo Pazos Gutierrez (pablo.swp@gmail.com)
+ */
 class DomainController {
+
+ 
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
+
 
    def hceService
    
@@ -43,10 +65,9 @@ class DomainController {
       if (!hceService.domainHasTemplates(params.path))
       {		
 			//informacion de transaccion para el log.info
-			log.info("Dominio incorrecto: {domainPath: "+ params.path+", userId: "+session.traumaContext.userId+", user: "+
-					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
-					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+			logged("Dominio incorrecto: "+ params.path+" ", "info", session.traumaContext.userId)
 			flash.message = 'domain.selectDomain.flash'
+			
 			redirect(action: "list")
 			return
       }
@@ -57,9 +78,7 @@ class DomainController {
       }
       
 	  //informacion de transaccion para el log.info
-	  log.info("Dominio seleccionado correctamente!!!: {domainPath: "+ session.traumaContext.domainPath+", userId: "+session.traumaContext.userId+", user: "+
-					LoginAuth.get(session.traumaContext.userId).user+", person: "+LoginAuth.get(session.traumaContext.userId).person+ 
-					", roles: "+LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+	  logged("Dominio seleccionado correctamente: "+ session.traumaContext.domainPath+" ","info",session.traumaContext.userId)
 	  redirect(controller: 'records', action: 'list')
    }
 }

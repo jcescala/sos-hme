@@ -6,6 +6,8 @@
 import demographic.party.*
 import demographic.identity.PersonName
 import demographic.role.*
+import authorization.LoginAuth
+
 import hce.core.support.identification.UIDBasedID
 
 import hce.HceService
@@ -56,8 +58,25 @@ import java.io.File
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import org.apache.commons.io.FileUtils
-
+import util.*
 class DemographicController{
+
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
+
 
     def hceService
     def demographicService
@@ -536,9 +555,19 @@ class DemographicController{
 
     def show ={
 
+
+	
+	
         //Mostrar detalle de un paciente
          def persona = Person.get(params.id)
-        if (persona.ids.size() == 0) // Debe tener un id!
+		 
+		if(!persona){
+		//redirect(controller:'record', action:'list')
+			//redirect( action : 'findPatient', params
+			return 
+		}
+        
+		if (persona.ids.size() == 0) // Debe tener un id!
             {
 			
                 redirect( action : 'findPatient',
@@ -582,12 +611,25 @@ class DemographicController{
     }
     def seleccionarPaciente = {
         
+		
+		
         // FIXME: esta hecho en base al id en la base, que pasa cuando la
         // seleccion se hace sobre un paciente en un IMP remoto y no esta en la base?
         
         // Guardo los resultados de consultar el IMP remoto en la base como cache.
         def persona = Person.get(params.id)
         
+		if(!persona){
+			
+			//i18n
+			flash.message = 'Episodio seleccionado Invalido'
+			
+			logged("Episodio seleccionado invalido","info",session.traumaContext.userId)
+			
+			redirect(controller:'records', action:'list')
+			return
+		}
+		
         
         // =====================================================================
         // 1) Si no hay un episodio seleccionado, muestro la patalla de show del
@@ -602,12 +644,14 @@ class DemographicController{
         // (o simplemente pongo la que me digan y que ellos corrijan).
         // Cada correccion debe tener un log de quien lo hizo.
         // Vuelve a la pantalla principal del episodio seleccionado (show).
+		
+		
 
         if (!session.traumaContext?.episodioId) // caso 1)
         {
             println "No hay epidosio seleccionado"
-
-            
+			
+			logged("Paciente seleccionado correctamente sin episodio asaociado ", "info", session.traumaContext.userId)
 
             redirect(action:'show', params: params)
 
@@ -653,9 +697,14 @@ class DemographicController{
             
             // Si no le pongo flush:true parece que demora un poco mas en guardar el partyself y
             // vuelve a la pagina rapido y muestra que el episodio no tiene paciente.
-            if (!composition.save(flush:true))
+            
+			if (!composition.save(flush:true))
             {
                 println "ERROR compo: " + composition.errors
+				
+				
+				logged("Problemas en el save() de composition","error",-1)
+				logged(composition.errors, "error", -1)
             }
             
             
@@ -672,7 +721,11 @@ class DemographicController{
             //        o es un tema de carga lazy en el records.show para las participations del
             //        episodio.
             
-            redirect( controller:'records', action:'show',
+			
+			
+			logged("Paciente seleccionado correctamente", "info", session.traumaContext.userId)
+            
+			redirect( controller:'records', action:'show',
                 params: [id: session.traumaContext.episodioId] )
         }
         
@@ -685,8 +738,6 @@ class DemographicController{
                 episodeId: session.traumaContext?.episodioId // puede ser null
             ]
         )
-        
-        //render('Selecciona paciente: ' + persona)
     }
     
     /**
@@ -769,7 +820,9 @@ class DemographicController{
                 else
                 {
                     // Vuelve a la pagina
-                    flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
+                    
+					//i18n
+					flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
                     //def tiposIds = TipoIdentificador.list()
                     return [tiposIds: tiposIds,
                                 etniasIds : etniasIds,
@@ -851,13 +904,19 @@ class DemographicController{
             if(person.save()){
                 def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
                 if(role.save()){
-                    redirect(action:'seleccionarPaciente', id:person.id)
+                    
+					logged("Paciente creado correctamente patientId: "+person.id+" ","info",session.traumaContext.userId)
+					redirect(action:'seleccionarPaciente', id:person.id)
                 }
                 else{
-                    println role.errors
+                    logged("Error creando role al paciente ","error",session.traumaContext.userId)
+					logged(role.errors,"error",session.traumaContext.userId)
+					println role.errors 
                 }
             }else{
-                println person.errors
+                logged("Error creando Person para el paciente ","error",session.traumaContext.userId)
+				logged(person.errors,"error",session.traumaContext.userId)
+				println person.errors
             }
 			
             redirect(action:'admisionPaciente')
