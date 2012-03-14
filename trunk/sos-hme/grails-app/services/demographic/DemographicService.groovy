@@ -14,7 +14,7 @@ import demographic.identity.PersonName
 import demographic.identity.*
 import demographic.party.Person
 import demographic.role.Role
-
+import tablasMaestras.TipoIdentificador
 
 // Configuracion de consulta local o remota
 import org.codehaus.groovy.grails.commons.ApplicationHolder
@@ -936,5 +936,16 @@ class DemographicService {
             }
         }
         return contenido
+    }
+    
+    public String tipoIdentificador (String rootIdentificador){
+        def tipo = null
+        def identificadorTemp = TipoIdentificador.withCriteria{
+                eq('codigo',rootIdentificador)
+        }
+        if(identificadorTemp){
+            tipo = identificadorTemp.nombreCorto
+        }
+      return tipo
     }
 }

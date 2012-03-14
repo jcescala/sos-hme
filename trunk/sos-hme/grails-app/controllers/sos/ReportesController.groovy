@@ -34,10 +34,13 @@ import java.net.*
 /*reportes*/
 import templates.TemplateManager
 import tablasMaestras.Cie10Trauma
+
 import java.util.HashMap
 import net.sf.jasperreports.engine.data.JRXmlDataSource
 import net.sf.jasperreports.engine.export.JRPdfExporter
+import net.sf.jasperreports.engine.fill.JRFileVirtualizer;
 import net.sf.jasperreports.engine.*
+
 //creacion de archivos xml
 import groovy.xml.MarkupBuilder
 import org.custommonkey.xmlunit.*
@@ -187,6 +190,9 @@ class ReportesController {
             java.util.Date h =  sdf.parse(params.hasta.toString())
             fin =  h
         }
+        else{
+            redirect(controller:'reportes', action:'index')
+        }
         println("inicio:->"+inicio)
         println("fin:->"+fin)
         
@@ -261,9 +267,17 @@ class ReportesController {
                             }
                             
                             
+                           def tipoDeIdentificador = demographicService.tipoIdentificador(patient.ids.value.root)
+                           def cedulaRegistro
+                           if("[CI V]" == tipoDeIdentificador || "[CI E]" == tipoDeIdentificador || "[Pasaporte]" == tipoDeIdentificador){
+                               cedulaRegistro = patient.ids.value[0].extension
+                           }else{
+                               cedulaRegistro = "Sin Cédula"
+                           }
+                            
                             
                             def agregarNodoXml =  demographicService.crearXmlEPI10Gen(nombreDoc,
-                                                                                      patient.ids.value[0].extension,
+                                                                                      cedulaRegistro,
                                                                                       patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
                                                                                       patient.fechaNacimiento.format("dd/MM/yyyy"), 
                                                                                       fullDireccion,
@@ -398,8 +412,17 @@ class ReportesController {
                                             generarReporte = true
                                             codigos << codigo.nombre
                                             paciente << patient
+                                            
+                                           def tipoDeIdentificador = demographicService.tipoIdentificador(patient.ids.value.root)
+                                           def cedulaRegistro
+                                           if("[CI V]" == tipoDeIdentificador || "[CI E]" == tipoDeIdentificador || "[Pasaporte]" == tipoDeIdentificador){
+                                               cedulaRegistro = patient.ids.value[0].extension
+                                           }else{
+                                               cedulaRegistro = "Sin Cédula"
+                                           }
+                                            
                                             def agregarNodoXml =  demographicService.crearXmlEPI13Morbilidad(nombreDoc,
-                                                                                      patient.ids.value[0].extension,
+                                                                                      cedulaRegistro,
                                                                                       patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
                                                                                       patient.fechaNacimiento.format("dd/MM/yyyy"), 
                                                                                       fullDireccion,
@@ -605,25 +628,35 @@ class ReportesController {
        //List jpList = new ArrayList()
        JasperReport jasperReport
        List<JasperPrint> jpList = new ArrayList<JasperPrint>();
+       String filexml = outFileName;
        try
           {
               def i =0
               def j = reportFileName.size()
               for(i=0;i<=j-1;i++){
-                  println("ciclo:->"+i)
-                  println("path:->"+reportFileName[i])
+                  //println("ciclo:->"+i)
+                  //println("path:->"+reportFileName[i])
                   jasperReport = JasperCompileManager.compileReport(reportFileName[i])
                   //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
                   
                   //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],hm,jrxmlds)
+                  JRFileVirtualizer fileVirtualizer =new JRFileVirtualizer(1,ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes"));
+                  hm.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
                   JasperPrint reporte = JasperFillManager.fillReport(jasperReport,hm,new JRXmlDataSource(xmlFileName,recordPath))
                   
                   jpList.add(reporte)
               }
              
             JRPdfExporter exporter = new JRPdfExporter();
-            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
+            //exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,outFileName);
             exporter.setParameter(net.sf.jasperreports.engine.export.JRPdfExporterParameter.JASPER_PRINT_LIST, jpList);
+            exporter.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF-8");
+            
+            OutputStream output = new FileOutputStream(new File(outFileName));
+            exporter.setParameter(net.sf.jasperreports.engine.export.JRPdfExporterParameter.OUTPUT_STREAM, output);
+            //response.setContentLength(output.toByteArray().length)
+            
+            
             exporter.exportReport()
             
             System.out.println("Created file: " + outFileName)

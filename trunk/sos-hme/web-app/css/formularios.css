@@ -1,7 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-table td {
-	vertical-align: top;}
+
 textarea {
   width: 98%;
    height: 48px;
@@ -40,7 +39,6 @@ textarea {
     .CLUSTER {
       margin-bottom: 3px;
       font-weight: bold;
-	  
     }    
 	
 	.CLUSTER .CLUSTER .CLUSTER {
@@ -54,9 +52,7 @@ textarea {
       padding: 3px;
       font-size: 13px;
       margin: 0px;
-	  
     }
-	
 	
 	.CLUSTER .label {  /* Primer Nivel */
 		color:#052441;
@@ -125,7 +121,7 @@ textarea {
 
     .ELEMENT .label {
       padding: 4px;
-      font-size: 14px;
+      font-size: 12px;
       margin-bottom: 0px;
 	  font-weight:normal;
     }
@@ -160,7 +156,7 @@ textarea {
     }
 
     /* Si pongo .ELEMENT_DvOrdinal .content se ve mal el triage */
-	.ELEMENT_DvOrdinal .content,
+
     .ELEMENT_DV_CODED_TEXT .content, 
 	.ELEMENT_DV_COUNT .content, 
 	.ELEMENT_DvQuantity .content, 
@@ -300,30 +296,57 @@ textarea {
     text-decoration: none;
 	font-size:14px;
 	font-weight:bold;
-	cursor: pointer;
 
 	}
-	.bottom_actions input:hover{
 	
-	background: #EBB420;
+    /*******************************************************/
+
+    /*                      Modo SHOW                      */
 	
-	}
+	.MODO_SHOW .ELEMENT {
+		border:solid 1px #FFFFFF;
+		}
+
+	.MODO_SHOW .ELEMENT_DV_CODED_TEXT,
+	.MODO_SHOW .ELEMENT_DV_TEXT,
+	.MODO_SHOW .ELEMENT_DV_COUNT, 
+	.MODO_SHOW .ELEMENT_DvQuantity, 
+	.MODO_SHOW .ELEMENT_DV_BOOLEAN,
+	.MODO_SHOW .ELEMENT_DV_DATE
+	 {
+	overflow:hidden;}
 	
-	
-	
-	/*-------Añadido ------ */
-	
-	.CLUSTER .labelCluster {
-      border-bottom:1px solid #c1c1c1;
-	  
+    .MODO_SHOW .ELEMENT_DV_CODED_TEXT .content, 
+	.MODO_SHOW .ELEMENT_DV_TEXT .content,
+	.MODO_SHOW .ELEMENT_DV_COUNT .content, 
+	.MODO_SHOW .ELEMENT_DvQuantity .content, 
+	.MODO_SHOW .ELEMENT_DV_BOOLEAN .content,
+	.MODO_SHOW .ELEMENT_DV_DATE .content {
+
+      display: block;
+	  background:#ffffd7;
+      position: relative;
+      vertical-align: middle;
+	  font-weight:normal;
+	  color:#1e1e1e;
     }
-	
-	 .CLUSTER  {
+
+	.MODO_SHOW .CLUSTER .ELEMENT .label, 						 /* Primer Nivel Contenido */
+	.MODO_SHOW .CLUSTER .CLUSTER .ELEMENT .label,				/* Segundo Nivel Contenido */
+	.MODO_SHOW .CLUSTER .CLUSTER .CLUSTER .ELEMENT .label,  	/* Tercer Nivel Contenido */
+	.MODO_SHOW .CLUSTER .CLUSTER .CLUSTER .CLUSTER .ELEMENT .label 		/* Cuarto Nivel Contenido */
+	 { 
+		float:left;
+		width:200px;
+		text-align:right;
+		font-style:italic;
+		padding-right:10px;
+	}
+		
+	.MODO_SHOW .CLUSTER  {
 			  padding-bottom:10px;
 }
-     .OBSERVATION .label, .EVALUATION .label, .INSTRUCTION .label, .ACTION .label {
+    .MODO_SHOW .OBSERVATION .label, .EVALUATION .label, .INSTRUCTION .label, .ACTION .label {
 		clear:both;
 
     }
-	
-	

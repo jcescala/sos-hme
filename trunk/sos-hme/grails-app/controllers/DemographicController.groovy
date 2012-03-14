@@ -978,7 +978,7 @@ class DemographicController{
      */
     def edit = {
         
-        println params
+        //println params
         // Si no viene el id, vuelvo a un punto seguro.
         if (!params.id)
         {
@@ -997,7 +997,8 @@ class DemographicController{
         def entidadNace = null
         def municipioNace = null
         def paisNace = null
-        
+        def idPorEliminar = null
+        def idDelete = null
         if(pn.lugar!=null){
             municipioNace =  pn.lugar
             entidadNace = Lugar.get(municipioNace.padre.id)
@@ -1025,11 +1026,132 @@ class DemographicController{
         
         if (params.doit)
         {
+            def idTemp = null    
             //patient.setProperties( params )
             //pn.setProperties( params )
             patient.sexo = params.sexo
             
-            println("extensionNuevo:->"+params.extension)
+            def numeroDeIds = patient.ids.size()
+            def cicloIds
+            def numeroIdentificador
+            def tipoIdentificador
+            
+            
+            
+            for (cicloIds = 0; cicloIds < numeroDeIds; cicloIds++){
+                numeroIdentificador = 'extension'+cicloIds
+                tipoIdentificador = 'root'+cicloIds
+                if(!(params[numeroIdentificador] in patient.ids.extension)){// si los valores del form difieren de los ya registrados
+                    if(numeroDeIds== 1 && params[numeroIdentificador]=='' && params[tipoIdentificador] != TipoIdentificador.AUTOGENERADO){
+                        flash.message = "El Identificador no Puede quedar vacio"
+                        return [patient:patient, pn:pn, tiposIds:tiposIds, 
+                                etniasIds : etniasIds,
+                                profesionIds : profesionIds,
+                                paisesIds : paisesIds,
+                                conyugalIds : conyugalIds,
+                                nivelEducIds : nivelEducIds,
+                                ocupacionIds : ocupacionIds,
+                                entidadesIds : entidadesIds,
+                                municipios : municipios,
+                                parroquias : parroquias,
+                                municipio : municipio,
+                                estado : estado,
+                                municipioNace : municipioNace,
+                                entidadNace : entidadNace,
+                                paisNace : paisNace,
+                                fechaNace : formatter.format(fechaNace)]
+                    }
+                    else{
+                            idPorEliminar = UIDBasedID.create(patient.ids[cicloIds].root,patient.ids[cicloIds].extension)
+                            if(params[tipoIdentificador] == TipoIdentificador.AUTOGENERADO){ // en caso de que se decida cambiar el id por uno autogenerado
+                                def extensionAutogeneraro = RandomGenerator.generateDigitString(8)
+                                idTemp = UIDBasedID.create(params[tipoIdentificador], extensionAutogeneraro)
+                                
+                                while ( UIDBasedID.findByValue(idTemp.value) ){
+                                    extensionAutogeneraro = RandomGenerator.generateDigitString(8)
+                                    idTemp = UIDBasedID.create(params[tipoIdentificador], extensionAutogeneraro)
+                                }
+                            }
+                            else{
+                                idTemp = UIDBasedID.create(params[tipoIdentificador], params[numeroIdentificador]) // TODO: if !hasExtension => error
+                            }
+
+                            def existPatient = Person.withCriteria{
+                                ids{
+                                        eq("value", idTemp.value)
+                                }
+                                identities{
+                                        eq("purpose", "PersonNamePatient")
+                                }
+                            }
+
+                            if(existPatient){ // si el id ingresado en form ya pertenece a otro usuario del sistema
+                                flash.message = "Ya existe la persona con id: " + idTemp.extension + ", verifique el id ingresado"
+                                return [patient:patient, pn:pn, tiposIds:tiposIds, 
+                                        etniasIds : etniasIds,
+                                        profesionIds : profesionIds,
+                                        paisesIds : paisesIds,
+                                        conyugalIds : conyugalIds,
+                                        nivelEducIds : nivelEducIds,
+                                        ocupacionIds : ocupacionIds,
+                                        entidadesIds : entidadesIds,
+                                        municipios : municipios,
+                                        parroquias : parroquias,
+                                        municipio : municipio,
+                                        estado : estado,
+                                        municipioNace : municipioNace,
+                                        entidadNace : entidadNace,
+                                        paisNace : paisNace,
+                                        fechaNace : formatter.format(fechaNace)] 
+                            }else{
+                                patient.addToIds(idTemp)
+                                def eliminado = patient.ids.find{idPorEliminar}
+                                def compositionsPatient = hceService.getAllCompositionForPatient(patient, new Date(0), new Date())
+                                def numeroCompositions = compositionsPatient.size()
+                                def cicloCompositions
+                                def compositionsParticular
+
+                                for(cicloCompositions=0 ; cicloCompositions < numeroCompositions ; cicloCompositions++){
+
+                                    compositionsParticular = compositionsPatient[cicloCompositions]
+
+                                    def partySelf
+                                    def pacienteEnCompositions 
+                                    def participations = compositionsParticular.context.participations
+
+                                    if(participations){
+                                        def numeroParticipations = participations.size()
+                                        def cicloParticipations 
+
+                                        for (cicloParticipations = 0; cicloParticipations < numeroParticipations ; cicloParticipations ++){
+
+                                            if(participations[cicloParticipations]!=null){
+                                                pacienteEnCompositions = participations[cicloParticipations].find{ it.function.value == 'subject of care' }
+
+                                                if (pacienteEnCompositions.performer.getClassName() == 'PartySelf'){
+                                                    partySelf = PartySelf.get(pacienteEnCompositions.performer.id)
+                                                    partySelf.externalRef.objectId = idTemp
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    compositionsParticular.save()
+                                }
+                             // println compositionPatiet.getClass() // solo para que reviente .. codigo errado
+                              patient.removeFromIds(eliminado)
+                              eliminado.delete(flush:true)
+                            }
+                    }
+                }
+                else{  // los valores ingresados ya estaban en los ids del patient, no hay cambios 
+                    println "pertenece"
+                }
+                
+            }
+           
+            
+            
             
             def dia = params.fechaNacimiento.split('-')[0]
             def mes = params.fechaNacimiento.split('-')[1]
@@ -1039,18 +1161,24 @@ class DemographicController{
             java.util.Date d =  sdf.parse(fecha.toString())
             patient.fechaNacimiento =  d
             
-            
             println "PN:: " + pn
             
             // borra el viejo
             patient.removeFromIdentities(pn)
             pn.delete()
-
+            
+            
+            if(idDelete!=null){
+                patient.removeFromIds(idDelete) // elimino el id que fue modificado   
+            }
+            
+            
+            
             // crea el nuevo
             pn = new PersonNamePatient(params)
             patient.addToIdentities( pn )
-
-
+            
+            
             /*
             def person = new Person( params ) // sexo, fechaNac (no mas)
             
