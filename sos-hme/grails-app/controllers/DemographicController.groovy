@@ -1163,6 +1163,10 @@ class DemographicController{
             
             println "PN:: " + pn
             
+            //--Guardo la foto anterior
+            def auxFoto = pn.foto
+            def auxTipoFoto = pn.tipofoto
+
             // borra el viejo
             patient.removeFromIdentities(pn)
             pn.delete()
@@ -1176,6 +1180,35 @@ class DemographicController{
             
             // crea el nuevo
             pn = new PersonNamePatient(params)
+
+            if(params.foto){
+
+                def x1 = params.x1 as Integer
+                def y1 = params.y1 as Integer
+                def x2 = params.x2 as Integer
+                def y2 = params.y2 as Integer
+                File tempPicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar + params.foto)
+                BufferedImage image = ImageIO.read(tempPicture)
+                BufferedImage croppedImage = image.getSubimage(x1, y1, x2 - x1, y2 - y1)
+                File profilePicture = new File(grailsApplication.config.images.location.toString() + File.separatorChar +"prueba.jpg")
+                ImageIO.write(croppedImage, "jpg", profilePicture);
+                FileUtils.deleteQuietly(tempPicture)
+
+
+                //def f = request.getFile('foto')
+                def okcontents = ['image/png' , 'image/jpeg' , 'image/gif']
+                if(okcontents.contains(new MimetypesFileTypeMap().getContentType(profilePicture).toString())){
+                    pn.foto = profilePicture.getBytes()
+                    pn.tipofoto = new MimetypesFileTypeMap().getContentType(profilePicture).toString()
+                }
+
+
+            }else{
+                pn.foto = auxFoto
+                pn.tipofoto = auxTipoFoto
+
+            }
+
             patient.addToIdentities( pn )
             
             

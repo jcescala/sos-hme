@@ -16,7 +16,14 @@
       <g:each in="${compositions}" var="composition">
         <tr>
           <td>${composition.id}</td>
-          <td><g:person param1="${composition}" /></td>
+          <td>
+   
+        
+          <g:person param1="${composition}" />
+
+
+
+          </td>
           <td><g:formatDate date="${composition.context.startTime?.toDate()}" formatName="default.date.format.text"   /></td>
           <td><g:formatDate date="${composition.context.endTime?.toDate()}" formatName="default.date.format.text" /></td>
           <td>
