@@ -191,6 +191,7 @@ class ReportesController {
             fin =  h
         }
         else{
+            flash.message = "Los rangos de fecha deben seleccionarse"
             redirect(controller:'reportes', action:'index')
         }
         println("inicio:->"+inicio)
@@ -358,6 +359,7 @@ class ReportesController {
             java.util.Date h =  sdf.parse(params.hasta.toString())
             hasta =  h
         }else{
+            flash.message = "Los rangos de fecha deben seleccionarse"
             redirect(controller:'reportes', action:'index')
         }
         
@@ -514,6 +516,7 @@ class ReportesController {
             java.util.Date h =  sdf.parse(params.hasta.toString())
             hasta =  h
         }else{
+            flash.message = "Los rangos de fecha deben seleccionarse"
             redirect(controller:'reportes', action:'index')
         }
         
@@ -650,8 +653,6 @@ class ReportesController {
                   //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],new HashMap(),new JRXmlDataSource(xmlFileName,recordPath))
                   
                   //JasperPrint reporte = JasperFillManager.fillReport(reportFileName[i],hm,jrxmlds)
-                  JRFileVirtualizer fileVirtualizer =new JRFileVirtualizer(1,ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/reports/reportes"));
-                  hm.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
                   JasperPrint reporte = JasperFillManager.fillReport(jasperReport,hm,new JRXmlDataSource(xmlFileName,recordPath))
                   
                   jpList.add(reporte)

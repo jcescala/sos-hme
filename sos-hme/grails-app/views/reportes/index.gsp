@@ -19,6 +19,11 @@
               <div class ="accionrepo"><g:message code="reporte.accion"/></div>
             </div>
             --%>
+            <g:if test="${flash.message}">
+      <div style="color:red;">
+        <g:message code="${flash.message}" />
+      </div>
+    </g:if>
             <div class="listarepo">
 
               <div class="reportlist">
