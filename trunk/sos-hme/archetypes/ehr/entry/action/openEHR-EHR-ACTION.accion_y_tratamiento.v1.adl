@@ -21,7 +21,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"E906F6CCBF90C71EBB607A57A280CBA7">
+		["MD5-CAM-1.0.1"] = <"301732F9ACC897662D51C0A3A81D0CFC">
 	>
 
 definition
@@ -29,18 +29,22 @@ definition
 		description matches {
 			ITEM_TREE[at0001] matches {	-- Arbol
 				items cardinality matches {1..*; unordered} matches {
-					CLUSTER[at0002] occurrences matches {1..*} matches {	-- Tratamiento
+					CLUSTER[at0002] occurrences matches {1} matches {	-- Tratamiento
 						items cardinality matches {0..*; unordered} matches {
-							ELEMENT[at0005] occurrences matches {0..1} matches {	-- Fecha
-								value matches {
-									DV_DATE_TIME matches {
-										value matches {yyyy-mm-ddTHH:??:??}
+							CLUSTER[at0006] occurrences matches {0..*} matches {	-- Descripción
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0005] occurrences matches {0..1} matches {	-- Fecha
+										value matches {
+											DV_DATE_TIME matches {
+												value matches {yyyy-mm-ddTHH:??:??}
+											}
+										}
 									}
-								}
-							}
-							ELEMENT[at0004] occurrences matches {0..1} matches {	-- Tratamientos y Acciones a Seguir
-								value matches {
-									DV_TEXT matches {*}
+									ELEMENT[at0004] occurrences matches {0..1} matches {	-- Tratamientos y Acciones a Seguir
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
 								}
 							}
 						}
@@ -72,6 +76,10 @@ ontology
 				>
 				["at0005"] = <
 					text = <"Fecha">
+					description = <"*">
+				>
+				["at0006"] = <
+					text = <"Descripción">
 					description = <"*">
 				>
 			>
