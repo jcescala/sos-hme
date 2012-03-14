@@ -106,24 +106,7 @@ class DemographicController{
 
 		//println "PARAMS: " + params + "\n"
 
-        //    def pixpdq = new PixPdqDemographicAccess()
-        //pixpdq.findIdsById( new UIDBasedID(value:params.identificador) )
-        //pixpdq.findPersonById( new UIDBasedID(value:params.identificador) )
-        
-        //def person = new Person()
-        //person.properties = params
-        //bindData(person, params, 'person')
-        //println "Person: " + person
-        
-        //if (!params.identificador)
-        /*
-        if (!params.('person.ids[0].value'))
-        {
-        flash.message = "Identificador requerido"
-        redirect(action:'admisionPaciente')
-        return
-        }
-         */
+		
         
         // TODO: aca va la consulta PIX al maciel.
         // Deberia hacerse como un strategy, definiendo una interfaz comun,
@@ -141,17 +124,6 @@ class DemographicController{
         // Para la fecha no funciona el bindData, lo hago a mano
         def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' ) // Si no vienen todos los datos, que sea null
         
-        /*
-        if (params.useBirthDate)
-        {
-        //String fecha = params.fechaNacimiento_day+'-'+params.fechaNacimiento_month+'-'+params.fechaNacimiento_year
-        //java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy")
-        //bd = sdf.parse(fecha)
-            
-        bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
-        //println "Date: " + bd
-        }
-         */
 
         // TODO: si no hay datos para los nombres, no crear pn.
         def pn = null
@@ -163,163 +135,87 @@ class DemographicController{
             //println "Person Name: " + pn
         }
         
-        /*
-        // TODO: todavia no uso el sexo
-        def candidatos2 = demographicService.findByPersonData(pn, bd, null)
-        println "CANDIDATOS2 : " + candidatos2
-         */
         
         println "======================================="
         println "buscando por: "
         println "   PN: "+ pn
         println "   BD: "+ bd
+		println "   ID: "+ id
         println "======================================="
 
-        //findByPersonDataAndIdAndRole( PersonName n, Date bithdate, String sex, UIDBasedID id, String roleType )
-        //def candidatos = demographicService.findByPersonDataAndId(pn, bd, null, id)
-
         def candidatos = []
+		//(id) del candidato obtenido mediante un identificador uid
+		def candidatosid = []
+		//uids de el candidato obtenido mediante su id (candidatosid)
+		def candidatosUidbid = []
 
-/*	
-		def perr = Person.get(21)
+		def i
 		
-		println "perrrrrrrr: " +perr.ids
-*/
+		def idss = []
 
         try // La comunicacion puede tirar timeout
-        {		
+        {	
+			
 			candidatos = demographicService.findByPersonDataAndIdAndRole(
 			pn,
 			bd,
 			null,
 			id,
 			Role.PACIENTE )
-
-/*			
-			def classPnp = "demographic.identity.PersonNamePatient"
-			def idCandidato
-			def candidatos2 = []
-			if(candidatos){
-					
-					for( c in candidatos){
-						for(idt in c.ids){
-							if(idt!=null){ 
-								idCandidato = Person.executeQuery("select p.id from Person as p left join p.ids ids left join p.identities idt where ids.value =? and idt.class = ?",idt.value, classPnp)						
-								println "idcandidato: "+ idCandidato[0]
-								candidatos2 << Person.get(idCandidato[0])
-								break
-							}
-								
-						}
+			
+			
+			//debido a que en la consulta de candidatos cuando se suministra un id esta no retorna
+			// los otros identificadores UID de la Person seleccionada, se realizan estas consultas
+			// para obtener todos los identificadores.
+			if(id){
+				candidatosid = Person.executeQuery("select p.id from Person as p left join p.ids as i left join p.identities as idt where i.value =? and idt.purpose =?",id.value, "PersonNamePatient")
+				if(candidatosid){
+					candidatosUidbid = Person.executeQuery("select uid.value from Person as p left join p.ids as uid left join p.identities as idt where p.id =? and idt.purpose =?", candidatosid[0], "PersonNamePatient")
+					println "candidatos uidbid "+ candidatosUidbid
+					for (i=0; i<candidatosUidbid.size(); i++) {
+						idss[i] = new UIDBasedID(value:candidatosUidbid[i])
 					}
 					
-				println "candidatos2 "+ candidatos2.ids
+				}
+			}
 			
 			
 			
-			}		
-*/
-
-	
-
-			// Si el IMP es remoto, salvo los resultados localmente como un cache para facilitar el pedido
-            // y mostrado de los datos de los pacientes seleccionados.
-            // TODO: vaciar el cache despues de cierto tiempo, y si el paciente de un episodio no esta en
-            //       el repositorio local y el IMP es remoto, pedirlo de nuevo con PDQ y cachearlo.
-            //       El borrado deberia hacerse con cuidado de no eliminar personal del hospital, el cual
-            //       se guarda en la misma tabla que los pacientes y tiene logins asignados.
-            //
-
-			//angel esto esta funcionando ????
-            if (!ApplicationHolder.application.config.hce.patient_administration.serviceType.local)
-            {
-                def candidatosCache = candidatos // Los que se trageron del IMP remoto
-                candidatos = [] // Los que se cargan del cache, incluyendo los que se trageron y se guardaron ahora en cache.
-                println "estoy en cacheado!!!!!!!!!!!!!!!!!!"
-                candidatosCache.each{ per ->
-                    
-                    // Ver si esta en cache
-                    
-                    def perid = per.ids.toArray()[0]
-                    def cache = Person.withCriteria {
-                        ids {
-                            eq('value', perid.value)
-                        }
-                    }
-                    
-                    // Ya esta en cache
-                    if (cache.size()>0)
-                    {
-                        // Toma la entrada del cache para no ingresar 2 veces el mismo paciente en el cache
-                        per = cache[0]
-                    }
-                    else // No esta
-                    {
-                        // FIXME: falta asignar rol paciente.
-                        if ( !per.save(flush:true) )
-                        {
-                            println "Error al salvar persona en cache: " + per.errors
-                        }
-                        
-                        def role = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:per)
-                        if (!role.save())
-                        {
-                            println "Error al salvar rol en cache: " + role.errors
-                        }
-                    }
-                    
-                    // Todos los pacientes resultados de la busqueda, los que ya
-                    // estaban en cache y los que se guardaron ahora.
-                    candidatos << per
-                }
-            }
+			
         }
         catch (Exception e)
         {
             flash.message = "Ocurrio un error en la comunicacion, intente de nuevo"
             println "Ocurrio un error en la comunicacion " + e.getMessage()
         }
-        
-        // ==================================================================
-        // TEST
-        //pixpdq.findByPersonData(pn, bd, "M")
-        //    def result = pixpdq.findByPersonData(pn, bd, null)
-        //    XStream xstream = new XStream()
-        //    println xstream.toXML(result) + "\n\n"
-        // /TEST
-        // ==================================================================
-        
-        
-        // OJO! los candidatos de pix y pdq no tienen ID!!!!!
-        // lo puse para hacer el OR entre cand 1 y cand 2
-        //        def candidatos = candidatos1.plus( candidatos2 ) //.unique{ it.id }
-        
-        println("numero cantidatos:->"+candidatos.size())
+/*		
+		println "candidatos: "+candidatos
+		println "candidatosIds" + candidatosid
+		
+		def numIds = candidatosid.size()
+		
+		println "num candidatos: "+numIds
 
-        //Verificar di ya hay un paciente seleccionado para el episodio actual
+		
+		println "idss " + idss
+
+*/		
+		
+
+
+		
         def pacienteSeleccionado
+		
         if(session.traumaContext.episodioId){
             pacienteSeleccionado = true
 
         }else{
             pacienteSeleccionado = false
         }
-		println "candidatos: "+candidatos.ids
-
 		
 		
-
-		/*			println "idsssssssss: "+id2
-			//def asd = "demographic.identity.PersonNamePatient"
-			//idCandidatos = Person.executeQuery("select p.id from Person as p left join p.ids ids left join p.identities idt where ids.value =? and idt.class = ?",id2.value, asd)
-            
-			//println "idcandidatos: "+idCandidatos
-			candidatos2 = Person.get(16)
-			println "candidatos ids "+candidatos2.ids
-			*/
 		
-		
-        render(view:'listaCandidatos', model:[candidatos:candidatos,pacienteSeleccionado:pacienteSeleccionado])
+        render(view:'listaCandidatos', model:[candidatos:candidatos,pacienteSeleccionado:pacienteSeleccionado, idss:idss])
         
     } // findPatient
     
