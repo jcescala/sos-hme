@@ -258,7 +258,13 @@ class ReportesController {
                                 
                                 if(element[k].name.value!="Descripción"){ // identifico si el nodo el arquetipo de diagnostico hace referencia al diagnostico codificado o a la impresion diagnostica (Ver Arquetipo EHR-OBSERVATION.diagnosticos)
                                     codigo = Cie10Trauma.findByCodigo(element[k].value.definingCode.codeString)
-                                    codigos << codigo.nombre
+                                    if(codigo!=null){
+                                            codigos << codigo.nombre
+                                        }else{
+                                            codigo = Cie10Trauma.findBySubgrupo(element[k].value.definingCode.codeString)
+                                            codigos << codigo.nombre
+                                        }
+                                    
                                 }else{
                                     codigo = element[k].value.value
                                     codigos << codigo
@@ -351,6 +357,8 @@ class ReportesController {
             desde =  d
             java.util.Date h =  sdf.parse(params.hasta.toString())
             hasta =  h
+        }else{
+            redirect(controller:'reportes', action:'index')
         }
         
         def j = 0 //loop
@@ -505,6 +513,8 @@ class ReportesController {
             desde =  d
             java.util.Date h =  sdf.parse(params.hasta.toString())
             hasta =  h
+        }else{
+            redirect(controller:'reportes', action:'index')
         }
         
         def j = 0 //loop
