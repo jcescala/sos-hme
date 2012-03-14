@@ -27,7 +27,9 @@ class LocalDemographicAccess extends DemographicAccess {
         // Devolver todos los ids de esas personas
         
         // OBS: si la base no tiene buena calidad puedo obtener varias personas.
-        
+
+		Person.executeQuery("select e.primer from Person e where e.nacionalidad = ?","Bolivia")
+		
         return []
     }
     
@@ -206,7 +208,8 @@ class LocalDemographicAccess extends DemographicAccess {
                  if (id)
                  {
                     ids {
-                       eq('value', id.root+'::'+id.extension) // si no hago busqueda exacta con ids que uno es substring del otro me tira a las 2 personas, el id, si existe deberia tirar una sola.
+                       //'in'("value", )
+					   eq('value', id.root+'::'+id.extension) // si no hago busqueda exacta con ids que uno es substring del otro me tira a las 2 personas, el id, si existe deberia tirar una sola.
                     }
                  }
                  if (names.size()>0)
