@@ -1260,29 +1260,29 @@ class DemographicController{
 				if(existPatient){
 						
 						codmsj="2"
-						render          "<input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>"+
-                                                                "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+						render  "<input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>"+
+                                "<p><label for='primerApellido'>"+m1+"</label>"+
                                                                 
-								"<input type='text' name='primerApellido' id='primerApellido' value=''>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value=''></p>"+
 
-								"<label for='segundoApellido'>"+m2+"</label>"+
-								"<input type='text' name='segundoApellido' id='segundoApellido' value=''>"+
+								"<p><label for='segundoApellido'>"+m2+"</label>"+
+								"<input type='text' name='segundoApellido' id='segundoApellido' value=''></p>"+
 
-								"<label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value=''>"+
+								"<p><label for='primerNombre'>"+m3+"</label>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value=''></p>"+
 
-								"<label for='segundoNombre'>"+m4+"</label>"+
-								"<input type='text' name='segundoNombre' id='segundoNombre' value=''>"+
-								"<label for='fechaNacimiento'>"+m5+"</label>"+
+								"<p><label for='segundoNombre'>"+m4+"</label>"+
+								"<input type='text' name='segundoNombre' id='segundoNombre' value=''></p>"+
+								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br />"+
-								"<label for='sexo'>"+m6+"</label>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br /></p>"+
+								"<p><label for='sexo'>"+m6+"</label>"+
 								"<select name='sexo' class='selectci' id='sexo' >"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' >Masculino</option>"+
-								"<option value='Femenino' >Femenino</option></select>"+
-								"<label for='foto'>"+m7+"</label>"+
-								"<input type='text' name='foto' id='foto' style='width: 300px;'/></div>"+
+								"<option value='Femenino' >Femenino</option></select></p>"+
+								"<p><label for='foto'>"+m7+"</label>"+
+								"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
@@ -1329,28 +1329,28 @@ class DemographicController{
 							selectFemenino = "selected"
 						}
 						codmsj="3"
-						render          "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
-                                                                "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+						render  "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+                                "<p><label for='primerApellido'>"+m1+"</label>"+
                                                                 
 								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"'>"+
 
-								"<label for='segundoApellido'>"+m2+"</label>"+
+								"<p><label for='segundoApellido'>"+m2+"</label>"+
 								"<input type='text' name='segundoApellido' id='segundoApellido' value='"+datos.get("dos")+"'>"+
 
-								"<label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value='"+datos.get("tres")+"'>"+
+								"<p><label for='primerNombre'>"+m3+"</label>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='"+datos.get("tres")+"'></p>"+
 
-								"<label for='segundoNombre'>"+m4+"</label>"+
-								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+datos.get("cuatro")+"'>"+
-								"<label for='fechaNacimiento'>"+m5+"</label>"+
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento'  value='"+datos.get("cinco")+"' />  <br /><br />"+
-								"<label for='sexo'>"+m6+"</label>"+
+								"<p><label for='segundoNombre'>"+m4+"</label>"+
+								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+datos.get("cuatro")+"'></p>"+
+								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento'  value='"+datos.get("cinco")+"' />  <br /><br /></p>"+
+								"<p><label for='sexo'>"+m6+"</label>"+
 								"<select name='sexo' class='selectci' id='sexo' >"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' "+selectMasculino+">Masculino</option>"+
-								"<option value='Femenino' "+selectFemenino+">Femenino</option></select>"+
-								"<label for='foto'>"+m7+"</label>"+
-								"<input type='text' name='foto' id='foto' style='width: 300px;'/></div>"+
+								"<option value='Femenino' "+selectFemenino+">Femenino</option></select></p>"+
+								"<p><label for='foto'>"+m7+"</label>"+
+								"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
@@ -1368,28 +1368,28 @@ class DemographicController{
 							selectFemenino = "selected"
 						}
 						
-						render          "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
-                                                                "</select>"+"<label for='primerApellido'>"+m1+"</label>"+
+						render  "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+                                "<p><label for='primerApellido'>"+m1+"</label>"+
                                                                     
-								"<input type='text' name='primerApellido' id='primerApellido' value="+primerApellido+">"+
-								"<label for='segundoApellido'>"+m2+"</label>"+
-								"<input type='text' name='segundoApellido' id='segundoApellido' value="+segundoApellido+">"+
+								"<input type='text' name='primerApellido' id='primerApellido' value="+primerApellido+"></p>"+
+								"<p><label for='segundoApellido'>"+m2+"</label>"+
+								"<input type='text' name='segundoApellido' id='segundoApellido' value="+segundoApellido+"></p>"+
 
-								"<label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value="+primerNombre+">"+
+								"<p><label for='primerNombre'>"+m3+"</label>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value="+primerNombre+"></p>"+
 
-								"<label for='segundoNombre'>"+m4+"</label>"+
-								"<input type='text' name='segundoNombre' id='segundoNombre' value="+segundoNombre+">"+
-								"<label for='fechaNacimiento'>"+m5+"</label>"+
+								"<p><label for='segundoNombre'>"+m4+"</label>"+
+								"<input type='text' name='segundoNombre' id='segundoNombre' value="+segundoNombre+"></p>"+
+								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='"+fechaNacimiento+"' />  <br /><br />"+
-								"<label for='sexo'>"+m6+"</label>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='"+fechaNacimiento+"' />  <br /><br /></p>"+
+								"<p><label for='sexo'>"+m6+"</label>"+
 								"<select name='sexo' class='selectci' id='sexo' >"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' "+selectMasculino+">Masculino</option>"+
-								"<option value='Femenino' "+selectFemenino+">Femenino</option></select>"+
-								"<label for='foto'>"+m7+"</label>"+
-								"<input type='text' name='foto' id='foto' style='width: 300px;'/></div>"+
+								"<option value='Femenino' "+selectFemenino+">Femenino</option></select></p>"+
+								"<p><label for='foto'>"+m7+"</label>"+
+								"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
@@ -1404,34 +1404,34 @@ class DemographicController{
 			}catch(ArrayIndexOutOfBoundsException e){
 				println "estoy en el catch"
 				
-				render 	"</select>"+"<label for='primerApellido'>"+m1+"</label>"+
-						"<input type='text' name='primerApellido' value=''>"+
+				render 	"<p><label for='primerApellido'>"+m1+"</label>"+
+						"<input type='text' name='primerApellido' value=''></p>"+
 
-						"<label for='segundoApellido'>"+m2+"</label>"+
-						"<input type='text' name='segundoApellido' value=''>"+
+						"<p><label for='segundoApellido'>"+m2+"</label>"+
+						"<input type='text' name='segundoApellido' value=''></p>"+
 
-						"<label for='primerNombre'>"+m3+"</label>"+
-						"<input type='text' name='primerNombre' value=''>"+
+						"<p><label for='primerNombre'>"+m3+"</label>"+
+						"<input type='text' name='primerNombre' value=''></p>"+
 
-						"<label for='segundoNombre'>"+m4+"</label>"+
-						"<input type='text' name='segundoNombre' value=''>"+
+						"<p><label for='segundoNombre'>"+m4+"</label>"+
+						"<input type='text' name='segundoNombre' value=''></p>"+
 
-						"<label for='fechaNacimiento'>"+m5+"</label>"+
+						"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-						"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br />"+
-						"<label for='sexo'>"+m6+"</label>"+
+						"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br /></p>"+
+						"<p><label for='sexo'>"+m6+"</label>"+
 						"<select name='sexo' class='selectci' id='sexo' >"+
 						"<option value=''>Seleccione</option>"+
 						"<option value='Masculino' >Masculino</option>"+
-						"<option value='Femenino' >Femenino</option></select>"+
-						"<label for='foto'>"+m7+"</label>"+
-						"<input type='text' name='foto' id='foto' style='width: 300px;'/></div>"+
+						"<option value='Femenino' >Femenino</option></select></p>"+
+						"<p><label for='foto'>"+m7+"</label>"+
+						"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
 						"<script>jQuery(document).ready(function(){"+
 						"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 						"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
 						"jQuery('#mensaje').html('&nbsp;');"+
 						"});</script>"+
-                                                "<input type='hidden' id='identificadorUnico' value='novalido'/>"
+                        "<input type='hidden' id='identificadorUnico' value='novalido'/>"
 			}
 	}
 	
