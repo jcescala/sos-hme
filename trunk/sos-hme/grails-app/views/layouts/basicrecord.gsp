@@ -1,3 +1,4 @@
+<%@ page import="hce.core.common.directory.Folder" %>
 <html>
   <g:set var="startmsec" value="${System.currentTimeMillis()}"/>
   <head>
@@ -6,7 +7,7 @@
     <META Http-Equiv="Expires" Content="0"> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><g:layoutTitle default="grails" /></title>
-    <link rel="stylesheet" href="${resource(dir:'css',file:'estilos.css')}" />
+    <link rel="stylesheet" href="${resource(dir:'css',file:'estilo.css')}" />
     <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
     <g:layoutHead />
     <g:javascript library="jquery" />
@@ -54,33 +55,68 @@
 
     </head>
   <body class="bodybasic">
-    <div id="headerbasic" class="headerbasic">
-      <div id="logo" class="logobasic"></div>
-      <div id="ucvbasic" class="ucvbasic"></div>
-      <div id="sessionbasic" class="sessionbasic">
-        <g:datosUsuario userId="${session.traumaContext.userId}" /> | <g:link controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link>
-      </div>
+     <div id="cabecera">
+	<div id="cabColI">
+    	<div id="logo">
+        	<h1><img src="${createLinkTo(dir:'images' ,file:'SOS.gif')}" alt="SOS" width="97" height="53" align="texttop" />Historias Médicas</h1>
+        </div>
+        <div id="breadcrumbs">
+        	<g:link controller="domain" action="list" class="contextoEhr"><g:message code="domain.action.list" /></g:link>
+                <g:set var="folder" value="${Folder.findByPath(session.traumaContext.domainPath)}" />
+                ${folder.name.value}
+
+        </div>
+        
     </div>
-    <div id="menubar" class="menubar">
-        <ul>
-          <!--li><a href="../domain/list">Dominios</a></li-->
-          <li><g:link controller="domain" action="list">Dominios</g:link></li>
-          <li><g:link controller="records" action="index">Registros</g:link></li>
-          <li><g:link controller="demographic" action="admisionPaciente">Admisión</g:link></li>
-        <li><g:link controller="reportes" action="index" class="find"><g:message code="reportes.link.title" /></g:link></li>
-        </ul>
-      </div>
-    <div id="barrabasic" class="barrabasic"></div>
+    <div id="cabColD">
+   	  <div id="infoSec"><g:formatDate date="${new Date()}" formatName="default.date.format.text" /> &nbsp; | &nbsp; Cambiar idioma
+          <g:langSelector>
+            <g:if test="${(session.locale.getLanguage()!=it)}">
+
+            <a href="?sessionLang=${it}&templateId=${params.templateId}" class="contextoEhr"><img src="${createLinkTo(dir:'images' ,file:'ico_'+it+'.jpg')}" alt="${message(code:'common.lang.'+it)}" width="25" height="34" hspace="2" border="0" align="absmiddle" /></a>
+            </g:if>
+          </g:langSelector>
+
+          </div>
+        <div id="infoLogin">
+        <g:datosUsuario userId="${session.traumaContext.userId}" /> &nbsp; | &nbsp;
+
+        <g:link controller="authorization" action="logout" class="contextoEhr"><g:message code="authorization.action.logout" /></g:link>
+        </div>
+
+    </div>
+</div>
+
+
+
+  <div id="menu1">
+  <ul>
+    <li>
+       <g:link controller="records" action="list" class="selected"><g:message code="records.action.list" /></g:link>
+    </li>
+    <li>
+      <g:link controller="demographic" action="admisionPaciente"><g:message code="demographic.action.admisionPaciente" /></g:link>
+    </li>
+
+    <li>
+       <g:link controller="reportes"><g:message code="reportes.Reportes"/></g:link>
+    </li>
+  </ul>
+</div>
+
+
+
+   
     
-    <div id="contenidobasic" class="contenidobasic">
       <g:layoutBody />
-    </div>
-   <%--
-    <div id="footerbasic" class="footercontenido">
+    
+
+
+   <div id="footer" class="footercontenido">
       Centro de An&aacute;lisis de Im&aacute;genes Biom&eacute;dicas Computarizadas CAIBCO - Insituto de Medicina Tropical </br>
       Facultad de Medicina. Universiad Central de Venezuela </br>
       Tel&eacute;fonos: (0212) 605.37.46 / 35.94 </br>
-      sostelemedicina&#64;ucv.ve
-    </div>--%>
+      <a href="mailto:sostelemedicina&#64;ucv.ve">sostelemedicina&#64;ucv.ve
+    </a></div>
   </body>
 </html>

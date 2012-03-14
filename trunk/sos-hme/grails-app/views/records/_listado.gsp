@@ -3,7 +3,7 @@
 <%@ page import="hce.core.composition.Composition" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="hce.HceService" %>
-    <table id="listrecords" class="listrecords">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" id="listrecords" class="tabla1">
       <tr>
         <th class="threcords"><g:message code="trauma.list.label.id" /></th>
         <th class="threcords"><g:message code="registro.paciente" /></th>
@@ -35,7 +35,7 @@
             <g:message code="${g.stateForComposition(episodeId:composition.id).toString()}" />
           </td>
           <td>
-            <g:link action="show" id="${composition.id}"><g:message code="trauma.list.action.show" /></g:link>
+            <g:link action="show" id="${composition.id}" class="boton2"><g:message code="trauma.list.action.show" /></g:link>
             <br />
               <g:if test="${(g.stateForComposition(episodeId:composition.id) == Version.STATE_SIGNED)}">
                 <g:set var="version" value="${Version.findByData(composition)}"/>

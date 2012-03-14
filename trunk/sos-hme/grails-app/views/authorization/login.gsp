@@ -6,8 +6,8 @@
     <meta name="layout" content="login" />
     <title><g:message code="auth.login.title" /></title>
     <g:javascript library="prototype/prototype" />
-    <!--link rel="stylesheet" href="${createLinkTo(dir:'css', file:'ehr.css')}" /-->
-    <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'estilos.css')}" />
+   
+    <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'estilo.css')}" />
    <script type="text/javascript">
 function replaceT(obj){
   var newO=document.createElement('input');
@@ -19,9 +19,9 @@ function replaceT(obj){
 }
 </script>
   </head>
-  <body>
+ <body class="login_fondo">
     
-    <div id="outer" class="outerlogin">
+<%--    <div id="outer" class="outerlogin">
        <ul class="langBar">
           <g:langSelector>
             <li ${(session.locale.getLanguage()==it)?'class="active"':''}>
@@ -32,49 +32,42 @@ function replaceT(obj){
           </g:langSelector>
         </ul>
       <br />
-     
-        <div id="ingreseimage" class="ingreseimage"></div>
-        <div id="formwrap">
+</div>
+--%>
+<div id="cabLogin">
+      <h1><img src="${createLinkTo(dir:'images',file:'sos_login.png')}" alt="SOS" width="163" height="95" align="absmiddle" />Historias Médicas</h1>
+</div>
+<div id="formLogin">
+<h2>Ingrese a SOS </h2>
+       
           <g:form url="[action:'login']" method="post" id="form1">
-            <div class="errorlogin">
+            <div class="error">
             <g:if test="${flash.message}">
               <div class="error"><g:message code="${flash.message}" /></div>
             </g:if>
-            </div> 
+            </div>
+
             <div id="userlogin" class="userlogin">
-              <!--g:textField name="user" id="user" value="Usuario" class="userlogin"/-->
+             
               <input type="text" id="user" name="user" class="userlogin" value="${message(code:'auth.login.label.userid')}" onmousedown="javascript:this.value='';"/>
             </div>
+
             <div id="passlogin" class="userlogin">
+
               <input name="pass" type="text" value="${message(code:'auth.login.label.password')}" class="userlogin" onfocus="replaceT(this)"/>
+
             </div>
+
+
             <div id="ingresarboton" class="ingresarboton">
               <input type="submit" name="doit" id="doit" value="${message(code:'auth.login.action.signin')}" class="buttonlogin"/>
             </div>
             
-            <!--table>
-              <tr>
-                <th><g:message code="auth.login.label.userid" /></th>
-                <td><input type="text" id="user" name="user" size="24" /></td>
-              </tr>
-              <tr>
-                <th><g:message code="auth.login.label.password" /></th>
-                <td><input type="password" name="pass" size="24" /></td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>
-                  <input type="submit" name="doit" value="${message(code:'auth.login.action.signin')}" />
-                </td>
-              </tr>
-            </table-->
-            <%-- TODO: recordar clave
-            <div align="center">
-              <g:link action="forgotPassword"><g:message code="auth.login.action.forgotPass" /></g:link>
-            </div>
-            --%>
+            
           </g:form>
-        </div>
+        
       </div>
+    
+    
   </body>
 </html>

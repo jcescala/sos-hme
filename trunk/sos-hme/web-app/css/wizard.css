@@ -1,17 +1,25 @@
-body { font-family:Lucida Sans, Arial, Helvetica, Sans-Serif; font-size:13px; margin:20px;}
-        #main { width:960px; margin: 0px auto; border:solid 1px #b2b3b5; -moz-border-radius:10px; padding:20px; background-color:#f6f6f6;}
-        #header { text-align:center; border-bottom:solid 1px #b2b3b5; margin: 0 0 20px 0; }
-        fieldset { border:none; width:400px;}
-        legend { font-size:18px; margin:0px; padding:10px 0px; color:#15334f; font-weight:bold;}
-        label { display:block; margin:15px 0 5px;}
-        input[type=text], input[type=password] { width:300px; padding:5px; border:solid 1px #000; 	color:#ecb421; border-color:#ecb421; font-weight:bold;}
-        .prev, .next { background-color:#15334f; padding:5px 10px; color:#fff; text-decoration:none; margin-top:15px;}
+		legend {	color:#eab423;
+					font-size:16px;
+					margin-bottom:20px;
+					font-weight:bold;}
+        fieldset { border:none;}
+        input[type=text], input[type=password] {}
+        .prev, .next { background-color:#7c91a6; padding:5px 10px; color:#fff; text-decoration:none; margin-top:15px;}
         .prev:hover, .next:hover { background-color:#000; text-decoration:none;}
-        .prev { float:left;}
-        .next { float:right; margin-right:100px;}
-        #steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px; margin-left:120px;}
-        #steps li {font-size:24px; float:left; padding:10px; color:#b0b1b3;}
-        #steps li span {font-size:11px; display:block;}
-        #steps li.current { color:#000;}
+        .prev { float:left; background:#7c91a6 url(../images/ico_anterior.png) no-repeat left; padding-left:35px;}
+        .next { float:right; margin-right:100px; background:#7c91a6 url(../images/ico_siguiente.png) no-repeat right; padding-right:35px;}
+        #steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px; margin-top:20px; margin-bottom:25px;}
+        #steps li {
+				display:block;
+				width:145px;
+				float:left;
+				height:65px;
+				background:url(../images/wizard_pasos.gif) no-repeat;
+				background-position:-290px 45px;
+				color:#f5c645;
+				font-weight:bold;
+			}
+        #steps li span { display:block; color:#afafae;}
+        #steps li.current { color:#324b64; background-position:-145px 45px;}
         #makeWizard { background-color:#b0232a; color:#fff; padding:5px 10px; text-decoration:none; font-size:18px;}
         #makeWizard:hover { background-color:#000;}
