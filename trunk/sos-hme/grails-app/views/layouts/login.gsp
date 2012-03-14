@@ -1,6 +1,6 @@
 <html>
   <head>
-    
+     <title><g:message code="auth.login.welcome"/></title>
     <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
     <g:layoutHead />
     <g:javascript library="application" />
@@ -19,7 +19,7 @@
       Centro de An&aacute;lisis de Im&aacute;genes Biom&eacute;dicas Computarizadas CAIBCO - Insituto de Medicina Tropical </br>
       Facultad de Medicina. Universiad Central de Venezuela </br>
       Tel&eacute;fonos: (0212) 605.37.46 / 35.94 </br>
-      <a href="mailto:sostelemedicina@ucv.ve">sostelemedicina&#64;ucv.ve
+      <a href="mailto:sostelemedicina&#64ucv.ve">sostelemedicina&#64;ucv.ve
     </a></div>
 
   </body>

@@ -6,7 +6,7 @@
     <META Http-Equiv="Pragma" Content="no-cache">
     <META Http-Equiv="Expires" Content="0"> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><g:layoutTitle default="grails" /></title>
+    <title><g:message code="auth.login.welcome"/></title>
     <link rel="stylesheet" href="${resource(dir:'css',file:'estilo.css')}" />
     <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
     <g:layoutHead />
@@ -89,20 +89,7 @@
 
 
 
-  <div id="menu1">
-  <ul>
-    <li>
-       <g:link controller="records" action="list" class="selected"><g:message code="records.action.list" /></g:link>
-    </li>
-    <li>
-      <g:link controller="demographic" action="admisionPaciente"><g:message code="demographic.action.admisionPaciente" /></g:link>
-    </li>
-
-    <li>
-       <g:link controller="reportes"><g:message code="reportes.Reportes"/></g:link>
-    </li>
-  </ul>
-</div>
+ 
 
 
 

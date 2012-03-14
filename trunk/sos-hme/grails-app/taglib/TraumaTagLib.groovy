@@ -26,13 +26,30 @@ class TraumaTagLib {
 
         def persona = hceService.getPatientFromComposition(attrs['param1'])
         if(persona){
-        def name= persona.identities.find{ it.purpose == 'PersonNamePatient'}
-       
-        out << "<a href='demographic/show/"+ persona.id +"'>"
-        out << (name?.primerNombre?:"") + " "+ (name?.segundoNombre?:"") +" "+ (name?.primerApellido?:"") + " "+(name?.segundoApellido?:"")
-        out << "</a>"
+            def name= persona.identities.find{ it.purpose == 'PersonNamePatient'}
+
+            if(!name || !name.foto || !name.tipofoto){
+
+                if(persona.sexo=='Masculino'){
+
+                    out << "<img src='${createLinkTo(dir:"images", file:"man.png")}' style='width: 30px; height: auto;' /> "
+                }else{
+
+
+                    out << "<img src='${createLinkTo(dir:"images", file:"woman.png")}' style='width: 30px; height: auto;'  /> "
+                }
+            }else{
+    
+                out << "<img src='${createLink(controller:"demographic", action: "fotopaciente", params:[persona:persona.id])}' style='width: 30px; height: auto;'/> "
+            }
+        
+
+            out << "<a href='demographic/show/"+ persona.id +"'>"
+            out << (name?.primerNombre?:"") + " "+ (name?.segundoNombre?:"") +" "+ (name?.primerApellido?:"") + " "+(name?.segundoApellido?:"")
+            out << "</a>"
         }else{
-        out << message(code:'records.list.paciente.false')
+            out << "<img src='${createLinkTo(dir:"images", file:"siluetaPersona.png")}' style='width: 30px; height: auto;' /> "
+            out << message(code:'records.list.paciente.false')
 
 
         }
@@ -79,16 +96,16 @@ class TraumaTagLib {
         //-----------------------------------------------------------------------
         //-----------------------------------------------------------------------
 
-       out << "<table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-       out << "<tr>"
-       out << "<td width='15%' valign='top'><h2>"+message(code:'trauma.label.resumenEpisodio')+"</h2></td>"
-       out << "<td width='30%' valign='top'> <span class='negritas'>"+message(code:'trauma.list.label.startTime')+": </span>"+g.formatDate( date: composition.context.startTime?.toDate(), formatName: 'default.date.format.text' )+" <br />"
-       out << "<span class='negritas'>"+message(code:'trauma.list.label.endTime') +": </span>"+g.formatDate( date: composition.context.endTime?.toDate(),formatName: 'default.date.format.text' )+"</td>"
-       out << "<td valign='top'><p>"+message(code:'trauma.list.label.observations')+":</p>"
-       out << "<p class='info'>"+composition.context.otherContext.item.value.value+"</p></td>"
+        out << "<table width='100%' border='0' cellspacing='0' cellpadding='0'>"
+        out << "<tr>"
+        out << "<td width='15%' valign='top'><h2>"+message(code:'trauma.label.resumenEpisodio')+"</h2></td>"
+        out << "<td width='30%' valign='top'> <span class='negritas'>"+message(code:'trauma.list.label.startTime')+": </span>"+g.formatDate( date: composition.context.startTime?.toDate(), formatName: 'default.date.format.text' )+" <br />"
+        out << "<span class='negritas'>"+message(code:'trauma.list.label.endTime') +": </span>"+g.formatDate( date: composition.context.endTime?.toDate(),formatName: 'default.date.format.text' )+"</td>"
+        out << "<td valign='top'><p>"+message(code:'trauma.list.label.observations')+":</p>"
+        out << "<p class='info'>"+composition.context.otherContext.item.value.value+"</p></td>"
        
-       out  << "</tr>"
-       out  << "<tr>"
+        out  << "</tr>"
+        out  << "<tr>"
 
         
         // RESPONSABLE
@@ -98,10 +115,10 @@ class TraumaTagLib {
             def persons = demographicService.findPersonUserById( composition.composer.externalRef.objectId )
             
 			
-			def responsable
+            def responsable
             if (persons.size() == 0)
             {
-				println "nadaa!!!"
+                println "nadaa!!!"
                 // no hago nada, no se encuentra el responsable, aca hay un error de consistencia de datos en el sistema!
             }
             else if (persons.size() == 1)
@@ -149,7 +166,7 @@ class TraumaTagLib {
         out << '</div>' // resumen_episodio
 
        
-       out << "</table>"
+        out << "</table>"
     }
     
     

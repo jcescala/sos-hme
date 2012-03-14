@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><g:layoutTitle default="grails" /></title>
+    <title><g:message code="auth.login.welcome"/></title>
     <link rel="stylesheet" href="${resource(dir:'css',file:'estilos.css')}" />
     <link rel="stylesheet" href="${resource(dir:'css',file:'estilo.css')}" />
     <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />

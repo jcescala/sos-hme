@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title><g:layoutTitle default="Grails" /></title>
+        <title><g:message code="auth.login.welcome"/></title>
         <style>
         .logo {
           padding: 5px;

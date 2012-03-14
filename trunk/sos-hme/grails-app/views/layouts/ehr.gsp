@@ -17,9 +17,9 @@
       window.history.go(1);
     </g:javascript>
    --%>
-    <title><g:layoutTitle/> | <g:message code="hce.nombre" /> | v${ApplicationHolder.application.metadata['app.version']}</title>
-
-
+   <%-- <title><g:layoutTitle/> | <g:message code="hce.nombre" /> | v${ApplicationHolder.application.metadata['app.version']}</title>
+   --%>
+ <title><g:message code="auth.login.welcome"/></title>
    
    <link rel="stylesheet" href="${createLinkTo(dir:'css' ,file:'estilo.css')}" />
 
@@ -357,7 +357,7 @@
       <h2><g:message code="trauma.title.informacionPaciente" /></h2>
       </g:link>
       <g:render template="../demographic/Person" model="[person:patient]" />
-      <div class="verMas"><a href="#" class="contextoEhr"><g:message code="records.show.completarDatos" /></a></div>
+      <div class="verMas"><g:link controller="demographic" action="edit" id="${patient.id}" class="contextoEhr"><g:message code="records.show.completarDatos" /></g:link></div>
 
     </g:if>
     <g:else>

@@ -182,16 +182,20 @@
   </head>
   <body>
     <div id="menu1">
-      <ul>
-        <li><g:link controller="records" action="list">Episodios</a></g:link></li>
-        <li><g:link controller="demographic" action="admisionPaciente">Admisión</a></g:link></li>
-        <li><g:link controller="records" action="list">Buscar Episodios</a></g:link></li>
-        <li><g:link controller="demographic" action="admisionPaciente">Buscar Pacientes</a></g:link></li>
-        <li><g:link controller="records" action="create">Nuevo Episodio</a></g:link></li>
-        <li><g:link controller="reportes" action="index">Reportes</a></g:link></li>
-      </ul>
-    </div>
-    
+  <ul>
+    <li>
+      <a href="#" class="selected contextoEhr"><g:message code="demographic.show.paciente" /></a>
+    </li>
+    <li>
+    <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
+    </li>
+    <li>
+    <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
+    </li>
+
+    <li><g:link controller="reportes" action="index" class="contextoEhr"><g:message code="reportes.Reportes"/></a></g:link></li>
+  </ul>
+</div>
      <div id="nivel1">   
    <div id="nivel2">
     <div id="contenido"> 
@@ -204,7 +208,12 @@
     </g:if>
     
     <g:form action="edit" id="${patient.id}" name="nuevopaciente" class="form1">
-      
+       <g:hiddenField name="x1" value="0" />
+        <g:hiddenField name="y1" value="0" />
+        <g:hiddenField name="x2" value="100" />
+        <g:hiddenField name="y2" value="100" />
+
+        
       <fieldset>
         <legend> Identificaci&oacute;n</legend>
       
@@ -259,8 +268,13 @@
       <label for="foto"><g:message code="persona.foto" /></label>
       <input type="text" name="foto" id="foto"/>  
       </p>
-        
-      </fieldset>  
+       <div id="imgPrevia" style="margin-left:310px;">
+        <g:if test="${pn.foto}">
+        <img src="${createLink(controller:"demographic", action: 'fotopaciente', params:[persona:patient.id])}" width="122" height="124" alt="Nombre Paciente" />
+        </g:if>
+      </div>
+      
+        </fieldset>
         
         
        <fieldset>

@@ -71,7 +71,7 @@
       });
     </g:javascript>
     
-    <title><g:layoutTitle/> | HCE SOS Telemedicina | v${ApplicationHolder.application.metadata['app.version']}</title>
+     <title><g:message code="auth.login.welcome"/></title>
     <%--
     <link rel="stylesheet" href="${createLinkTo(dir:'css', file:'ehr.css')}" />
     --%>

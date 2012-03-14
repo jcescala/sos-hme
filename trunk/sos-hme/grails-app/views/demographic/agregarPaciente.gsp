@@ -193,16 +193,21 @@
   
   <body>
     
-    <div id="menu1">
-      <ul>
-        <li><g:link controller="records" action="list">Episodios</a></g:link></li>
-        <li><g:link controller="demographic" action="admisionPaciente">Admisión</a></g:link></li>
-        <li><g:link controller="records" action="list">Buscar Episodios</a></g:link></li>
-        <li><g:link controller="demographic" action="admisionPaciente">Buscar Pacientes</a></g:link></li>
-        <li><g:link controller="records" action="create">Nuevo Episodio</a></g:link></li>
-        <li><g:link controller="reportes" action="index">Reportes</a></g:link></li>
-      </ul>
-    </div>
+      <div id="menu1">
+  <ul>
+    <li>
+      <a href="#" class="selected contextoEhr"><g:message code="demographic.show.paciente" /></a>
+    </li>
+    <li>
+    <g:link controller="records" action="list" class="contextoEhr"><g:message code="records.action.list" /></g:link>
+    </li>
+    <li>
+    <g:link controller="demographic" action="admisionPaciente" class="contextoEhr"><g:message code="demographic.action.admisionPaciente" /></g:link>
+    </li>
+
+    <li><g:link controller="reportes" action="index" class="contextoEhr"><g:message code="reportes.Reportes"/></a></g:link></li>
+  </ul>
+</div>
     
  <div id="nivel1">   
    <div id="nivel2">

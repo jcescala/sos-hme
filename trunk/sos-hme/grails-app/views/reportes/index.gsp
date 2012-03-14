@@ -6,7 +6,26 @@
   </head>
 
   <body>
+
+    <div id="menu1">
+      <ul>
+        <li>
+        <g:link controller="records" action="list" ><g:message code="records.action.list" /></g:link>
+        </li>
+        <li>
+        <g:link controller="demographic" action="admisionPaciente" ><g:message code="demographic.action.admisionPaciente" /></g:link>
+        </li>
+
+        <li>
+        <g:link controller="reportes" class="selected"><g:message code="reportes.Reportes"/></g:link>
+        </li>
+      </ul>
+    </div>
+
+
     <div id="nivel1">
+      <div id="menu2">
+      </div>
       <div id="nivel2">
         <div id="contenido">
 
