@@ -188,7 +188,8 @@ class ReportesController {
             java.util.Date d =  sdf.parse(params.desde.toString())
             inicio =  d
             java.util.Date h =  sdf.parse(params.hasta.toString())
-            fin =  h
+            java.util.Date dayAfter = new java.util.Date(h.getTime()+(24*60*60*1000));
+            fin =  dayAfter
         }
         else{
             flash.message = "Los rangos de fecha deben seleccionarse"
@@ -298,7 +299,7 @@ class ReportesController {
                             generarReporte = true
                             def k=0 // variable de ciclo, usada en caso de que la composition tenga varios diagnósticos
                             def codigos = []
-                            codigo << "Sin Diagnóstico"
+                            codigos << "Sin Diagnóstico"
                             def agregarNodoXml =  demographicService.crearXmlEPI10Gen(nombreDoc,
                                                                                       patient.ids.value[0].extension,
                                                                                       patient.identities.primerNombre[0]+" "+patient.identities.segundoNombre[0]+" "+patient.identities.primerApellido[0],
@@ -357,7 +358,8 @@ class ReportesController {
             java.util.Date d =  sdf.parse(params.desde.toString())
             desde =  d
             java.util.Date h =  sdf.parse(params.hasta.toString())
-            hasta =  h
+            java.util.Date dayAfter = new java.util.Date(h.getTime()+(24*60*60*1000));
+            hasta =  dayAfter
         }else{
             flash.message = "Los rangos de fecha deben seleccionarse"
             redirect(controller:'reportes', action:'index')
@@ -514,7 +516,8 @@ class ReportesController {
             java.util.Date d =  sdf.parse(params.desde.toString())
             desde =  d
             java.util.Date h =  sdf.parse(params.hasta.toString())
-            hasta =  h
+            java.util.Date dayAfter = new java.util.Date(h.getTime()+(24*60*60*1000));
+            hasta =  dayAfter
         }else{
             flash.message = "Los rangos de fecha deben seleccionarse"
             redirect(controller:'reportes', action:'index')
