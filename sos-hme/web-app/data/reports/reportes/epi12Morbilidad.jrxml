@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi12Morbilidad" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="1981"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="1468"/>
+	<property name="ireport.y" value="247"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<queryString language="xPath">
 		<![CDATA[/pacientes]]>
@@ -22834,7 +22834,9 @@ Integer.parseInt($F{T60_edadignorada_M})]]></textFieldExpression>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="25" height="9"/>
+					<reportElement x="0" y="0" width="25" height="9">
+						<printWhenExpression><![CDATA[$F{R50_edadignorada_M}.compareTo( "0" )==1]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{R50_edadignorada_M}]]></textFieldExpression>
 				</textField>
@@ -23264,7 +23266,9 @@ Integer.parseInt($F{R50_edadignorada_M})]]></textFieldExpression>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="25" height="9"/>
+					<reportElement x="0" y="0" width="25" height="9">
+						<printWhenExpression><![CDATA[$F{J00-J06yJ20-J22_edadignorada_M}.compareTo( "0" )==1]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{J00-J06yJ20-J22_edadignorada_M}]]></textFieldExpression>
 				</textField>

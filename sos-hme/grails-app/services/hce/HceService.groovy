@@ -856,11 +856,24 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
     public List<Composition>  getAllCompositionForDate(Date desde, Date hasta)
     {      
             // Busca el contexto con la participacion del partySelf que no tenga fecha de fin (el espisodio esta activo)
-            def contexts = EventContext.withCriteria {
-               startTime{
+            def contexts 
+            println("desde"+desde)
+            if(desde==hasta){ // se puede dar el caso que solo quiera las compositions de un solo dia
+                contexts = EventContext.withCriteria {
+                startTime{
+                   ge("value", desde.format("yyyy-MM-dd"))
+                    }
+                }
+            }else{
+                contexts = EventContext.withCriteria {
+                startTime{
                    between("value", desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd") )
-               }
+                    }
+                }
             }
+            
+            
+            println("contexts.size"+contexts.size)
 
             if (contexts.size>0)
             {
