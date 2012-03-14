@@ -182,6 +182,7 @@ class LocalDemographicAccess extends DemographicAccess {
         if (n)
         {
            names = PersonName.withCriteria {
+             or{
              if (n.primerNombre)
                like('primerNombre','%'+n.primerNombre+'%')
              if (n.segundoNombre)
@@ -190,6 +191,7 @@ class LocalDemographicAccess extends DemographicAccess {
                like('primerApellido','%'+n.primerApellido+'%')
              if (n.segundoApellido)
                like('segundoApellido','%'+n.segundoApellido+'%')
+             }
            }
         }
         
@@ -198,7 +200,9 @@ class LocalDemographicAccess extends DemographicAccess {
            def result_roles = Role.withCriteria {
 
               eq('type', roleType)
-              performer { // FIXME: deberia ser person si no no va a tener todos los atributos
+              performer {
+                 or{
+                    // FIXME: deberia ser person si no no va a tener todos los atributos
                  if (id)
                  {
                     ids {
@@ -218,6 +222,7 @@ class LocalDemographicAccess extends DemographicAccess {
                  if (bithdate) eq('fechaNacimiento', bithdate)
                  if (sex) eq('sexo', sex)
               }
+            }
            }
            
            result = result_roles.performer

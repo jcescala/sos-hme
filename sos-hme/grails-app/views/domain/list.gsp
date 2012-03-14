@@ -5,29 +5,35 @@
     <title>Domain list</title>
   </head>
   <body>
-    <%--
-    <div class="nav">
-      <g:link action="unloadAll">Unload all</g:link>
-    </div>
-    --%>
-    <div class="bodydomainlist">
-      <div id="listadominios" class="listadominios">
-        ${message(code:'domain.list.label.listadoDominios')}
-      </div>
-      
+
+
+    <div id="nivel1">
+      <div id="nivel2">
       <g:if test="${flash.message}">
         <div class="message"><g:message code="${flash.message}"/></div>
       </g:if>
-      <div class="list">
+
+      <div class="bodydomainlist">
+        <div id="listaDominio">
+         
+        
+          <ul>
         <g:each in="${folders}" status="i" var="folder">
-          <div class="domainfolder">
+          <li>
+         
             <g:link action="selectDomain" params="[path: folder.path]">
-              <img src="${createLinkTo(dir: 'images', file: 'folder.png')}" /><br/>
-              ${folder.name.value}
+              <img src="${createLinkTo(dir: 'images', file: folder.path +'.gif')}" width="142" height="101" />
+                ${folder.name.value}
             </g:link>
-          </div>
+      
+          </li>
         </g:each>
+            
+          </ul>
+       </div>
+
       </div>
+        </div>
     </div>
   </body>
 </html>

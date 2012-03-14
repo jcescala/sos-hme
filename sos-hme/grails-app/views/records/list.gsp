@@ -11,26 +11,35 @@
   <body>
      <div class="bodydomainlist">
      
-    <div id="listadominios" class="listadominios">
-        <g:message code="episodio.list.title" />
-    </div>
+   
+   
+   
   <g:if test="${flash.message}">
     <div style="color:red; align:right;">
       <g:message code="${flash.message}" />
     </div>
   </g:if>
     
-    <div id="menubar2" class="menubar2">
-      <ul>
+    
+
+
+ <div id="nivel1">
+
+
+   <div id="menu2">
+ <ul>
         <li>
           <g:link action="create" class="create"><g:message code="trauma.list.action.crearEpisodio" /></g:link>
         </li>
-       
-       
-        
-      </ul>
-    </div>  
 
+
+
+      </ul>
+   </div>
+  <div id="nivel2">
+
+    <div id="contenido">
+      <h1>     <g:message code="episodio.list.title" /></h1>
 
     <%-- BUSQUEDA REGISTROS--%>
     <div id="registroInterno">
@@ -66,7 +75,7 @@
          
 
         </select>
-        <g:submitButton name="doit" value="${message(code:'buscar.filtro')}" />
+        <g:submitButton class="boton1" name="doit" value="${message(code:'buscar.filtro')}" />
 
 
       </g:formRemote>
@@ -84,8 +93,8 @@
 
     </div>
 
-
-
-
+    </div>
+</div>
+</div>
   </body>
 </html>
