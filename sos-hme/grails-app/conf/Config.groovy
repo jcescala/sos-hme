@@ -234,9 +234,9 @@ log4j = {
 
 	development {
 		appenders {
-				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos2/dev/logs/errorLog.log'
+				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLog.log'
 				//file name:'errorAppenderService', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLogService.log'
-				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos2/dev/logs/infoLog.log'
+				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos/dev/logs/infoLog.log'
 				//rollingFile name: "StackTrace", maxFileSize: 1024, file: "/sos/dev/logs/myApp-stacktrace.log"
 		}
 	}
