@@ -117,9 +117,15 @@
         </tr>
       </g:if>
       <g:else>
+		<g:set var="ids" value="${idss}" />	
 	      <g:each in="${candidatos}" var="persona">
 	        <tr>
-	          <td><g:render template="UIDBasedID" collection="${persona.ids}" var="id" /></td>
+				<g:if test="${idss.size()!=0}">
+					<td><g:render template="UIDBasedID" collection="${ids}" var="id"/></td>
+				</g:if>
+				<g:else>
+					<td><g:render template="UIDBasedID" collection="${persona.ids}" var="id"/></td>
+				</g:else>
 	          <g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
 	          <td>${name?.primerNombre} ${name?.segundoNombre} ${name?.primerApellido} ${name?.segundoApellido}</td>
 	          
