@@ -867,7 +867,9 @@ class HceService implements serviceinterfaces.HceServiceInterface  {
             }else{
                 contexts = EventContext.withCriteria {
                 startTime{
-                   between("value", desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd") )
+                   //between("value", desde.format("yyyy-MM-dd"),hasta.format("yyyy-MM-dd") )
+                   ge("value",desde.format("yyyy-MM-dd"))
+                   lt("value",hasta.format("yyyy-MM-dd"))
                     }
                 }
             }
