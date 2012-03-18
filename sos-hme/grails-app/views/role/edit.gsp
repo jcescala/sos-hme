@@ -46,7 +46,14 @@
                                   <g:hiddenField name="performer.id" value="${personid}" />
                                 </g:else>--%>
                             </tr>
-							
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="status"><g:message code="role.status.label" default="status" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'status', 'errors')}">
+                                    <g:checkBox name="status"  value="${roleInstance?.status}"  />
+                                </td>
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="timeValidityFrom"><g:message code="role.timeValidityFrom.label" default="Time Validity From" />:</label>
@@ -126,11 +133,11 @@
                                     <label for="type"><g:message code="role.type.label" default="Type" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
-                                    <g:select name="type" from="${demographic.role.Role.getRoleCodes()}" multiple="No" size="4" value="type" />
+                                    <g:select name="type" from="${demographic.role.Role.getRoleCodes()}" multiple="No" size="4" value="${roleInstance?.type}" />
                                 </td>
-                                <!--<td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
+                                <%--<td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'type', 'errors')}">
                                     <g:textField name="type" value="${roleInstance?.type}" />
-                                </td>-->
+                                </td>--%>
                             </tr>
                         
                         </tbody>

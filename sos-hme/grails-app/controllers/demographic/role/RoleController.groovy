@@ -1,6 +1,29 @@
 package demographic.role
 import demographic.party.Person
+import util.FormatLog
+
+/**
+ * @author Angel Rodriguez (angel.rodriguez.leon@gmail.com)
+ */
+
 class RoleController {
+
+
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -48,9 +71,13 @@ class RoleController {
 
     def save = {
         def roleInstance = new Role(params)
-        if (roleInstance.save(flush: true)) {
+        def type = roleInstance.type
+		def person = roleInstance.performer
+		
+		if (roleInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'role.label', default: 'Role'), roleInstance.id])}"
-            redirect(action: "show", id: roleInstance.id)
+            logged("Role "+type+" actualizado correctamente para: "+person+" ","info", session.traumaContext.userId)
+			redirect(action: "show", id: roleInstance.id)
         }
         else {
             render(view: "create", model: [roleInstance: roleInstance])
@@ -81,6 +108,9 @@ class RoleController {
 
     def update = {
         def roleInstance = Role.get(params.id)
+        def persona = roleInstance.performer
+		def type = roleInstance.type
+		
         if (roleInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -96,7 +126,9 @@ class RoleController {
             roleInstance.properties = params
             if (!roleInstance.hasErrors() && roleInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'role.label', default: 'Role'), roleInstance.id])}"
-                redirect(action: "show", id: roleInstance.id)
+                
+				logged("Role "+type+" actualizado correctamente para: "+persona+" ","info", session.traumaContext.userId)
+				redirect(action: "show", id: roleInstance.id)
             }
             else {
                 render(view: "edit", model: [roleInstance: roleInstance])
@@ -110,11 +142,14 @@ class RoleController {
 
     def delete = {
         def roleInstance = Role.get(params.id)
-        if (roleInstance) {
+        def persona = roleInstance.performer
+		def type = roleInstance.type
+		if (roleInstance) {
             try {
                 roleInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
-                redirect(action: "list")
+                logged("Role "+type+" eliminado correctamente para: "+persona+" ","info", session.traumaContext.userId)
+				redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
