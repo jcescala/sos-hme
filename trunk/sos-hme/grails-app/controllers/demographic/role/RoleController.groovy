@@ -76,11 +76,18 @@ class RoleController {
 		
 		if (roleInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'role.label', default: 'Role'), roleInstance.id])}"
-            logged("Role "+type+" actualizado correctamente para: "+person+" ","info", session.traumaContext.userId)
+            logged("Role "+type+" creado correctamente para: "+person+" ","info", session.traumaContext.userId)
 			redirect(action: "show", id: roleInstance.id)
         }
         else {
-            render(view: "create", model: [roleInstance: roleInstance])
+			def personUsers = Person.withCriteria{
+				identities{
+					eq("purpose", "PersonNameUser")
+				}
+			}
+		
+		
+            render(view: "create", model: [roleInstance: roleInstance, personUsers: personUsers])
         }
     }
 

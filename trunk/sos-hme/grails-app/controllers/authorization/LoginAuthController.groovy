@@ -3,7 +3,29 @@ import java.util.regex.Matcher /*para uso de expresiones regulares*/
 import java.util.regex.Pattern
 import demographic.DemographicService
 import demographic.party.Person
+
+import util.FormatLog
+/*
+ *@author Angel Rodriguez Leon
+ */
+ 
 class LoginAuthController {
+
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
 
 	def demographicService
 	
@@ -49,9 +71,12 @@ class LoginAuthController {
 				 
 				if (loginAuthInstance.save(flush: true)) {
 					flash.message = "${message(code: 'default.created.message')}"
+					
+					logged("loginAuth creado correctamente, loginAuthId: "+loginAuthInstance.id+" ", "info", session.traumaContext.userId)
 					redirect(action: "show", id: loginAuthInstance.id)
 				}
 				else {
+					logged("loginAuth error al crear, loginAuthId: "+loginAuthInstance.error+" ", "error", session.traumaContext.userId)
 					render(view: "create", model: [loginAuthInstance: loginAuthInstance, personUsers: personUsers])
 				}
 			}else{
@@ -122,7 +147,8 @@ class LoginAuthController {
                     if (!loginAuthInstance.hasErrors() && loginAuthInstance.save(flush: true)) {
                         
 						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), loginAuthInstance.id])}"
-                        redirect(action: "show", id: loginAuthInstance.id)
+                        logged("loginAuth clave actualizada correctamente, LoginAuth: "+loginAuthInstance.id+" ", "info", session.traumaContext.userId)
+						redirect(action: "show", id: loginAuthInstance.id)
                     }else {
 
                         render(view: "edit", model: [loginAuthInstance: loginAuthInstance])
@@ -152,11 +178,14 @@ class LoginAuthController {
         if (loginAuthInstance) {
             try {
                 loginAuthInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
+                logged("loginAuth Eliminado correctamente, loginAuthId: "+loginAuthInstance.id+" ", "info", session.traumaContext.userId)
+				flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
+                
+				logged("loginAuth eliminado de forma inesperada tambi: "+lifing, "error", )
+				flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
         }
