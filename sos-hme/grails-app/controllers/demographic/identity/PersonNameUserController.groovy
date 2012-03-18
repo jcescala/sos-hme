@@ -1,6 +1,27 @@
 package demographic.identity
+import util.FormatLog
 
+/*
+ *@author Angel Rodriguez Leon
+ */
+ 
 class PersonNameUserController {
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
+
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
+	
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -23,7 +44,9 @@ class PersonNameUserController {
         def personNameUserInstance = new PersonNameUser(params)
         if (personNameUserInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'personNameUser.label', default: 'PersonNameUser'), personNameUserInstance.id])}"
-            redirect(action: "show", id: personNameUserInstance.id)
+			logged("PersonNameUser creado correctamente, personNameUserId: "+personNameUserInstance.id+" ", "info", session.traumaContext.userId)
+			redirect(action: "show", id: personNameUserInstance.id)
+
         }
         else {
             render(view: "create", model: [personNameUserInstance: personNameUserInstance])
@@ -67,7 +90,8 @@ class PersonNameUserController {
             personNameUserInstance.properties = params
             if (!personNameUserInstance.hasErrors() && personNameUserInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'personNameUser.label', default: 'PersonNameUser'), personNameUserInstance.id])}"
-                redirect(action: "show", id: personNameUserInstance.id)
+				logged("PersonNameUser actualizado correctamente, personNameUserId: "+personNameUserInstance.id+" ", "info", session.traumaContext.userId)
+				redirect(action: "show", id: personNameUserInstance.id)
             }
             else {
                 render(view: "edit", model: [personNameUserInstance: personNameUserInstance])
@@ -85,16 +109,19 @@ class PersonNameUserController {
             try {
                 personNameUserInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'personNameUser.label', default: 'PersonNameUser'), params.id])}"
-                redirect(action: "list")
+                logged("PersonNameUser eliminado correctamente, personNameUserId: "+personNameUserInstance.id+" ", "info", session.traumaContext.userId)
+				redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'personNameUser.label', default: 'PersonNameUser'), params.id])}"
-                redirect(action: "show", id: params.id)
+                logged("PersonNameUser error al persistir en la BD", "error", session.traumaContext.userId)
+				redirect(action: "show", id: params.id)
             }
         }
         else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'personNameUser.label', default: 'PersonNameUser'), params.id])}"
-            redirect(action: "list")
+            logged("Identificador invalido para PersonNameUser", "error", session.traumaContext.userId)
+			redirect(action: "list")
         }
     }
 }

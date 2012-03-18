@@ -5,10 +5,28 @@ import tablasMaestras.TipoIdentificador
 import demographic.role.Role
 import util.RandomGenerator
 import demographic.identity.*
+import util.FormatLog
+/*
+ *@author Angel Rodriguez Leon
+ */
 
 class PersonController {
 
+    /*
+     *@author Angel Rodriguez Leon
+     *
+     *Funcion que genera entradas en log correspondiente al nivel que se le pase por parametro.
+	 *error o info
+     * */ 
+	private void logged(String message, String level, userId){
 
+		def bla = new FormatLog()
+		
+		if(level.equals("info"))
+			log.info(bla.createFormat(message, "long",userId))
+		if(level == "error")
+			log.error(bla.createFormat(message, "long",userId))
+	}
 
 	//private List getSubsections( String section )
 
@@ -137,10 +155,10 @@ class PersonController {
 	
     def save = {
 	
-	
+		
 
 		if (params.create){	
-
+			def tiposIds = TipoIdentificador.list()
 		    def id = null
             if (params.root == TipoIdentificador.AUTOGENERADO)
             {
@@ -169,7 +187,7 @@ class PersonController {
                     {
                         println "Ya existe!"
                         flash.message = "Ya existe la persona con id: " + id.value + ", verifique el id ingresado o vuelva a buscar la persona"
-                        def tiposIds = TipoIdentificador.list()
+                        //
                         render(view: "create", model: [tiposIds: tiposIds])
 						return
                     }
@@ -180,8 +198,10 @@ class PersonController {
                 {
 					println "identificador obligatorio!!"
                     // Vuelve a la pagina
+					
+					//i18n
                     flash.message = "identificador obligatorio, si no lo tiene seleccione 'Autogenerado' en el tipo de identificador"
-                    def tiposIds = TipoIdentificador.list()
+
                     //return [tiposIds: tiposIds]
 					render(view: "create", model: [tiposIds: tiposIds])
 					return
@@ -194,6 +214,15 @@ class PersonController {
 			
 			def personInstance = new Person( params ) // sexo, fechaNac (no mas)
             
+			if(!personInstance.identities){
+				
+				flash.message = "se debe indicar una identidad para la persona"
+				render(view: "create", model: [personInstance: personInstance, tiposIds: tiposIds])
+				return
+			}
+			
+			
+			
             def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
             personInstance.setFechaNacimiento( bd )
 
@@ -227,10 +256,11 @@ class PersonController {
 			
 			if (personInstance.save(flush: true)) {
 				flash.message = "${message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"
+				logged("Person creado correctamente, personId: "+personInstance.id+" ", "info", session.traumaContext.userId)
 				redirect(action: "show", id: personInstance.id)
 			}
 			else {
-				render(view: "create", model: [personInstance: personInstance])
+				render(view: "create", model: [personInstance: personInstance,tiposIds: tiposIds])
 			}
 		
 		
@@ -379,7 +409,8 @@ class PersonController {
             if (!personInstance.hasErrors() && personInstance.save(flush: true)) {
 
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"
-                redirect(action: "show", id: personInstance.id)
+                logged("Person actualizado correctamente, personId: "+personInstance.id+" ", "info", session.traumaContext.userId)
+				redirect(action: "show", id: personInstance.id)
 
 
             }
@@ -417,7 +448,8 @@ class PersonController {
                // rol.delete(flush: true)
                 personInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'person.label', default: 'Person'), params.id])}"
-                redirect(action: "list")
+                logged("Person eliminado correctamente, personId: "+personInstance.id+" ", "info", session.traumaContext.userId)
+				redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'person.label', default: 'Person'), params.id])}"
