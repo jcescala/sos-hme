@@ -33,19 +33,19 @@ import hce.core.common.directory.Folder
 				mssg = mssg + ", " + LoginAuth.get(userId).user
 					
 				if(format.equals("short")){
-					println format+"==short"
+					//println format+"==short"
 					return mssg + " }"
 				}
 				mssg = mssg + ", " + LoginAuth.get(userId).person
 				
 				if(format.equals("mide")){
-					println format+"==mide"
+					//println format+"==mide"
 					return mssg + " }"
 				}
 				mssg = mssg + ", " + LoginAuth.get(userId).person.roles.type
 					
 				if(format.equals("long")){
-					println format+"==long"				
+					//println format+"==long"				
 					return mssg + " }"
 				}
 

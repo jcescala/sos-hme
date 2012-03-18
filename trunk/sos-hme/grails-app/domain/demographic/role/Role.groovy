@@ -28,14 +28,16 @@ class Role extends Party {
     // Intervalo de validez del rol: en el modelo de OpenEHR es un Interval<DvDate>
     Date timeValidityFrom
     Date timeValidityTo
-    
+    boolean status
+	
     // Actor que tiene este rol asignado
     Actor performer
     
     static hasMany = [capabilities:Capability]
 
     static constraints = {
-        timeValidityTo(nullable:true)
+        //timeValidityTo(nullable:true)// hay que quitar esto para que no de error.
+		status(nullable:false)
     }
 
 

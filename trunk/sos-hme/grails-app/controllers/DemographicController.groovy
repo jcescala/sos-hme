@@ -798,7 +798,7 @@ class DemographicController{
             
             
             if(person.save()){
-                def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
+                def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person, timeValidityTo: new Date())
                 if(role.save()){
                     
 					logged("Paciente creado correctamente patientId: "+person.id+" ","info",session.traumaContext.userId)
@@ -806,7 +806,7 @@ class DemographicController{
                 }
                 else{
                     logged("Error creando role al paciente ","error",session.traumaContext.userId)
-					logged(role.errors,"error",session.traumaContext.userId)
+					logged(" "+role.errors,"error",session.traumaContext.userId)
 					println role.errors 
                 }
             }else{

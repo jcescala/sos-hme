@@ -10,7 +10,7 @@ import cda.*
 import imp.*
 import util.*
 
-
+import hce.core.support.identification.UIDBasedID
 import hce.core.common.directory.Folder
 import hce.core.support.identification.ObjectID
 import hce.core.support.identification.ObjectRef
@@ -334,7 +334,18 @@ class RecordsController {
 
 
 	}
-    
+def preCreate = {
+
+	def ids=[]
+
+	def id = UIDBasedID.create(params.root,params.extension)
+	
+	ids[0] = id
+	println "ids"+ ids
+	redirect( action: 'create', params: [ids: ids])
+
+
+}
     
 // Pantalla 3.2- Crear Episodio
 // Puede venir un patientId si creo el episodio para un paciente desde admision.
@@ -368,6 +379,7 @@ def create = {
         //        deberia estar en HCESession.
         if (params.root && params.extension) // si viene el id del paciente
         {
+			def id = UIDBasedID.create(params.root,params.extension)
             println "Se crea un episodio para el paciente seleccionado"
             def partySelf = hceService.createPatientPartysSelf(params.root, params.extension)
             def participation = hceService.createParticipationToPerformer( partySelf )

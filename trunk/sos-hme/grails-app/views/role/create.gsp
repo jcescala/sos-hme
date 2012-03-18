@@ -43,7 +43,14 @@
                                   <g:hiddenField name="performer.id" value="${personid}" />
                                 </g:else>
                             </tr>
-
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="status"><g:message code="role.status.label" default="status" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'status', 'errors')}">
+                                    <g:checkBox name="status"  value="${true}"  />
+                                </td>
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="timeValidityFrom"><g:message code="role.timeValidityFrom.label" default="Time Validity From" /></label>

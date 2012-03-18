@@ -154,7 +154,7 @@ def customSecureServiceClientImpFactory
         paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::6677') )
         paciente.addToIdentities( new PersonNameUser(primerNombre:'Pedro', primerApellido:'Perez') )
         paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
-        paciente.type = "Persona" // FIXME: el type no se setea solo con el nombre de la clase? (Person)
+        paciente.type = "Person" // FIXME: el type no se setea solo con el nombre de la clase? (Person)
         paciente.sexo = "Masculino"
         if (!paciente.save()) println paciente.errors
         
@@ -165,7 +165,7 @@ def customSecureServiceClientImpFactory
         pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::3366') )
         pac2.addToIdentities( new PersonNameUser(primerNombre:'Luis', primerApellido:'Lopez') )
         pac2.fechaNacimiento = new Date(82, 10, 25)
-        pac2.type = "Persona"
+        pac2.type = "Person"
         pac2.sexo = "Masculino"
         if (!pac2.save()) println pac2.errors
         
@@ -176,7 +176,7 @@ def customSecureServiceClientImpFactory
         persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::444') )
         persona3.addToIdentities( new PersonNameUser(primerNombre:'Mata', primerApellido:'Lozano') )
         persona3.fechaNacimiento = new Date(83, 11, 26)
-        persona3.type = "Persona"
+        persona3.type = "Person"
         persona3.sexo = "Femenino"
         if (!persona3.save()) println persona3.errors
         
@@ -185,7 +185,7 @@ def customSecureServiceClientImpFactory
         persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::44556') )
         persona4.addToIdentities( new PersonNameUser(primerNombre:'Carlos', primerApellido:'Cardozo') )
         persona4.fechaNacimiento = new Date(85, 9, 24) // 24/10/1981
-        persona4.type = "Persona"
+        persona4.type = "Person"
         persona4.sexo = "Masculino"
         if (!persona4.save()) println persona4.errors
         
@@ -194,7 +194,7 @@ def customSecureServiceClientImpFactory
         persona5.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::2233445') )
         persona5.addToIdentities( new PersonNameUser(primerNombre:'Marcos', primerApellido:'Carisma') )
         persona5.fechaNacimiento = new Date(80, 11, 26)
-        persona5.type = "Persona"
+        persona5.type = "Person"
         persona5.sexo = "Masculino"
         if (!persona5.save()) println persona5.errors
         
@@ -212,30 +212,30 @@ def customSecureServiceClientImpFactory
         if (!persona_administrativo.save()) println persona_administrativo.errors
         
         // ROLES
-        def role1 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:paciente)
+        def role1 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:paciente, status: '1')
         if (!role1.save()) println role1.errors
             
-        def role2 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:pac2)
+        def role2 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:pac2, status: '1')
         if (!role2.save()) println role2.errors
             
-        def role3 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:persona4)
+        def role3 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:persona4, status: '1')
         if (!role3.save()) println role3.errors
             
-        def role4 = new Role(timeValidityFrom:new Date(), type:Role.PACIENTE, performer:persona5)
+        def role4 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:persona5, status: '1')
         if (!role4.save()) println role4.errors
             
 
         
         // Medico
-        def role6 = new Role(timeValidityFrom:new Date(), type:Role.MEDICO, performer:persona3)
+        def role6 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.MEDICO, performer:persona3, status: '1')
         if (!role6.save()) println role6.errors
 
         // Administrativo
-        def role_adm = new Role(timeValidityFrom:new Date(), type:Role.ADMINISTRATIVO, performer:persona_administrativo)
+        def role_adm = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.ADMINISTRATIVO, performer:persona_administrativo, status: '1')
         if (!role_adm.save()) println role_adm.errors
 		
 		// Admin
-        def role_sudo = new Role(timeValidityFrom:new Date(), type:Role.ADMIN, performer:persona6)
+        def role_sudo = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.ADMIN, performer:persona6, status: '1')
         if (!role_sudo.save()) println role_sudo.errors
         
         

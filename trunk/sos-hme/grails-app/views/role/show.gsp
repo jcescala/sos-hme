@@ -32,6 +32,12 @@
 
                         </tr>
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="role.status.label" default="status" /></td>
+                            
+                            <td valign="top" class="value"><g:checkBox name="status" value="${roleInstance?.status}" /></td>
+                            
+                        </tr>
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.timeValidityFrom.label" default="Time Validity From" /></td>
                             
                             <td valign="top" class="value"><g:formatDate date="${roleInstance?.timeValidityFrom}" /></td>
