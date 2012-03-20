@@ -154,8 +154,6 @@
                 params:'\'id=\' + estado')}
           }
           function updateMunicipiosReside(estado){
-            var selectparroquia = document.getElementById("parroresid");
-            
             ${remoteFunction( 
                 controller:'demographic', 
                 action:'ajaxGetMunicipios', 
@@ -423,7 +421,7 @@
         </p>          
         <p>
           <label for="municipioresidencia"><g:message code="persona.municipioreside"/></label>
-          <g:select name="municresid" class="selectci" value="${municipio.id}" from="${municipios}" optionKey="id" optionValue="nombre" onchange="updateParroquiaReside(this.value)"/>
+          <g:select name="municresid" class="selectci" value="${municipio.id}" from="${municipios}" optionKey="id" optionValue="nombre" onclick="updateParroquiaReside(this.value)"/>
         </p>
         <p>
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>
@@ -437,7 +435,7 @@
           
           <p>
           <label for="urbreside"><g:message code="persona.urbreside"/></label>
-		  <g:textField name="urbasector" class="selectci" value="${pn.urbasector}" />
+	   <g:textField name="urbasector" class="selectci" value="${pn.urbasector}" />
            </p>
            <p>
           <label for="avenireside"><g:message code="persona.avenireside"/></label>

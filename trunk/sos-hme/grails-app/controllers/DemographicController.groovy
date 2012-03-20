@@ -1472,7 +1472,8 @@ class DemographicController{
                     eq('id',params.id.toLong())
                 }
             }
-            render list.collect{ """<option value="${it.id}">${it.nombre}</option>""" }
+                render list.collect{ """<option value="${it.id}">${it.nombre}</option>""" }
+                //render {"""<option value=''>Seleccione</option>"""}
         }
         else{
             def list = Lugar.findByNombreLike("Venezuela")

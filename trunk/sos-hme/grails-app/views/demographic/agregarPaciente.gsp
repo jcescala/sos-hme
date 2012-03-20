@@ -354,7 +354,7 @@
           </p>   
           <p>
           <label for="municipioresidencia"><g:message code="persona.municipioreside"/></label>
-          <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onchange="updateParroquiaReside(this.value)"/>
+          <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onclick="updateParroquiaReside(this.value)"/>
           </p>	  
           <p>
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>

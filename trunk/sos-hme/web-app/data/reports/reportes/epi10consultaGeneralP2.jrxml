@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epi10consultaGeneralP2" language="groovy" pageWidth="938" pageHeight="615" orientation="Landscape" columnWidth="910" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="156"/>
-	<property name="ireport.y" value="189"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="2319"/>
+	<property name="ireport.y" value="637"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\juan\\Desktop\\sosDeve\\sos-hme\\web-app\\data\\reports\\reportes\\"]]></defaultValueExpression>
 	</parameter>
@@ -1155,9 +1155,9 @@ y Programas]]></text>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<textField>
-				<reportElement x="26" y="0" width="14" height="30"/>
+				<reportElement x="26" y="0" width="14" height="45"/>
 				<box>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
@@ -1167,7 +1167,7 @@ y Programas]]></text>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="40" y="0" width="14" height="30"/>
+				<reportElement x="40" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1176,7 +1176,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="54" y="0" width="13" height="30"/>
+				<reportElement x="54" y="0" width="13" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1185,7 +1185,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="67" y="0" width="13" height="30"/>
+				<reportElement x="67" y="0" width="13" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1194,7 +1194,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="0" width="14" height="30"/>
+				<reportElement x="80" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1203,7 +1203,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="94" y="0" width="14" height="30"/>
+				<reportElement x="94" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1212,7 +1212,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="108" y="0" width="14" height="30"/>
+				<reportElement x="108" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1221,7 +1221,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="122" y="0" width="14" height="30"/>
+				<reportElement x="122" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1230,7 +1230,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="136" y="0" width="14" height="30"/>
+				<reportElement x="136" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1239,7 +1239,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="0" width="14" height="30"/>
+				<reportElement x="150" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1248,7 +1248,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="164" y="0" width="14" height="30"/>
+				<reportElement x="164" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1257,7 +1257,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="178" y="0" width="14" height="30"/>
+				<reportElement x="178" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1266,7 +1266,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="192" y="0" width="14" height="30"/>
+				<reportElement x="192" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1275,7 +1275,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="206" y="0" width="18" height="30"/>
+				<reportElement x="206" y="0" width="18" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1284,7 +1284,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="224" y="0" width="18" height="30"/>
+				<reportElement x="224" y="0" width="18" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1293,7 +1293,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="242" y="0" width="18" height="30"/>
+				<reportElement x="242" y="0" width="18" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1302,7 +1302,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="260" y="0" width="18" height="30"/>
+				<reportElement x="260" y="0" width="18" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1311,7 +1311,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="278" y="0" width="14" height="30"/>
+				<reportElement x="278" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1320,7 +1320,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="292" y="0" width="14" height="30"/>
+				<reportElement x="292" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1329,7 +1329,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="306" y="0" width="14" height="30"/>
+				<reportElement x="306" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1338,7 +1338,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="320" y="0" width="14" height="30"/>
+				<reportElement x="320" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1347,7 +1347,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="334" y="0" width="14" height="30"/>
+				<reportElement x="334" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1356,7 +1356,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="348" y="0" width="14" height="30"/>
+				<reportElement x="348" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1365,7 +1365,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="0" width="12" height="30"/>
+				<reportElement x="362" y="0" width="12" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1374,7 +1374,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="374" y="0" width="12" height="30"/>
+				<reportElement x="374" y="0" width="12" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1383,7 +1383,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="386" y="0" width="12" height="30"/>
+				<reportElement x="386" y="0" width="12" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1392,7 +1392,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="398" y="0" width="256" height="30"/>
+				<reportElement x="398" y="0" width="256" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1401,7 +1401,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="654" y="0" width="122" height="30"/>
+				<reportElement x="654" y="0" width="122" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1410,7 +1410,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="776" y="0" width="14" height="30"/>
+				<reportElement x="776" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1419,7 +1419,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="790" y="0" width="14" height="30"/>
+				<reportElement x="790" y="0" width="14" height="45"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -1428,7 +1428,7 @@ y Programas]]></text>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="398" y="0" width="256" height="30"/>
+				<reportElement x="398" y="1" width="256" height="44"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>

@@ -53,9 +53,7 @@ def customSecureServiceClientImpFactory
         println "======= +++++++++ ======="
         println ""
         servletContext.conexionImp  = false //Se setea en falso el semaforo de conexion al IMP
-
-
-   /*
+  /*      
         // TEST Folder
         //def g = new org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib()
         def appContext = WebApplicationContextUtils.getWebApplicationContext( servletContext )
@@ -89,13 +87,8 @@ def customSecureServiceClientImpFactory
         }
         // /TEST Folder
         
-        // Correccion de reloj segun uso horario
-        // http://groovy.codehaus.org/JN0545-Dates
-        // Esto si lo corrige!!!!
-        //HORA DE CARACAS-VENEZUELA GMT-04:30
-*/
         TimeZone.'default'= TimeZone.getTimeZone('GMT-04:30') //set the default time zone
- /*
+ 
  
         println " - START: Carga tablas maestras"
         
@@ -147,84 +140,29 @@ def customSecureServiceClientImpFactory
        
         println " - Creacion de pacientes de prueba"
         
-        def paciente = new Person()
-        //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.2.1', value:'1234567') )
-        //paciente.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'6677') )
-        paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234567') )
-        paciente.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::6677') )
-        paciente.addToIdentities( new PersonNameUser(primerNombre:'Pedro', primerApellido:'Perez') )
-        paciente.fechaNacimiento = new Date(81, 9, 24) // 24/10/1981
-        paciente.type = "Person" // FIXME: el type no se setea solo con el nombre de la clase? (Person)
-        paciente.sexo = "Masculino"
-        if (!paciente.save()) println paciente.errors
         
-        def pac2 = new Person()
-        //pac2.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.2.4', value:'2345678') )
-        //pac2.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'3366') )
-        pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.4::2345678') )
-        pac2.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::3366') )
-        pac2.addToIdentities( new PersonNameUser(primerNombre:'Luis', primerApellido:'Lopez') )
-        pac2.fechaNacimiento = new Date(82, 10, 25)
-        pac2.type = "Person"
-        pac2.sexo = "Masculino"
-        if (!pac2.save()) println pac2.errors
         
         def persona3 = new Person()
-        //pac3.addToIds( new UIDBasedID(root:'2.16.840.1.113883.4.330.858', value:'6667778') )
-        //pac3.addToIds( new UIDBasedID(root:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1', value:'444') )
-        persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.858::6667778') )
-        persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::444') )
+        persona3.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1.1::44444444') )
         persona3.addToIdentities( new PersonNameUser(primerNombre:'Mata', primerApellido:'Lozano') )
         persona3.fechaNacimiento = new Date(83, 11, 26)
         persona3.type = "Person"
         persona3.sexo = "Femenino"
         if (!persona3.save()) println persona3.errors
         
-        def persona4 = new Person()
-        persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::1234888') )
-        persona4.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::44556') )
-        persona4.addToIdentities( new PersonNameUser(primerNombre:'Carlos', primerApellido:'Cardozo') )
-        persona4.fechaNacimiento = new Date(85, 9, 24) // 24/10/1981
-        persona4.type = "Person"
-        persona4.sexo = "Masculino"
-        if (!persona4.save()) println persona4.errors
-        
-        def persona5 = new Person()
-        persona5.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.858::45687543') )
-        persona5.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::2233445') )
-        persona5.addToIdentities( new PersonNameUser(primerNombre:'Marcos', primerApellido:'Carisma') )
-        persona5.fechaNacimiento = new Date(80, 11, 26)
-        persona5.type = "Person"
-        persona5.sexo = "Masculino"
-        if (!persona5.save()) println persona5.errors
-        
         // Paciente con estudios imagenologicos en el CCServer local
         def persona6 = new Person()
-        persona6.addToIds( new UIDBasedID(value:'2.16.840.1.113883.4.330.666::2178309') ) // id en el CCServer
+        persona6.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1.1::2178309') ) // id en el CCServer
         persona6.addToIdentities( new PersonNameUser(primerNombre:'CT', primerApellido:'Mister') )
         persona6.type = "Persona"        
         if (!persona6.save()) println persona6.errors
         
         def persona_administrativo = new Person()
-        persona_administrativo.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1::3334442') )
+        persona_administrativo.addToIds( new UIDBasedID(value:'2.16.840.1.113883.2.14.2.1.1::3334442') )
         persona_administrativo.addToIdentities( new PersonNameUser(primerNombre:'John', primerApellido:'Doe') )
         persona_administrativo.type = "Persona"        
         if (!persona_administrativo.save()) println persona_administrativo.errors
         
-        // ROLES
-        def role1 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:paciente, status: '1')
-        if (!role1.save()) println role1.errors
-            
-        def role2 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:pac2, status: '1')
-        if (!role2.save()) println role2.errors
-            
-        def role3 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:persona4, status: '1')
-        if (!role3.save()) println role3.errors
-            
-        def role4 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.PACIENTE, performer:persona5, status: '1')
-        if (!role4.save()) println role4.errors
-            
-
         
         // Medico
         def role6 = new Role(timeValidityFrom:new Date(), timeValidityTo:new Date()+100, type:Role.MEDICO, performer:persona3, status: '1')
@@ -258,46 +196,13 @@ def customSecureServiceClientImpFactory
         def login_sudo = new LoginAuth(user:'suuu', pass:pass3, person:persona6)
         if (!login_sudo.save())  println login_sudo.errors
         
-        // /Creacion de pacientes
-        
-        
-        /* saco episodio de prueba para no generar problemas...
-        
-        println " - Creacion de episodio de prueba"
-        
-        def composition = hceService.createComposition( '2010-01-08 01:23:32', 'El paciente ingresa con dolor en el tobillo' )
 
-        // Agrego el autor a la composición
-        //def arrayIds = persona3.ids.toArray()
-        //hceService.setCompositionComposer(composition, arrayIds[0].getRoot(), arrayIds[0].getExtension())
-
-        def uidAutor = new UIDBasedID(value:'2.16.840.1.113883.2.14.1.1.1.3.1.5.1::444')
-        hceService.setCompositionComposer(composition, uidAutor.getRoot(), uidAutor.getExtension())
-
-        if (!composition.save())
-        {
-            println "Error: " + composition.errors
-        }
         
-        // Crea la version inicial
-        def version = new Version(
-          data: composition,
-          timeCommited: new DvDateTime(
-            value: '2010-01-08 01:23:32'
-          )
-        )
         
-        if (!version.save())
-        {
-            println "ERROR: " + version.errors
-        }
         
-        // /Creacion de episodio
-    */
-
-        /*DATA INICIAL*/
+       // Data inicial
        
-    /*  
+     
         println " - Datos Iniciales Tablas Demograficas"
         
        
@@ -333,10 +238,10 @@ def customSecureServiceClientImpFactory
         String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
             sql.execute(it)
         }
-      */ 
-        /*FIN DATA INICIAL*/
+       
+      
 
-
+*/
  
 
       /*  Map<String, Object> inProps = [:]
