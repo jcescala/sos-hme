@@ -21,7 +21,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"687246301CB3D873312BE465E45611B5">
+		["MD5-CAM-1.0.1"] = <"508F13D5A3F176E465992324B19376AB">
 	>
 
 definition
@@ -37,26 +37,28 @@ definition
 										items cardinality matches {0..*; unordered} matches {
 											ELEMENT[at0008] occurrences matches {0..1} matches {	-- Apertura ocular
 												value matches {
-													1|[local::at0009], 	-- Nivel bajo
-													2|[local::at0010], 	-- Nivel medio bajo
-													3|[local::at0011], 	-- Nivel medio alto
-													4|[local::at0012]  	-- Nivel alto
+													1|[local::at0009], 	-- No responde
+													2|[local::at0010], 	-- Al dolor
+													3|[local::at0011], 	-- Estimulo verbal
+													4|[local::at0012]  	-- Espontánea
 												}
 											}
 											ELEMENT[at0013] occurrences matches {0..1} matches {	-- Respuesta verbal
 												value matches {
-													1|[local::at0015], 	-- Nivel bajo
-													2|[local::at0016], 	-- Nivel medio bajo
-													3|[local::at0017], 	-- Nivel medio alto
-													4|[local::at0018]  	-- Nivel alto
+													1|[local::at0015], 	-- No responde
+													2|[local::at0016], 	-- Sonidos incomprensibles
+													3|[local::at0017], 	-- Palabras inapropiadas
+													4|[local::at0018], 	-- Desorientado
+													5|[local::at0087]  	-- Orientado
 												}
 											}
 											ELEMENT[at0014] occurrences matches {0..1} matches {	-- Respuesta motora
 												value matches {
-													1|[local::at0019], 	-- Nivel bajo
-													2|[local::at0020], 	-- Nivel medio bajo
-													3|[local::at0021], 	-- Nivel medio alto
-													4|[local::at0022]  	-- Nivel alto
+													1|[local::at0019], 	-- No responde
+													2|[local::at0020], 	-- Respuesta en extensión
+													3|[local::at0021], 	-- Retira ante el estímulo doloroso
+													4|[local::at0022], 	-- Localiza el estímulo doloroso
+													5|[local::at0088]  	-- Cumple órdenes expresadas por voz
 												}
 											}
 										}
@@ -397,19 +399,19 @@ ontology
 					description = <"*">
 				>
 				["at0009"] = <
-					text = <"Nivel bajo">
+					text = <"No responde">
 					description = <"nivel bajo de apertura ocular">
 				>
 				["at0010"] = <
-					text = <"Nivel medio bajo">
+					text = <"Al dolor">
 					description = <"Nivel medio bajo de apertura ocular">
 				>
 				["at0011"] = <
-					text = <"Nivel medio alto">
+					text = <"Estimulo verbal">
 					description = <"Nivel medio alto de apertura ocular">
 				>
 				["at0012"] = <
-					text = <"Nivel alto">
+					text = <"Espontánea">
 					description = <"Nivel alto de apertura ocular">
 				>
 				["at0013"] = <
@@ -421,35 +423,35 @@ ontology
 					description = <"*">
 				>
 				["at0015"] = <
-					text = <"Nivel bajo">
+					text = <"No responde">
 					description = <"Nivel bajo de respuesta verbal">
 				>
 				["at0016"] = <
-					text = <"Nivel medio bajo">
+					text = <"Sonidos incomprensibles">
 					description = <"Nivel medio bajo de respuesta verbal">
 				>
 				["at0017"] = <
-					text = <"Nivel medio alto">
+					text = <"Palabras inapropiadas">
 					description = <"Nivel medio alto de respuesta verbal">
 				>
 				["at0018"] = <
-					text = <"Nivel alto">
+					text = <"Desorientado">
 					description = <"Nivel alto de respuesta verbal">
 				>
 				["at0019"] = <
-					text = <"Nivel bajo">
+					text = <"No responde">
 					description = <"Nivel bajo de respuesta motora">
 				>
 				["at0020"] = <
-					text = <"Nivel medio bajo">
+					text = <"Respuesta en extensión">
 					description = <"Nivel medio bajo de respuesta motora">
 				>
 				["at0021"] = <
-					text = <"Nivel medio alto">
+					text = <"Retira ante el estímulo doloroso">
 					description = <"Nivel medio alto de respuesta motora">
 				>
 				["at0022"] = <
-					text = <"Nivel alto">
+					text = <"Localiza el estímulo doloroso">
 					description = <"Nivel alto de respuesta motora">
 				>
 				["at0023"] = <
@@ -690,6 +692,14 @@ ontology
 				>
 				["at0085"] = <
 					text = <"Descripción">
+					description = <"*">
+				>
+				["at0087"] = <
+					text = <"Orientado">
+					description = <"*">
+				>
+				["at0088"] = <
+					text = <"Cumple órdenes expresadas por voz">
 					description = <"*">
 				>
 			>
