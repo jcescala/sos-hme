@@ -10,6 +10,7 @@ import cda.*
 import imp.*
 import util.*
 
+import tablasMaestras.TipoIdentificador
 import hce.core.support.identification.UIDBasedID
 import hce.core.common.directory.Folder
 import hce.core.support.identification.ObjectID
@@ -352,6 +353,19 @@ def preCreate = {
 def create = {
    
     println "Create: " + params
+    
+    def identificadores = TipoIdentificador.getTipos()
+    def sizeIden = identificadores.size()
+    def i
+    if(params.root && params.extension){
+        for (i=0 ; i < sizeIden ; i++){
+            if(identificadores[i].codigo == params.root){
+                params.nombreCorto = identificadores[i].nombreCorto
+            }
+        }
+    }    
+        
+        
     if (params.doit)
     {
         if(!params.startDate){
@@ -379,7 +393,7 @@ def create = {
         //        deberia estar en HCESession.
         if (params.root && params.extension) // si viene el id del paciente
         {
-			def id = UIDBasedID.create(params.root,params.extension)
+            //def id = UIDBasedID.create(params.root,params.extension)
             println "Se crea un episodio para el paciente seleccionado"
             def partySelf = hceService.createPatientPartysSelf(params.root, params.extension)
             def participation = hceService.createParticipationToPerformer( partySelf )
