@@ -88,7 +88,7 @@ $("#datepicker").click(function(){
 <%-- se crea el episodio para una persona seleccionada por admision --%>
             <g:if test="${params.root && params.extension}">
 			<%-- i18n --%>
-              Se crea episodio para la persona con identificador: ${params.root}::${params.extension}<br/>
+              Se crea episodio para la persona con identificador: ${params.nombreCorto} - ${params.extension}<br/>
               <%--<g:render template="UIDBasedID" collection="${ids}" var="id"/>--%>
 			  <input type="hidden" name="root" value="${params.root}" />
               <input type="hidden" name="extension" value="${params.extension}" />
