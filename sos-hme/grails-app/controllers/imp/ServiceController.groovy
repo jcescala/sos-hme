@@ -251,10 +251,137 @@ class ServiceController {
 
 
     }
-    def agregarPaciente = {
+/*    
+	def agregarPacienteAjax = {
 
         def person=   Person.get(params.id)
 
+        def personNamePatient = person.identities.find{
+            it.purpose == 'PersonNamePatient'
+        }
+
+        
+        if(personNamePatient){
+            //   def paciente = Paciente.get(params.id)
+            
+            //RECIBIR PARAMS DEL PACIENTE
+
+            def p = new PacienteArr()
+            p.setIdPaciente(params.id) //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
+
+            person.ids.each{
+                def codigo = TipoIdentificador.findByCodigo(it.root)
+                if((codigo.nombreCorto == "CI V")||(codigo.nombreCorto == "CI E")){
+                        p.setCedula(it.extension)
+                }
+                if(codigo.nombreCorto == "Pasaporte"){
+                        p.setPasaporte(it.extension)
+                }
+            }
+            
+            
+            p.setPrimerNombre(personNamePatient.getPrimerNombre())
+            p.setSegundoNombre(personNamePatient.getSegundoNombre())
+            p.setPrimerApellido(personNamePatient.getPrimerApellido())
+            p.setSegundoApellido(personNamePatient.getSegundoApellido())
+            p.setSexo(person.getSexo())
+            p.setFechaNacimiento(person.getFechaNacimiento().format("yyyy-MM-dd").toString())
+
+
+            
+
+
+            //ID 'token' asignado a la organizacion en el IMP
+            String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+            def result
+            def conexionImp = true
+            try{
+            result= customSecureServiceClientImp.agregarPaciente(p, idOrganizacion)
+            }catch(Exception e){
+                
+                //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
+                conexionImp = false
+                result = null
+                
+                
+            }
+            if(result){
+			
+				logged("Paciente agregado correctamente al IMP, patientId: "+params.id+" ", "info", session.traumaContext.userId)
+                //println personNamePatient.foto
+                //println personNamePatient.tipofoto
+
+              if(personNamePatient.foto && personNamePatient.tipofoto){
+                  def resultImagen= customSecureServiceClientImp.agregarImagenPaciente(personNamePatient.foto,
+                                                      personNamePatient.tipofoto,
+                                                      params.id,idOrganizacion)
+
+                   if(resultImagen){
+                   //Se agrega imagen
+				   logged("Foto del paciente agregada correctamente al IMP , patientId: "+params.id+" ", "info", session.traumaContext.userId)
+                   }else{
+                   //No se pudo agregar imagen
+
+                   }
+                   
+
+              }
+              flash.message = "service.imp.agregarPaciente.true"
+              flash.clase = "ok"
+            }else{
+                    flash.clase = "error"
+                    if(!conexionImp){
+                    flash.message = "service.imp.sinConexion"
+                    }else{
+                    flash.message = "service.imp.agregarPaciente.false"
+                    }
+            }
+            
+						render 	"<div class='close'><a href='#' class='simplemodal-close'>x</a></div>"+
+						"<div id='osx-modal-data'>"+
+						"<h2>Accesos valido</h2>"+
+						"<form action='/sos/demographic/impValidate' method='post'>"+
+							"<div id='userlogin' class='userlogin'>"+
+								"<input type='text' id='user' class='userlogin' value='Usuario' onfocus='focused(this)'/>"+
+							"</div>"+
+							"<div id='passlogin' class='userlogin'>"+
+								"<input id='pass' name='pass' type='text' value='Contrase&ntilde;a' class='userlogin' onfocus='replaceT(this)'/>"+
+							"</div>"+
+							"<div id='ingresarboton' class='ingresarboton'>"+
+								"<input type='submit' name='doit' id='doit' value='Ingresar' class='buttonlogin'/>"+
+								"<input type='button' value='ajax' class='buttonlogin' onclick='validImp(user.value, pass.value)'/>"+
+						"</div></form></div>"+
+						"<script>"+
+							"var bas = function(){ jQuery.modal.close(); };"+
+							"jQuery(document).ready(function() {"+
+								"jQuery.modal.close();"+
+						"});</script>"
+			
+			
+			//sleep(300)
+			return 0
+			
+            //redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
+
+        }else{
+			
+            render("<p>El paciente no existe</p>")
+
+        }
+    }
+*/
+
+    def agregarPaciente = {
+
+        def person = Person.get(params.id)
+		println "person: " + person
+		println "person: " + session.traumaContext.authTemp
+	
+	if(session.traumaContext.authTemp.equals("start")){
+
+	
+		session.traumaContext.authTemp = "stop"
         def personNamePatient = person.identities.find{
             it.purpose == 'PersonNamePatient'
         }
@@ -344,11 +471,18 @@ class ServiceController {
             render("<p>El paciente no existe</p>")
 
         }
+	}
     }
     def eliminarPaciente = {
-
-        def person=   Person.get(params.id)
-
+	
+	
+        def person = Person.get(params.id)
+		println "person: "+ person
+		println "person: " + session.traumaContext.authTemp
+		
+	if(session.traumaContext.authTemp.equals("start")){
+		
+		session.traumaContext.authTemp = "stop"
         if(person){
             def personNamePatient = person.identities.find{
                 it.purpose == 'PersonNamePatient'
@@ -388,7 +522,8 @@ class ServiceController {
                     flash.message = "service.imp.eliminarPaciente.false"
                     }
                 }
-
+				
+				
                 redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
             }else{
 
@@ -399,6 +534,8 @@ class ServiceController {
 
             render("<p>El Person no existe</p>")
         }
+		
+	}
 
     }
     def buscarPaciente = {
@@ -443,75 +580,82 @@ class ServiceController {
 
     }
     def agregarRelacionPaciente = {
-
+		println "params service: "+ params
         //ID 'token' asignado a la organizacion en el IMP
-        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+        
+		if(session.traumaContext.authTemp.equals("start")){
+			
+			session.traumaContext.authTemp = "stop"
+			String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+			
+			long idCentroImp= params.idCentroImp.toLong()
+			String idPacienteImp= params.idPacienteImp
+			String idPacienteOrg = params.idPacienteOrg
+			def result
+			def conexionImp = true
+			try{
+			result= customSecureServiceClientImp.agregarRelacionPaciente(idCentroImp,idPacienteImp,idPacienteOrg,idOrganizacion)
+			println "result: "+ result
+			}catch(Exception e){
+				
 
-        long idCentroImp= params.idCentroImp.toLong()
-        String idPacienteImp= params.idPacienteImp
-        String idPacienteOrg = params.idPacienteOrg
-        def result
-        def conexionImp = true
-        try{
-        result= customSecureServiceClientImp.agregarRelacionPaciente(idCentroImp,idPacienteImp,idPacienteOrg,idOrganizacion)
-        }catch(Exception e){
-            
+				 //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
+					
+					result = null
 
-             //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
-                
-                result = null
+			}
+			 if(result){
+						logged("Relacion agregada correctamente para paciente, patientId: "+idPacienteOrg+" ", "info", session.traumaContext.userId)
+						flash.message = "service.imp.agregarRelacionPaciente.true"
+						flash.clase = "ok"
+					   
 
-        }
-         if(result){
-					logged("Relacion agregada correctamente para paciente, patientId: "+idPacienteOrg+" ", "info", session.traumaContext.userId)
-                    flash.message = "service.imp.agregarRelacionPaciente.true"
-                    flash.clase = "ok"
-                   
+				   }else{
+						flash.clase = "error"
+						if(!conexionImp){
+						flash.message = "service.imp.sinConexion"
+						}else{
+						flash.message = "service.imp.agregarRelacionPaciente.false"
+						}
+					}
 
-               }else{
-                    flash.clase = "error"
-                    if(!conexionImp){
-                    flash.message = "service.imp.sinConexion"
-                    }else{
-                    flash.message = "service.imp.agregarRelacionPaciente.false"
-                    }
-                }
+					redirect(controller:'demographic', action: 'show', params: [id: params.idPacienteOrg, pestana: 'pestanaOpcionesImp'] )
 
-                redirect(controller:'demographic', action: 'show', params: [id: params.idPacienteOrg, pestana: 'pestanaOpcionesImp'] )
-
-
+		}
     }
     def eliminarRelacionPaciente = {
+		
+		if(session.traumaContext.authTemp.equals("start")){
+			session.traumaContext.authTemp="stop"
+			//ID 'token' asignado a la organizacion en el IMP
+			String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
 
-        //ID 'token' asignado a la organizacion en el IMP
-        String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+			def result
+			def conexionImp = true
+			try{
+			result= customSecureServiceClientImp.eliminarRelacionPaciente(params.id,idOrganizacion)
+			}catch(Exception e){
+				  //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
+					conexionImp = false
+					result = null
+				
+			}
+			  if(result){
+						flash.message = "service.imp.eliminarRelacionPaciente.true"
+						flash.clase = "ok"
+						logged("Relacion eliminada correctamente para paciente, patientId: "+params.id+" ", "info", session.traumaContext.userId)
+					}else{
+						flash.clase = "error"
+						if(!conexionImp){
+						flash.message = "service.imp.sinConexion"
+						}else{
+						flash.message = "service.imp.eliminarRelacionPaciente.false"
+						}
+					}
 
-        def result
-        def conexionImp = true
-        try{
-        result= customSecureServiceClientImp.eliminarRelacionPaciente(params.id,idOrganizacion)
-        }catch(Exception e){
-              //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
-                conexionImp = false
-                result = null
-            
-        }
-          if(result){
-                    flash.message = "service.imp.eliminarRelacionPaciente.true"
-                    flash.clase = "ok"
-					logged("Relacion eliminada correctamente para paciente, patientId: "+params.id+" ", "info", session.traumaContext.userId)
-                }else{
-                    flash.clase = "error"
-                    if(!conexionImp){
-                    flash.message = "service.imp.sinConexion"
-                    }else{
-                    flash.message = "service.imp.eliminarRelacionPaciente.false"
-                    }
-				}
+					redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
 
-                redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
-
-
+		}
     }
 
 

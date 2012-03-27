@@ -15,6 +15,8 @@ class HCESession {
     // Path al dominio actual
     String domainPath
     
+	String authTemp
+	
     // Id del paciente seleccionado
     Long patientId
     
