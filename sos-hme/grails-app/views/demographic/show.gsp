@@ -157,7 +157,7 @@
 		<div id="osx-modal-content-delImpPatient">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
-				<h2>Ingrese a SOS2</h2>
+				<h2>SOS Historias Medicas</h2>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="iddelp" id="iddelp" value="${persona.id}" style="display:none;" >
 					<input name="actionType" value="delImpPatient" style="display:none;" >
@@ -179,7 +179,7 @@
 		<div id="osx-modal-content-addImpRelation" style="display:none;">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
-				<h2>Ingrese a SOS2</h2>
+				<h2>SOS Historias Medicas</h2>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="idaddr1" id="idaddr1" value="${persona.id}" style="display:none;">
 					<input name="idaddr2" id="idaddr2" value="${persona.id}" style="display:none;">
@@ -203,7 +203,7 @@
 		<div id="osx-modal-content-delImpRelation">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
-				<h2>Ingrese a SOS2</h2>
+				<h2>SOS Historias Medicas</h2>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="iddelr" id="iddelr" value="${persona.id}" style="display:none;">
 					<input name="actionType" value="delImpRelation" style="display:none;">

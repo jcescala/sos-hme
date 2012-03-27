@@ -233,7 +233,7 @@ jQuery(function ($) {
 						var h = $("#osx-modal-data", self.container).height() + 50;
 						d.container.animate(
 							{height: h}, 
-							400,
+							200,
 							function () {
 								$("div.close", self.container).show();
 								$("#osx-modal-data", self.container).show();

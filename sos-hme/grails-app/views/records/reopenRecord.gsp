@@ -69,7 +69,7 @@
     <g:if test="${flash.message}">
       <div class="message"><g:message code="${flash.message}" /></div>
     </g:if>
-
+<%--
     <g:form url="[action:'reopenRecord', id:params.id]" method="post" id="form1" class="ehrform">
 
       <table id="reopen_table" align="center">
@@ -86,7 +86,7 @@
 
       <input type="submit" name="doit" value="${message(code:'trauma.reopen.action.reopen')}" class="boton1" />
 
-    </g:form>
+    </g:form>--%>
      </div>
   </body>
 </html>
