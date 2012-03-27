@@ -664,394 +664,464 @@ def fetch_mm = {
  * Firma y cierra el registro (antes firmar y cerrar eran procesos separados: http://code.google.com/p/open-ehr-gen-framework/issues/detail?id=9).
  * in: id episode id
  */
-def signRecord = {
-        
-    // FIXME: se tiene el id en session.traumaContext?.episodioId
-    def composition = Composition.get( params.id )
-
-    if (!composition)
-    {
-        flash.message = 'trauma.list.error.noEpisodeSelected'
-        redirect(action:'list')
-        return
-    }
-        
-    // FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
-    def patient = hceService.getPatientFromComposition( composition )
-
-
-    // Es necesario para mostrar el menu
-    def sections = this.getSections()
-    def subsections = [] // No hay porque estoy firmando el registro
-
-
-    flash.message = null
-    flash.error = null
-        
-    // Para retornarle a la vista
-    def model = [episodeId: session.traumaContext?.episodioId,
-        userId: session.traumaContext.userId,
-        composition: composition,
-        patient: patient,
-        sections: sections,
-        subsections: subsections,
-        allSubsections: this.getDomainTemplates()
-    ]
-        
-        
-    // FIXME: cerrar y firmar deberian estar dentro de la misma transaccion y asegurar de que si fallo algo, el registro
-    //        NO quede cerrado y no firmado, o abierto y firmado.
-    if (params.doit)
-    {
-        if (!patient)
-        {
-            flash.error = "trauma.sign.noPatientSelected"
-            return model
-        }
-           
-        if (composition.composer)
-        {
-            flash.error = "trauma.sign.registryAlreadySigned"
-            return model
-        }
-
-        if (!composition.content){
-            flash.error = "trauma.sign.empty"
-            return model
-
-
-        }
-
-        //en esta linea se verifica el usuario y password  para firmar una HME
-        def auth = authorizationService.getLogin(params.user, params.pass)
-        if (!auth)
-        {
-			logged("Firma de registro invalida user: "+params.user+" ","info", session.traumaContext.userId )
-			//log.info("Firma de registro invalida {user: "+params.user+"}")
-            flash.error = "trauma.sign.wrongSignature"
-            return model
-        }
-            
-        // Verificacion del rol, debe ser medico
-        // Este problema puede pasar si estoy logueado como medico pero firmo con datos de un adminsitrativo.
-        // TODO: un posible tema a ver es que pasa si la persona firmante no es la persona
-        //       que esta logueada, puede pasar y no necesariamente es un problema.
-        def roles = Role.withCriteria {
-            eq('performer', auth.person)
-        }
-            
-        def roleKeys = roles.type
-        if ( !roleKeys.contains(Role.MEDICO) )
-        {
+ 
+def recordValidate = {
+	println "estoy en recordValidate!!!!!!!!!!!!---------------!!!!!!!!!!!!!"
+	
+	def login = authorizationService.getLogin(params.user, params.pass)
+	if (login){
+			println "log in good"
+			def roles = authorizationService.getRolesByPerformer(login.person)
+			def roleKeys = roles.type
+			
+		if ( roleKeys.intersect([Role.MEDICO]).size() > 0 ){
+			println "roles good"
+			def loginid = login.id
+			//def personid = person.ids[0]
+			if(params.actionType == "reopenRecord"){
+				println "reopen"
+				redirect( controller:'records', action:'reopenRecord', params: [doit: 'signRecord', id: params.episodio_id, loginid: loginid, validate: true] )
+			}
+			if(params.actionType == "signRecord"){
+				println "firmar"
+				redirect( controller:'records', action:'signRecord', params: [doit: 'signRecord',id: params.episodio_id, loginid: loginid, validate: true] )
+			}
+		}else{
+		
 			logged("Firma de registro no autorizada user: "+params.user+" ","info", session.traumaContext.userId)
-			//log.info("Firma de registro no autorizada  {user: "+params.user+"}")
-            flash.error = "trauma.sign.wrongSigningRole"
-            return model
-        }
-                
-            
-        def person = auth.person
-        def id = person.ids[0] // FIXME: ver si tiene ID, DEBERIA TENER UN ID SIEMPRE, es un medico!
+			
+			redirect( controller:'records', action:'signRecord', params: [id: params.episodio_id, validate: false] )
+		}
+	}else{
+		flash.error = "trauma.sign.wrongSignature"
+		logged("Firma de registro no autorizada user: "+params.user+" ","info", session.traumaContext.userId)
+		redirect( controller:'records', action:'signRecord', params: [id: params.episodio_id, validate: false] )
+	}
+} 
+ 
+def signRecord = {
+	println "estoy en signRecord !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    println "params: " + params
+    // FIXME: se tiene el id en session.traumaContext?.episodioId
 
-            
-        // Cierra el registro
-        if ( !hceService.closeComposition(composition, DateConverter.toIso8601ExtendedDateTimeFormat(new Date())) )
-        {
-            flash.error = "trauma.sign.closeInternalError"
-            logged("Error interno al tratar de cerrar episodio compositionId: "+composition.id+" ","error",session.traumaContext.userId)
-			//log.error("Error interno al tratar de cerrar episodio {compositionId: "+composition.id+"}")
-			return model
-        }
-           
-        // TODO:
-        // Guardar digesto del registro para detectar alteraciones posteriores
-        // Usar clave privada del medico para encriptar el digesto, y asi firmar el registro.
-        //   Luego con su clave publica se podra decifrar el digesto y compararlo con el digesto original.
-        //   Con esto se garantiza autoria, pero se necesita algun tipo de gestor de claves para mantener la publica y permitir que el medico ingrese la privada (que no se puede mantener en el sistema).
-            
-        // Firma el registro
-        if (!hceService.setCompositionComposer(composition, id.root, id.extension))
-        {
-			logged("Error interno al tratar de firmar episodio, user: "+params.user+" ","error",session.traumaContext.userId)
-			//log.error("Error interno al tratar de firmar episodio {user: "+params.user+"}")
-            flash.error = "trauma.sign.signInternalError"
-            return model
-        }
+	if(params.validate){
+		def composition = Composition.get( params.id )
 
-        // Cambia el estado del regsitro en su VERSION
-        def version = Version.findByData( composition )
-        version.lifecycleState = Version.STATE_SIGNED
-        version.save()
-
-        flash.message = "trauma.sign.recordCorrectlySigned"
-		logged("Firma de episodio valida, user: "+params.user+" ", "info", session.traumaContext.userId )
-		//log.info("Firma de episodio valida {userId:"+session.traumaContext.userId+", user: "+
-		//LoginAuth.get(session.traumaContext.userId).user+", person: "+
-		//LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+
-		//LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
-
-        //AÑADIENDO CREACION AUTOMATICA DE CDA
-
-        if(CdaRecords.registrarCda(params.id, this.getDomainTemplates())){
-
-            //CDA CREADO AUTOMATICAMENTE
-            println "CDA CREADO AUTOMATICAMENTE"
-        }
+		if (!composition)
+		{
+			flash.message = 'trauma.list.error.noEpisodeSelected'
+			redirect(action:'list')
+			return
+		}
+			
+		// FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
+		def patient = hceService.getPatientFromComposition( composition )
 
 
-            
-        redirect(action:'registroClinico',params: params)
-    }
-        
-    return model
+		// Es necesario para mostrar el menu
+		def sections = this.getSections()
+		def subsections = [] // No hay porque estoy firmando el registro
+
+
+		flash.message = null
+		flash.error = null
+			
+		// Para retornarle a la vista
+		def model = [episodeId: session.traumaContext?.episodioId,
+			userId: session.traumaContext.userId,
+			composition: composition,
+			patient: patient,
+			sections: sections,
+			subsections: subsections,
+			allSubsections: this.getDomainTemplates()
+		]
+			
+			
+		// FIXME: cerrar y firmar deberian estar dentro de la misma transaccion y asegurar de que si fallo algo, el registro
+		//        NO quede cerrado y no firmado, o abierto y firmado.
+		println "antes doit"
+		if (params.doit)
+		{	
+			println "post doit"
+			if (!patient)
+			{
+				flash.error = "trauma.sign.noPatientSelected"
+				return model
+			}
+			   
+			if (composition.composer)
+			{
+				flash.error = "trauma.sign.registryAlreadySigned"
+				return model
+			}
+
+			if (!composition.content){
+				flash.error = "trauma.sign.empty"
+				return model
+
+
+			}
+
+			
+			
+			//en esta linea se verifica el usuario y password  para firmar una HME
+		/*    def auth = authorizationService.getLogin(params.user, params.pass)
+			if (!auth)
+			{
+				logged("Firma de registro invalida user: "+params.user+" ","info", session.traumaContext.userId )
+				//log.info("Firma de registro invalida {user: "+params.user+"}")
+				flash.error = "trauma.sign.wrongSignature"
+				return model
+			}
+				
+			// Verificacion del rol, debe ser medico
+			// Este problema puede pasar si estoy logueado como medico pero firmo con datos de un adminsitrativo.
+			// TODO: un posible tema a ver es que pasa si la persona firmante no es la persona
+			//       que esta logueada, puede pasar y no necesariamente es un problema.
+			def roles = Role.withCriteria {
+				eq('performer', auth.person)
+			}
+				
+			def roleKeys = roles.type
+			if ( !roleKeys.contains(Role.MEDICO) )
+			{
+				logged("Firma de registro no autorizada user: "+params.user+" ","info", session.traumaContext.userId)
+				//log.info("Firma de registro no autorizada  {user: "+params.user+"}")
+				flash.error = "trauma.sign.wrongSigningRole"
+				return model
+			}
+					
+				
+			def person = auth.person*/
+			
+			
+			def auth = LoginAuth.get(params.loginid)
+			
+			def person = auth.person
+			
+			
+			
+			
+			
+			def id = person.ids[0] // FIXME: ver si tiene ID, DEBERIA TENER UN ID SIEMPRE, es un medico!
+
+				
+			// Cierra el registro
+			if ( !hceService.closeComposition(composition, DateConverter.toIso8601ExtendedDateTimeFormat(new Date())) )
+			{
+				flash.error = "trauma.sign.closeInternalError"
+				logged("Error interno al tratar de cerrar episodio compositionId: "+composition.id+" ","error",session.traumaContext.userId)
+				//log.error("Error interno al tratar de cerrar episodio {compositionId: "+composition.id+"}")
+				return model
+			}
+			   
+			// TODO:
+			// Guardar digesto del registro para detectar alteraciones posteriores
+			// Usar clave privada del medico para encriptar el digesto, y asi firmar el registro.
+			//   Luego con su clave publica se podra decifrar el digesto y compararlo con el digesto original.
+			//   Con esto se garantiza autoria, pero se necesita algun tipo de gestor de claves para mantener la publica y permitir que el medico ingrese la privada (que no se puede mantener en el sistema).
+				
+			// Firma el registro
+			if (!hceService.setCompositionComposer(composition, id.root, id.extension))
+			{
+				logged("Error interno al tratar de firmar episodio, user: "+params.user+" ","error",session.traumaContext.userId)
+				//log.error("Error interno al tratar de firmar episodio {user: "+params.user+"}")
+				flash.error = "trauma.sign.signInternalError"
+				return model
+			}
+
+			// Cambia el estado del regsitro en su VERSION
+			def version = Version.findByData( composition )
+			version.lifecycleState = Version.STATE_SIGNED
+			version.save()
+
+			flash.message = "trauma.sign.recordCorrectlySigned"
+			println "firma del registro hecha!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+			logged("Firma de episodio valida, user: "+params.user+" ", "info", session.traumaContext.userId )
+			//log.info("Firma de episodio valida {userId:"+session.traumaContext.userId+", user: "+
+			//LoginAuth.get(session.traumaContext.userId).user+", person: "+
+			//LoginAuth.get(session.traumaContext.userId).person+ ", roles: "+
+			//LoginAuth.get(session.traumaContext.userId).person.roles.type+"}")
+
+			//AÑADIENDO CREACION AUTOMATICA DE CDA
+
+			if(CdaRecords.registrarCda(params.id, this.getDomainTemplates())){
+
+				//CDA CREADO AUTOMATICAMENTE
+				println "CDA CREADO AUTOMATICAMENTE"
+			}
+
+
+				
+			redirect(action:'registroClinico',params: params)
+		}
+		flash.error = "trauma.sign.wrongSigningRole"	
+		return model
+	
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------
 // Pantalla - Reapertura de registro
 def reopenRecord = {
+	println "params: "+params
+    
+	if(params.validate){
+	
+	
+		def composition = Composition.get( params.id )
 
-    def composition = Composition.get( params.id )
+		if (!composition)
+		{
+			redirect(action:'list')
+			return
+		}
 
-    if (!composition)
-    {
-        redirect(action:'list')
-        return
-    }
-
-    def version = Version.findByData( composition ) // Ojo. findByData retorna una coleccion. Como hay una sola version con esa composition retorna una instancia (porque al crear una nueva version, pongo null en el atributo data de la version)
-    if (version.lifecycleState == Version.STATE_SIGNED  || version.lifecycleState==Version.STATE_COMPLETE)
-    {
-        // -----------------------------------------------------------------
-        // FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
-        def patient = hceService.getPatientFromComposition( composition )
-            
-        /*
-        def sections = [] // NECESARIO PARA EL MENU
-        def subsections = [] // No hay porque estoy firmando el registro
-        grailsApplication.config.hce.emergencia.sections.trauma.keySet().each { sectionPrefix ->
-        sections << sectionPrefix
-        }
-         */
-        def sections = this.getSections()
-        def subsections = [] // No hay porque estoy firmando el registro
-
-        //------------------------------------------------------------------
-        //------------------------------------------------------------------
-
-        flash.message = null
-        flash.error = null
-
-        if (params.doit)
-        {
-            //en esta linea se verifica el usuario y password  para reabrir la HME.
-            def auth = authorizationService.getLogin(params.user, params.pass)
-            if (!auth)
-            {
+		def version = Version.findByData( composition ) // Ojo. findByData retorna una coleccion. Como hay una sola version con esa composition retorna una instancia (porque al crear una nueva version, pongo null en el atributo data de la version)
+		if (version.lifecycleState == Version.STATE_SIGNED  || version.lifecycleState==Version.STATE_COMPLETE)
+		{
+			// -----------------------------------------------------------------
+			// FIXME: esta tira una except si hay mas de un pac con el mismo id, hacer catch
+			def patient = hceService.getPatientFromComposition( composition )
 				
-                
-				logged("Reapertura de episodio invalida, user: "+params.user+" ", "info", session.traumaContext.userId)
-				//log.info("Reapertura de episodio invalida {user: "+params.user+"}")
-				
-				// TODO: i18n
-                flash.error = "Firma erronea, verifique sus datos"
-                return [episodeId: session.traumaContext?.episodioId,
-                    userId: session.traumaContext.userId,
-                    composition: composition,
-                    patient: patient,
-                    sections: sections,
-                    subsections: subsections,
-                    allSubsections: this.getDomainTemplates()
-                ]
-            }
+			/*
+			def sections = [] // NECESARIO PARA EL MENU
+			def subsections = [] // No hay porque estoy firmando el registro
+			grailsApplication.config.hce.emergencia.sections.trauma.keySet().each { sectionPrefix ->
+			sections << sectionPrefix
+			}
+			 */
+			def sections = this.getSections()
+			def subsections = [] // No hay porque estoy firmando el registro
 
-            // Verificacion del rol, debe ser medico
-            // Este problema puede pasar si estoy logueado como medico pero firmo con datos de un adminsitrativo.
-            // TODO: un posible tema a ver es que pasa si la persona firmante no es la persona
-            //       que esta logueada, puede pasar y no necesariamente es un problema.
-            def roles = Role.withCriteria {
-                eq('performer', auth.person)
-            }
+			//------------------------------------------------------------------
+			//------------------------------------------------------------------
 
-            def roleKeys = roles.type
-            if ( !roleKeys.contains(Role.MEDICO) )
-            {
-				logged("Reapertura de episodio no autorizada, user: "+params.user+" ", "info", session.traumaContext.userId)
-				//log.info("Reapertura de episodio no autorizada {user: "+params.user+"}")
-                
-				// TODO: i18n
-				flash.error = "Firma erronea, la persona firmante no es medico"
-                return [episodeId: session.traumaContext?.episodioId,
-                    userId: session.traumaContext.userId,
-                    composition: composition,
-                    patient: patient,
-                    sections: sections,
-                    subsections: subsections,
-                    allSubsections: this.getDomainTemplates()
-                ]
-            }
+			flash.message = null
+			flash.error = null
 
-
-            def person = auth.person
-            def id = person.ids[0] // FIXME: ver si tiene ID, DEBERIA TENER UN ID SIEMPRE, es un medico!
-
-            if (!hceService.setVersionCommitter(version, id.root, id.extension))
-            {
-				//log.error
-                // TODO: i18n
-                flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
-                
-				logged("Error al tratar de crear object referencia para la nueva version en hce.hceService.setVersionCommitter ", "error", -1)
-
-				
-				return [episodeId: session.traumaContext?.episodioId,
-                    userId: session.traumaContext.userId,
-                    composition: composition,
-                    patient: patient,
-                    sections: sections,
-                    subsections: subsections,
-                    allSubsections: this.getDomainTemplates()
-                ]
-            }
-
-
-            if(!hceService.setVersionPatient(version, composition)){
-				
-				//log.error
-                // TODO: i18n
-                flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
-				
-				logged( "Error intentando referenciar a paciente en la nueva version en hce.hceService.setVersionPatient", "error", -1)
-                return [episodeId: session.traumaContext?.episodioId,
-                    userId: session.traumaContext.userId,
-                    composition: composition,
-                    patient: patient,
-                    sections: sections,
-                    subsections: subsections,
-                    allSubsections: this.getDomainTemplates()
-                ]
-
-
-            }
-
-            // Cambia el estado del regsitro en su VERSION
-            //def version = Version.findByData( composition )
-            //version.lifecycleState = Version.STATE_SIGNED
-            //version.save()
-
-
-            // Creo CDA si no existe
-            def archivoCDA = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + version.nombreArchCDA)
-            if (!archivoCDA.exists())
-            {
-                def cdaMan = new ManagerCDA()
-                int idEpisodio = Integer.parseInt(params.id)
-                cdaMan.createFileCDA(idEpisodio, this.getDomainTemplates())
-            }
-
-            // Creo una copia de la composition
-            ////def new_composition = new Composition(archetypeNodeId: composition.archetypeNodeId,
-            ////                                      name: composition.name,
-            ////                                      archetypeDetails: composition.archetypeDetails,
-            ////                                      path: composition.path,
-            ////                                      composer: null,
-            ////                                      context: composition.context,
-            ////                                      category: composition.category,
-            ////                                      territory: composition.territory,
-            ////                                      language: composition.language)
-            ////composition.content.each{e ->
-            ////    new_composition.addToContent(e)
-            ////}
-            //RMLoader.recorrerComposition(composition, new_composition)
-
-            // Elimino movimiento y firma de la composition (de la copia)
-            def composerAux = composition.composer
-            def contentAux = composition.content
-            composition.composer = null
-                
-            // Esto no es mas necesario en la reapertura, porque cerrar el registro ya
-            // no implica que se movio al paciente.
-            //hceService.eliminarMovimientoComposition(composition)
-
-                
-            //composition.save()
-
-            // Creo nueva versión (con motivo, firma, nombre Arch CDA, composition)
-            def new_version = new Version(
-                //data: composition,
-                //timeCommited: new DvDateTime(
-                //  value: DateConverter.toIso8601ExtendedDateTimeFormat( new Date() )
-                //),
-                //lifecycleState: Version.STATE_INCOMPLETE,
-                //numeroVers: version.getNumVersion() + 1
-            )
-
-            new_version.data = composition
-            new_version.timeCommited = new DvDateTime(value: DateConverter.toIso8601ExtendedDateTimeFormat(new Date()))
-            new_version.lifecycleState = Version.STATE_INCOMPLETE
-            new_version.numeroVers = version.getNumVersion() + 1
-            println "XXXXXXXXXXXXXX------>>>> V0:" + version.getNumVersion()
-            println "XXXXXXXXXXXXXX------>>>> V1:" + new_version.getNumVersion()
-
-            if (new_version.save())
-            {
-                version.data = null
-                if (version.save())
-                {
-					logged("Reapertura firmada correctamente, user: "+params.user+" ", "info", session.traumaContext.userId)
-					//log.info("Reapertura firmada correctamente { user: "+params.user+"}")
-                    // TODO: i18n
-					flash.message = "Reapertura firmada correctamente"
-                }
-                else
-                {
-                    composition.composer = composerAux
-                    composition.content = contentAux
-                    version.data = composition;
+			if (params.doit)
+			{
+				//en esta linea se verifica el usuario y password  para reabrir la HME.
+				/*def auth = authorizationService.getLogin(params.user, params.pass)
+				if (!auth)
+				{
 					
-					logged("Error creando nueva version en version.save()", "error", -1)
-					logged(version.error, "error", -1)
-					//log.error("Error creando nueva version en version.save()")
-					//log.error(version.error)
-                    // TODO: i18n
+					
+					logged("Reapertura de episodio invalida, user: "+params.user+" ", "info", session.traumaContext.userId)
+					//log.info("Reapertura de episodio invalida {user: "+params.user+"}")
+					
+					// TODO: i18n
+					flash.error = "Firma erronea, verifique sus datos"
+					return [episodeId: session.traumaContext?.episodioId,
+						userId: session.traumaContext.userId,
+						composition: composition,
+						patient: patient,
+						sections: sections,
+						subsections: subsections,
+						allSubsections: this.getDomainTemplates()
+					]
+				}
+
+				// Verificacion del rol, debe ser medico
+				// Este problema puede pasar si estoy logueado como medico pero firmo con datos de un adminsitrativo.
+				// TODO: un posible tema a ver es que pasa si la persona firmante no es la persona
+				//       que esta logueada, puede pasar y no necesariamente es un problema.
+				def roles = Role.withCriteria {
+					eq('performer', auth.person)
+				}
+
+				def roleKeys = roles.type
+				if ( !roleKeys.contains(Role.MEDICO) )
+				{
+					logged("Reapertura de episodio no autorizada, user: "+params.user+" ", "info", session.traumaContext.userId)
+					//log.info("Reapertura de episodio no autorizada {user: "+params.user+"}")
+					
+					// TODO: i18n
+					flash.error = "Firma erronea, la persona firmante no es medico"
+					return [episodeId: session.traumaContext?.episodioId,
+						userId: session.traumaContext.userId,
+						composition: composition,
+						patient: patient,
+						sections: sections,
+						subsections: subsections,
+						allSubsections: this.getDomainTemplates()
+					]
+				}
+
+
+				def person = auth.person
+				*/
+			def auth = LoginAuth.get(params.loginid)
+			
+			def person = auth.person
+			
+			
+			
+			
+			
+			def id = person.ids[0] // FIXME: ver si tiene ID, DEBERIA TENER UN ID SIEMPRE, es un medico!
+
+				if (!hceService.setVersionCommitter(version, id.root, id.extension))
+				{
+					//log.error
+					// TODO: i18n
 					flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
-                }
-            }
-            else
-            {
-				logged("problema de creacion de nueva version en new_version.save()", "error", -1)
-				logged(version.error, "error", -1)
-				//log.error("problema de creacion de nueva version en new_version.save()")
-				//log.error(version.error)
-                // TODO: i18n
-				flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
-            }
-                
-            /*return [episodeId: session.traumaContext?.episodioId,
-                userId: session.traumaContext.userId,
-                composition: composition,
-                patient: patient,
-                sections: sections,
-                subsections: subsections,
-                allSubsections: this.getDomainTemplates()
-            ]*/
-             redirect(action:'registroClinico',params: params)
-        }
-		
-        return [composition: composition,
-            patient: patient,
-            episodeId: session.traumaContext?.episodioId,
-            userId: session.traumaContext.userId,
-            sections: sections, // necesario para el menu
-            subsections: subsections, // necesario para el menu
-            allSubsections: this.getDomainTemplates()
-        ]
-         
-    }
-    else
-    {
-        // Vuelvo a la Pagina de Selección Episodio
-        redirect(action:'list')
-        return
-    }
+					
+					logged("Error al tratar de crear object referencia para la nueva version en hce.hceService.setVersionCommitter ", "error", -1)
+
+					
+					return [episodeId: session.traumaContext?.episodioId,
+						userId: session.traumaContext.userId,
+						composition: composition,
+						patient: patient,
+						sections: sections,
+						subsections: subsections,
+						allSubsections: this.getDomainTemplates()
+					]
+				}
+
+
+				if(!hceService.setVersionPatient(version, composition)){
+					
+					//log.error
+					// TODO: i18n
+					flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+					
+					logged( "Error intentando referenciar a paciente en la nueva version en hce.hceService.setVersionPatient", "error", -1)
+					return [episodeId: session.traumaContext?.episodioId,
+						userId: session.traumaContext.userId,
+						composition: composition,
+						patient: patient,
+						sections: sections,
+						subsections: subsections,
+						allSubsections: this.getDomainTemplates()
+					]
+
+
+				}
+
+				// Cambia el estado del regsitro en su VERSION
+				//def version = Version.findByData( composition )
+				//version.lifecycleState = Version.STATE_SIGNED
+				//version.save()
+
+
+				// Creo CDA si no existe
+				def archivoCDA = new File(ApplicationHolder.application.config.hce.rutaDirCDAs + '//' + version.nombreArchCDA)
+				if (!archivoCDA.exists())
+				{
+					def cdaMan = new ManagerCDA()
+					int idEpisodio = Integer.parseInt(params.id)
+					cdaMan.createFileCDA(idEpisodio, this.getDomainTemplates())
+				}
+
+				// Creo una copia de la composition
+				////def new_composition = new Composition(archetypeNodeId: composition.archetypeNodeId,
+				////                                      name: composition.name,
+				////                                      archetypeDetails: composition.archetypeDetails,
+				////                                      path: composition.path,
+				////                                      composer: null,
+				////                                      context: composition.context,
+				////                                      category: composition.category,
+				////                                      territory: composition.territory,
+				////                                      language: composition.language)
+				////composition.content.each{e ->
+				////    new_composition.addToContent(e)
+				////}
+				//RMLoader.recorrerComposition(composition, new_composition)
+
+				// Elimino movimiento y firma de la composition (de la copia)
+				def composerAux = composition.composer
+				def contentAux = composition.content
+				composition.composer = null
+					
+				// Esto no es mas necesario en la reapertura, porque cerrar el registro ya
+				// no implica que se movio al paciente.
+				//hceService.eliminarMovimientoComposition(composition)
+
+					
+				//composition.save()
+
+				// Creo nueva versión (con motivo, firma, nombre Arch CDA, composition)
+				def new_version = new Version(
+					//data: composition,
+					//timeCommited: new DvDateTime(
+					//  value: DateConverter.toIso8601ExtendedDateTimeFormat( new Date() )
+					//),
+					//lifecycleState: Version.STATE_INCOMPLETE,
+					//numeroVers: version.getNumVersion() + 1
+				)
+
+				new_version.data = composition
+				new_version.timeCommited = new DvDateTime(value: DateConverter.toIso8601ExtendedDateTimeFormat(new Date()))
+				new_version.lifecycleState = Version.STATE_INCOMPLETE
+				new_version.numeroVers = version.getNumVersion() + 1
+				println "XXXXXXXXXXXXXX------>>>> V0:" + version.getNumVersion()
+				println "XXXXXXXXXXXXXX------>>>> V1:" + new_version.getNumVersion()
+
+				if (new_version.save())
+				{
+					version.data = null
+					if (version.save())
+					{
+						logged("Reapertura firmada correctamente, user: "+params.user+" ", "info", session.traumaContext.userId)
+						//log.info("Reapertura firmada correctamente { user: "+params.user+"}")
+						// TODO: i18n
+						flash.message = "Reapertura firmada correctamente"
+					}
+					else
+					{
+						composition.composer = composerAux
+						composition.content = contentAux
+						version.data = composition;
+						
+						logged("Error creando nueva version en version.save()", "error", -1)
+						logged(version.error, "error", -1)
+						//log.error("Error creando nueva version en version.save()")
+						//log.error(version.error)
+						// TODO: i18n
+						flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+					}
+				}
+				else
+				{
+					logged("problema de creacion de nueva version en new_version.save()", "error", -1)
+					logged(version.error, "error", -1)
+					//log.error("problema de creacion de nueva version en new_version.save()")
+					//log.error(version.error)
+					// TODO: i18n
+					flash.error = "Ocurrio un error al intentar firmar el registro clinico, intente de nuevo"
+				}
+					
+				/*return [episodeId: session.traumaContext?.episodioId,
+					userId: session.traumaContext.userId,
+					composition: composition,
+					patient: patient,
+					sections: sections,
+					subsections: subsections,
+					allSubsections: this.getDomainTemplates()
+				]*/
+				 redirect(action:'registroClinico',params: params)
+			}
+			
+			return [composition: composition,
+				patient: patient,
+				episodeId: session.traumaContext?.episodioId,
+				userId: session.traumaContext.userId,
+				sections: sections, // necesario para el menu
+				subsections: subsections, // necesario para el menu
+				allSubsections: this.getDomainTemplates()
+			]
+			 
+		}
+		else
+		{
+			// Vuelvo a la Pagina de Selección Episodio
+			redirect(action:'list')
+			return
+		}
+	}
+	flash.error = "trauma.sign.wrongSigningRole"
 }
 }

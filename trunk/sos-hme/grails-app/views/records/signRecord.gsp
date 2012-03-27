@@ -53,7 +53,7 @@
     <g:if test="${!patient && !flash.error}">
       <div class="message"><ul><li><g:message code="trauma.sign.noPatientSelected" /></li></ul></div>
     </g:if>
-      
+    <%--  
     <g:form url="[action:'signRecord', id:params.id]" method="post" id="form1" class="ehrform">
       
       <table id="sign_table" align="center">
@@ -79,13 +79,9 @@
        
       </g:isNotSignedRecord>
       
-      <%-- TODO: recordar clave
-      <div align="center">
-        <g:link action="forgotPassword"><g:message code="auth.login.action.forgotPass" /></g:link>
-      </div>
-      --%>
+
       
-    </g:form>
+    </g:form>--%>
     </div>
   </body>
 </html>

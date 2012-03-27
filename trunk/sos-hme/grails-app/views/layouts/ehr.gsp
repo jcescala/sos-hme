@@ -34,6 +34,12 @@
   <script src="${createLinkTo(dir:'js/jquery/jqueryalert' ,file:'jquery.alerts.js')}"  type="text/javascript"></script>
   <link href="${createLinkTo(dir:'js/jquery/jqueryalert' ,file:'jquery.alerts.css')}" rel="stylesheet" type="text/css" media="screen" />
 
+<%--carga de codigos js y css para ventana modal--%>
+<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'osx.css')}"/>
+<script type="text/javascript" src="${createLinkTo(dir:'js/', file:'jquery.simplemodal.js')}"></script>
+<script type="text/javascript" src="${createLinkTo(dir:'js/', file:'osx.js')}"></script>
+
+
   <script type="text/javascript">
    
     // 'modificado' establece si los valores de la seccion han sido modificados
@@ -263,13 +269,88 @@
       });
 
  });
+ 
+
   </script>
 
  <g:layoutHead />
+<script>
+	function replaceT(obj){
+		var newO=document.createElement('input');
+		newO.setAttribute('type','password');
+		newO.setAttribute('name',obj.getAttribute('name'));
+		newO.setAttribute('class','userlogin')
+		obj.parentNode.replaceChild(newO,obj);
+		newO.focus();
+	}
 
+	function focused(obj){
+		jQuery(obj).val('');
+	
+	}
+</script>
   </head>
 
 <body>
+
+
+	<div id='content'>
+		
+
+		<%--Codigo html ventana modal para reabrir episodio--%>
+		<div id="osx-modal-content-abrirEpisodio">
+			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
+			<div id="osx-modal-data">
+				<h2>SOS Historias Medicas abrir</h2>
+				<%--<g:form url="[ controller: 'records', action:'reopenRecord', id:episodeId]" method="post">--%>
+				<form action="/sos/records/recordValidate" method="post">
+					<input name="episodio_id" id="episodio_id" value="${episodeId}"><%-- style="display:none;" --%>
+					<input name="actionType" id="actionType" value="reopenRecord" style="display:none;">
+					<div id="userlogin" class="userlogin">
+						<input type="text" id="user" name="user" class="userlogin" value="Usuario" onfocus="focused(this)"/>
+					</div>
+					<div id="passlogin" class="userlogin">
+						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
+					</div>
+					
+					<div id="ingresarboton" class="ingresarboton">
+						<%-- i18n --%>
+						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
+						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+					</div>
+				<%--</g:form>--%>
+				</form>
+			</div>
+		</div>
+
+		<%--Codigo html ventana modal para firmar episodio--%>
+		<div id="osx-modal-content-firmarEpisodio">
+			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
+			<div id="osx-modal-data">
+				<h2>SOS Historias Medicas firmar</h2>
+				<%--<g:form url="[ controller: 'records', action:'signRecord', id:episodeId]" method="post">--%>
+				<form action="/sos/records/recordValidate" method="post">
+				<%--<form action="/sos/demographic/impValidate" method="post">--%>
+					<input name="episodio_id" id="episodio_id" value="${episodeId}"><%-- style="display:none;" --%>
+					<input name="actionType" id="actionType" value="signRecord" style="display:none;">
+					<div id="userlogin" class="userlogin">
+						<input type="text" id="user" name="user" class="userlogin" value="Usuario" onfocus="focused(this)"/>
+					</div>
+					<div id="passlogin" class="userlogin">
+						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
+					</div>
+					
+					<div id="ingresarboton" class="ingresarboton">
+						<%-- i18n --%>
+						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
+						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+					</div>
+				<%--</g:form>--%>
+				
+			</div>
+		</div>		
+
+	</div>
   <div id="cabecera">
 	<div id="cabColI">
     	<div id="logo">
@@ -494,16 +575,19 @@
                   </g:isSignedRecord>
                   <g:if test="${firmado == false}">
                    <li>
+				   <div id="firmar">
                    <a href="${createLink(controller: 'records', action: 'signRecord',id:episodeId)}"  ${((controllerName=='records'&&['signRecord'].contains(actionName)) ? "class='selected contextoEhr'" : "class='contextoEhr'")}>
                       <g:message code="registro.menu.close" />
                    </a>
+				   </div>
                   </li>
                   </g:if>
                   <g:else>
                     <li >
+					<div id="abrir">
                      <a href="${createLink(controller: 'records', action: 'reopenRecord',id:episodeId)}"  ${((controllerName=='records'&&['reopenRecord'].contains(actionName)) ? "class='selected'" : '')}>
                       <g:message code="registro.menu.open" />
-                   </a>
+                   </a></div>
                     </li>
 
                   </g:else>
