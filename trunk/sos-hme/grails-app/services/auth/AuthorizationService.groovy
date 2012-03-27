@@ -1,5 +1,5 @@
 package auth;
-
+import demographic.role.Role
 import authorization.LoginAuth
 
 class AuthorizationService {
@@ -19,4 +19,20 @@ class AuthorizationService {
         
         return login
     }
+	
+	def getRolesByPerformer(personId){
+	
+		def fechaActual = new Date()
+		
+		// se busca el rol asociado con la clase persona asignada al login
+		def roles = Role.withCriteria {
+			eq('performer', personId)
+			eq('status', true)
+			le('timeValidityFrom', fechaActual)
+			ge('timeValidityTo', fechaActual)
+		}
+		
+		return roles
+	
+	}
 }

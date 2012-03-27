@@ -11,6 +11,7 @@ import authorization.LoginAuth
 import hce.core.support.identification.UIDBasedID
 
 import hce.HceService
+import auth.AuthorizationService
 
 import tablasMaestras.TipoIdentificador
 
@@ -59,6 +60,8 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import org.apache.commons.io.FileUtils
 import util.*
+import imp.PacienteArr
+
 class DemographicController{
 
     /*
@@ -98,7 +101,7 @@ class DemographicController{
         def tiposIds = TipoIdentificador.list()
         return [tiposIds: tiposIds]
     }
-    
+
     /**
      * Busqueda de candidatos.
      */
@@ -449,6 +452,306 @@ class DemographicController{
 
     }
 
+
+/*	private void agregarPacienteImp(String id){
+
+		def person=   Person.get(id)
+		
+        def personNamePatient = person.identities.find{
+            it.purpose == 'PersonNamePatient'
+        }
+
+        
+        if(personNamePatient){
+            //   def paciente = Paciente.get(params.id)
+            
+            //RECIBIR PARAMS DEL PACIENTE
+
+            def p = new PacienteArr()
+            p.setIdPaciente(id) //ESTE ES EL ID QUE TIENE ASIGNADO EN ESTE SISTEMA
+
+            person.ids.each{
+                def codigo = TipoIdentificador.findByCodigo(it.root)
+                if((codigo.nombreCorto == "CI V")||(codigo.nombreCorto == "CI E")){
+                        p.setCedula(it.extension)
+                }
+                if(codigo.nombreCorto == "Pasaporte"){
+                        p.setPasaporte(it.extension)
+                }
+            }
+            
+            
+            p.setPrimerNombre(personNamePatient.getPrimerNombre())
+            p.setSegundoNombre(personNamePatient.getSegundoNombre())
+            p.setPrimerApellido(personNamePatient.getPrimerApellido())
+            p.setSegundoApellido(personNamePatient.getSegundoApellido())
+            p.setSexo(person.getSexo())
+            p.setFechaNacimiento(person.getFechaNacimiento().format("yyyy-MM-dd").toString())
+
+
+            
+
+
+            //ID 'token' asignado a la organizacion en el IMP
+            String idOrganizacion = ApplicationHolder.application.config.imp.organizacion.id
+
+            def result
+            def conexionImp = true
+            try{
+            result= customSecureServiceClientImp.agregarPaciente(p, idOrganizacion)
+            }catch(Exception e){
+                
+                //OCURRIO UNA EXCEPCION NO SE PUEDE CONECTAR AL IMP
+                conexionImp = false
+                result = null
+                println "catch!!"
+                
+            }
+            if(result){
+			//println "catch!!"
+				//logged("Paciente agregado correctamente al IMP, patientId: "+params.id+" ", "info", session.traumaContext.userId)
+                //println personNamePatient.foto
+                //println personNamePatient.tipofoto
+
+              if(personNamePatient.foto && personNamePatient.tipofoto){
+                  def resultImagen= customSecureServiceClientImp.agregarImagenPaciente(personNamePatient.foto,
+                                                      personNamePatient.tipofoto,
+                                                      id,idOrganizacion)
+
+                   if(resultImagen){
+                   //Se agrega imagen
+				   //logged("Foto del paciente agregada correctamente al IMP , patientId: "+params.id+" ", "info", session.traumaContext.userId)
+                   //return 1
+				   }else{
+                   //No se pudo agregar imagen
+					//return -1
+                   }
+                   
+
+              }
+              //flash.message = "service.imp.agregarPaciente.true"
+              //flash.clase = "ok"
+            }else{
+				//return -2
+            }
+            
+            //redirect(controller:'demographic', action: 'show', params: [id: params.id, pestana: 'pestanaOpcionesImp'] )
+
+        }else{
+			//return -3
+            //render("<p>El paciente no existe</p>")
+
+        }
+
+	}*/
+	
+/*    def impValidate2 = {
+		//render ""
+		//println " parametros: " +params
+		//println "submit validate!! id: "+params.idd
+		def a = agregarPacienteImp(params.idd.toString())
+		//println "a: "
+		flash.clase = "error"
+		flash.message = "service.imp.sinConexion"
+		redirect(controller:'demographic', action: 'show', params: [id: params.idd, pestana: 'pestanaOpcionesImp'] )
+		
+
+	}
+*/
+
+def authorizationService
+
+    def impValidate = {
+		//render ""
+		//println " parametros: " +params
+		//println "submit validate!! id: "+params.idd
+		//def a = agregarPacienteImp(params.idd.toString())
+		//println "a: "
+		
+		def login = authorizationService.getLogin(params.user, params.pass)
+		if (login){
+                //http://localhost:9090/sos/service/agregarPaciente/30
+				//http://localhost:9090/sos/service/eliminarPaciente/30
+				//http://localhost:9090/sos/service/eliminarRelacionPaciente/30
+				//http://localhost:9090/sos/service/agregarRelacionPaciente?idCentroImp=4&idPacienteImp=32&idPacienteOrg=30
+				def roles = authorizationService.getRolesByPerformer(login.person)
+				def roleKeys = roles.type
+				
+				if ( roleKeys.intersect([Role.MEDICO]).size() > 0 ){
+					if(params.actionType == "addImpPatient"){
+						session.traumaContext.authTemp = "start"
+						redirect( controller:'service', action:'agregarPaciente', params: [id: params.idaddp.toString()] )
+					}
+					if(params.actionType == "delImpPatient"){
+						session.traumaContext.authTemp = "start"
+						redirect( controller:'service', action:'eliminarPaciente', params: [id: params.iddelp.toString()] )
+					}
+					if(params.actionType == "addImpRelation"){
+						session.traumaContext.authTemp = "start"
+						println "params demographic "+ params
+						redirect(controller:'service', action: 'agregarRelacionPaciente',
+						params: [idCentroImp: params.idaddr1,idPacienteImp: params.idaddr2 ,idPacienteOrg: params.idaddr3] )
+						
+						
+					}
+					if(params.actionType=="delImpRelation"){
+						session.traumaContext.authTemp = "start"
+						redirect(controller:'service', action:'eliminarRelacionPaciente', params:[id: params.iddelr])
+					}
+
+				}else{
+					flash.clase = "error"
+					flash.message = "service.imp.accesoNoAutorizado"
+					//redirect(controller:'demographic', action: 'show', params: [id: params.idd, pestana: 'pestanaOpcionesImp'] )
+						
+					if(params.actionType.equals("addImpPatient"))
+						redirect(controller:'demographic', action: 'show', params: [id: params.idaddp, pestana: 'pestanaOpcionesImp'] )		
+					if(params.actionType.equals("delImpPatient"))
+						redirect(controller:'demographic', action: 'show', params: [id: params.iddelp, pestana: 'pestanaOpcionesImp'] )
+					if(params.actionType.equals("addImpRelation"))
+						redirect(controller:'demographic', action: 'show', params: [id: params.idaddr3, pestana: 'pestanaOpcionesImp'] )
+					if(params.actionType.equals("delImpRelation"))
+						redirect(controller:'demographic', action: 'show', params: [id: params.iddelr, pestana: 'pestanaOpcionesImp'] )	
+						
+				
+				}
+		
+		}else{
+			flash.clase = "error"
+			flash.message = "service.imp.accesoInvalido"
+			
+			if(params.actionType.equals("addImpPatient"))
+				redirect(controller:'demographic', action: 'show', params: [id: params.idaddp, pestana: 'pestanaOpcionesImp'] )		
+			if(params.actionType.equals("delImpPatient"))
+				redirect(controller:'demographic', action: 'show', params: [id: params.iddelp, pestana: 'pestanaOpcionesImp'] )
+			if(params.actionType.equals("addImpRelation"))
+				redirect(controller:'demographic', action: 'show', params: [id: params.idaddr3, pestana: 'pestanaOpcionesImp'] )
+			if(params.actionType.equals("delImpRelation"))
+				redirect(controller:'demographic', action: 'show', params: [id: params.iddelr, pestana: 'pestanaOpcionesImp'] )		
+		}
+	}
+	
+	//validate para ventana modal con ajax
+    
+	def impValidatee = {
+		params.id
+		
+		println "ajax validate!!"+params.id
+		def array = params.id.split("-")
+		if(array[0] == "" || array[1] == ""){
+			println "usuario vacio"
+			render 	"<div class='close'><a href='#' class='simplemodal-close'>x</a></div>"+
+					"<div id='osx-modal-data'>"+
+					"<h2>clave o usuario no puede ser vacio</h2>"+
+					"<form action='/sos/demographic/impValidate' method='post'>"+
+						"<div id='userlogin' class='userlogin'>"+
+							"<input type='text' id='user' class='userlogin' value='Usuario' onfocus='focused(this)'/>"+
+						"</div>"+
+						"<div id='passlogin' class='userlogin'>"+
+							"<input id='pass' name='pass' type='text' value='Contrase&ntilde;a' class='userlogin' onfocus='replaceT(this)'/>"+
+						"</div>"+
+						"<div id='ingresarboton' class='ingresarboton'>"+
+							"<input type='submit' name='doit' id='doit' value='Ingresar' class='buttonlogin'/>"+
+							"<input type='button' value='ajax' class='buttonlogin' onclick='validImp(user.value, pass.value, person_id2.value)'/>"+
+					"</div></form></div>"+
+					"<script>"+
+						"var bas = function(){ jQuery.modal.close(); };"+
+						"jQuery(document).ready(function() {"+
+							"jQuery('.close a').click(bas)"+
+					"});</script>"
+					return 0
+		
+		}else{
+			if(array[0].equals("user") && array[1].equals("pass")){
+			def ident = array[2]
+            //redirect( controller:'service', action:'agregarPacienteAjax', params: [id: ident] )
+					
+					//def a = agregarPacienteImp(ident)	
+					//println "usuario valido"+a
+					/*render 	"<div class='close'><a href='#' class='simplemodal-close'>x</a></div>"+
+						"<div id='osx-modal-data'>"+
+						"<h2>Accesos valido</h2>"+
+						"<form action='/sos/demographic/impValidate' method='post'>"+
+							"<div id='userlogin' class='userlogin'>"+
+								"<input type='text' id='user' class='userlogin' value='Usuario' onfocus='focused(this)'/>"+
+							"</div>"+
+							"<div id='passlogin' class='userlogin'>"+
+								"<input id='pass' name='pass' type='text' value='Contrase&ntilde;a' class='userlogin' onfocus='replaceT(this)'/>"+
+							"</div>"+
+							"<div id='ingresarboton' class='ingresarboton'>"+
+								"<input type='submit' name='doit' id='doit' value='Ingresar' class='buttonlogin'/>"+
+								"<input type='button' value='ajax' class='buttonlogin' onclick='validImp(user.value, pass.value, person_id2.value)'/>"+
+						"</div></form></div>"+
+						"<script>"+
+							"var bas = function(){ jQuery.modal.close(); };"+
+							"jQuery(document).ready(function() {"+
+								"jQuery.modal.close();"+
+						"});</script>"*/
+
+						//println "usuario valido2"+a
+						redirect( controller:'service', action:'agregarPacienteAjax', params: [id: ident] )
+						return 0
+						
+						
+			}else{
+				println "usuario invalido"
+				render 	"<div class='close'><a href='#' class='simplemodal-close'>x</a></div>"+
+						"<div id='osx-modal-data'>"+
+						"<h2>Accesso invalido</h2>"+
+						"<form action='/sos/demographic/impValidate' method='post'>"+
+							"<div id='userlogin' class='userlogin'>"+
+								"<input type='text' id='user' class='userlogin' value='Usuario' onfocus='focused(this)'/>"+
+							"</div>"+
+							"<div id='passlogin' class='userlogin'>"+
+								"<input id='pass' name='pass' type='text' value='Contrase&ntilde;a' class='userlogin' onfocus='replaceT(this)'/>"+
+							"</div>"+
+							"<div id='ingresarboton' class='ingresarboton'>"+
+								"<input type='submit' name='doit' id='doit' value='Ingresar' class='buttonlogin'/>"+
+								"<input type='button' value='ajax' class='buttonlogin' onclick='validImp(user.value, pass.value, person_id2.value)'/>"+
+						"</div></form></div>"+
+						"<script>"+
+							"var bas = function(){ jQuery.modal.close(); };"+
+							"jQuery(document).ready(function() {"+
+								"jQuery('.close a').click(bas)"+
+						"});</script>"
+						return 0
+			
+			
+			}
+		
+
+		
+		}
+		println "de otra forma.."
+		
+		//validacion de parametros not null
+		
+		render 	"<div class='close'><a href='#' class='simplemodal-close'>x</a></div>"+
+				"<div id='osx-modal-data'>"+
+				"<h2>Ingrese a SOS</h2>"+
+				"<form action='/sos/demographic/impValidate' method='post'>"+
+					"<div id='userlogin' class='userlogin'>"+
+						"<input type='text' id='user' class='userlogin' value='Usuario' onfocus='focused(this)'/>"+
+					"</div>"+
+					"<div id='passlogin' class='userlogin'>"+
+						"<input id='pass' name='pass' type='text' value='Contrase&ntilde;a' class='userlogin' onfocus='replaceT(this)'/>"+
+					"</div>"+
+					"<div id='ingresarboton' class='ingresarboton'>"+
+						"<input type='submit' name='doit' id='doit' value='Ingresar' class='buttonlogin'/>"+
+						"<input type='button' value='ajax' class='buttonlogin' onclick='validImp(user.value, pass.value)'/>"+
+					"</div></form></div>"+
+				"<script>"+
+					"var bas = function(){ jQuery.modal.close(); };"+
+					"jQuery(document).ready(function() {"+
+						"jQuery('.close a').click(bas)"+
+				"});</script>"
+				return 0
+
+	}
+
+	
+	
+	
     def show ={
 
 
@@ -498,9 +801,9 @@ class DemographicController{
             }
 
             def ids = persona.ids.toArray()
-
+			def accesoValido = params.accesoValido
             println "ObjectID ": ids[0].root +"::"+ids[0].extension
-            render( view:'show', model: [ userId: session.traumaContext.userId,persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp])
+            render( view:'show', model: [ userId: session.traumaContext.userId,persona: persona, root: ids[0].root, extension: ids[0].extension, conexionImp: conexionImp, agregadoImp: agreImp, relacionadoImp:relaImp, accesoValido: accesoValido])
 
 
 

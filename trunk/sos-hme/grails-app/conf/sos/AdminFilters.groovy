@@ -1,6 +1,7 @@
 package sos
 import authorization.*
 import demographic.role.*
+
 class AdminFilters {
 
     def filters = {
@@ -38,6 +39,11 @@ class AdminFilters {
                 
             }
         }
+		
+		myGreedyFilter(controller:'service', action:'*'){
+			
+			//redirect(controller:'domain', action:'list')
+		}
     }
     
 }

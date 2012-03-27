@@ -4,22 +4,35 @@
 <html>
   <head>
 <%-- <meta name="layout" content="ehr-modal" /> --%>
-  <g:javascript library="jquery" />
-
+<g:javascript library="jquery" />
+  <title><g:message code="demographic.show.title" /></title>
   <g:javascript>
 
     $(document).ready( function() {
-    $('.message').delay(3000).fadeOut();
+
+
+		$('.message').delay(3000).fadeOut();
     });
     function cargando(etiqueta){
-
-
-
-    $(etiqueta).html("<img src='${createLinkTo(dir:"images", file:"spinner.gif")}'/> Cargando...");
-
-
+		
+		$(etiqueta).html("<img src='${createLinkTo(dir:"images", file:"spinner.gif")}'/> Cargando...");
     }
 
+	function replaceT(obj){
+		var newO=document.createElement('input');
+		newO.setAttribute('type','password');
+		newO.setAttribute('name',obj.getAttribute('name'));
+		newO.setAttribute('class','userlogin')
+		obj.parentNode.replaceChild(newO,obj);
+		newO.focus();
+	}
+
+	function focused(obj){
+		jQuery(obj).val('');
+	
+	}
+
+  
   </g:javascript>
 
   <script type="text/javascript" src="${createLinkTo(dir:'js/fancybox', file:'jquery.mousewheel-3.0.4.pack.js')}"></script>
@@ -27,12 +40,23 @@
   <link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'js/fancybox', file:'jquery.fancybox-1.3.4.css')}" media="screen" />
   <link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'estilo.css')}"/>
 
+  
+<%--carga de codigos js y css para ventana modal--%>
+
+<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'osx.css')}"/>
+
+<script type="text/javascript" src="${createLinkTo(dir:'js/', file:'jquery.simplemodal.js')}"></script>
+
+<script type="text/javascript" src="${createLinkTo(dir:'js/', file:'osx.js')}"></script>
+
+
+
 
 
   <g:javascript>
 		$(document).ready(function() {
     $('.pestana').hide();
-
+	
     <%
     if(params.pestana){
     %>
@@ -61,34 +85,149 @@
 			'transitionOut'	: 'elastic'
     });
 
-
     $('.ping').click(function(){
     $('.ping').removeClass('selected');
     $(this).addClass('selected');
     });
 
     });
+	
 
+	
+	
     function cambio(pestana){
 
 
-    $('.pestana').hide();
-    $(pestana).show();
+		$('.pestana').hide();
+		$(pestana).show();
 
     }
 
+
   </g:javascript>
-  <title><g:message code="demographic.show.title" /></title>
+
+	
+	<g:javascript>
+		function validImp( user, pass, fin){
+			${remoteFunction( 
+			controller:'demographic', 
+			action:'impValidatee', 
+			update:'osx-modal-content', 
+			params:'\'id=\' + user + \'-\'+ pass + \'-\' + fin')}
 
 
-
-
+		}
+		
+		
+	</g:javascript>
 </head>
 <body>
 
-<g:set var="person_id" value="${persona.id}" />
-<g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
+<div id='salida'>
+</div>
+	<div id='content'>
+		
 
+		<%--Codigo html ventana modal para agregar paciente al IMP--%>
+		<div id="osx-modal-content-addImpPatient">
+			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
+			<div id="osx-modal-data">
+				<h2>SOS Historias Medicas</h2>
+				
+				<form action="/sos/demographic/impValidate" method="post">
+					<input name="idaddp" id="idaddp" value="${persona.id}" style="display:none;" >
+					<input name="actionType" id="actionType" value="addImpPatient" style="display:none;">
+					<div id="userlogin" class="userlogin">
+						<input type="text" id="user" name="user" class="userlogin" value="Usuario" onfocus="focused(this)"/>
+					</div>
+					<div id="passlogin" class="userlogin">
+						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
+					</div>
+					
+					<div id="ingresarboton" class="ingresarboton">
+						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
+						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+		
+		<%--Codigo html ventana modal para eliminar paciente del IMP--%>
+		<div id="osx-modal-content-delImpPatient">
+			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
+			<div id="osx-modal-data">
+				<h2>Ingrese a SOS2</h2>
+				<form action="/sos/demographic/impValidate" method="post">
+					<input name="iddelp" id="iddelp" value="${persona.id}" style="display:none;" >
+					<input name="actionType" value="delImpPatient" style="display:none;" >
+					<div id="userlogin" class="userlogin">
+						<input type="text" id="user" name="user" class="userlogin" value="Usuario" onfocus="focused(this)"/>
+					</div>
+					<div id="passlogin" class="userlogin">
+						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
+					</div>
+					<div id="ingresarboton" class="ingresarboton">
+						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
+						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+					</div>
+				</form>
+			</div>
+		</div>	
+
+		<%--Codigo html ventana modal para agregar relacion al IMP--%>
+		<div id="osx-modal-content-addImpRelation" style="display:none;">
+			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
+			<div id="osx-modal-data">
+				<h2>Ingrese a SOS2</h2>
+				<form action="/sos/demographic/impValidate" method="post">
+					<input name="idaddr1" id="idaddr1" value="${persona.id}" style="display:none;">
+					<input name="idaddr2" id="idaddr2" value="${persona.id}" style="display:none;">
+					<input name="idaddr3" id="idaddr3" value="${persona.id}" style="display:none;">
+					<input name="actionType" value="addImpRelation" style="display:none;">
+					<div id="userlogin" class="userlogin">
+						<input type="text" id="user" name="user" class="userlogin" value="Usuario" onfocus="focused(this)"/>
+					</div>
+					<div id="passlogin" class="userlogin">
+						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
+					</div>
+					<div id="ingresarboton" class="ingresarboton">
+						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
+						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+					</div>
+				</form>
+			</div>
+		</div>	
+
+		<%--Codigo html ventana modal para eliminar relacion al IMP--%>
+		<div id="osx-modal-content-delImpRelation">
+			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
+			<div id="osx-modal-data">
+				<h2>Ingrese a SOS2</h2>
+				<form action="/sos/demographic/impValidate" method="post">
+					<input name="iddelr" id="iddelr" value="${persona.id}" style="display:none;">
+					<input name="actionType" value="delImpRelation" style="display:none;">
+					<div id="userlogin" class="userlogin">
+						<input type="text" id="user" name="user" class="userlogin" value="Usuario" onfocus="focused(this)"/>
+					</div>
+					<div id="passlogin" class="userlogin">
+						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
+					</div>
+					<div id="ingresarboton" class="ingresarboton">
+						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
+						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	
+
+<g:set var="person_id" value="${persona.id}" />
+<%--<input id="person_id2" value="${persona.id}" > style="display:none;"--%>
+<g:set var="name" value="${persona.identities.find{ it.purpose == 'PersonNamePatient'} }" />
+<%--<input id="bla" value="${accesoValido}" >--%>
 
 <div id="cabecera">
   <div id="cabColI">
@@ -248,25 +387,31 @@ ${folder.name.value}
 
 
 				<g:if test="${!agregadoImp}">
-					<g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link>
+					<div id="addPatient"><g:link controller="service" action="agregarPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.agregarPaciente" /></g:link></div>
 				</g:if>
 				<g:else>
-					<g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
+					<div id="delPatient"><g:link controller="service" action="eliminarPaciente" params="[id: person_id]" class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_eliminar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="service.imp.eliminarPaciente" /></g:link>
+					
+					</div>
 
-					<g:if test="${!relacionadoImp}">
-						<g:remoteLink controller="service"
-									action="buscarPaciente"
-									params="[id: person_id, offset: '0']"
-									update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
-									onLoading="cargando('#resultadoCandidatos')"
-									class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
-
-					</g:if>
-					<g:else>
-
-						<g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
-					</g:else>
-
+						
+						<g:if test="${!relacionadoImp}">
+						<div id="addRelPac">
+											<g:remoteLink controller="service"
+											action="buscarPaciente"
+											params="[id: person_id, offset: '0']"
+											update="[success:'resultadoCandidatos',failure:'errorResultadoCandidatos']"
+											onLoading="cargando('#resultadoCandidatos')"
+											class="boton1"><img src="${createLinkTo(dir:'images/', file:'ico_agregar.png')}" alt="(+)" width="16" height="16" align="absmiddle" /><g:message code="demographic.show.agregarRelacionPaciente" /></g:remoteLink>
+								
+						</div>
+						</g:if>
+						<g:else>
+							<div id="delImpRelation">
+								<g:link controller="service" action="eliminarRelacionPaciente" params="[id: person_id]" class="boton1"><g:message code="service.imp.eliminarRelacionPaciente" /></g:link>
+							</div>
+						</g:else>
+					
 				</g:else>
 
 
@@ -278,11 +423,14 @@ ${folder.name.value}
 
 
           </div>
+		
+		
+		
+			<div id="resultadoCandidatos">
 
-          <div id="resultadoCandidatos">
 
+			</div>
 
-          </div>
           <div id="errorResultadoCandidatos">
 
 

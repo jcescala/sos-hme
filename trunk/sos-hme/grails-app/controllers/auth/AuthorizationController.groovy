@@ -43,7 +43,7 @@ class AuthorizationController {
             def login = authorizationService.getLogin(params.user, params.pass)
             if (login)
             {
-				def fechaActual = new Date()
+		/*		def fechaActual = new Date()
 				
 				// se busca el rol asociado con la clase persona asignada al login
                 def roles = Role.withCriteria {
@@ -51,9 +51,11 @@ class AuthorizationController {
 					eq('status', true)
 					le('timeValidityFrom', fechaActual)
 					ge('timeValidityTo', fechaActual)
-                }
+                }*/
 				
-                def roleKeys = roles.type
+                def roles = authorizationService.getRolesByPerformer(login.person)
+				
+				def roleKeys = roles.type
 				
 				
 				
@@ -66,6 +68,8 @@ class AuthorizationController {
 
 					// Pone al usuario en session
 					session.traumaContext = new HCESession( userId: login.id )
+					
+					
 					
 					//informacion de transaccion para el log.info
 					logged("Acceso valido a SOS Telemedicina Administracion", "info", session.traumaContext.userId)
@@ -81,6 +85,10 @@ class AuthorizationController {
 
 					// Pone al usuario en session
 					session.traumaContext = new HCESession( userId: login.id )
+					
+					//session.traumaContext = new HCESession( tempAut: 1 )
+					
+					session.traumaContext.authTemp = "stop"
 					
 					//informacion de transaccion para el log.info
 					logged("Acceso valido a SOS Telemedicina HME:","info",session.traumaContext.userId)
