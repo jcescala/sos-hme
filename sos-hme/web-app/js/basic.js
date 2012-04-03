@@ -16,9 +16,23 @@ jQuery(function ($) {
 	//$('#basic-modal-content').modal();
 
 	// Load dialog on click
-	/*$('#basic').click(function (e) {
-		$('#basic-modal-content').modal();
+	$('#addPatient').click(function (e) {
+		$('#osx-modal-content-addImpPatient').modal();
 
 		return false;
-	});*/
+	});
+
+	$('#delPatient').click(function (e) {
+		$('#osx-modal-content-delImpPatient').modal();
+
+		return false;
+	});
+	
+	$('#delImpRelation').click(function (e) {
+		$('#osx-modal-content-delImpRelation').modal();
+
+		return false;
+	});	
+
+
 });

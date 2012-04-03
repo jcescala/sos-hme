@@ -14,7 +14,6 @@ jQuery(function ($) {
 	var OSX = {
 		container: null,
 		init: function () {
-			//$("input.osx, a.osx").click(function (e) {
 			$("#addPatient").click(function (e) {
 				e.preventDefault();	
 
@@ -37,13 +36,15 @@ jQuery(function ($) {
 			d.overlay.fadeIn('slow', function () {
 				$("#osx-modal-content-addImpPatient", self.container).show();
 				var title = $("#osx-modal-title", self.container);
-				//title.show();
+				title.show();
 				d.container.slideDown('slow', function () {
 					setTimeout(function () {
-						var h = $("#osx-modal-data", self.container).height() + 50;
+						var h = $("#osx-modal-data", self.container).height()
+							+ title.height()
+							+ 20;
 						d.container.animate(
 							{height: h}, 
-							400,
+							200,
 							function () {
 								$("div.close", self.container).show();
 								$("#osx-modal-data", self.container).show();
