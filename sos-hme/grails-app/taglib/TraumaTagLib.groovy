@@ -364,6 +364,21 @@ class TraumaTagLib {
         out << body()
     }
 
+    def canFillClinicalImp = { attrs, body ->
+
+        def login = LoginAuth.get( session.traumaContext.userId )
+
+        // Roles de la persona
+        def roles = Role.withCriteria {
+            eq('performer', login.person)
+        }
+        
+        def roleKeys = roles.type
+        
+        if ( roleKeys.intersect([Role.MEDICO]).size() > 0 )
+        out << body()
+    }	
+	
     def canFillAdmin = { attrs, body ->
 
         def login = LoginAuth.get( session.traumaContext.userId )
