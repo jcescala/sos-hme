@@ -43,11 +43,11 @@
   
 <%--carga de codigos js y css para ventana modal--%>
 
-<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'osx.css')}"/>
+<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'basic.css')}"/>
 
 <script type="text/javascript" src="${createLinkTo(dir:'js/', file:'jquery.simplemodal.js')}"></script>
 
-<script type="text/javascript" src="${createLinkTo(dir:'js/', file:'osx.js')}"></script>
+<script type="text/javascript" src="${createLinkTo(dir:'js/', file:'basic.js')}"></script>
 
 
 
@@ -128,12 +128,12 @@
 	<div id='content'>
 		
 
-		<%--Codigo html ventana modal para agregar paciente al IMP--%>
+		
 		<div id="osx-modal-content-addImpPatient">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
-				
+				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="idaddp" id="idaddp" value="${persona.id}" style="display:none;" >
 					<input name="actionType" id="actionType" value="addImpPatient" style="display:none;">
@@ -145,19 +145,20 @@
 					</div>
 					
 					<div id="ingresarboton" class="ingresarboton">
-						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
-						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+						<input type="submit" name="doit" id="doit" value="Confirmar" class="buttonlogin"/>
+						
 					</div>
 				</form>
 				
 			</div>
 		</div>
 		
-		<%--Codigo html ventana modal para eliminar paciente del IMP--%>
+		
 		<div id="osx-modal-content-delImpPatient">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
+				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="iddelp" id="iddelp" value="${persona.id}" style="display:none;" >
 					<input name="actionType" value="delImpPatient" style="display:none;" >
@@ -168,18 +169,19 @@
 						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
 					</div>
 					<div id="ingresarboton" class="ingresarboton">
-						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
-						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+						<input type="submit" name="doit" id="doit" value="Confirmar" class="buttonlogin"/>
+						
 					</div>
 				</form>
 			</div>
 		</div>	
 
-		<%--Codigo html ventana modal para agregar relacion al IMP--%>
+		<%-- esta ventana modal se invoca desde el template candidatos en views/service --%>
 		<div id="osx-modal-content-addImpRelation" style="display:none;">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
+				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="idaddr1" id="idaddr1" value="${persona.id}" style="display:none;">
 					<input name="idaddr2" id="idaddr2" value="${persona.id}" style="display:none;">
@@ -192,18 +194,19 @@
 						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
 					</div>
 					<div id="ingresarboton" class="ingresarboton">
-						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
-						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+						<input type="submit" name="doit" id="doit" value="Confirmar" class="buttonlogin"/>
+						
 					</div>
 				</form>
 			</div>
 		</div>	
 
-		<%--Codigo html ventana modal para eliminar relacion al IMP--%>
+		
 		<div id="osx-modal-content-delImpRelation">
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
+				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="iddelr" id="iddelr" value="${persona.id}" style="display:none;">
 					<input name="actionType" value="delImpRelation" style="display:none;">
@@ -214,8 +217,8 @@
 						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
 					</div>
 					<div id="ingresarboton" class="ingresarboton">
-						<input type="submit" name="doit" id="doit" value="Ingresar" class="buttonlogin"/>
-						<%--<input type='button' value='ajax' class='buttonlogin' onclick="validImp(user.value, pass.value, person_id2.value)"/>--%>
+						<input type="submit" name="doit" id="doit" value="Confirmar" class="buttonlogin"/>
+						
 					</div>
 				</form>
 			</div>
@@ -361,8 +364,9 @@ ${folder.name.value}
         <li><a id="fichapestanaRegistrosExternos" class="ping" href="javascript:cambio('#pestanaRegistrosExternos')"><g:message code="service.imp.registrosExternos" /></a></li>
         <li><a id="fichapestanaOrganizaciones" class="ping" href="javascript:cambio('#pestanaOrganizaciones')"><g:message code="service.imp.listadoOrganizaciones" /></a></li>
         </g:if>
-        <li><a id="fichapestanaOpcionesImp" class="ping" href="javascript:cambio('#pestanaOpcionesImp')" ><g:message code="demographic.show.opcionesImp" /></a></li>
-      </ul>
+        <li><g:canFillClinicalImp><a id="fichapestanaOpcionesImp" class="ping" href="javascript:cambio('#pestanaOpcionesImp')" ><g:message code="demographic.show.opcionesImp" /></a></li>
+			</g:canFillClinicalImp>
+	  </ul>
     </div>
 
 

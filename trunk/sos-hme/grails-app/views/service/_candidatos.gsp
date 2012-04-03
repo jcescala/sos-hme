@@ -60,6 +60,7 @@ ${paciente.pasaporte}[Pasaporte] </td>
 			action="agregarRelacionPaciente"
 			params="[idCentroImp: paciente.idCentro,idPacienteImp: paciente.idPaciente ,idPacienteOrg: idPacienteOrg]"
 			class="boton2">Seleccionar</g:link>
+			<%--datos necesarios para la funcion invocada desde la modal.--%>
 			<input id="param1" value="${paciente.idCentro}" style="display:none;" >
 			<input id="param2" value="${paciente.idPaciente}" style="display:none;" >
 			<input id="param3" value="${idPacienteOrg}" style="display:none;" >
@@ -72,12 +73,12 @@ ${paciente.pasaporte}[Pasaporte] </td>
   
 <script>
 jQuery(function ($) {
-	var OSX = {
-		container: null,
-		init: function () {
+
 			$(".addImpRelation").click(function (e) {
 				e.preventDefault();	
 				
+				/*coloca los datos dentro del objeto clikeado y los coloca en input ocultos
+				dentro de la ventana modal.*/
 				var a1 = jQuery(this).children("#param1").val();
 				jQuery('#idaddr1').val(a1);
 				var a2 = jQuery(this).children("#param2").val();
@@ -86,60 +87,9 @@ jQuery(function ($) {
 				jQuery('#idaddr3').val(a3);
 				
 				
-				$("#osx-modal-content-addImpRelation").modal({
-					overlayId: 'osx-overlay',
-					containerId: 'osx-container',
-					closeHTML: null,
-					minHeight: 80,
-					opacity: 65, 
-					position: ['15%',],
-					overlayClose: true,
-					onOpen: OSX.open,
-					onClose: OSX.close
-				});
+				$("#osx-modal-content-addImpRelation").modal();
 			});
-		},
-		open: function (d) {
-			var self = this;
-			self.container = d.container[0];
-			d.overlay.fadeIn('slow', function () {
-				$("#osx-modal-content-addImpRelation", self.container).show();
-				var title = $("#osx-modal-title", self.container);
-				title.show();
-				d.container.slideDown('slow', function () {
-					setTimeout(function () {
-						var h = $("#osx-modal-data", self.container).height()
-							+ 40; // padding
-						d.container.animate(
-							{height: h}, 
-							200,
-							function () {
-								$("div.close", self.container).show();
-								$("#osx-modal-data", self.container).show();
-							}
-						);
-					}, 300);
-				});
-			})
-		},
-		close: function (d) {
-
-				var self = this; // this = SimpleModal object
-				d.container.animate(
-					{top:"-" + (d.container.height() + 20)},
-					500,
-					function () {
-						self.close(); // or $.modal.close();
-					}
-				);
-			
-
-		}
-	};
-
-	OSX.init();
-
-});
+		});
 </script>
 
   <util:remotePaginate controller="service"
