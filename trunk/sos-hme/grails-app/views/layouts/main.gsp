@@ -26,8 +26,8 @@
             
             <span class="menuButton"><g:link class="list" controller="loginAuth" action="list"><g:message code="default.loginAuth.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="list" controller="person" action="list"><g:message code="default.person.label" args="[entityName]" /></g:link></span>
-			<span class="menuButton"><g:link class="list" controller="personNameUser" action="list"><g:message code="default.personNameUser.label" args="[entityName]" /></g:link></span>
-			<span class="menuButton"><g:link class="list" controller="role" action="list"><g:message code="default.role.label" args="[entityName]" /></g:link></span>
+			<%--<span class="menuButton"><g:link class="list" controller="personNameUser" action="list"><g:message code="default.personNameUser.label" args="[entityName]" /></g:link></span>
+			<span class="menuButton"><g:link class="list" controller="role" action="list"><g:message code="default.role.label" args="[entityName]" /></g:link></span>--%>
 			<span class="menuButton"><g:link class="list" controller="authorization" action="logout"><g:message code="authorization.action.logout" /></g:link></span>
 		</div>
         <g:layoutBody />		

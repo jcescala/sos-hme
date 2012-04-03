@@ -184,7 +184,7 @@ class LoginAuthController {
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 
-				logged("loginAuth eliminado de forma inesperada tambi: "+lifing, "error", )
+				logged("loginAuth eliminado de forma inesperada tambi: "+lifing, "error", session.traumaContext.userId)
 				flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'loginAuth.label', default: 'LoginAuth'), params.id])}"
                 redirect(action: "show", id: params.id)
             }

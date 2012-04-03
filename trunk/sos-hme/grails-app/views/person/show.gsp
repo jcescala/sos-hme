@@ -17,24 +17,83 @@
             <div class="dialog">
                 <table>
                     <tbody>
-                    <%--
-                        <tr class="prop">
+                    
+                    <%--    <tr class="prop">
                             <td valign="top" class="name"><g:message code="person.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personInstance, field: "id")}</td>
                             
                         </tr>--%>
+
+						<tr class="prop">
+							<td valign="top" class="name">
+								<label for="primerNombre"><g:message code="personNameUser.primerNombre.label" default="Primer Nombre" />:</label>
+							</td>
+							<td valign="top" class="value ${hasErrors(bean: personNameUserInstance, field: 'primerNombre', 'errors')}">
+								<g:if test="${personInstance.identities.primerNombre[0]!=null}">
+									${personInstance.identities.primerNombre[0].encodeAsHTML()}
+								</g:if>
+							</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name">
+								<label for="segundoNombre"><g:message code="personNameUser.segundoNombre.label" default="Segundo Nombre" />:</label>
+							</td>
+							<td valign="top" class="value ${hasErrors(bean: personNameUserInstance, field: 'segundoNombre', 'errors')}">
+								<g:if test="${personInstance.identities.segundoNombre[0]!=null}">
+									${personInstance.identities.segundoNombre[0].encodeAsHTML()}
+								</g:if>
+							</td>
+						</tr>						
+
+						<tr class="prop">
+							<td valign="top" class="name">
+								<label for="primerApellido"><g:message code="personNameUser.primerApellido.label" default="Primer Apellido" />:</label>
+							</td>
+							<td valign="top" class="value ${hasErrors(bean: personNameUserInstance, field: 'primerApellido', 'errors')}">
+								<g:if test="${personInstance.identities.primerApellido[0]!=null}">
+									${personInstance.identities.primerApellido[0].encodeAsHTML()}
+								</g:if>
+							</td>
+						</tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="segundoApellido"><g:message code="personNameUser.segundoApellido.label" default="Segundo Apellido" />:</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: personNameUserInstance, field: 'segundoApellido', 'errors')}">
+								<g:if test="${personInstance.identities.segundoApellido[0]!=null}">
+									${personInstance.identities.segundoApellido[0].encodeAsHTML()}
+								</g:if>
+                                </td>
+                            </tr>
+
                         <tr  class="prop">
-                            <td valign="top" class="name"><g:message code="person.identities.label" default="Identities" />:</td>
+                            <td valign="top" class="name"><g:message code="personNameUser.telfhabitacion.label" default="Identities" />:</td>
 
                             <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${personInstance.identities}" var="i">
-                                    <li><g:link controller="personNameUser" action="show" id="${i.id}">${i?.encodeAsHTML()}</g:link></li>
-                                </g:each>
-                                  
-                                </ul>
+
+                                    ${personInstance.identities.telfhabitacion[0]?.encodeAsHTML()}
+
                             </td>
+
+                        </tr>
+						
+                        <tr  class="prop">
+                            <td valign="top" class="name"><g:message code="personNameUser.telfcelular.label" default="Identities" />:</td>
+
+                            <td valign="top" style="text-align: left;" class="value">
+
+                                    ${personInstance.identities.telfcelular[0]?.encodeAsHTML()}
+
+                            </td>
+
+                        </tr>
+						
+                        <tr  class="prop">
+                            <td valign="top" class="name"><g:message code="personNameUser.email.label" default="Identities" />:</td>
+
+                            <td valign="top" style="text-align: left;" class="value">${personInstance.identities.email[0]?.encodeAsHTML()}</td>
 
                         </tr>
                         <tr class="prop">
@@ -76,7 +135,7 @@
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
                                 <g:each in="${personInstance.roles}" var="r">
-                                    <li><g:link controller="role" action="show" id="${r.id}">${r?.type}</g:link></li>
+                                    <li><g:link controller="role" action="show" params="['id': r.id, 'person.id': personInstance?.id]">${r?.type}</g:link></li>
                                 </g:each>
                                 </ul>
                             </td>

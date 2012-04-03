@@ -53,7 +53,8 @@ class RoleController {
             //println "parametro" + params.person.id
             def roleInstance = new Role()
             //roleInstance.properties = params
-            return [roleInstance: roleInstance, personid: params.person.id]
+			def person = Person.get(params.person.id)
+            return [roleInstance: roleInstance, personid: params.person.id, person: person]
         }else{
 			def personUsers = Person.withCriteria{
 				identities{
@@ -76,8 +77,13 @@ class RoleController {
 		
 		if (roleInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'role.label', default: 'Role'), roleInstance.id])}"
-            logged("Role "+type+" creado correctamente para: "+person+" ","info", session.traumaContext.userId)
-			redirect(action: "show", id: roleInstance.id)
+            logged("Role "+type+" creado correctamente para personId: "+person.id+" ","info", session.traumaContext.userId)
+			
+			println "performerid: "+params.performer.id
+			if(params.performer.id != null)
+				redirect(controller: "person", action: "show", id: params.performer.id)
+			
+			//redirect(action: "show", id: roleInstance.id)
         }
         else {
 			def personUsers = Person.withCriteria{
@@ -104,20 +110,25 @@ class RoleController {
 
     def edit = {
         def roleInstance = Role.get(params.id)
+		println "performer "+roleInstance.performer.id
         if (!roleInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
             redirect(action: "list")
         }
         else {
-            return [roleInstance: roleInstance]
+            return [roleInstance: roleInstance, personid: roleInstance.performer.id]
         }
     }
 
     def update = {
+	
+		println "params: " + params
         def roleInstance = Role.get(params.id)
         def persona = roleInstance.performer
-		def type = roleInstance.type
 		
+		def type = roleInstance.type
+		println "roleInstance: " + roleInstance
+        println "persona: " + persona
         if (roleInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -128,13 +139,15 @@ class RoleController {
                     return
                 }
             }
-
-            
+            println "performer "+params.performer
+			
+			def asd = Person.get(params.performer)
+			params.performer = asd
             roleInstance.properties = params
             if (!roleInstance.hasErrors() && roleInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'role.label', default: 'Role'), roleInstance.id])}"
                 
-				logged("Role "+type+" actualizado correctamente para: "+persona+" ","info", session.traumaContext.userId)
+				logged("Role "+type+" actualizado correctamente para personId: "+persona.id+" ","info", session.traumaContext.userId)
 				redirect(action: "show", id: roleInstance.id)
             }
             else {
@@ -155,7 +168,7 @@ class RoleController {
             try {
                 roleInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
-                logged("Role "+type+" eliminado correctamente para: "+persona+" ","info", session.traumaContext.userId)
+                logged("Role "+type+" eliminado correctamente para personId: "+persona.id+" ","info", session.traumaContext.userId)
 				redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {

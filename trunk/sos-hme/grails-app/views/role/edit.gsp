@@ -26,26 +26,25 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="performer"><g:message code="role.performer.label" default="Performer" /></label>
-                                </td>
+
                                 <%--<g:if test="${personid == null}">--%>
 
                                    <%-- <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
                                         <g:select name="performer.id" from="${demographic.identity.PersonNameUser.list()}" optionKey="id" value="${roleInstance?.performer?.id}"  />
                                     </td>--%>
 
-                                <td valign="top" class="value ${hasErrors(bean: roleInstance, field: 'performer', 'errors')}">
-                                    <g:select name="performer.id" from="${demographic.party.Person.list()}" optionKey="id" value="${roleInstance?.performer?.id}"  />
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="role.performer.label" default="Performer" /></td>
+							
+							<td valign="top" class="value"><g:link controller="person" action="show" id="${roleInstance?.performer?.id}">${roleInstance?.performer?.identities?.toString()}</g:link></td>
 
-                                </td>
-                                    
+                        </tr>
+                                <g:hiddenField name="performer" value="${personid}" />    
                                 <%--</g:if>
                                 <g:else>
-                                  <g:hiddenField name="performer.id" value="${personid}" />
+                                  
                                 </g:else>--%>
-                            </tr>
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="status"><g:message code="role.status.label" default="status" /></label>
