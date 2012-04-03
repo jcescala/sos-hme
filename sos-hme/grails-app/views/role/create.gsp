@@ -29,7 +29,7 @@
                                 <td valign="top" class="name">
                                     <label for="performer"><g:message code="role.performer.label" default="Performer" /></label>
                                 </td>
-
+								<td valign="top" class="value"><g:link controller="person" action="show" id="${person?.id}">${person?.identities?.toString()}</g:link></td>
                                 <%-- si no tiene un id person asignado--%>
                                 <g:if test="${personid == null}">
                                     <%--se le pide al usuario que le asigne uno--%>

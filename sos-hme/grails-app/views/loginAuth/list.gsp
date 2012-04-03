@@ -25,8 +25,7 @@
                             
 							<g:sortableColumn property="person" title="${message(code: 'loginAuth.person.label', default: 'Persona')}" />
 							
-                        
-                            <th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>
+						
                         
                         </tr>
                     </thead>
@@ -38,13 +37,12 @@
                         -->
                             <!--<td>${fieldValue(bean: loginAuthInstance, field: "purpose")}</td>-->
                         
-                            <td>${fieldValue(bean: loginAuthInstance, field: "user")}</td>
+                            <td><g:link action="show" id="${loginAuthInstance.id}">${fieldValue(bean: loginAuthInstance, field: "user")}</g:link></td>
 
                             
                         
                             <td>${loginAuthInstance?.person?.identities?.toString()}</td>
-                        
-                            <td><g:link action="show" id="${loginAuthInstance.id}">detalle</g:link></td>
+							
                         
                         </tr>
                     </g:each>

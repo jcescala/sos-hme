@@ -29,7 +29,7 @@
 
                             <g:sortableColumn property="Role" title="${message(code: 'person.type.label', default: 'Rol')}" />
 
-                            <th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>
+                            <%--<th><g:message code="loginAuth.person.detail" default="Detalles:" /></th>--%>
                         
                         </tr>
                     </thead>
@@ -39,8 +39,7 @@
                         
                             <%--<td><g:link action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "id")}</g:link></td>--%>
 
-                            <td>${personInstance.identities}</td>
-
+							<td><g:link action="show" id="${personInstance.id}">${personInstance.identities?.toString()}</g:link></td>
                             <td><g:formatDate date="${personInstance.fechaNacimiento}" /></td>
                         
                             <td>${fieldValue(bean: personInstance, field: "sexo")}</td>
@@ -49,9 +48,9 @@
                             personInstance.identities.primerNombre
                             --%>
                             
-                            <!--angel: se verifica que el objeto person tenga un role de lo contrario
+                            <%--angel: se verifica que el objeto person tenga un role de lo contrario
                                 muestra.
-                            -->
+                            --%>
                             <g:if test="${demographic.role.Role.get(personInstance.roles.id [0]) != null}">
 
                               <td>${demographic.role.Role.get(personInstance.roles.id [0]).type}</td>
@@ -60,7 +59,7 @@
 									<td></td>
 							</g:else>
 							
-							<td><g:link action="show" id="${personInstance.id}">${message(code: 'loginAuth.person.detail', default: 'Detalles')}</g:link></td>
+							<%--<td><g:link action="show" id="${personInstance.id}">${message(code: 'loginAuth.person.detail', default: 'Detalles')}</g:link></td>--%>
 							
 
                         </tr>

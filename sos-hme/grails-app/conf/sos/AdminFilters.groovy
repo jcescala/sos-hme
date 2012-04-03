@@ -39,11 +39,6 @@ class AdminFilters {
                 
             }
         }
-		
-		myGreedyFilter(controller:'service', action:'*'){
-			
-			//redirect(controller:'domain', action:'list')
-		}
     }
     
 }

@@ -211,12 +211,18 @@ class PersonController {
 			
 			
 			
+			def personNameUserInstance = new PersonNameUser()
+			personNameUserInstance.properties = params
+			
 			
 			def personInstance = new Person( params ) // sexo, fechaNac (no mas)
-            
-			if(!personInstance.identities){
+            personInstance.addToIdentities( personNameUserInstance )
+			
+			println "personInstance.ids: "+personInstance.identities
+			if(personInstance.identities.size()<1){
 				
-				flash.message = "se debe indicar una identidad para la persona"
+				//i18n
+				flash.message = "se debe indicar una identidad (nombre y apellido) para la persona"
 				render(view: "create", model: [personInstance: personInstance, tiposIds: tiposIds])
 				return
 			}
@@ -227,28 +233,6 @@ class PersonController {
             personInstance.setFechaNacimiento( bd )
 
             personInstance.addToIds( id )
-            
-            //def name = new PersonName(params)
-            //person.addToIdentities( name )
-            
-            //def datos = new PersonNameUser(params)
-            //personInstance.addToIdentities(datos)
-            
-            
-			
-			
-			/*
-			
-			if (!person.save()) println person.errors
-            
-            
-            def role = new Role(timeValidityFrom: new Date(), type: "paciente", performer: person)
-            if (!role.save()) println role.errors
-            
-            redirect(action:'seleccionarPaciente', id:person.id)
-            return		
-		
-		*/
 		
 		
 			
@@ -393,19 +377,38 @@ class PersonController {
 				}
 			}
 			
-		/*	
-			esta parte es para validar que el arreglo devuelto sea de un solo elemento y no de mas
-			de esta forma no se agreguen varias identidades a un person.
-		
-			println("IDENTIDADES:" +params.identities+"tamanio"+[params.identities].size() +" \n\n\n")
-	
-			if(params.identities.size()>1){
-				params.identities = params.identities[0]
+			println "identidad "+personInstance.identities
+			if( personInstance.identities!=[]){
+					
+				def personNameUserInstance = PersonNameUser.get(personInstance.identities.id[0])
+				
+				personNameUserInstance.properties = params
+				
+				
+
+				if(!personNameUserInstance.hasErrors() && personNameUserInstance.save(flush: true)){
+					
+					
+					println "Se salvo la identidad"
+					
+				}else{
+					
+					
+					println "No se salvo la identidad"
+					
+				}
 			}else{
-				//params.identities = params.identities
+			
+				personInstance.addToIdentities(personNameUserInstance)
+				println "no hay identidades en personinstance"
+				
 			}
-			println("IDENTIDAD:" +params.identities+"\n\n\n")*/
-			personInstance.properties = params
+			
+			def bd = DateConverter.dateFromParams( params, 'fechaNacimiento_' )
+            personInstance.setFechaNacimiento( bd )
+            //personInstance.addToIdentities( personNameUserInstance )
+			println "params: "+params
+			personInstance.sexo = params.sexo
             if (!personInstance.hasErrors() && personInstance.save(flush: true)) {
 
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])}"

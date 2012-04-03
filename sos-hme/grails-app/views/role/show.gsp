@@ -27,14 +27,14 @@
 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.performer.label" default="Performer" /></td>
-
-                            <td valign="top" class="value"><g:link controller="person" action="show" id="${roleInstance?.performer?.id}">${roleInstance?.performer?.identities?.toString()}</g:link></td>
+							
+								<td valign="top" class="value"><g:link controller="person" action="show" id="${roleInstance?.performer?.id}">${roleInstance?.performer?.identities?.toString()}</g:link></td>
 
                         </tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="role.status.label" default="status" /></td>
                             
-                            <td valign="top" class="value"><g:checkBox name="status" value="${roleInstance?.status}" /></td>
+                            <td valign="top" class="value">${roleInstance?.status}</td>
                             
                         </tr>
                         <tr class="prop">
