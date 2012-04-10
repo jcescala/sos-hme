@@ -619,6 +619,8 @@ border-bottom:#c1c1c1 solid 1px;
 .userlogin input {
 	color:#4077ab;
 	font-size:18px;
+	/*padding:10px;*/
+	/*height:30px;*/
 	margin-bottom:15px;
 	width:90%;}
 .buttonlogin {
@@ -704,22 +706,15 @@ cursor: pointer;
         
 		
       }
-	  
-
   .error {
   
         /* TODO: meter icono de error ! */
         border: 1px solid #f00;
         background-color: #f99;
+       
         
       }
-#logine .error{
-        border: 1px solid #f00;
-        background-color: #f99;
-		height:30px;
-		margin-top: -15px;
 
-}
       .ok{
         /* TODO: meter icono de ok ! */
         border: 1px solid #f00;
