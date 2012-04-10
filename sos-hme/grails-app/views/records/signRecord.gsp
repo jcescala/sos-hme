@@ -5,13 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <title><g:message code="trauma.sign.title" /></title>
     <g:javascript library="prototype/prototype" />
-	<g:javascript library="jquery" />
-<%--carga de codigos js y css para ventana modal--%>
-<link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css/', file:'basic.css')}"/>
+<g:javascript library="jquery" />
 <script type="text/javascript" src="${createLinkTo(dir:'js/', file:'jquery.simplemodal.js')}"></script>
 <script type="text/javascript" src="${createLinkTo(dir:'js/', file:'basic.js')}"></script>
-
-    <g:javascript>
+	
+	<g:javascript>
       <!--
         Event.observe(window, 'load', function(event) {
         
@@ -34,7 +32,32 @@
       }
     
      
-      
+      .error {
+        /* TODO: meter icono de error ! */
+        border: 1px solid #f00;
+        background-color: #f99;
+        padding: 2px;
+		height: 30px;
+        margin-bottom: 3px;
+		margin-top: 0px;
+	  }
+      .error ul {
+        list-style:none;
+        margin:0;
+        padding:0;
+      }
+      .message {
+        /* TODO: meter icono de error ! */
+        border: 1px solid #0f0;
+        background-color: #9f9;
+        padding: 2px;
+        margin-bottom: 3px;
+      }
+      .message ul {
+        list-style:none;
+        margin:0;
+        padding:0;
+      }
      
       table #sign_table {
         width: 290px;
