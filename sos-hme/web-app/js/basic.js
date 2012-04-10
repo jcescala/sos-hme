@@ -34,5 +34,15 @@ jQuery(function ($) {
 		return false;
 	});	
 
+	$('#firmar').click(function (e) {
+		$('#osx-modal-content-firmarEpisodio').modal();
 
+		return false;
+	});	
+	
+	$('#reabrir').click(function (e) {
+		$('#osx-modal-content-reabrirEpisodio').modal();
+
+		return false;
+	});	
 });

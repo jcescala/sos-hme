@@ -659,7 +659,10 @@ def fetch_mm = {
 
     return null
 }
-    
+    def faildrecord = {
+
+
+}
 /**
  * Firma y cierra el registro (antes firmar y cerrar eran procesos separados: http://code.google.com/p/open-ehr-gen-framework/issues/detail?id=9).
  * in: id episode id
@@ -687,7 +690,7 @@ def recordValidate = {
 				redirect( controller:'records', action:'signRecord', params: [doit: 'signRecord',id: params.episodio_id, loginid: loginid, validate: true] )
 			}
 		}else{
-		
+			flash.error = "trauma.sign.wrongSigningRole"
 			logged("Firma de registro no autorizada user: "+params.user+" ","info", session.traumaContext.userId)
 			
 			redirect( controller:'records', action:'signRecord', params: [id: params.episodio_id, validate: false] )

@@ -133,7 +133,7 @@
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
-				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
+				<h4>Por favor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="idaddp" id="idaddp" value="${persona.id}" style="display:none;" >
 					<input name="actionType" id="actionType" value="addImpPatient" style="display:none;">
@@ -145,8 +145,8 @@
 					</div>
 					
 					<div id="ingresarboton" class="ingresarboton">
+						<%-- i18n --%>
 						<input type="submit" name="doit" id="doit" value="Confirmar" class="buttonlogin"/>
-						
 					</div>
 				</form>
 				
@@ -158,7 +158,7 @@
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
-				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
+				<h4>Por favor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="iddelp" id="iddelp" value="${persona.id}" style="display:none;" >
 					<input name="actionType" value="delImpPatient" style="display:none;" >
@@ -169,8 +169,8 @@
 						<input name="pass" type="text" value="Contrase&ntilde;a" class="userlogin" onfocus="replaceT(this)"/>
 					</div>
 					<div id="ingresarboton" class="ingresarboton">
+						<%-- i18n --%>
 						<input type="submit" name="doit" id="doit" value="Confirmar" class="buttonlogin"/>
-						
 					</div>
 				</form>
 			</div>
@@ -181,7 +181,7 @@
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
-				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
+				<h4>Por favor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="idaddr1" id="idaddr1" value="${persona.id}" style="display:none;">
 					<input name="idaddr2" id="idaddr2" value="${persona.id}" style="display:none;">
@@ -206,7 +206,7 @@
 			<div class="close"><a href="#" class="simplemodal-close">x</a></div>
 			<div id="osx-modal-data">
 				<h2>SOS Historias Medicas</h2>
-				<h4>Porfavor identif&iacute;quese como m&eacute;dico:</h4>
+				<h4>Por favor identif&iacute;quese como m&eacute;dico:</h4>
 				<form action="/sos/demographic/impValidate" method="post">
 					<input name="iddelr" id="iddelr" value="${persona.id}" style="display:none;">
 					<input name="actionType" value="delImpRelation" style="display:none;">
