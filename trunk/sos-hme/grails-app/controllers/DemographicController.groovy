@@ -1306,7 +1306,11 @@ def authorizationService
                                 patient.addToIds(idTemp)
                                 def eliminado = patient.ids.find{idPorEliminar}
                                 def compositionsPatient = hceService.getAllCompositionForPatient(patient, new Date(0), new Date())
-                                def numeroCompositions = compositionsPatient.size()
+                                def numeroCompositions=0;
+                                if(compositionsPatient!=null){
+                                    numeroCompositions = compositionsPatient.size()
+                                }
+                                
                                 def cicloCompositions
                                 def compositionsParticular
 
