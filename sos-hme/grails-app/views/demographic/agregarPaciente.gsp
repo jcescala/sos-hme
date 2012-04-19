@@ -231,7 +231,9 @@
 
         <fieldset>
         <legend>Identificaci&oacute;n</legend>
+		
 	<div style="clear:both"></div>
+	
                 <p>
                 <label for="identificador"><g:message code="persona.identificador" /></label>
                 <g:textField name="extension" value="${params.identificador}" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
@@ -245,7 +247,7 @@
                 </g:else>
                 </p>
                 <%--<g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	--%>
-                 <div id="nombres">
+    <div id="nombres"><div style="clear:both"></div>           
                    <p>
                     <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
                     <g:textField name="primerApellido" value="${params.primerApellido}"/>
@@ -273,7 +275,7 @@
                     </p>
                     <p>
                     <label for="foto"><g:message code="persona.foto" /></label>
-                    <input type="text" name="foto" id="foto"/>
+                    <input type="text" name="foto" id="foto" style='width: 300px;'/>
                     </p>
                 </div>
         <div id="imgPrevia"></div>

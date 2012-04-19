@@ -1484,7 +1484,15 @@ def authorizationService
     
 	
 		  
-	def ajaxGetNombres = {	
+	def ajaxGetNombres = {
+	
+		if(!session.traumaContext){
+			redirect(controller:'Authorization', action:'login')
+		}
+		
+		//por alguna razon en el servidor estos mensajes no son desplegados correctamente
+		//por lo tanto se debera migrar este codigo a la vista donde los codigos si son
+		//desplegados correctamente.
 		def m0 = messageSource.getMessage( 'persona.identificador', null, null)		
 	
 		def m1 = messageSource.getMessage( 'persona.primerApellido', null, null)
@@ -1502,12 +1510,19 @@ def authorizationService
 		def m7 = messageSource.getMessage( 'persona.foto', null, null)
 		
 		def codmsj = "1"
-		println "estoy en la funcion ajaxGetNombres!!! id: "+ params.id
 		
+		//se modifica el valor  los mensajes para que sean desplegados correctamente.
+		m0 = "Identificador [Número / Tipo]"
+		m1 = "Primer Apellido"
+		m2 = "Segundo Apellido"
+		m3 = "Primer Nombre"
+		m4 = "Segundo Nombre"
+		m5 = "Fecha de Nacimiento"
+		m6 = "Sexo"
+		m7 = "Foto del Paciente"
+		//println "m2 "+m2
 		def array
 		def a = true
-		
-		println "parametrosss: "+params
 			array = params.id.split	("!")
 			def primerApellido
 			def segundoApellido
@@ -1517,7 +1532,16 @@ def authorizationService
 			def sexo
 			def selectFemenino = ""
 			def selectMasculino = ""
-			
+			def tiposIds = TipoIdentificador.list()
+			def cadenaTiposIds = ""
+			//println "root "+array[0]
+			for(i in tiposIds){
+					if(i.codigo.equals(array[0].toString()))
+						cadenaTiposIds = cadenaTiposIds + "<option value='"+i.codigo+"' selected='selected'>"+ i.nombreCorto + "</option>\n"
+					else
+						cadenaTiposIds = cadenaTiposIds + "<option value='"+i.codigo+"' >"+ i.nombreCorto + "</option>\n"
+				}
+			//println "opciones: "+cadenaTiposIds
 			if(array[2]!=null)
 				primerApellido = array[2]
 			else
@@ -1559,33 +1583,47 @@ def authorizationService
 				println "id "+id
 				candidatosUsuarios = demographicService.findUserById(id)
 				existPatient = demographicService.findPatientById(id)
-				println "candidatosUsuarios: "+ candidatosUsuarios
-				if(existPatient){
+				//println "candidatosUsuarios: "+ candidatosUsuarios
+				
+/*
+"<div style='clear:both'></div>"+
+"<p><label for='identificador'>"+m0+"</label>"+
+"<input type='text' name='extension' value='' onchange='updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')'/>"+
+"<select id='root' name='root' onchange='updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')'>"+
+cadenaTiposIds+"</select>"+
+"</p>"+
+								
+
+*/		
+				
+				
+				if(existPatient){ // si el paciente ya existe
 						
 						codmsj="2"
-						render  "<input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>"+
-                                "<p><label for='primerApellido'>"+m1+"</label>"+
+						render  "<div style='clear:both'></div>"+
+								"<p><input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>"+
+                                "<label for='primerApellido'>"+m1+"</label>"+
                                                                 
-								"<input type='text' name='primerApellido' id='primerApellido' value=''></p>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value='' style='margin-left:5px;'></p>"+
 
 								"<p><label for='segundoApellido'>"+m2+"</label>"+
-								"<input type='text' name='segundoApellido' id='segundoApellido' value=''></p>"+
+								"<input type='text' name='segundoApellido' id='segundoApellido' value='' style='margin-left:5px;'></p>"+
 
 								"<p><label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value=''></p>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='' style='margin-left:5px;'></p>"+
 
 								"<p><label for='segundoNombre'>"+m4+"</label>"+
-								"<input type='text' name='segundoNombre' id='segundoNombre' value=''></p>"+
+								"<input type='text' name='segundoNombre' id='segundoNombre' value='' style='margin-left:5px;'></p>"+
 								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br /></p>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='' style='margin-left:5px;'/>  <br /><br /></p>"+
 								"<p><label for='sexo'>"+m6+"</label>"+
-								"<select name='sexo' class='selectci' id='sexo' >"+
+								"<select name='sexo' class='selectci' id='sexo' style='width: 175px; margin-left:5px;' >"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' >Masculino</option>"+
 								"<option value='Femenino' >Femenino</option></select></p>"+
 								"<p><label for='foto'>"+m7+"</label>"+
-								"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
+								"<input type='text' name='foto' id='foto' style='width: 300px; margin-left:5px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
@@ -1594,11 +1632,11 @@ def authorizationService
 								"});</script>"
 							
 							
-				}else{
+				}else{ // si no existe
 				
 					
 				
-					if(candidatosUsuarios){
+					if(candidatosUsuarios){	//si existen usuarios con ese identificador
 
 						
 						def datos = [uno:"",dos:"",tres:"",cuatro:"",cinco:"",seis:""]
@@ -1632,28 +1670,29 @@ def authorizationService
 							selectFemenino = "selected"
 						}
 						codmsj="3"
-						render  "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
-                                "<p><label for='primerApellido'>"+m1+"</label>"+
+						render  "<div style='clear:both'></div>"+
+								"<p><input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+                                "<label for='primerApellido'>"+m1+"</label>"+
                                                                 
-								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"'>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"' style='margin-left:5px;'>"+
 
 								"<p><label for='segundoApellido'>"+m2+"</label>"+
-								"<input type='text' name='segundoApellido' id='segundoApellido' value='"+datos.get("dos")+"'>"+
+								"<input type='text' name='segundoApellido' id='segundoApellido' value='"+datos.get("dos")+"' style='margin-left:5px;'>"+
 
 								"<p><label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value='"+datos.get("tres")+"'></p>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='"+datos.get("tres")+"' style='margin-left:5px;'></p>"+
 
 								"<p><label for='segundoNombre'>"+m4+"</label>"+
-								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+datos.get("cuatro")+"'></p>"+
+								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+datos.get("cuatro")+"' style='margin-left:5px;'></p>"+
 								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento'  value='"+datos.get("cinco")+"' />  <br /><br /></p>"+
 								"<p><label for='sexo'>"+m6+"</label>"+
-								"<select name='sexo' class='selectci' id='sexo' >"+
+								"<select name='sexo' class='selectci' id='sexo' style='width: 175px; margin-left:5px;'>"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' "+selectMasculino+">Masculino</option>"+
 								"<option value='Femenino' "+selectFemenino+">Femenino</option></select></p>"+
 								"<p><label for='foto'>"+m7+"</label>"+
-								"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
+								"<input type='text' name='foto' id='foto' style='width: 300px; margin-left:5px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
@@ -1661,7 +1700,7 @@ def authorizationService
 
 								"});</script>"
 							
-					}else{
+					}else{ // si no existen usuarios con ese identificador
 					
 						codmsj="4"
 
@@ -1671,28 +1710,29 @@ def authorizationService
 							selectFemenino = "selected"
 						}
 						
-						render  "<input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
-                                "<p><label for='primerApellido'>"+m1+"</label>"+
+						render  "<div style='clear:both'></div>"+
+								"<p><input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+                                "<label for='primerApellido'>"+m1+"</label>"+
                                                                     
-								"<input type='text' name='primerApellido' id='primerApellido' value="+primerApellido+"></p>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value='"+primerApellido+"' style='margin-left:5px;'></p>"+
 								"<p><label for='segundoApellido'>"+m2+"</label>"+
-								"<input type='text' name='segundoApellido' id='segundoApellido' value="+segundoApellido+"></p>"+
+								"<input type='text' name='segundoApellido' id='segundoApellido' value='"+segundoApellido+"' style='margin-left:5px;'></p>"+
 
 								"<p><label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value="+primerNombre+"></p>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='"+primerNombre+"' style='margin-left:5px;'></p>"+
 
 								"<p><label for='segundoNombre'>"+m4+"</label>"+
-								"<input type='text' name='segundoNombre' id='segundoNombre' value="+segundoNombre+"></p>"+
+								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+segundoNombre+"' style='margin-left:5px;'></p>"+
 								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='"+fechaNacimiento+"' />  <br /><br /></p>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='"+fechaNacimiento+"' style='margin-left:5px;'/>  <br /><br /></p>"+
 								"<p><label for='sexo'>"+m6+"</label>"+
-								"<select name='sexo' class='selectci' id='sexo' >"+
+								"<select name='sexo' class='selectci' id='sexo' style='width: 175px; margin-left:5px;'>"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' "+selectMasculino+">Masculino</option>"+
 								"<option value='Femenino' "+selectFemenino+">Femenino</option></select></p>"+
 								"<p><label for='foto'>"+m7+"</label>"+
-								"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
+								"<input type='text' name='foto' id='foto' style='width: 300px; margin-left:5px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
@@ -1702,12 +1742,13 @@ def authorizationService
 					}
 				}
 				
-				println("funcion ajax get nombres finalizada con exito "+codmsj)
+				//println("funcion ajax get nombres finalizada con exito "+codmsj)
 				
 			}catch(ArrayIndexOutOfBoundsException e){
-				println "estoy en el catch"
+				//println "estoy en el catch"
 				
-				render 	"<p><label for='primerApellido'>"+m1+"</label>"+
+				render 	"<div style='clear:both'></div>"+
+						"<p><label for='primerApellido'>"+m1+"</label>"+
 						"<input type='text' name='primerApellido' value=''></p>"+
 
 						"<p><label for='segundoApellido'>"+m2+"</label>"+
@@ -1723,7 +1764,7 @@ def authorizationService
 
 						"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br /></p>"+
 						"<p><label for='sexo'>"+m6+"</label>"+
-						"<select name='sexo' class='selectci' id='sexo' >"+
+						"<select name='sexo' class='selectci' id='sexo' style='width: 175px;'>"+
 						"<option value=''>Seleccione</option>"+
 						"<option value='Masculino' >Masculino</option>"+
 						"<option value='Femenino' >Femenino</option></select></p>"+
