@@ -15,7 +15,8 @@
                 <h1><img src="${createLinkTo(dir:'images',file:'SOS.gif')}" alt="SOS" width="97" height="53" align="texttop" />Historias Médicas</h1>
         </div>
         <div id="breadcrumbs">
-        	<a href="#">Dominios</a> > Historia Integral
+        	
+                <g:link controller="domain" action="list" class="contextoEhr">Dominios</g:link>> Historia Integral
         </div>
     </div>
       <div id="cabColD">
@@ -34,8 +35,8 @@
     </div>
     
     <div id="footerbasic" class="footercontenido">
-      Centro de An&aacute;lisis de Im&aacute;genes Biom&eacute;dicas Computarizadas CAIBCO - Insituto de Medicina Tropical </br>
-      Facultad de Medicina. Universiad Central de Venezuela </br>
+      Centro de An&aacute;lisis de Im&aacute;genes Biom&eacute;dicas Computarizadas CAIBCO - Instituto de Medicina Tropical </br>
+      Facultad de Medicina. Universidad Central de Venezuela </br>
       Tel&eacute;fonos: (0212) 605.37.46 / 35.94 </br>
       sostelemedicina&#64;ucv.ve
     </div>

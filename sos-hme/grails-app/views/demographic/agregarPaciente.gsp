@@ -17,7 +17,6 @@
     <script type="text/javascript" src="../js/jquery/jquery-ui-timepicker-addon.js"> </script>
      
       <script type="text/javascript" src="${createLinkTo(dir:'js/jquery' ,file:'jquery.form.js')}"></script>
-    
     <g:javascript src='formToWizard.js' />
     <g:javascript src='funciones.js' />
     <g:javascript src='jquery.validate.js' />
@@ -81,8 +80,7 @@
  
 
         });
-
-
+        
       });
       function mostrarRespuesta(respuesta){
 
@@ -236,7 +234,9 @@
 	
                 <p>
                 <label for="identificador"><g:message code="persona.identificador" /></label>
-                <g:textField name="extension" value="${params.identificador}" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
+
+                <g:textField name="extension" value="${params.identificador}" title="Número de Identificador y Tipo" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
+
                 <g:if test="${params.root}">
                   <input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>
                   <g:select name="root" from="${tiposIds}" value="${params.root}" optionKey="codigo" optionValue="nombreCorto" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
@@ -275,7 +275,7 @@
                     </p>
                     <p>
                     <label for="foto"><g:message code="persona.foto" /></label>
-                    <input type="text" name="foto" id="foto" style='width: 300px;'/>
+                    <input type="text" name="foto" id="foto" style='width: 300px;' title="Haga click en el campo para agregar una foto"/>
                     </p>
                 </div>
         <div id="imgPrevia"></div>
@@ -340,7 +340,7 @@
         </p>  
         <p>  
           <label for="anosaprobados"><g:message code="persona.anosaprobados"/></label>
-          <g:textField name="anosaprobados" class="selectci" value="${params.anosaprobados}" />
+          <g:textField name="anosaprobados" class="selectci" value="${params.anosaprobados}" title="Cuado aplique, años pasados desde su graduación"/>
         </p>	  
         <p>
           <label for="ocupacion"><g:message code="persona.ocupacion"/></label>
@@ -389,7 +389,7 @@
           </p>
           <p>
           <label for="tiemporesidencia"><g:message code="persona.tiemporesidencia"/></label> 
-          <g:textField name="tiemporesidencia" class="selectci" value="${params.tiemporesidencia}" />
+          <g:textField name="tiemporesidencia" class="selectci" value="${params.tiemporesidencia}" title="Indicar el tiempo en años o meses que tiene en la residencia actual"/>
           </p>
         </fieldset>
 		
