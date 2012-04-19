@@ -234,7 +234,7 @@
 	<div style="clear:both"></div>
                 <p>
                 <label for="identificador"><g:message code="persona.identificador" /></label>
-                <g:textField name="extension" value="${params.identificador}" />
+                <g:textField name="extension" value="${params.identificador}" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
                 <g:if test="${params.root}">
                   <input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>
                   <g:select name="root" from="${tiposIds}" value="${params.root}" optionKey="codigo" optionValue="nombreCorto" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
