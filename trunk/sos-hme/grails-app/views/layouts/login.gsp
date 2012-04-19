@@ -16,8 +16,8 @@
 
 
     <div id="footer" class="footercontenido">
-      Centro de An&aacute;lisis de Im&aacute;genes Biom&eacute;dicas Computarizadas CAIBCO - Insituto de Medicina Tropical </br>
-      Facultad de Medicina. Universiad Central de Venezuela </br>
+      Centro de An&aacute;lisis de Im&aacute;genes Biom&eacute;dicas Computarizadas CAIBCO - Instituto de Medicina Tropical </br>
+      Facultad de Medicina. Universidad Central de Venezuela </br>
       Tel&eacute;fonos: (0212) 605.37.46 / 35.94 </br>
       <a href="mailto:sostelemedicina&#64ucv.ve">sostelemedicina&#64;ucv.ve
     </a></div>
