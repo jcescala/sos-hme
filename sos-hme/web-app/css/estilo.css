@@ -504,7 +504,7 @@ border-bottom:#c1c1c1 solid 1px;
 .form1 textarea {
 	margin-left:100px;
 	margin-top:10px;
-	width:80%;}
+	width:70%;}
 .form1 p:nth-child(odd) {
 	background-color:#f7f7f7;
 	}
@@ -709,11 +709,27 @@ cursor: pointer;
   .error {
   
         /* TODO: meter icono de error ! */
-        border: 1px solid #f00;
+        /*border: 1px solid #f00;*/
         background-color: #f99;
        
         
       }
+label.error {
+		background: transparent;
+		padding-left: 5px;
+		width: 200px;
+		height: 15px;
+		color: #FF0000;
+		text-align: left;
+}
+label#errorms {
+		background: transparent;
+		padding-left: 5px;
+		width: 200px;
+		height: 15px;
+		color: #FF0000;
+		text-align: left;
+}
 
       .ok{
         /* TODO: meter icono de ok ! */

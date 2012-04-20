@@ -169,14 +169,18 @@
 	border-bottom-color:#4f677f;
 	border-bottom-width:thin;
 }
-label.error {
-		background: url('../images/unchecked.gif') no-repeat;
-		padding-left: 16px;
-		width: 200px;
+/*label.error {
+		background: transparent;
+		padding-left: 5px;
+		width: 50px;
 		height: 15px;
-}
+		color: #FF0000;
+		text-align: left;
+}*/
+
+
 label.valid {
-		background: url('http://dev.jquery.com/view/trunk/plugins/validate/demo/images/checked.gif') no-repeat;
+		background-color: url('http://dev.jquery.com/view/trunk/plugins/validate/demo/images/checked.gif') no-repeat;
 		display: block;
 		width: 100px;
 		height: 16px;
