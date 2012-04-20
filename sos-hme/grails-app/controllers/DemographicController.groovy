@@ -1448,7 +1448,7 @@ def authorizationService
             if (session.traumaContext.episodioId)
             redirect(controller:'records', action:'show', id:session.traumaContext.episodioId)
             else
-            redirect(controller:'records', action:'list')
+            redirect(controller:'demographic', action:'show',id:params.id)
             return
         }
         
