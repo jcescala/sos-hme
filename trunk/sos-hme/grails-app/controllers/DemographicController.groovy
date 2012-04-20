@@ -1605,7 +1605,7 @@ cadenaTiposIds+"</select>"+
 						
 						codmsj="2"
 						render  "<div style='clear:both'></div>"+
-								"<p><input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>"+
+								"<p>"+
                                 "<label for='primerApellido'>"+m1+"</label>"+
                                                                 
 								"<input type='text' name='primerApellido' id='primerApellido' value='' style='margin-left:5px;'></p>"+
@@ -1631,8 +1631,11 @@ cadenaTiposIds+"</select>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
-								"jQuery('#mensaje').html('Ya existe un paciente con este identificador, favor identificarse de otra forma.');"+
-
+								"jQuery('#errorms').html('Paciente ya existente');"+
+								"jQuery('#extension').css('background-color','#FF9999');"+
+								"jQuery('#identificadorUnico').val('novalido');"+
+								"jQuery('#extension').focus();"+
+								"jQuery('#extension').blur();"+
 								"});</script>"
 							
 							
@@ -1675,7 +1678,7 @@ cadenaTiposIds+"</select>"+
 						}
 						codmsj="3"
 						render  "<div style='clear:both'></div>"+
-								"<p><input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+								"<p>"+
                                 "<label for='primerApellido'>"+m1+"</label>"+
                                                                 
 								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"' style='margin-left:5px;'>"+
@@ -1700,8 +1703,11 @@ cadenaTiposIds+"</select>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
-								"jQuery('#mensaje').html('&nbsp;');"+
-
+								"jQuery('#errorms').html('&nbsp;')"+
+								"jQuery('#extension').css('background-color','#FFF');"+
+								"jQuery('#identificadorUnico').val('valido');"+
+								"jQuery('#extension').focus();"+
+								"jQuery('#extension').blur();"+
 								"});</script>"
 							
 					}else{ // si no existen usuarios con ese identificador
@@ -1715,7 +1721,7 @@ cadenaTiposIds+"</select>"+
 						}
 						
 						render  "<div style='clear:both'></div>"+
-								"<p><input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>"+
+								"<p>"+
                                 "<label for='primerApellido'>"+m1+"</label>"+
                                                                     
 								"<input type='text' name='primerApellido' id='primerApellido' value='"+primerApellido+"' style='margin-left:5px;'></p>"+
@@ -1740,7 +1746,11 @@ cadenaTiposIds+"</select>"+
 								"<script>jQuery(document).ready(function(){"+
 								"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 								"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
-								"jQuery('#mensaje').html('&nbsp;');"+
+								"jQuery('#errorms').html('&nbsp;');"+
+								"jQuery('#extension').css('background-color','#fff');"+
+								"jQuery('#identificadorUnico').val('valido');"+
+								"jQuery('#extension').focus();"+
+								"jQuery('#extension').blur();"+
 								"});</script>"
 							
 					}
@@ -1752,7 +1762,8 @@ cadenaTiposIds+"</select>"+
 				//println "estoy en el catch"
 				
 				render 	"<div style='clear:both'></div>"+
-						"<p><label for='primerApellido'>"+m1+"</label>"+
+						"<p>"+
+						"<label for='primerApellido'>"+m1+"</label>"+
 						"<input type='text' name='primerApellido' value=''></p>"+
 
 						"<p><label for='segundoApellido'>"+m2+"</label>"+
@@ -1778,8 +1789,9 @@ cadenaTiposIds+"</select>"+
 						"jQuery('.Date').datepicker({dateFormat: 'dd-mm-yy',changeYear: true, buttonText: 'Calendario', buttonImage: '/sos/images/datepicker.gif', maxDate: new Date(), yearRange: '1900:2100', constrainInput: true, showButtonPanel: true, showOn: 'button' });"+
 						"jQuery('#fechaNacimiento').attr('readonly',true);jQuery('#foto').attr('readonly',true);jQuery('#foto').click(function (){jQuery('#inputFotoPrevia').click();});"+	
 						"jQuery('#mensaje').html('&nbsp;');"+
-						"});</script>"+
-                        "<input type='hidden' id='identificadorUnico' value='novalido'/>"
+						"jQuery('#extension').css('background-color','#FF9999');"+
+						"jQuery('#identificadorUnico').val('novalido');"+
+						"});</script>"
 			}
 	}
 	

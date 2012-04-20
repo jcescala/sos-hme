@@ -227,16 +227,14 @@
         <g:hiddenField name="y2" value="100" />
 
 
-        <fieldset>
+<fieldset>
         <legend>Identificaci&oacute;n</legend>
 		
 	<div style="clear:both"></div>
 	
                 <p>
                 <label for="identificador"><g:message code="persona.identificador" /></label>
-
-                <g:textField name="extension" value="${params.identificador}" title="Número de Identificador y Tipo" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
-
+                
                 <g:if test="${params.root}">
                   <input type='hidden' id='identificadorUnico' value='valido' name='identificadorUnico'/>
                   <g:select name="root" from="${tiposIds}" value="${params.root}" optionKey="codigo" optionValue="nombreCorto" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
@@ -245,7 +243,9 @@
                   <input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>
                   <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['*1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
                 </g:else>
-                </p>
+				<g:textField name="extension" value="${params.identificador}" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
+                
+				</p>
                 <%--<g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	--%>
     <div id="nombres"><div style="clear:both"></div>           
                    <p>
@@ -275,7 +275,7 @@
                     </p>
                     <p>
                     <label for="foto"><g:message code="persona.foto" /></label>
-                    <input type="text" name="foto" id="foto" style='width: 300px;' title="Haga click en el campo para agregar una foto"/>
+                    <input type="text" name="foto" id="foto" style='width: 300px;'/>
                     </p>
                 </div>
         <div id="imgPrevia"></div>
