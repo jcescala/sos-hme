@@ -614,15 +614,21 @@ border-bottom:#c1c1c1 solid 1px;
 
 
 
-}	
-
+}
 .userlogin input {
 	color:#4077ab;
 	font-size:18px;
-	/*padding:10px;*/
-	/*height:30px;*/
+	padding:10px;
 	margin-bottom:15px;
 	width:90%;}
+
+/*.userlogin input {
+	color:#4077ab;
+	font-size:18px;
+	padding:10px;
+	height:30px;
+	margin-bottom:15px;
+	width:90%;}*/
 .buttonlogin {
 	background-color:#479d00;
 	font-size:18px;
