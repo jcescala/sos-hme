@@ -200,8 +200,10 @@ class ServiceController {
         if(result){
 
             if(params.render == 'xml'){
-                render(text: result.getDocumento(),contentType:"text/xml",encoding:"UTF-8")
 
+           
+               response.setHeader("Content-disposition", "attachment; filename=cda-${result.getId()}-${result.getTitulo()}-${result.getFechaCreacion()}.xml");
+               render(text: result.getDocumento(),contentType:"text/xml")
             }else if(params.render == 'cda'){
 
 
