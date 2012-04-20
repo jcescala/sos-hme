@@ -27,8 +27,16 @@ environments {
 	}
 	test {
 		dataSource {
-			dbCreate = "update"
-			url = "jdbc:hsqldb:mem:testDb"
+//          dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+//			url = "jdbc:hsqldb:mem:devDB"
+			
+	        pooling = true
+	        driverClassName = "com.mysql.jdbc.Driver"
+	        url = "jdbc:mysql://localhost:3306/oehr_dev?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8"
+	        dbCreate = "update"
+	        username = "root"
+	        password = ""
+                //loggingSql = true
 		}
 	}
 	production {
