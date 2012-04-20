@@ -20,13 +20,13 @@ $j(document).ready(function(){
     jQuery.validator.addMethod( 
 	  "identificadorValido", 
 	  function(value, element) { 
-	    if (element.value == "novalido") 
+	    if (document.getElementById("identificadorUnico").value == "novalido") 
 	    { 
 	      return false; 
 	    } 
 	    else return true; 
 	  }, 
-	  "identificador no valido" 
+	  "Paciente ya existente" 
 	);
             
     $j("#nuevopaciente").validate({
@@ -53,6 +53,7 @@ $j(document).ready(function(){
             },
             "extension":{
                 //required: true,
+		identificadorValido: true,
 		minlength: 6,
 		maxlength: 8,
 		number: true
@@ -167,6 +168,7 @@ $j(document).ready(function(){
             },
             "extension":{
                 //required: "Obligatorio", 
+		
 		minlength: "M&iacute;nimo 6 d&iacute;gitos",
 		maxlength: "M&aacute;ximo 8 d&iacute;gitos",
                 number: " Num&eacute;rico"
