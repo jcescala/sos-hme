@@ -172,8 +172,8 @@ service.simple.url = ""
 service.complex.url = ""
 service.secure.url.cda = ""
 service.secure.url.imp = ""
-service.serverURL = "http://190.169.161.50:9090"
-//service.serverURL = "http://127.0.0.1:8080"
+//service.serverURL = "http://190.169.161.50:9090"
+service.serverURL = "http://127.0.0.1:8888"
 
 // set per-environment service url
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -181,10 +181,11 @@ service.serverURL = "http://190.169.161.50:9090"
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 environments {
     production {
-        grails.serverURL = "http://www.changeme.com"
-        service.simple.url = "${grails.serverURL}/services/simple"
-        service.complex.url = "${grails.serverURL}/services/complex"
-        service.secure.url = "${grails.serverURL}/services/secure"
+        grails.serverURL = "${service.serverURL}/${appName}"
+        service.simple.url = "${service.serverURL}/imp-cda/services/imp"
+        service.complex.url = "${service.serverURL}/imp-cda/services/imp"
+        service.secure.url.cda = "${service.serverURL}/imp-cda/services/cda"
+        service.secure.url.imp = "${service.serverURL}/imp-cda/services/imp"
     }
     development {
         grails.serverURL = "${service.serverURL}/${appName}"
@@ -195,10 +196,11 @@ environments {
 
     }
     test {
-        grails.serverURL = "http://localhost:9090/${appName}"
-        service.simple.url = "${grails.serverURL}/services/simple"
-        service.complex.url = "${grails.serverURL}/services/complex"
-        service.secure.url = "${grails.serverURL}/services/secure"
+         grails.serverURL = "${service.serverURL}/${appName}"
+        service.simple.url = "${service.serverURL}/imp-cda/services/imp"
+        service.complex.url = "${service.serverURL}/imp-cda/services/imp"
+        service.secure.url.cda = "${service.serverURL}/imp-cda/services/cda"
+        service.secure.url.imp = "${service.serverURL}/imp-cda/services/imp"
     }
 }
 
@@ -219,24 +221,28 @@ log4j = {
 
 	production {
 		appenders {
-			file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos/prod/logs/errorLog.log'
-			file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos/prod/logs/infoLog.log'
+				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos2/dev/logs/errorLog.log'
+				//file name:'errorAppenderService', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLogService.log'
+				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos2/dev/logs/infoLog.log'
+				//rollingFile name: "StackTrace", maxFileSize: 1024, file: "/sos/dev/logs/myApp-stacktrace.log"
 		}
 	}
 	
 	test{
 		appenders {
-			file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos/test/logs/errorLog.log'
-			file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos/logs/test/infoLog.log'
-		}	
+				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos2/dev/logs/errorLog.log'
+				//file name:'errorAppenderService', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLogService.log'
+				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos2/dev/logs/infoLog.log'
+				//rollingFile name: "StackTrace", maxFileSize: 1024, file: "/sos/dev/logs/myApp-stacktrace.log"
+		}
 	
 	}
 
 	development {
 		appenders {
-				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLog.log'
+				file name:'errorAppender', threshold: org.apache.log4j.Level.ERROR, file:'/sos2/dev/logs/errorLog.log'
 				//file name:'errorAppenderService', threshold: org.apache.log4j.Level.ERROR, file:'/sos/dev/logs/errorLogService.log'
-				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos/dev/logs/infoLog.log'
+				file name:'infoAppender', threshold: org.apache.log4j.Level.INFO, file:'/sos2/dev/logs/infoLog.log'
 				//rollingFile name: "StackTrace", maxFileSize: 1024, file: "/sos/dev/logs/myApp-stacktrace.log"
 		}
 	}
@@ -272,7 +278,7 @@ log4j = {
 //UCV CAIBCO 
 
 //imp.organizacion.id = "fea4ae1f-a828-4780-9f79-2e68176fa4ab"
-imp.organizacion.id = "4ff2af8f-beed-4b2d-b710-100a5306e41e"
+imp.organizacion.id = "b02667bc-4266-4f0e-9c70-9c7b2af6ba64"
 //imp.organizacion.id ="4c9fdb58-eb0f-4430-b616-408a0c580793" //SOS2
 
 
