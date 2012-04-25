@@ -243,14 +243,14 @@
                   <input type='hidden' id='identificadorUnico' value='novalido' name='identificadorUnico'/>
                   <g:select name="root" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['*1':'Seleccione Identificador']" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
                 </g:else>
-				<g:textField name="extension" value="${params.identificador}" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/>
+                <g:textField name="extension" value="${params.identificador}" onchange="updateNombres( root.value, extension.value, primerApellido.value, segundoApellido.value, primerNombre.value, segundoNombre.value, fechaNacimiento.value, sexo.value, 'fin')"/> <span class="obligatorio">*</span>
                 
 				</p>
                 <%--<g:select name="root" class="selectci" from="${tiposIds}" optionKey="codigo" optionValue="nombreCorto" noSelection="['-1':'Seleccione Identificador']"/>	--%>
     <div id="nombres"><div style="clear:both"></div>           
                    <p>
                     <label for="primerApellido"> <g:message code="persona.primerApellido" /></label>
-                    <g:textField name="primerApellido" value="${params.primerApellido}"/>
+                   <g:textField name="primerApellido" value="${params.primerApellido}"/><span class="obligatorio">&nbsp;*</span>
                    </p>   
                    <p>
                     <label for="segundoApellido"> <g:message code="persona.segundoApellido" /></label>
@@ -259,7 +259,7 @@
                     <p>
                     
                     <label for="primerNombre"><g:message code="persona.primerNombre" /></label>
-                    <g:textField name="primerNombre" value="${params.primerNombre}" />
+                    <g:textField name="primerNombre" value="${params.primerNombre}" /><span class="obligatorio">&nbsp;*</span>
                     </p>
                     <p>
                     <label for="segundoNombre"><g:message code="persona.segundoNombre" /></label>
@@ -267,17 +267,18 @@
                     </p>
                     <p>
                     <label for="fechaNacimiento"><g:message code="persona.fechaNacimiento" /></label>
-                    <input name="fechaNacimiento" type="text" id="fechaNacimiento" class="Date" value="${params.fechaNacimiento}"/>  <br /><br />
+                    <input name="fechaNacimiento" type="text" id="fechaNacimiento" class="Date" value="${params.fechaNacimiento}"/><span class="obligatorio">&nbsp;*</span>  <br /><br />
                     </p>
                     <p>
                     <label for="sexo"><g:message code="persona.sexo" /></label>
-                    <g:select name="sexo" style="width: 175px;" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" />
+                    <g:select name="sexo" style="width: 175px;" noSelection="['':'Seleccione']" from="['Masculino', 'Femenino']" value="${params.sexo}" /><span class="obligatorio">&nbsp;*</span>
                     </p>
                     <p>
                     <label for="foto"><g:message code="persona.foto" /></label>
                     <input type="text" name="foto" id="foto" style='width: 300px;'/>
                     </p>
                 </div>
+                <span class="obligatorio">&nbsp;*</span> Campos Obligatorios                
         <div id="imgPrevia"></div>
 
       </fieldset>
@@ -352,32 +353,32 @@
         <legend>Direcci&oacute;n de Habitaci&oacute;n</legend>
           <p>
             <label for="entidadresidencia"><g:message code="persona.entidadreside"/></label>
-            <g:select name="entidresid" class="selectci" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" />
+            <g:select name="entidresid" class="selectci" from="${entidadesIds}" optionKey="id" optionValue="nombre" noSelection="['':'Seleccione Entidad']" onchange="updateMunicipiosReside(this.value)" /><span class="obligatorio">&nbsp;*</span>
           </p>   
           <p>
           <label for="municipioresidencia"><g:message code="persona.municipioreside"/></label>
-          <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onclick="updateParroquiaReside(this.value)"/>
+          <g:select name="municresid" class="selectci" disabled="false" noSelection="['':'Seleccione Municipio']" onclick="updateParroquiaReside(this.value)"/><span class="obligatorio">&nbsp;*</span>
           </p>	  
           <p>
           <label for="parroquiresidencia"><g:message code="persona.parroquiareside"/></label>
             <%--g:select name="direccion.id" class="selectci" id="parroresid" disabled="false" noSelection="['':'Seleccione Parroquia']"/--%>
-            <g:select name="direccion.id" class="selectci" disabled="false" noSelection="['':'Seleccione Parroquia']"/>
+            <g:select name="direccion.id" class="selectci" disabled="false" noSelection="['':'Seleccione Parroquia']"/><span class="obligatorio">&nbsp;*</span>
             </p>	  
           <p>
           <label for="localidadreside"><g:message code="persona.localidadreside"/></label>
-          <g:textField name="ciudad" class="selectci" value="${params.ciudad}" />
+          <g:textField name="ciudad" class="selectci" value="${params.ciudad}" /><span class="obligatorio">&nbsp;*</span>
           </p>
           <p>
           <label for="urbreside"><g:message code="persona.urbreside"/></label>
-          <g:textField name="urbasector" class="selectci" value="${params.urbasector}" />
+          <g:textField name="urbasector" class="selectci" value="${params.urbasector}" /><span class="obligatorio">&nbsp;*</span>
           </p>
           <p>
           <label for="avenireside"><g:message code="persona.avenireside"/></label>
-          <g:textField name="avenidacalle" class="selectci" value="${params.avenidacalle}" />
+          <g:textField name="avenidacalle" class="selectci" value="${params.avenidacalle}" /><span class="obligatorio">&nbsp;*</span>
           </p>
           <p>
           <label for="casareside"><g:message code="persona.casareside"/></label>
-          <g:textField name="casaedif" class="selectci" value="${params.casaedif}" />
+          <g:textField name="casaedif" class="selectci" value="${params.casaedif}" /><span class="obligatorio">&nbsp;*</span>
           </p>
           <p>
           <label for="pisoreside"><g:message code="persona.pisoreside"/></label>
@@ -391,6 +392,7 @@
           <label for="tiemporesidencia"><g:message code="persona.tiemporesidencia"/></label> 
           <g:textField name="tiemporesidencia" class="selectci" value="${params.tiemporesidencia}" title="Indicar el tiempo en años o meses que tiene en la residencia actual"/>
           </p>
+          <span class="obligatorio">&nbsp;*</span> Campos Obligatorios                
         </fieldset>
 		
         <fieldset>

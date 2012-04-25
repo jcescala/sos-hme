@@ -206,6 +206,9 @@ list-style:none;
 	float:right; width:250px; color:#00F; margin-left:-25%;
 }
 
+.obligatorio{
+    font-size: 18px; color:red; font-weight: bolder;
+}
 .pacientereporte{
 	margin-left:0%;	position:relative;
 	text-align:left; width:800px;
