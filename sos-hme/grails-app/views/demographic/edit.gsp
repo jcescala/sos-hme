@@ -225,7 +225,7 @@
         <p>
         <label for="identificador"><g:message code="persona.identificador" /></label>
         <g:textField name="extension${i}" id="extension" value="${pid.extension}"/>
-        <g:select name="root${i}" from="${tiposIds}" id="root" optionKey="codigo" optionValue="nombreCorto" value="${pid.root}"/>
+        <g:select name="root${i}" from="${tiposIds}" id="root${i}" optionKey="codigo" optionValue="nombreCorto" value="${pid.root}"/>
         </p>
         
         <%i++%>

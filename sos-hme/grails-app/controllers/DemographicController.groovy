@@ -1240,7 +1240,8 @@ def authorizationService
             for (cicloIds = 0; cicloIds < numeroDeIds; cicloIds++){
                 numeroIdentificador = 'extension'+cicloIds
                 tipoIdentificador = 'root'+cicloIds
-                if(!(params[numeroIdentificador] in patient.ids.extension)){// si los valores del form difieren de los ya registrados
+                
+                if(!(params[numeroIdentificador] in patient.ids.extension) || !(params[tipoIdentificador] in patient.ids.root)){// si los valores del form difieren de los ya registrados
                     if(numeroDeIds== 1 && params[numeroIdentificador]=='' && params[tipoIdentificador] != TipoIdentificador.AUTOGENERADO){
                         flash.message = "El Identificador no Puede quedar vacio"
                         return [patient:patient, pn:pn, tiposIds:tiposIds, 
@@ -1608,24 +1609,24 @@ cadenaTiposIds+"</select>"+
 								"<p>"+
                                 "<label for='primerApellido'>"+m1+"</label>"+
                                                                 
-								"<input type='text' name='primerApellido' id='primerApellido' value='' style='margin-left:5px;'></p>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value='' style='margin-left:5px;'><span class='obligatorio'>&nbsp;*</span></p>"+
 
 								"<p><label for='segundoApellido'>"+m2+"</label>"+
 								"<input type='text' name='segundoApellido' id='segundoApellido' value='' style='margin-left:5px;'></p>"+
 
 								"<p><label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value='' style='margin-left:5px;'></p>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='' style='margin-left:5px;'><span class='obligatorio'>&nbsp;*</span></p>"+
 
 								"<p><label for='segundoNombre'>"+m4+"</label>"+
 								"<input type='text' name='segundoNombre' id='segundoNombre' value='' style='margin-left:5px;'></p>"+
 								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='' style='margin-left:5px;'/>  <br /><br /></p>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='' style='margin-left:5px;'/> <span class='obligatorio'>&nbsp;*</span> <br /><br /></p>"+
 								"<p><label for='sexo'>"+m6+"</label>"+
 								"<select name='sexo' class='selectci' id='sexo' style='width: 175px; margin-left:5px;' >"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' >Masculino</option>"+
-								"<option value='Femenino' >Femenino</option></select></p>"+
+								"<option value='Femenino' >Femenino</option></select><span class='obligatorio'>&nbsp;*</span></p>"+
 								"<p><label for='foto'>"+m7+"</label>"+
 								"<input type='text' name='foto' id='foto' style='width: 300px; margin-left:5px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
@@ -1681,23 +1682,23 @@ cadenaTiposIds+"</select>"+
 								"<p>"+
                                 "<label for='primerApellido'>"+m1+"</label>"+
                                                                 
-								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"' style='margin-left:5px;'>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value='"+datos.get("uno")+"' style='margin-left:5px;'><span class='obligatorio'>&nbsp;*</span>"+
 
 								"<p><label for='segundoApellido'>"+m2+"</label>"+
 								"<input type='text' name='segundoApellido' id='segundoApellido' value='"+datos.get("dos")+"' style='margin-left:5px;'>"+
 
 								"<p><label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value='"+datos.get("tres")+"' style='margin-left:5px;'></p>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='"+datos.get("tres")+"' style='margin-left:5px;'><span class='obligatorio'>&nbsp;*</span></p>"+
 
 								"<p><label for='segundoNombre'>"+m4+"</label>"+
 								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+datos.get("cuatro")+"' style='margin-left:5px;'></p>"+
 								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento'  value='"+datos.get("cinco")+"' />  <br /><br /></p>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento'  value='"+datos.get("cinco")+"' /> <span class='obligatorio'>&nbsp;*</span> <br /><br /></p>"+
 								"<p><label for='sexo'>"+m6+"</label>"+
 								"<select name='sexo' class='selectci' id='sexo' style='width: 175px; margin-left:5px;'>"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' "+selectMasculino+">Masculino</option>"+
-								"<option value='Femenino' "+selectFemenino+">Femenino</option></select></p>"+
+								"<option value='Femenino' "+selectFemenino+">Femenino</option></select><span class='obligatorio'>&nbsp;*</span></p>"+
 								"<p><label for='foto'>"+m7+"</label>"+
 								"<input type='text' name='foto' id='foto' style='width: 300px; margin-left:5px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
@@ -1724,23 +1725,23 @@ cadenaTiposIds+"</select>"+
 								"<p>"+
                                 "<label for='primerApellido'>"+m1+"</label>"+
                                                                     
-								"<input type='text' name='primerApellido' id='primerApellido' value='"+primerApellido+"' style='margin-left:5px;'></p>"+
+								"<input type='text' name='primerApellido' id='primerApellido' value='"+primerApellido+"' style='margin-left:5px;'><span class='obligatorio'>&nbsp;*</span></p>"+
 								"<p><label for='segundoApellido'>"+m2+"</label>"+
 								"<input type='text' name='segundoApellido' id='segundoApellido' value='"+segundoApellido+"' style='margin-left:5px;'></p>"+
 
 								"<p><label for='primerNombre'>"+m3+"</label>"+
-								"<input type='text' name='primerNombre' id='primerNombre' value='"+primerNombre+"' style='margin-left:5px;'></p>"+
+								"<input type='text' name='primerNombre' id='primerNombre' value='"+primerNombre+"' style='margin-left:5px;'><span class='obligatorio'>&nbsp;*</span></p>"+
 
 								"<p><label for='segundoNombre'>"+m4+"</label>"+
 								"<input type='text' name='segundoNombre' id='segundoNombre' value='"+segundoNombre+"' style='margin-left:5px;'></p>"+
 								"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='"+fechaNacimiento+"' style='margin-left:5px;'/>  <br /><br /></p>"+
+								"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value='"+fechaNacimiento+"' style='margin-left:5px;'/> <span class='obligatorio'>&nbsp;*</span> <br /><br /></p>"+
 								"<p><label for='sexo'>"+m6+"</label>"+
 								"<select name='sexo' class='selectci' id='sexo' style='width: 175px; margin-left:5px;'>"+
 								"<option value=''>Seleccione</option>"+
 								"<option value='Masculino' "+selectMasculino+">Masculino</option>"+
-								"<option value='Femenino' "+selectFemenino+">Femenino</option></select></p>"+
+								"<option value='Femenino' "+selectFemenino+">Femenino</option></select><span class='obligatorio'>&nbsp;*</span></p>"+
 								"<p><label for='foto'>"+m7+"</label>"+
 								"<input type='text' name='foto' id='foto' style='width: 300px; margin-left:5px;'/></p></div>"+
 								"<script>jQuery(document).ready(function(){"+
@@ -1764,25 +1765,25 @@ cadenaTiposIds+"</select>"+
 				render 	"<div style='clear:both'></div>"+
 						"<p>"+
 						"<label for='primerApellido'>"+m1+"</label>"+
-						"<input type='text' name='primerApellido' value=''></p>"+
+						"<input type='text' name='primerApellido' value=''><span class='obligatorio'>&nbsp;*</span></p>"+
 
 						"<p><label for='segundoApellido'>"+m2+"</label>"+
 						"<input type='text' name='segundoApellido' value=''></p>"+
 
 						"<p><label for='primerNombre'>"+m3+"</label>"+
-						"<input type='text' name='primerNombre' value=''></p>"+
+						"<input type='text' name='primerNombre' value=''><span class='obligatorio'>&nbsp;*</span></p>"+
 
 						"<p><label for='segundoNombre'>"+m4+"</label>"+
 						"<input type='text' name='segundoNombre' value=''></p>"+
 
 						"<p><label for='fechaNacimiento'>"+m5+"</label>"+
 
-						"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/>  <br /><br /></p>"+
+						"<input name='fechaNacimiento' type='text' class='Date' id='fechaNacimiento' value=''/> <span class='obligatorio'>&nbsp;*</span> <br /><br /></p>"+
 						"<p><label for='sexo'>"+m6+"</label>"+
 						"<select name='sexo' class='selectci' id='sexo' style='width: 175px;'>"+
 						"<option value=''>Seleccione</option>"+
 						"<option value='Masculino' >Masculino</option>"+
-						"<option value='Femenino' >Femenino</option></select></p>"+
+						"<option value='Femenino' >Femenino</option></select><span class='obligatorio'>&nbsp;*</span></p>"+
 						"<p><label for='foto'>"+m7+"</label>"+
 						"<input type='text' name='foto' id='foto' style='width: 300px;'/></p></div>"+
 						"<script>jQuery(document).ready(function(){"+

@@ -61,8 +61,8 @@ templates2 {
       EXPLORACION=['exploracion_funcional','antecedentes_o_anamnesis']
       OBSERVATION=['enfermedad_actual']
       EXAMEN_FISICO=['examen_fisico']
-      TRATAMIENTO=['accion_y_tratamiento']
       DIAGNOSTICO=['diagnosticos'] //PRESENTA PROBLEMAS
+      TRATAMIENTO=['accion_y_tratamiento']
       MOVIMIENTO=['movimiento_de_paciente']
       
     }
