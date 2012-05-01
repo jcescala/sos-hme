@@ -21,7 +21,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"">
-		["MD5-CAM-1.0.1"] = <"66CA96700D40B6668E961F63B823F762">
+		["MD5-CAM-1.0.1"] = <"8B3ADB96E344801E37BF1F19849E0FD0">
 	>
 
 definition
@@ -41,7 +41,7 @@ definition
 									DV_TEXT matches {*}
 								}
 							}
-							ELEMENT[at0004] occurrences matches {0..1} matches {	-- Visión
+							ELEMENT[at0004] occurrences matches {0..1} matches {	-- Ojos
 								value matches {
 									DV_TEXT matches {*}
 								}
@@ -164,7 +164,7 @@ ontology
 					description = <"*">
 				>
 				["at0004"] = <
-					text = <"Visión">
+					text = <"Ojos">
 					description = <"*">
 				>
 				["at0005"] = <
