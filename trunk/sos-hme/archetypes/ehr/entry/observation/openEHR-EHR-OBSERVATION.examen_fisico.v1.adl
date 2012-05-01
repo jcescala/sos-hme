@@ -24,7 +24,7 @@ description
 	other_contributors = <>
 	other_details = <
 		["references"] = <"Este arquetipo tiene fines investigativos pues forma parte de un trabajo de grado pero a la vez es parte de un proyecto de telemedicina.">
-		["MD5-CAM-1.0.1"] = <"AE665E9E6C0395968CE02FDFCDAB173E">
+		["MD5-CAM-1.0.1"] = <"89761D83A78B8DFD65C05AFB1C7AD691">
 	>
 
 definition
@@ -167,6 +167,7 @@ definition
 																		list = <
 																			["1"] = <
 																				units = <"°C">
+																				magnitude = <|0.0..161.0|>
 																			>
 																		>
 																	>
