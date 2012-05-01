@@ -1207,6 +1207,7 @@ def authorizationService
         def municipio =  Lugar.get(pn.direccion.padre.id)
         def estado = Lugar.get(municipio.padre.id)
         
+        
         def tiposIds = TipoIdentificador.list()
         def etniasIds = Etnia.list()
         def profesionIds = Profesion.list()
@@ -1215,8 +1216,10 @@ def authorizationService
         def ocupacionIds = Ocupacion.list()
         def paisesIds = Lugar.findAllByTipolugarLike("Pais")
         def entidadesIds = Lugar.findAllByTipolugarLike("Estado")
-        def municipios = Lugar.findAllByTipolugarLike("Municipio")
-        def parroquias = Lugar.findAllByTipolugarLike("Parroquia")
+        //def municipios = Lugar.findAllByTipolugarLike("Municipio")
+        def municipios = Lugar.findAllByPadreLike(municipio.padre)
+        //def parroquias = Lugar.findAllByTipolugarLike("Parroquia")
+        def parroquias = Lugar.findAllByPadreLike(municipio)
         
         def fechaNace = patient.fechaNacimiento
         SimpleDateFormat formatter = new SimpleDateFormat ("dd-MM-yyyy")
