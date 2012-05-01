@@ -68,7 +68,7 @@
         </div>
         <div id="pageBody">
             <h1>SOS Telemedicina, Índice Maestro de Pacientes</h1>
-            <p>Ingresar texto aquí:</p>
+            
 
             <div id="controllerList" class="dialog">
                 <h2>Panel de Control:</h2>
