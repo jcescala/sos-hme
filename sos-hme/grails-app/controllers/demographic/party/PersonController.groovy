@@ -6,6 +6,7 @@ import demographic.role.Role
 import util.RandomGenerator
 import demographic.identity.*
 import util.FormatLog
+import authorization.*
 /*
  *@author Angel Rodriguez Leon
  */
@@ -439,16 +440,31 @@ class PersonController {
     def delete = {
 		println("identidades:::"+params.identities)
         def personInstance = Person.get(params.id)
-
-
+		def existLoginAuth = false
+		def loginAuthInstance
+		def la
+		//def loginAuthId = LoginAuth.executeQuery("select la.id from LoginAuth as la  where la.person =?",10)
+		def loginAuthId = LoginAuth.executeQuery("select la.id from LoginAuth as la left join la.person as p where p.id =?",personInstance.id)
+		println "size: "+loginAuthId.size()
+		if(loginAuthId.size()>0){
+			loginAuthInstance = LoginAuth.get(loginAuthId[0])
+			existLoginAuth = true
+		}
+		/*def usuario = LoginAuth.createCriteria() {
+					eq("person",personInstance.id)			
+		} */
+		println "authorization"+loginAuthId
       //  def rolid = personInstance.roles.get(1)
 
      //   def rol = Role.get(rolid)
-
+		
         
         if (personInstance) {
             try {
                // rol.delete(flush: true)
+			   if(existLoginAuth){
+					loginAuthInstance.delete(flush: true)
+			   }
                 personInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'person.label', default: 'Person'), params.id])}"
                 logged("Person eliminado correctamente, personId: "+personInstance.id+" ", "info", session.traumaContext.userId)
