@@ -51,7 +51,18 @@ ${paciente.pasaporte}[Pasaporte] </td>
         ${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}
         </td>
         <td>
-          ${paciente.fechaNacimiento}
+          <%
+                if(paciente.fechaNacimiento!=""){
+                StringTokenizer token = new StringTokenizer(paciente.fechaNacimiento,"-")
+                String fecha = ""
+                String ano= token.nextToken()
+                String mes= token.nextToken()
+                String dia= token.nextToken()
+                fecha = dia+"-"+mes+"-"+ano
+                print fecha
+                }
+          %>
+
         </td>  
 
 
