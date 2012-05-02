@@ -169,7 +169,7 @@ class RoleController {
                 roleInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
                 logged("Role "+type+" eliminado correctamente para personId: "+persona.id+" ","info", session.traumaContext.userId)
-				redirect(action: "list")
+				redirect(controller: "person", action: "show", id: params.personid)
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'role.label', default: 'Role'), params.id])}"
