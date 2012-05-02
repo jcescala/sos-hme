@@ -20,7 +20,16 @@
             <g:each in="${externo}" var="cda">
               <tr>
                 <td>${cda.titulo}</td>
-                <td>${cda.fechaCreacion}</td>
+                <td><%
+
+                StringTokenizer token = new StringTokenizer(cda.fechaCreacion,"-")
+                String fecha = ""
+                String ano= token.nextToken()
+                String mes= token.nextToken()
+                String dia= token.nextToken()
+                fecha = dia+"-"+mes+"-"+ano
+                print fecha
+                %> </td>
 
 
                 <td><g:link controller="service" action="buscarCdaById" id="${cda.id}" params="[idPaciente:idPaciente,render: 'cda']" class="boton2"><g:message code="hce.cda.verCda" /> </g:link></td>
