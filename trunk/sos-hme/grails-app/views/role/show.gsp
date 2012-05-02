@@ -131,7 +131,9 @@
             </div>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${roleInstance?.id}" />
+				
+                    <g:hiddenField name="id" value="${roleInstance?.id}"/>
+					<g:hiddenField name="personid" value="${roleInstance?.performer.id}" />
 					<!--<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
 					<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>-->
 					<span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
